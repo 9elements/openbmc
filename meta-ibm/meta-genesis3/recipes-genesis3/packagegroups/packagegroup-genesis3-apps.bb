@@ -41,6 +41,7 @@ RDEPENDS:${PN}-fans = " \
 
 SUMMARY:${PN}-system = "IBM System"
 RDEPENDS:${PN}-system = " \
+	phosphor-ipmi-ipmb \
 	bmcweb \
 	entity-manager \
 	webui-vue \
