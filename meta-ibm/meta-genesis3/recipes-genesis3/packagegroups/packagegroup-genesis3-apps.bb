@@ -37,6 +37,7 @@ RDEPENDS:${PN}-flash = " \
 
 SUMMARY:${PN}-fans = "IBM Fans"
 RDEPENDS:${PN}-fans = " \
+        phosphor-pid-control \
 	"
 
 SUMMARY:${PN}-system = "IBM System"
