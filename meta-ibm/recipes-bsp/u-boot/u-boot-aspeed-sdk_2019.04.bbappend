@@ -4,6 +4,11 @@ FILESEXTRAPATHS:prepend := "${THISDIR}/files:"
 SRC_URI:append:p10bmc = " file://ibm.json file://ips.json file://keys/"
 SRC_URI:append:p10bmc = " file://p10bmc.cfg"
 
+SRC_URI:append:genesis3 = " file://genesis3.cfg"
+SRC_URI:append:genesis3 = " \
+    file://0001-arm-mach-aspeed-Add-support-for-CONFIG_ASPEED_ROUTE_.patch \
+    "
+
 OTPTOOL_CONFIGS:p10bmc = "${WORKDIR}/ibm.json ${WORKDIR}/ips.json"
 OTPTOOL_KEY_DIR:p10bmc = "${WORKDIR}/keys/"
 

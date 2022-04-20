@@ -1,0 +1,52 @@
+From 935546441e4ece2da871f439816248bb86af5391 Mon Sep 17 00:00:00 2001
+From: Patrick Rudolph <patrick.rudolph@9elements.com>
+Date: Tue, 19 Apr 2022 17:12:18 +0200
+Subject: [PATCH 2/2] arm/mach-aspeed: Add support for
+ CONFIG_ASPEED_ROUTE_UART5_TO_UART1
+
+Introduce CONFIG_ASPEED_ROUTE_UART5_TO_UART1 and reuse existing
+platform code to route UART5 to UART1 pins.
+This is required on IBM/Genesis3 as only UART5 can be used as early
+debug console, but the RXD1/TXD1 pins are connected instead of RXD5/TXD5.
+This does not affect the "debug UART" function on RXD{1,5}.
+
+Signed-off-by: Patrick Rudolph <patrick.rudolph@9elements.com>
+---
+ arch/arm/mach-aspeed/Kconfig            | 7 +++++++
+ arch/arm/mach-aspeed/ast2500/platform.S | 2 +-
+ 2 files changed, 8 insertions(+), 1 deletion(-)
+
+diff --git a/arch/arm/mach-aspeed/Kconfig b/arch/arm/mach-aspeed/Kconfig
+index 687adcb308..660b5a240e 100644
+--- a/arch/arm/mach-aspeed/Kconfig
++++ b/arch/arm/mach-aspeed/Kconfig
+@@ -84,6 +84,13 @@ config ASPEED_ENABLE_DEBUG_UART
+ 
+ endif
+ 
++config ASPEED_ROUTE_UART5_TO_UART1
++	bool "Route UART5 console to UART1 pins"
++	depends on ASPEED_AST2500
++	help
++	  Route UART5 console to TXD1/RXD1 pins instead of TXD5/RXD5 pins.
++	  Does not affect the debug uart functionality.
++
+ config ASPEED_PALLADIUM
+ 	bool "Aspeed palladium for simulation"
+ 	default n
+diff --git a/arch/arm/mach-aspeed/ast2500/platform.S b/arch/arm/mach-aspeed/ast2500/platform.S
+index aef55c4a0a..fd013e4e6f 100644
+--- a/arch/arm/mach-aspeed/ast2500/platform.S
++++ b/arch/arm/mach-aspeed/ast2500/platform.S
+@@ -795,7 +795,7 @@ wait_ddr_reset:
+     /* end delay 10ms */
+ 
+ /* Debug - UART console message */
+-#ifdef CONFIG_DRAM_UART_TO_UART1
++#ifdef CONFIG_ASPEED_ROUTE_UART5_TO_UART1
+     ldr   r0, =0x1e78909c                        @ route UART5 to UART Port1, 2016.08.29
+     ldr   r1, =0x10000004
+     str   r1, [r0]
+-- 
+2.39.2
+
