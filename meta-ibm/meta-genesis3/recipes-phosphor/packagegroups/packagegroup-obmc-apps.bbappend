@@ -16,6 +16,8 @@ RDEPENDS:${PN}-devtools:append = " \
     ipmitool \
     "
 
+RDEPENDS:${PN}-inventory:append = " openpower-fru-vpd"
+
 PACKAGES += " \
     ${PN}-chassis \
     ${PN}-fans \
