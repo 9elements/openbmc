@@ -1,0 +1,4 @@
+SUBSYSTEM=="i2c", DRIVER=="at24", DEVPATH=="*/87-0050", ACTION=="add", TAG+="systemd", ENV{SYSTEMD_WANTS}+="intel-pirom-parser@%N.service"
+SUBSYSTEM=="i2c", DRIVER=="at24", DEVPATH=="*/74-0050", ACTION=="add", TAG+="systemd", ENV{SYSTEMD_WANTS}+="intel-pirom-parser@%N.service"
+SUBSYSTEM=="i2c", DRIVER=="at24", DEVPATH=="*/69-0050", ACTION=="add", TAG+="systemd", ENV{SYSTEMD_WANTS}+="intel-pirom-parser@%N.service"
+SUBSYSTEM=="i2c", DRIVER=="at24", DEVPATH=="*/105-0050", ACTION=="add", TAG+="systemd", ENV{SYSTEMD_WANTS}+="intel-pirom-parser@%N.service"
