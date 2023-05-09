@@ -1,0 +1,1228 @@
+[
+	{
+		"Exposes": [
+			{
+				"Address": "0x50",
+				"Bus": "92",
+				"Name": "DIMM_A0",
+				"Type": "EEPROM_24C01"
+			},
+			{
+				"Address": "0x18",
+				"Bus": "92",
+				"PowerState": "On",
+				"Name": "DIMM_A0 Temperature",
+				"PollRate": 5.0,
+				"Type": "JC42"
+			}
+		],
+		"Name": "DIMM_A0",
+		"Probe": ["xyz.openbmc_project.Inventory.Item({'PrettyName': 'DIMM A0', 'Present': true})",
+			"AND",
+			"xyz.openbmc_project.State.Host({'CurrentHostState': 'xyz.openbmc_project.State.Host.HostState.Running'})",
+			"MATCH_ONE"],
+		"Type": "nvme"
+	},
+	{
+		"Exposes": [
+			{
+				"Address": "0x51",
+				"Bus": "92",
+				"Name": "DIMM_A1",
+				"Type": "EEPROM_24C01"
+			},
+			{
+				"Address": "0x19",
+				"Bus": "92",
+				"PowerState": "On",
+				"Name": "DIMM_A1 Temperature",
+				"PollRate": 5.0,
+				"Type": "JC42"
+			}
+		],
+		"Name": "DIMM_A1",
+		"Probe": ["xyz.openbmc_project.Inventory.Item({'PrettyName': 'DIMM A1', 'Present': true})",
+			"AND",
+			"xyz.openbmc_project.State.Host({'CurrentHostState': 'xyz.openbmc_project.State.Host.HostState.Running'})",
+			"MATCH_ONE"],
+		"Type": "nvme"
+	},
+	{
+		"Exposes": [
+			{
+				"Address": "0x52",
+				"Bus": "92",
+				"Name": "DIMM_B0",
+				"Type": "EEPROM_24C01"
+			},
+			{
+				"Address": "0x1a",
+				"Bus": "92",
+				"PowerState": "On",
+				"Name": "DIMM_B0 Temperature",
+				"PollRate": 5.0,
+				"Type": "JC42"
+			}
+		],
+		"Name": "DIMM_B0",
+		"Probe": ["xyz.openbmc_project.Inventory.Item({'PrettyName': 'DIMM B0', 'Present': true})",
+			"AND",
+			"xyz.openbmc_project.State.Host({'CurrentHostState': 'xyz.openbmc_project.State.Host.HostState.Running'})",
+			"MATCH_ONE"],
+		"Type": "nvme"
+	},
+	{
+		"Exposes": [
+			{
+				"Address": "0x53",
+				"Bus": "92",
+				"Name": "DIMM_B1",
+				"Type": "EEPROM_24C01"
+			},
+			{
+				"Address": "0x1b",
+				"Bus": "92",
+				"PowerState": "On",
+				"Name": "DIMM_B1 Temperature",
+				"PollRate": 5.0,
+				"Type": "JC42"
+			}
+		],
+		"Name": "DIMM_B1",
+		"Probe": ["xyz.openbmc_project.Inventory.Item({'PrettyName': 'DIMM B1', 'Present': true})",
+			"AND",
+			"xyz.openbmc_project.State.Host({'CurrentHostState': 'xyz.openbmc_project.State.Host.HostState.Running'})",
+			"MATCH_ONE"],
+		"Type": "nvme"
+	},
+	{
+		"Exposes": [
+			{
+				"Address": "0x54",
+				"Bus": "92",
+				"Name": "DIMM_C0",
+				"Type": "EEPROM_24C01"
+			},
+			{
+				"Address": "0x1c",
+				"Bus": "92",
+				"PowerState": "On",
+				"Name": "DIMM_C0 Temperature",
+				"PollRate": 5.0,
+				"Type": "JC42"
+			}
+		],
+		"Name": "DIMM_C0",
+		"Probe": ["xyz.openbmc_project.Inventory.Item({'PrettyName': 'DIMM C0', 'Present': true})",
+			"AND",
+			"xyz.openbmc_project.State.Host({'CurrentHostState': 'xyz.openbmc_project.State.Host.HostState.Running'})",
+			"MATCH_ONE"],
+		"Type": "nvme"
+	},
+	{
+		"Exposes": [
+			{
+				"Address": "0x55",
+				"Bus": "92",
+				"Name": "DIMM_C1",
+				"Type": "EEPROM_24C01"
+			},
+			{
+				"Address": "0x1d",
+				"Bus": "92",
+				"PowerState": "On",
+				"Name": "DIMM_C1 Temperature",
+				"PollRate": 5.0,
+				"Type": "JC42"
+			}
+		],
+		"Name": "DIMM_C1",
+		"Probe": ["xyz.openbmc_project.Inventory.Item({'PrettyName': 'DIMM C1', 'Present': true})",
+			"AND",
+			"xyz.openbmc_project.State.Host({'CurrentHostState': 'xyz.openbmc_project.State.Host.HostState.Running'})",
+			"MATCH_ONE"],
+		"Type": "nvme"
+	},
+	{
+		"Exposes": [
+			{
+				"Address": "0x50",
+				"Bus": "93",
+				"Name": "DIMM_D0",
+				"Type": "EEPROM_24C01"
+			},
+			{
+				"Address": "0x18",
+				"Bus": "93",
+				"PowerState": "On",
+				"Name": "DIMM_D0 Temperature",
+				"PollRate": 5.0,
+				"Type": "JC42"
+			}
+		],
+		"Name": "DIMM_D0",
+		"Probe": ["xyz.openbmc_project.Inventory.Item({'PrettyName': 'DIMM D0', 'Present': true})",
+			"AND",
+			"xyz.openbmc_project.State.Host({'CurrentHostState': 'xyz.openbmc_project.State.Host.HostState.Running'})",
+			"MATCH_ONE"],
+		"Type": "nvme"
+	},
+	{
+		"Exposes": [
+			{
+				"Address": "0x51",
+				"Bus": "93",
+				"Name": "DIMM_D1",
+				"Type": "EEPROM_24C01"
+			},
+			{
+				"Address": "0x19",
+				"Bus": "93",
+				"PowerState": "On",
+				"Name": "DIMM_D1 Temperature",
+				"PollRate": 5.0,
+				"Type": "JC42"
+			}
+		],
+		"Name": "DIMM_D1",
+		"Probe": ["xyz.openbmc_project.Inventory.Item({'PrettyName': 'DIMM D1', 'Present': true})",
+			"AND",
+			"xyz.openbmc_project.State.Host({'CurrentHostState': 'xyz.openbmc_project.State.Host.HostState.Running'})",
+			"MATCH_ONE"],
+		"Type": "nvme"
+	},
+	{
+		"Exposes": [
+			{
+				"Address": "0x52",
+				"Bus": "93",
+				"Name": "DIMM_E0",
+				"Type": "EEPROM_24C01"
+			},
+			{
+				"Address": "0x1a",
+				"Bus": "93",
+				"PowerState": "On",
+				"Name": "DIMM_E0 Temperature",
+				"PollRate": 5.0,
+				"Type": "JC42"
+			}
+		],
+		"Name": "DIMM_E0",
+		"Probe": ["xyz.openbmc_project.Inventory.Item({'PrettyName': 'DIMM E0', 'Present': true})",
+			"AND",
+			"xyz.openbmc_project.State.Host({'CurrentHostState': 'xyz.openbmc_project.State.Host.HostState.Running'})",
+			"MATCH_ONE"],
+		"Type": "nvme"
+	},
+	{
+		"Exposes": [
+			{
+				"Address": "0x53",
+				"Bus": "93",
+				"Name": "DIMM_E1",
+				"Type": "EEPROM_24C01"
+			},
+			{
+				"Address": "0x1b",
+				"Bus": "93",
+				"PowerState": "On",
+				"Name": "DIMM_E1 Temperature",
+				"PollRate": 5.0,
+				"Type": "JC42"
+			}
+		],
+		"Name": "DIMM_E1",
+		"Probe": ["xyz.openbmc_project.Inventory.Item({'PrettyName': 'DIMM E1', 'Present': true})",
+			"AND",
+			"xyz.openbmc_project.State.Host({'CurrentHostState': 'xyz.openbmc_project.State.Host.HostState.Running'})",
+			"MATCH_ONE"],
+		"Type": "nvme"
+	},
+	{
+		"Exposes": [
+			{
+				"Address": "0x54",
+				"Bus": "93",
+				"Name": "DIMM_F0",
+				"Type": "EEPROM_24C01"
+			},
+			{
+				"Address": "0x1c",
+				"Bus": "93",
+				"PowerState": "On",
+				"Name": "DIMM_F0 Temperature",
+				"PollRate": 5.0,
+				"Type": "JC42"
+			}
+		],
+		"Name": "DIMM_F0",
+		"Probe": ["xyz.openbmc_project.Inventory.Item({'PrettyName': 'DIMM F0', 'Present': true})",
+			"AND",
+			"xyz.openbmc_project.State.Host({'CurrentHostState': 'xyz.openbmc_project.State.Host.HostState.Running'})",
+			"MATCH_ONE"],
+		"Type": "nvme"
+	},
+	{
+		"Exposes": [
+			{
+				"Address": "0x55",
+				"Bus": "93",
+				"Name": "DIMM_F1",
+				"Type": "EEPROM_24C01"
+			},
+			{
+				"Address": "0x1d",
+				"Bus": "93",
+				"PowerState": "On",
+				"Name": "DIMM_F1 Temperature",
+				"PollRate": 5.0,
+				"Type": "JC42"
+			}
+		],
+		"Name": "DIMM_F1",
+		"Probe": ["xyz.openbmc_project.Inventory.Item({'PrettyName': 'DIMM F1', 'Present': true})",
+			  "AND",
+			  "xyz.openbmc_project.State.Host({'CurrentHostState': 'xyz.openbmc_project.State.Host.HostState.Running'})"],
+		"Type": "nvme"
+	},
+	{
+		"Exposes": [
+			{
+				"Address": "0x50",
+				"Bus": "72",
+				"Name": "DIMM_G0",
+				"Type": "EEPROM_24C01"
+			},
+			{
+				"Address": "0x18",
+				"Bus": "72",
+				"PowerState": "On",
+				"Name": "DIMM_G0 Temperature",
+				"PollRate": 5.0,
+				"Type": "JC42"
+			}
+		],
+		"Name": "DIMM_A0",
+		"Probe": ["xyz.openbmc_project.Inventory.Item({'PrettyName': 'DIMM G0', 'Present': true})",
+			"AND",
+			"xyz.openbmc_project.State.Host({'CurrentHostState': 'xyz.openbmc_project.State.Host.HostState.Running'})",
+			"MATCH_ONE"],
+		"Type": "nvme"
+	},
+	{
+		"Exposes": [
+			{
+				"Address": "0x51",
+				"Bus": "72",
+				"Name": "DIMM_G1",
+				"Type": "EEPROM_24C01"
+			},
+			{
+				"Address": "0x19",
+				"Bus": "72",
+				"PowerState": "On",
+				"Name": "DIMM_G1 Temperature",
+				"PollRate": 5.0,
+				"Type": "JC42"
+			}
+		],
+		"Name": "DIMM_G1",
+		"Probe": ["xyz.openbmc_project.Inventory.Item({'PrettyName': 'DIMM G1', 'Present': true})",
+			"AND",
+			"xyz.openbmc_project.State.Host({'CurrentHostState': 'xyz.openbmc_project.State.Host.HostState.Running'})",
+			"MATCH_ONE"],
+		"Type": "nvme"
+	},
+	{
+		"Exposes": [
+			{
+				"Address": "0x52",
+				"Bus": "72",
+				"Name": "DIMM_H0",
+				"Type": "EEPROM_24C01"
+			},
+			{
+				"Address": "0x1a",
+				"Bus": "72",
+				"PowerState": "On",
+				"Name": "DIMM_H0 Temperature",
+				"PollRate": 5.0,
+				"Type": "JC42"
+			}
+		],
+		"Name": "DIMM_H0",
+		"Probe": ["xyz.openbmc_project.Inventory.Item({'PrettyName': 'DIMM H0', 'Present': true})",
+			"AND",
+			"xyz.openbmc_project.State.Host({'CurrentHostState': 'xyz.openbmc_project.State.Host.HostState.Running'})",
+			"MATCH_ONE"],
+		"Type": "nvme"
+	},
+	{
+		"Exposes": [
+			{
+				"Address": "0x53",
+				"Bus": "72",
+				"Name": "DIMM_H1",
+				"Type": "EEPROM_24C01"
+			},
+			{
+				"Address": "0x1b",
+				"Bus": "72",
+				"PowerState": "On",
+				"Name": "DIMM_H1 Temperature",
+				"PollRate": 5.0,
+				"Type": "JC42"
+			}
+		],
+		"Name": "DIMM_H1",
+		"Probe": ["xyz.openbmc_project.Inventory.Item({'PrettyName': 'DIMM H1', 'Present': true})",
+			"AND",
+			"xyz.openbmc_project.State.Host({'CurrentHostState': 'xyz.openbmc_project.State.Host.HostState.Running'})",
+			"MATCH_ONE"],
+		"Type": "nvme"
+	},
+	{
+		"Exposes": [
+			{
+				"Address": "0x54",
+				"Bus": "72",
+				"Name": "DIMM_J0",
+				"Type": "EEPROM_24C01"
+			},
+			{
+				"Address": "0x1c",
+				"Bus": "72",
+				"PowerState": "On",
+				"Name": "DIMM_J0 Temperature",
+				"PollRate": 5.0,
+				"Type": "JC42"
+			}
+		],
+		"Name": "DIMM_J0",
+		"Probe": ["xyz.openbmc_project.Inventory.Item({'PrettyName': 'DIMM J0', 'Present': true})",
+			"AND",
+			"xyz.openbmc_project.State.Host({'CurrentHostState': 'xyz.openbmc_project.State.Host.HostState.Running'})",
+			"MATCH_ONE"],
+		"Type": "nvme"
+	},
+	{
+		"Exposes": [
+			{
+				"Address": "0x55",
+				"Bus": "72",
+				"Name": "DIMM_J1",
+				"Type": "EEPROM_24C01"
+			},
+			{
+				"Address": "0x1d",
+				"Bus": "72",
+				"PowerState": "On",
+				"Name": "DIMM_J1 Temperature",
+				"PollRate": 5.0,
+				"Type": "JC42"
+			}
+		],
+		"Name": "DIMM_J1",
+		"Probe": ["xyz.openbmc_project.Inventory.Item({'PrettyName': 'DIMM J1', 'Present': true})",
+			"AND",
+			"xyz.openbmc_project.State.Host({'CurrentHostState': 'xyz.openbmc_project.State.Host.HostState.Running'})",
+			"MATCH_ONE"],
+		"Type": "nvme"
+	},
+	{
+		"Exposes": [
+			{
+				"Address": "0x50",
+				"Bus": "73",
+				"Name": "DIMM_K0",
+				"Type": "EEPROM_24C01"
+			},
+			{
+				"Address": "0x18",
+				"Bus": "73",
+				"PowerState": "On",
+				"Name": "DIMM_K0 Temperature",
+				"PollRate": 5.0,
+				"Type": "JC42"
+			}
+		],
+		"Name": "DIMM_K0",
+		"Probe": ["xyz.openbmc_project.Inventory.Item({'PrettyName': 'DIMM K0', 'Present': true})",
+			"AND",
+			"xyz.openbmc_project.State.Host({'CurrentHostState': 'xyz.openbmc_project.State.Host.HostState.Running'})",
+			"MATCH_ONE"],
+		"Type": "nvme"
+	},
+	{
+		"Exposes": [
+			{
+				"Address": "0x51",
+				"Bus": "73",
+				"Name": "DIMM_K1",
+				"Type": "EEPROM_24C01"
+			},
+			{
+				"Address": "0x19",
+				"Bus": "73",
+				"PowerState": "On",
+				"Name": "DIMM_K1 Temperature",
+				"PollRate": 5.0,
+				"Type": "JC42"
+			}
+		],
+		"Name": "DIMM_K1",
+		"Probe": ["xyz.openbmc_project.Inventory.Item({'PrettyName': 'DIMM K1', 'Present': true})",
+			"AND",
+			"xyz.openbmc_project.State.Host({'CurrentHostState': 'xyz.openbmc_project.State.Host.HostState.Running'})",
+			"MATCH_ONE"],
+		"Type": "nvme"
+	},
+	{
+		"Exposes": [
+			{
+				"Address": "0x52",
+				"Bus": "73",
+				"Name": "DIMM_L0",
+				"Type": "EEPROM_24C01"
+			},
+			{
+				"Address": "0x1a",
+				"Bus": "73",
+				"PowerState": "On",
+				"Name": "DIMM_L0 Temperature",
+				"PollRate": 5.0,
+				"Type": "JC42"
+			}
+		],
+		"Name": "DIMM_L0",
+		"Probe": ["xyz.openbmc_project.Inventory.Item({'PrettyName': 'DIMM L0', 'Present': true})",
+			"AND",
+			"xyz.openbmc_project.State.Host({'CurrentHostState': 'xyz.openbmc_project.State.Host.HostState.Running'})",
+			"MATCH_ONE"],
+		"Type": "nvme"
+	},
+	{
+		"Exposes": [
+			{
+				"Address": "0x53",
+				"Bus": "73",
+				"Name": "DIMM_L1",
+				"Type": "EEPROM_24C01"
+			},
+			{
+				"Address": "0x1b",
+				"Bus": "73",
+				"PowerState": "On",
+				"Name": "DIMM_L1 Temperature",
+				"PollRate": 5.0,
+				"Type": "JC42"
+			}
+		],
+		"Name": "DIMM_L1",
+		"Probe": ["xyz.openbmc_project.Inventory.Item({'PrettyName': 'DIMM L1', 'Present': true})",
+			"AND",
+			"xyz.openbmc_project.State.Host({'CurrentHostState': 'xyz.openbmc_project.State.Host.HostState.Running'})",
+			"MATCH_ONE"],
+		"Type": "nvme"
+	},
+	{
+		"Exposes": [
+			{
+				"Address": "0x54",
+				"Bus": "73",
+				"Name": "DIMM_M0",
+				"Type": "EEPROM_24C01"
+			},
+			{
+				"Address": "0x1c",
+				"Bus": "73",
+				"PowerState": "On",
+				"Name": "DIMM_M0 Temperature",
+				"PollRate": 5.0,
+				"Type": "JC42"
+			}
+		],
+		"Name": "DIMM_M0",
+		"Probe": ["xyz.openbmc_project.Inventory.Item({'PrettyName': 'DIMM M0', 'Present': true})",
+			"AND",
+			"xyz.openbmc_project.State.Host({'CurrentHostState': 'xyz.openbmc_project.State.Host.HostState.Running'})",
+			"MATCH_ONE"],
+		"Type": "nvme"
+	},
+	{
+		"Exposes": [
+			{
+				"Address": "0x55",
+				"Bus": "73",
+				"Name": "DIMM_M1",
+				"Type": "EEPROM_24C01"
+			},
+			{
+				"Address": "0x1d",
+				"Bus": "73",
+				"PowerState": "On",
+				"Name": "DIMM_M1 Temperature",
+				"PollRate": 5.0,
+				"Type": "JC42"
+			}
+		],
+		"Name": "DIMM_M1",
+		"Probe": ["xyz.openbmc_project.Inventory.Item({'PrettyName': 'DIMM M1', 'Present': true})",
+			"AND",
+			"xyz.openbmc_project.State.Host({'CurrentHostState': 'xyz.openbmc_project.State.Host.HostState.Running'})",
+			"MATCH_ONE"],
+		"Type": "nvme"
+	},
+	{
+		"Exposes": [
+			{
+				"Address": "0x50",
+				"Bus": "67",
+				"Name": "DIMM_N0",
+				"Type": "EEPROM_24C01"
+			},
+			{
+				"Address": "0x18",
+				"Bus": "67",
+				"PowerState": "On",
+				"Name": "DIMM_N0 Temperature",
+				"PollRate": 5.0,
+				"Type": "JC42"
+			}
+		],
+		"Name": "DIMM_N0",
+		"Probe": ["xyz.openbmc_project.Inventory.Item({'PrettyName': 'DIMM N0', 'Present': true})",
+			"AND",
+			"xyz.openbmc_project.State.Host({'CurrentHostState': 'xyz.openbmc_project.State.Host.HostState.Running'})",
+			"MATCH_ONE"],
+		"Type": "nvme"
+	},
+	{
+		"Exposes": [
+			{
+				"Address": "0x51",
+				"Bus": "67",
+				"Name": "DIMM_N1",
+				"Type": "EEPROM_24C01"
+			},
+			{
+				"Address": "0x19",
+				"Bus": "67",
+				"PowerState": "On",
+				"Name": "DIMM_N1 Temperature",
+				"PollRate": 5.0,
+				"Type": "JC42"
+			}
+		],
+		"Name": "DIMM_N1",
+		"Probe": ["xyz.openbmc_project.Inventory.Item({'PrettyName': 'DIMM N1', 'Present': true})",
+			"AND",
+			"xyz.openbmc_project.State.Host({'CurrentHostState': 'xyz.openbmc_project.State.Host.HostState.Running'})",
+			"MATCH_ONE"],
+		"Type": "nvme"
+	},
+	{
+		"Exposes": [
+			{
+				"Address": "0x52",
+				"Bus": "67",
+				"Name": "DIMM_P0",
+				"Type": "EEPROM_24C01"
+			},
+			{
+				"Address": "0x1a",
+				"Bus": "67",
+				"PowerState": "On",
+				"Name": "DIMM_P0 Temperature",
+				"PollRate": 5.0,
+				"Type": "JC42"
+			}
+		],
+		"Name": "DIMM_P0",
+		"Probe": ["xyz.openbmc_project.Inventory.Item({'PrettyName': 'DIMM P0', 'Present': true})",
+			"AND",
+			"xyz.openbmc_project.State.Host({'CurrentHostState': 'xyz.openbmc_project.State.Host.HostState.Running'})",
+			"MATCH_ONE"],
+		"Type": "nvme"
+	},
+	{
+		"Exposes": [
+			{
+				"Address": "0x53",
+				"Bus": "67",
+				"Name": "DIMM_P1",
+				"Type": "EEPROM_24C01"
+			},
+			{
+				"Address": "0x1b",
+				"Bus": "67",
+				"PowerState": "On",
+				"Name": "DIMM_P1 Temperature",
+				"PollRate": 5.0,
+				"Type": "JC42"
+			}
+		],
+		"Name": "DIMM_P1",
+		"Probe": ["xyz.openbmc_project.Inventory.Item({'PrettyName': 'DIMM P1', 'Present': true})",
+			"AND",
+			"xyz.openbmc_project.State.Host({'CurrentHostState': 'xyz.openbmc_project.State.Host.HostState.Running'})",
+			"MATCH_ONE"],
+		"Type": "nvme"
+	},
+	{
+		"Exposes": [
+			{
+				"Address": "0x54",
+				"Bus": "67",
+				"Name": "DIMM_Q0",
+				"Type": "EEPROM_24C01"
+			},
+			{
+				"Address": "0x1c",
+				"Bus": "67",
+				"PowerState": "On",
+				"Name": "DIMM_Q0 Temperature",
+				"PollRate": 5.0,
+				"Type": "JC42"
+			}
+		],
+		"Name": "DIMM_Q0",
+		"Probe": ["xyz.openbmc_project.Inventory.Item({'PrettyName': 'DIMM Q0', 'Present': true})",
+			"AND",
+			"xyz.openbmc_project.State.Host({'CurrentHostState': 'xyz.openbmc_project.State.Host.HostState.Running'})",
+			"MATCH_ONE"],
+		"Type": "nvme"
+	},
+	{
+		"Exposes": [
+			{
+				"Address": "0x55",
+				"Bus": "67",
+				"Name": "DIMM_Q1",
+				"Type": "EEPROM_24C01"
+			},
+			{
+				"Address": "0x1d",
+				"Bus": "67",
+				"PowerState": "On",
+				"Name": "DIMM_Q1 Temperature",
+				"PollRate": 5.0,
+				"Type": "JC42"
+			}
+		],
+		"Name": "DIMM_Q1",
+		"Probe": ["xyz.openbmc_project.Inventory.Item({'PrettyName': 'DIMM Q1', 'Present': true})",
+			"AND",
+			"xyz.openbmc_project.State.Host({'CurrentHostState': 'xyz.openbmc_project.State.Host.HostState.Running'})",
+			"MATCH_ONE"],
+		"Type": "nvme"
+	},
+	{
+		"Exposes": [
+			{
+				"Address": "0x50",
+				"Bus": "68",
+				"Name": "DIMM_R0",
+				"Type": "EEPROM_24C01"
+			},
+			{
+				"Address": "0x18",
+				"Bus": "68",
+				"PowerState": "On",
+				"Name": "DIMM_R0 Temperature",
+				"PollRate": 5.0,
+				"Type": "JC42"
+			}
+		],
+		"Name": "DIMM_R0",
+		"Probe": ["xyz.openbmc_project.Inventory.Item({'PrettyName': 'DIMM R0', 'Present': true})",
+			"AND",
+			"xyz.openbmc_project.State.Host({'CurrentHostState': 'xyz.openbmc_project.State.Host.HostState.Running'})",
+			"MATCH_ONE"],
+		"Type": "nvme"
+	},
+	{
+		"Exposes": [
+			{
+				"Address": "0x51",
+				"Bus": "68",
+				"Name": "DIMM_R1",
+				"Type": "EEPROM_24C01"
+			},
+			{
+				"Address": "0x19",
+				"Bus": "68",
+				"PowerState": "On",
+				"Name": "DIMM_R1 Temperature",
+				"PollRate": 5.0,
+				"Type": "JC42"
+			}
+		],
+		"Name": "DIMM_R1",
+		"Probe": ["xyz.openbmc_project.Inventory.Item({'PrettyName': 'DIMM R1', 'Present': true})",
+			"AND",
+			"xyz.openbmc_project.State.Host({'CurrentHostState': 'xyz.openbmc_project.State.Host.HostState.Running'})",
+			"MATCH_ONE"],
+		"Type": "nvme"
+	},
+	{
+		"Exposes": [
+			{
+				"Address": "0x52",
+				"Bus": "68",
+				"Name": "DIMM_S0",
+				"Type": "EEPROM_24C01"
+			},
+			{
+				"Address": "0x1a",
+				"Bus": "68",
+				"PowerState": "On",
+				"Name": "DIMM_S0 Temperature",
+				"PollRate": 5.0,
+				"Type": "JC42"
+			}
+		],
+		"Name": "DIMM_S0",
+		"Probe": ["xyz.openbmc_project.Inventory.Item({'PrettyName': 'DIMM S0', 'Present': true})",
+			"AND",
+			"xyz.openbmc_project.State.Host({'CurrentHostState': 'xyz.openbmc_project.State.Host.HostState.Running'})",
+			"MATCH_ONE"],
+		"Type": "nvme"
+	},
+	{
+		"Exposes": [
+			{
+				"Address": "0x53",
+				"Bus": "68",
+				"Name": "DIMM_S1",
+				"Type": "EEPROM_24C01"
+			},
+			{
+				"Address": "0x1b",
+				"Bus": "68",
+				"PowerState": "On",
+				"Name": "DIMM_S1 Temperature",
+				"PollRate": 5.0,
+				"Type": "JC42"
+			}
+		],
+		"Name": "DIMM_S1",
+		"Probe": ["xyz.openbmc_project.Inventory.Item({'PrettyName': 'DIMM S1', 'Present': true})",
+			"AND",
+			"xyz.openbmc_project.State.Host({'CurrentHostState': 'xyz.openbmc_project.State.Host.HostState.Running'})",
+			"MATCH_ONE"],
+		"Type": "nvme"
+	},
+	{
+		"Exposes": [
+			{
+				"Address": "0x54",
+				"Bus": "68",
+				"Name": "DIMM_T0",
+				"Type": "EEPROM_24C01"
+			},
+			{
+				"Address": "0x1c",
+				"Bus": "68",
+				"PowerState": "On",
+				"Name": "DIMM_T0 Temperature",
+				"PollRate": 5.0,
+				"Type": "JC42"
+			}
+		],
+		"Name": "DIMM_T0",
+		"Probe": ["xyz.openbmc_project.Inventory.Item({'PrettyName': 'DIMM T0', 'Present': true})",
+			"AND",
+			"xyz.openbmc_project.State.Host({'CurrentHostState': 'xyz.openbmc_project.State.Host.HostState.Running'})",
+			"MATCH_ONE"],
+		"Type": "nvme"
+	},
+	{
+		"Exposes": [
+			{
+				"Address": "0x55",
+				"Bus": "92",
+				"Name": "DIMM_T1",
+				"Type": "EEPROM_24C01"
+			},
+			{
+				"Address": "0x1d",
+				"Bus": "92",
+				"PowerState": "On",
+				"Name": "DIMM_T1 Temperature",
+				"PollRate": 5.0,
+				"Type": "JC42"
+			}
+		],
+		"Name": "DIMM_T1",
+		"Probe": ["xyz.openbmc_project.Inventory.Item({'PrettyName': 'DIMM T1', 'Present': true})",
+			"AND",
+			"xyz.openbmc_project.State.Host({'CurrentHostState': 'xyz.openbmc_project.State.Host.HostState.Running'})",
+			"MATCH_ONE"],
+		"Type": "nvme"
+	},
+	{
+		"Exposes": [
+			{
+				"Address": "0x50",
+				"Bus": "108",
+				"Name": "DIMM_U0",
+				"Type": "EEPROM_24C01"
+			},
+			{
+				"Address": "0x18",
+				"Bus": "108",
+				"PowerState": "On",
+				"Name": "DIMM_U0 Temperature",
+				"PollRate": 5.0,
+				"Type": "JC42"
+			}
+		],
+		"Name": "DIMM_U0",
+		"Probe": ["xyz.openbmc_project.Inventory.Item({'PrettyName': 'DIMM U0', 'Present': true})",
+			"AND",
+			"xyz.openbmc_project.State.Host({'CurrentHostState': 'xyz.openbmc_project.State.Host.HostState.Running'})",
+			"MATCH_ONE"],
+		"Type": "nvme"
+	},
+	{
+		"Exposes": [
+			{
+				"Address": "0x51",
+				"Bus": "108",
+				"Name": "DIMM_U1",
+				"Type": "EEPROM_24C01"
+			},
+			{
+				"Address": "0x19",
+				"Bus": "108",
+				"PowerState": "On",
+				"Name": "DIMM_U1 Temperature",
+				"PollRate": 5.0,
+				"Type": "JC42"
+			}
+		],
+		"Name": "DIMM_U1",
+		"Probe": ["xyz.openbmc_project.Inventory.Item({'PrettyName': 'DIMM U1', 'Present': true})",
+			"AND",
+			"xyz.openbmc_project.State.Host({'CurrentHostState': 'xyz.openbmc_project.State.Host.HostState.Running'})",
+			"MATCH_ONE"],
+		"Type": "nvme"
+	},
+	{
+		"Exposes": [
+			{
+				"Address": "0x52",
+				"Bus": "108",
+				"Name": "DIMM_V0",
+				"Type": "EEPROM_24C01"
+			},
+			{
+				"Address": "0x1a",
+				"Bus": "108",
+				"PowerState": "On",
+				"Name": "DIMM_V0 Temperature",
+				"PollRate": 5.0,
+				"Type": "JC42"
+			}
+		],
+		"Name": "DIMM_V0",
+		"Probe": ["xyz.openbmc_project.Inventory.Item({'PrettyName': 'DIMM V0', 'Present': true})",
+			"AND",
+			"xyz.openbmc_project.State.Host({'CurrentHostState': 'xyz.openbmc_project.State.Host.HostState.Running'})",
+			"MATCH_ONE"],
+		"Type": "nvme"
+	},
+	{
+		"Exposes": [
+			{
+				"Address": "0x53",
+				"Bus": "108",
+				"Name": "DIMM_V1",
+				"Type": "EEPROM_24C01"
+			},
+			{
+				"Address": "0x1b",
+				"Bus": "108",
+				"PowerState": "On",
+				"Name": "DIMM_V1 Temperature",
+				"PollRate": 5.0,
+				"Type": "JC42"
+			}
+		],
+		"Name": "DIMM_V1",
+		"Probe": ["xyz.openbmc_project.Inventory.Item({'PrettyName': 'DIMM V1', 'Present': true})",
+			"AND",
+			"xyz.openbmc_project.State.Host({'CurrentHostState': 'xyz.openbmc_project.State.Host.HostState.Running'})",
+			"MATCH_ONE"],
+		"Type": "nvme"
+	},
+	{
+		"Exposes": [
+			{
+				"Address": "0x54",
+				"Bus": "108",
+				"Name": "DIMM_W0",
+				"Type": "EEPROM_24C01"
+			},
+			{
+				"Address": "0x1c",
+				"Bus": "108",
+				"PowerState": "On",
+				"Name": "DIMM_W0 Temperature",
+				"PollRate": 5.0,
+				"Type": "JC42"
+			}
+		],
+		"Name": "DIMM_W0",
+		"Probe": ["xyz.openbmc_project.Inventory.Item({'PrettyName': 'DIMM W0', 'Present': true})",
+			"AND",
+			"xyz.openbmc_project.State.Host({'CurrentHostState': 'xyz.openbmc_project.State.Host.HostState.Running'})",
+			"MATCH_ONE"],
+		"Type": "nvme"
+	},
+	{
+		"Exposes": [
+			{
+				"Address": "0x55",
+				"Bus": "108",
+				"Name": "DIMM_W1",
+				"Type": "EEPROM_24C01"
+			},
+			{
+				"Address": "0x1d",
+				"Bus": "108",
+				"PowerState": "On",
+				"Name": "DIMM_W1 Temperature",
+				"PollRate": 5.0,
+				"Type": "JC42"
+			}
+		],
+		"Name": "DIMM_W1",
+		"Probe": ["xyz.openbmc_project.Inventory.Item({'PrettyName': 'DIMM W1', 'Present': true})",
+			"AND",
+			"xyz.openbmc_project.State.Host({'CurrentHostState': 'xyz.openbmc_project.State.Host.HostState.Running'})",
+			"MATCH_ONE"],
+		"Type": "nvme"
+	},
+	{
+		"Exposes": [
+			{
+				"Address": "0x50",
+				"Bus": "109",
+				"Name": "DIMM_X0",
+				"Type": "EEPROM_24C01"
+			},
+			{
+				"Address": "0x18",
+				"Bus": "109",
+				"PowerState": "On",
+				"Name": "DIMM_X0 Temperature",
+				"PollRate": 5.0,
+				"Type": "JC42"
+			}
+		],
+		"Name": "DIMM_X0",
+		"Probe": ["xyz.openbmc_project.Inventory.Item({'PrettyName': 'DIMM X0', 'Present': true})",
+			"AND",
+			"xyz.openbmc_project.State.Host({'CurrentHostState': 'xyz.openbmc_project.State.Host.HostState.Running'})",
+			"MATCH_ONE"],
+		"Type": "nvme"
+	},
+	{
+		"Exposes": [
+			{
+				"Address": "0x51",
+				"Bus": "109",
+				"Name": "DIMM_X1",
+				"Type": "EEPROM_24C01"
+			},
+			{
+				"Address": "0x19",
+				"Bus": "109",
+				"PowerState": "On",
+				"Name": "DIMM_X1 Temperature",
+				"PollRate": 5.0,
+				"Type": "JC42"
+			}
+		],
+		"Name": "DIMM_X1",
+		"Probe": ["xyz.openbmc_project.Inventory.Item({'PrettyName': 'DIMM X1', 'Present': true})",
+			"AND",
+			"xyz.openbmc_project.State.Host({'CurrentHostState': 'xyz.openbmc_project.State.Host.HostState.Running'})",
+			"MATCH_ONE"],
+		"Type": "nvme"
+	},
+	{
+		"Exposes": [
+			{
+				"Address": "0x52",
+				"Bus": "109",
+				"Name": "DIMM_Y0",
+				"Type": "EEPROM_24C01"
+			},
+			{
+				"Address": "0x1a",
+				"Bus": "109",
+				"PowerState": "On",
+				"Name": "DIMM_Y0 Temperature",
+				"PollRate": 5.0,
+				"Type": "JC42"
+			}
+		],
+		"Name": "DIMM_Y0",
+		"Probe": ["xyz.openbmc_project.Inventory.Item({'PrettyName': 'DIMM Y0', 'Present': true})",
+			"AND",
+			"xyz.openbmc_project.State.Host({'CurrentHostState': 'xyz.openbmc_project.State.Host.HostState.Running'})",
+			"MATCH_ONE"],
+		"Type": "nvme"
+	},
+	{
+		"Exposes": [
+			{
+				"Address": "0x53",
+				"Bus": "109",
+				"Name": "DIMM_Y1",
+				"Type": "EEPROM_24C01"
+			},
+			{
+				"Address": "0x1b",
+				"Bus": "109",
+				"PowerState": "On",
+				"Name": "DIMM_Y1 Temperature",
+				"PollRate": 5.0,
+				"Type": "JC42"
+			}
+		],
+		"Name": "DIMM_Y1",
+		"Probe": ["xyz.openbmc_project.Inventory.Item({'PrettyName': 'DIMM Y1', 'Present': true})",
+			"AND",
+			"xyz.openbmc_project.State.Host({'CurrentHostState': 'xyz.openbmc_project.State.Host.HostState.Running'})",
+			"MATCH_ONE"],
+		"Type": "nvme"
+	},
+	{
+		"Exposes": [
+			{
+				"Address": "0x54",
+				"Bus": "109",
+				"Name": "DIMM_Z0",
+				"Type": "EEPROM_24C01"
+			},
+			{
+				"Address": "0x1c",
+				"Bus": "109",
+				"PowerState": "On",
+				"Name": "DIMM_Z0 Temperature",
+				"PollRate": 5.0,
+				"Type": "JC42"
+			}
+		],
+		"Name": "DIMM_Z0",
+		"Probe": ["xyz.openbmc_project.Inventory.Item({'PrettyName': 'DIMM Z0', 'Present': true})",
+			"AND",
+			"xyz.openbmc_project.State.Host({'CurrentHostState': 'xyz.openbmc_project.State.Host.HostState.Running'})",
+			"MATCH_ONE"],
+		"Type": "nvme"
+	},
+	{
+		"Exposes": [
+			{
+				"Address": "0x55",
+				"Bus": "109",
+				"Name": "DIMM_Z1",
+				"Type": "EEPROM_24C01"
+			},
+			{
+				"Address": "0x1d",
+				"Bus": "109",
+				"PowerState": "On",
+				"Name": "DIMM_Z1 Temperature",
+				"PollRate": 5.0,
+				"Type": "JC42"
+			}
+		],
+		"Name": "DIMM_Z1",
+		"Probe": ["xyz.openbmc_project.Inventory.Item({'PrettyName': 'DIMM Z1', 'Present': true})",
+			"AND",
+			"xyz.openbmc_project.State.Host({'CurrentHostState': 'xyz.openbmc_project.State.Host.HostState.Running'})",
+			"MATCH_ONE"],
+		"Type": "nvme"
+	},
+
+	{
+		"Exposes": [
+			{
+				"Address": "0x50",
+				"Bus": 87,
+				"Name": "PIROM CPU0",
+				"Type": "EEPROM_24C01",
+				"PowerState": "On"
+			}
+		],
+		"Name": "PIROM SOCKET0",
+		"Probe": ["xyz.openbmc_project.Inventory.Item({'PrettyName': 'CPU0', 'Present': true})",
+			"AND",
+			"xyz.openbmc_project.State.Host({'CurrentHostState': 'xyz.openbmc_project.State.Host.HostState.Running'})",
+			"MATCH_ONE"],
+		"Type": "nvme",
+		"ProductId": 1
+	},
+	{
+		"Exposes": [
+			{
+				"Address": "0x50",
+				"Bus": 74,
+				"Name": "PIROM CPU1",
+				"Type": "EEPROM_24C01",
+				"PowerState": "On"
+			}
+		],
+		"Name": "PIROM SOCKET1",
+		"Probe": ["xyz.openbmc_project.Inventory.Item({'PrettyName': 'CPU1', 'Present': true})",
+			"AND",
+			"xyz.openbmc_project.State.Host({'CurrentHostState': 'xyz.openbmc_project.State.Host.HostState.Running'})",
+			"MATCH_ONE"],
+		"Type": "nvme",
+		"ProductId": 2
+	},
+	{
+		"Exposes": [
+			{
+				"Address": "0x50",
+				"Bus": 69,
+				"Name": "PIROM CPU2",
+				"Type": "EEPROM_24C01",
+				"PowerState": "On"
+			}
+		],
+		"Name": "PIROM SOCKET2",
+		"Probe": ["xyz.openbmc_project.Inventory.Item({'PrettyName': 'CPU2', 'Present': true})",
+			"AND",
+			"xyz.openbmc_project.State.Host({'CurrentHostState': 'xyz.openbmc_project.State.Host.HostState.Running'})",
+			"MATCH_ONE"],
+		"Type": "nvme",
+		"ProductId": 3
+	},
+	{
+		"Exposes": [
+			{
+				"Address": "0x50",
+				"Bus": 105,
+				"Name": "PIROM CPU3",
+				"Type": "EEPROM_24C01",
+				"PowerState": "On"
+			}
+		],
+		"Name": "PIROM SOCKET3",
+		"Probe": ["xyz.openbmc_project.Inventory.Item({'PrettyName': 'CPU3', 'Present': true})",
+			"AND",
+			"xyz.openbmc_project.State.Host({'CurrentHostState': 'xyz.openbmc_project.State.Host.HostState.Running'})",
+			"MATCH_ONE"],
+		"Type": "nvme",
+		"ProductId": 4
+	}
+]
+
+
