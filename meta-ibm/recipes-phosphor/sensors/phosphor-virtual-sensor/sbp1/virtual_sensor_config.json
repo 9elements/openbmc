@@ -1,0 +1,7230 @@
+[
+	{
+	    "Desc":
+	    {
+		"Name": "total_power",
+		"SensorType": "power"
+	    },
+	    "Associations":
+	    [
+		[
+		    "chassis",
+		    "all_sensors",
+		    "/xyz/openbmc_project/inventory/system/board/IBM_SBP1_Baseboard"
+		],
+		[
+		    "inventory",
+		    "sensors",
+		    "/xyz/openbmc_project/inventory/system/board/IBM_SBP1_Baseboard"
+		]
+	    ],
+	    "Params":
+	    {
+		"DbusParam":
+		[
+		    {
+			"ParamName": "P0",
+			"Desc":
+			{
+			    "Name": "BCM0_Input_Power",
+			    "SensorType": "power"
+			}
+		    },
+		    {
+			"ParamName": "P1",
+			"Desc":
+			{
+			    "Name": "BCM1_Input_Power",
+			    "SensorType": "power"
+			}
+		    },
+		    {
+			"ParamName": "P2",
+			"Desc":
+			{
+			    "Name": "BCM2_Input_Power",
+			    "SensorType": "power"
+			}
+		    },
+		    {
+			"ParamName": "P3",
+			"Desc":
+			{
+			    "Name": "BCM3_Input_Power",
+			    "SensorType": "power"
+			}
+		    }
+		]
+	    },
+	    "Expression": "((P0 == P0) ? P0 : 0) + ((P1 == P1) ? P1 : 0) + ((P2 == P2) ? P2 : 0) + ((P3 == P3) ? P3 : 0)"
+	},
+	{
+	    "Desc":
+	    {
+		"Name": "RTC Battery",
+		"SensorType": "voltage"
+	    },
+	    "Associations":
+	    [
+		[
+		    "chassis",
+		    "all_sensors",
+		    "/xyz/openbmc_project/inventory/system/board/IBM_SBP1_Baseboard"
+		],
+		[
+		    "inventory",
+		    "sensors",
+		    "/xyz/openbmc_project/inventory/system/board/IBM_SBP1_Baseboard"
+		]
+	    ],
+	    "Params":
+	    {
+		"DbusParam":
+		[
+		    {
+			"ParamName": "V0",
+			"Desc":
+			{
+			    "Name": "RTC_BATT_SNS",
+			    "SensorType": "voltage"
+			}
+		    }
+		]
+	    },
+	    "Expression": "(V0 == V0) ? V0 : NULL"
+	},
+	{
+		"Desc":
+		{
+		    "Name": "PVDRV SSB Voltage",
+		    "SensorType": "voltage"
+		},
+		"Associations":
+		[
+		    [
+			"chassis",
+			"all_sensors",
+			"/xyz/openbmc_project/inventory/system/board/IBM_SBP1_Baseboard"
+		    ],
+		    [
+			"inventory",
+			"sensors",
+			"/xyz/openbmc_project/inventory/system/board/IBM_SBP1_Baseboard"
+		    ]
+		],
+		"Params":
+		{
+		    "DbusParam":
+		    [
+			{
+			    "ParamName": "V0",
+			    "Desc":
+			    {
+				"Name": "PVDRV_Voltage",
+				"SensorType": "voltage"
+			    }
+			}
+		    ]
+		},
+		"Expression": "(V0 == V0) ? V0 : NULL"
+	    },
+	    {
+		"Desc":
+		{
+		    "Name": "PVDRV SSB Current",
+		    "SensorType": "current"
+		},
+		"Associations":
+		[
+		    [
+			"chassis",
+			"all_sensors",
+			"/xyz/openbmc_project/inventory/system/board/IBM_SBP1_Baseboard"
+		    ],
+		    [
+			"inventory",
+			"sensors",
+			"/xyz/openbmc_project/inventory/system/board/IBM_SBP1_Baseboard"
+		    ]
+		],
+		"Params":
+		{
+		    "DbusParam":
+		    [
+			{
+			    "ParamName": "C0",
+			    "Desc":
+			    {
+				"Name": "PVDRV_Current",
+				"SensorType": "current"
+			    }
+			}
+		    ]
+		},
+		"Expression": "(C0 == C0) ? C0 : NULL"
+	    },
+	    {
+		"Desc":
+		{
+		    "Name": "P3V3_PCH SSB Voltage",
+		    "SensorType": "voltage"
+		},
+		"Associations":
+		[
+		    [
+			"chassis",
+			"all_sensors",
+			"/xyz/openbmc_project/inventory/system/board/IBM_SBP1_Baseboard"
+		    ],
+		    [
+			"inventory",
+			"sensors",
+			"/xyz/openbmc_project/inventory/system/board/IBM_SBP1_Baseboard"
+		    ]
+		],
+		"Params":
+		{
+		    "DbusParam":
+		    [
+			{
+			    "ParamName": "V0",
+			    "Desc":
+			    {
+				"Name": "P3V3_PCH_Voltage",
+				"SensorType": "voltage"
+			    }
+			}
+		    ]
+		},
+		"Expression": "(V0 == V0) ? V0 : NULL"
+	    },
+	    {
+		"Desc":
+		{
+		    "Name": "P3V3_PCH SSB Current",
+		    "SensorType": "current"
+		},
+		"Associations":
+		[
+		    [
+			"chassis",
+			"all_sensors",
+			"/xyz/openbmc_project/inventory/system/board/IBM_SBP1_Baseboard"
+		    ],
+		    [
+			"inventory",
+			"sensors",
+			"/xyz/openbmc_project/inventory/system/board/IBM_SBP1_Baseboard"
+		    ]
+		],
+		"Params":
+		{
+		    "DbusParam":
+		    [
+			{
+			    "ParamName": "C0",
+			    "Desc":
+			    {
+				"Name": "P3V3_PCH_Current",
+				"SensorType": "current"
+			    }
+			}
+		    ]
+		},
+		"Expression": "(C0 == C0) ? C0 : NULL"
+	    },
+	    {
+		"Desc":
+		{
+
+
+		    "Name": "RSSB1 12V Current",
+		    "SensorType": "current"
+		},
+
+                "Associations":
+		[
+		    [
+			"chassis",
+			"all_sensors",
+			"/xyz/openbmc_project/inventory/system/board/IBM_SBP1_Baseboard"
+		    ],
+		    [
+			"inventory",
+			"sensors",
+			"/xyz/openbmc_project/inventory/system/board/IBM_SBP1_Baseboard"
+		    ]
+		],
+		"Params":
+		{
+		    "DbusParam":
+		    [
+			{
+			    "ParamName": "C0",
+			    "Desc":
+			    {
+
+
+				"Name": "RSSB1_CURRENT_12V",
+
+				"SensorType": "current"
+			    }
+			}
+		    ]
+		},
+		"Expression": "(C0 == C0) ? C0 : NULL"
+	    },
+
+	{
+		"Desc":
+		{
+
+
+		    "Name": "RSSB2 12V Current",
+		    "SensorType": "current"
+		},
+
+                "Associations":
+		[
+		    [
+			"chassis",
+			"all_sensors",
+			"/xyz/openbmc_project/inventory/system/board/IBM_SBP1_Baseboard"
+		    ],
+		    [
+			"inventory",
+			"sensors",
+			"/xyz/openbmc_project/inventory/system/board/IBM_SBP1_Baseboard"
+		    ]
+		],
+		"Params":
+		{
+		    "DbusParam":
+		    [
+			{
+			    "ParamName": "C0",
+			    "Desc":
+			    {
+
+
+				"Name": "RSSB2_CURRENT_12V",
+
+				"SensorType": "current"
+			    }
+			}
+		    ]
+		},
+		"Expression": "(C0 == C0) ? C0 : NULL"
+	    },
+
+	{
+		"Desc":
+		{
+
+
+		    "Name": "RSSB3 12V Current",
+		    "SensorType": "current"
+		},
+
+                "Associations":
+		[
+		    [
+			"chassis",
+			"all_sensors",
+			"/xyz/openbmc_project/inventory/system/board/IBM_SBP1_Baseboard"
+		    ],
+		    [
+			"inventory",
+			"sensors",
+			"/xyz/openbmc_project/inventory/system/board/IBM_SBP1_Baseboard"
+		    ]
+		],
+		"Params":
+		{
+		    "DbusParam":
+		    [
+			{
+			    "ParamName": "C0",
+			    "Desc":
+			    {
+
+
+				"Name": "RSSB3_CURRENT_12V",
+
+				"SensorType": "current"
+			    }
+			}
+		    ]
+		},
+		"Expression": "(C0 == C0) ? C0 : NULL"
+	    },
+
+	{
+		"Desc":
+		{
+
+
+		    "Name": "RSSB4 12V Current",
+		    "SensorType": "current"
+		},
+
+                "Associations":
+		[
+		    [
+			"chassis",
+			"all_sensors",
+			"/xyz/openbmc_project/inventory/system/board/IBM_SBP1_Baseboard"
+		    ],
+		    [
+			"inventory",
+			"sensors",
+			"/xyz/openbmc_project/inventory/system/board/IBM_SBP1_Baseboard"
+		    ]
+		],
+		"Params":
+		{
+		    "DbusParam":
+		    [
+			{
+			    "ParamName": "C0",
+			    "Desc":
+			    {
+
+
+				"Name": "RSSB4_CURRENT_12V",
+
+				"SensorType": "current"
+			    }
+			}
+		    ]
+		},
+		"Expression": "(C0 == C0) ? C0 : NULL"
+	    },
+
+	{
+		"Desc":
+		{
+
+
+		    "Name": "RSSB5 12V Current",
+		    "SensorType": "current"
+		},
+
+                "Associations":
+		[
+		    [
+			"chassis",
+			"all_sensors",
+			"/xyz/openbmc_project/inventory/system/board/IBM_SBP1_Baseboard"
+		    ],
+		    [
+			"inventory",
+			"sensors",
+			"/xyz/openbmc_project/inventory/system/board/IBM_SBP1_Baseboard"
+		    ]
+		],
+		"Params":
+		{
+		    "DbusParam":
+		    [
+			{
+			    "ParamName": "C0",
+			    "Desc":
+			    {
+
+
+				"Name": "RSSB5_CURRENT_12V",
+
+				"SensorType": "current"
+			    }
+			}
+		    ]
+		},
+		"Expression": "(C0 == C0) ? C0 : NULL"
+	    },
+
+	{
+		"Desc":
+		{
+
+
+		    "Name": "RSSB6 12V Current",
+		    "SensorType": "current"
+		},
+
+                "Associations":
+		[
+		    [
+			"chassis",
+			"all_sensors",
+			"/xyz/openbmc_project/inventory/system/board/IBM_SBP1_Baseboard"
+		    ],
+		    [
+			"inventory",
+			"sensors",
+			"/xyz/openbmc_project/inventory/system/board/IBM_SBP1_Baseboard"
+		    ]
+		],
+		"Params":
+		{
+		    "DbusParam":
+		    [
+			{
+			    "ParamName": "C0",
+			    "Desc":
+			    {
+
+
+				"Name": "RSSB6_CURRENT_12V",
+
+				"SensorType": "current"
+			    }
+			}
+		    ]
+		},
+		"Expression": "(C0 == C0) ? C0 : NULL"
+	    },
+
+	{
+		"Desc":
+		{
+
+
+		    "Name": "RSSB7 12V Current",
+		    "SensorType": "current"
+		},
+
+                "Associations":
+		[
+		    [
+			"chassis",
+			"all_sensors",
+			"/xyz/openbmc_project/inventory/system/board/IBM_SBP1_Baseboard"
+		    ],
+		    [
+			"inventory",
+			"sensors",
+			"/xyz/openbmc_project/inventory/system/board/IBM_SBP1_Baseboard"
+		    ]
+		],
+		"Params":
+		{
+		    "DbusParam":
+		    [
+			{
+			    "ParamName": "C0",
+			    "Desc":
+			    {
+
+
+				"Name": "RSSB7_CURRENT_12V",
+
+				"SensorType": "current"
+			    }
+			}
+		    ]
+		},
+		"Expression": "(C0 == C0) ? C0 : NULL"
+	    },
+
+	{
+		"Desc":
+		{
+
+
+		    "Name": "RSSB8 12V Current",
+		    "SensorType": "current"
+		},
+
+                "Associations":
+		[
+		    [
+			"chassis",
+			"all_sensors",
+			"/xyz/openbmc_project/inventory/system/board/IBM_SBP1_Baseboard"
+		    ],
+		    [
+			"inventory",
+			"sensors",
+			"/xyz/openbmc_project/inventory/system/board/IBM_SBP1_Baseboard"
+		    ]
+		],
+		"Params":
+		{
+		    "DbusParam":
+		    [
+			{
+			    "ParamName": "C0",
+			    "Desc":
+			    {
+
+
+				"Name": "RSSB8_CURRENT_12V",
+
+				"SensorType": "current"
+			    }
+			}
+		    ]
+		},
+		"Expression": "(C0 == C0) ? C0 : NULL"
+	    },
+
+	{
+		"Desc":
+		{
+
+
+		    "Name": "RSSB9 12V Current",
+		    "SensorType": "current"
+		},
+
+                "Associations":
+		[
+		    [
+			"chassis",
+			"all_sensors",
+			"/xyz/openbmc_project/inventory/system/board/IBM_SBP1_Baseboard"
+		    ],
+		    [
+			"inventory",
+			"sensors",
+			"/xyz/openbmc_project/inventory/system/board/IBM_SBP1_Baseboard"
+		    ]
+		],
+		"Params":
+		{
+		    "DbusParam":
+		    [
+			{
+			    "ParamName": "C0",
+			    "Desc":
+			    {
+
+
+				"Name": "RSSB9_CURRENT_12V",
+
+				"SensorType": "current"
+			    }
+			}
+		    ]
+		},
+		"Expression": "(C0 == C0) ? C0 : NULL"
+	    },
+
+	{
+		"Desc":
+		{
+
+
+		    "Name": "RSSB10 12V Current",
+		    "SensorType": "current"
+		},
+
+                "Associations":
+		[
+		    [
+			"chassis",
+			"all_sensors",
+			"/xyz/openbmc_project/inventory/system/board/IBM_SBP1_Baseboard"
+		    ],
+		    [
+			"inventory",
+			"sensors",
+			"/xyz/openbmc_project/inventory/system/board/IBM_SBP1_Baseboard"
+		    ]
+		],
+		"Params":
+		{
+		    "DbusParam":
+		    [
+			{
+			    "ParamName": "C0",
+			    "Desc":
+			    {
+
+
+				"Name": "RSSB10_CURRENT_12V",
+
+				"SensorType": "current"
+			    }
+			}
+		    ]
+		},
+		"Expression": "(C0 == C0) ? C0 : NULL"
+	    },
+
+	{
+		"Desc":
+		{
+
+
+		    "Name": "RSSB11 12V Current",
+		    "SensorType": "current"
+		},
+
+                "Associations":
+		[
+		    [
+			"chassis",
+			"all_sensors",
+			"/xyz/openbmc_project/inventory/system/board/IBM_SBP1_Baseboard"
+		    ],
+		    [
+			"inventory",
+			"sensors",
+			"/xyz/openbmc_project/inventory/system/board/IBM_SBP1_Baseboard"
+		    ]
+		],
+		"Params":
+		{
+		    "DbusParam":
+		    [
+			{
+			    "ParamName": "C0",
+			    "Desc":
+			    {
+
+
+				"Name": "RSSB11_CURRENT_12V",
+
+				"SensorType": "current"
+			    }
+			}
+		    ]
+		},
+		"Expression": "(C0 == C0) ? C0 : NULL"
+	    },
+
+	{
+		"Desc":
+		{
+
+
+		    "Name": "RSSB12 12V Current",
+		    "SensorType": "current"
+		},
+
+                "Associations":
+		[
+		    [
+			"chassis",
+			"all_sensors",
+			"/xyz/openbmc_project/inventory/system/board/IBM_SBP1_Baseboard"
+		    ],
+		    [
+			"inventory",
+			"sensors",
+			"/xyz/openbmc_project/inventory/system/board/IBM_SBP1_Baseboard"
+		    ]
+		],
+		"Params":
+		{
+		    "DbusParam":
+		    [
+			{
+			    "ParamName": "C0",
+			    "Desc":
+			    {
+
+
+				"Name": "RSSB12_CURRENT_12V",
+
+				"SensorType": "current"
+			    }
+			}
+		    ]
+		},
+		"Expression": "(C0 == C0) ? C0 : NULL"
+	    },
+
+	{
+		"Desc":
+		{
+
+
+		    "Name": "RSSB13 12V Current",
+		    "SensorType": "current"
+		},
+
+                "Associations":
+		[
+		    [
+			"chassis",
+			"all_sensors",
+			"/xyz/openbmc_project/inventory/system/board/IBM_SBP1_Baseboard"
+		    ],
+		    [
+			"inventory",
+			"sensors",
+			"/xyz/openbmc_project/inventory/system/board/IBM_SBP1_Baseboard"
+		    ]
+		],
+		"Params":
+		{
+		    "DbusParam":
+		    [
+			{
+			    "ParamName": "C0",
+			    "Desc":
+			    {
+
+
+				"Name": "RSSB13_CURRENT_12V",
+
+				"SensorType": "current"
+			    }
+			}
+		    ]
+		},
+		"Expression": "(C0 == C0) ? C0 : NULL"
+	    },
+
+	{
+		"Desc":
+		{
+
+
+		    "Name": "RSSB14 12V Current",
+		    "SensorType": "current"
+		},
+
+                "Associations":
+		[
+		    [
+			"chassis",
+			"all_sensors",
+			"/xyz/openbmc_project/inventory/system/board/IBM_SBP1_Baseboard"
+		    ],
+		    [
+			"inventory",
+			"sensors",
+			"/xyz/openbmc_project/inventory/system/board/IBM_SBP1_Baseboard"
+		    ]
+		],
+		"Params":
+		{
+		    "DbusParam":
+		    [
+			{
+			    "ParamName": "C0",
+			    "Desc":
+			    {
+
+
+				"Name": "RSSB14_CURRENT_12V",
+
+				"SensorType": "current"
+			    }
+			}
+		    ]
+		},
+		"Expression": "(C0 == C0) ? C0 : NULL"
+	    },
+
+	{
+		"Desc":
+		{
+
+
+		    "Name": "RSSB15 12V Current",
+		    "SensorType": "current"
+		},
+
+                "Associations":
+		[
+		    [
+			"chassis",
+			"all_sensors",
+			"/xyz/openbmc_project/inventory/system/board/IBM_SBP1_Baseboard"
+		    ],
+		    [
+			"inventory",
+			"sensors",
+			"/xyz/openbmc_project/inventory/system/board/IBM_SBP1_Baseboard"
+		    ]
+		],
+		"Params":
+		{
+		    "DbusParam":
+		    [
+			{
+			    "ParamName": "C0",
+			    "Desc":
+			    {
+
+
+				"Name": "RSSB15_CURRENT_12V",
+
+				"SensorType": "current"
+			    }
+			}
+		    ]
+		},
+		"Expression": "(C0 == C0) ? C0 : NULL"
+	    },
+
+	{
+		"Desc":
+		{
+
+
+		    "Name": "RSSB16 12V Current",
+		    "SensorType": "current"
+		},
+
+                "Associations":
+		[
+		    [
+			"chassis",
+			"all_sensors",
+			"/xyz/openbmc_project/inventory/system/board/IBM_SBP1_Baseboard"
+		    ],
+		    [
+			"inventory",
+			"sensors",
+			"/xyz/openbmc_project/inventory/system/board/IBM_SBP1_Baseboard"
+		    ]
+		],
+		"Params":
+		{
+		    "DbusParam":
+		    [
+			{
+			    "ParamName": "C0",
+			    "Desc":
+			    {
+
+
+				"Name": "RSSB16_CURRENT_12V",
+
+				"SensorType": "current"
+			    }
+			}
+		    ]
+		},
+		"Expression": "(C0 == C0) ? C0 : NULL"
+	    },
+
+	{
+		"Desc":
+		{
+
+
+		    "Name": "RSSB17 12V Current",
+		    "SensorType": "current"
+		},
+
+                "Associations":
+		[
+		    [
+			"chassis",
+			"all_sensors",
+			"/xyz/openbmc_project/inventory/system/board/IBM_SBP1_Baseboard"
+		    ],
+		    [
+			"inventory",
+			"sensors",
+			"/xyz/openbmc_project/inventory/system/board/IBM_SBP1_Baseboard"
+		    ]
+		],
+		"Params":
+		{
+		    "DbusParam":
+		    [
+			{
+			    "ParamName": "C0",
+			    "Desc":
+			    {
+
+
+				"Name": "RSSB17_CURRENT_12V",
+
+				"SensorType": "current"
+			    }
+			}
+		    ]
+		},
+		"Expression": "(C0 == C0) ? C0 : NULL"
+	    },
+
+	{
+		"Desc":
+		{
+
+
+		    "Name": "RSSB18 12V Current",
+		    "SensorType": "current"
+		},
+
+                "Associations":
+		[
+		    [
+			"chassis",
+			"all_sensors",
+			"/xyz/openbmc_project/inventory/system/board/IBM_SBP1_Baseboard"
+		    ],
+		    [
+			"inventory",
+			"sensors",
+			"/xyz/openbmc_project/inventory/system/board/IBM_SBP1_Baseboard"
+		    ]
+		],
+		"Params":
+		{
+		    "DbusParam":
+		    [
+			{
+			    "ParamName": "C0",
+			    "Desc":
+			    {
+
+
+				"Name": "RSSB18_CURRENT_12V",
+
+				"SensorType": "current"
+			    }
+			}
+		    ]
+		},
+		"Expression": "(C0 == C0) ? C0 : NULL"
+	    },
+
+	{
+		"Desc":
+		{
+
+
+		    "Name": "RSSB19 12V Current",
+		    "SensorType": "current"
+		},
+
+                "Associations":
+		[
+		    [
+			"chassis",
+			"all_sensors",
+			"/xyz/openbmc_project/inventory/system/board/IBM_SBP1_Baseboard"
+		    ],
+		    [
+			"inventory",
+			"sensors",
+			"/xyz/openbmc_project/inventory/system/board/IBM_SBP1_Baseboard"
+		    ]
+		],
+		"Params":
+		{
+		    "DbusParam":
+		    [
+			{
+			    "ParamName": "C0",
+			    "Desc":
+			    {
+
+
+				"Name": "RSSB19_CURRENT_12V",
+
+				"SensorType": "current"
+			    }
+			}
+		    ]
+		},
+		"Expression": "(C0 == C0) ? C0 : NULL"
+	    },
+
+	{
+		"Desc":
+		{
+
+
+		    "Name": "RSSB20 12V Current",
+		    "SensorType": "current"
+		},
+
+                "Associations":
+		[
+		    [
+			"chassis",
+			"all_sensors",
+			"/xyz/openbmc_project/inventory/system/board/IBM_SBP1_Baseboard"
+		    ],
+		    [
+			"inventory",
+			"sensors",
+			"/xyz/openbmc_project/inventory/system/board/IBM_SBP1_Baseboard"
+		    ]
+		],
+		"Params":
+		{
+		    "DbusParam":
+		    [
+			{
+			    "ParamName": "C0",
+			    "Desc":
+			    {
+
+
+				"Name": "RSSB20_CURRENT_12V",
+
+				"SensorType": "current"
+			    }
+			}
+		    ]
+		},
+		"Expression": "(C0 == C0) ? C0 : NULL"
+	    },
+
+	{
+		"Desc":
+		{
+
+
+		    "Name": "RSSB21 12V Current",
+		    "SensorType": "current"
+		},
+
+                "Associations":
+		[
+		    [
+			"chassis",
+			"all_sensors",
+			"/xyz/openbmc_project/inventory/system/board/IBM_SBP1_Baseboard"
+		    ],
+		    [
+			"inventory",
+			"sensors",
+			"/xyz/openbmc_project/inventory/system/board/IBM_SBP1_Baseboard"
+		    ]
+		],
+		"Params":
+		{
+		    "DbusParam":
+		    [
+			{
+			    "ParamName": "C0",
+			    "Desc":
+			    {
+
+
+				"Name": "RSSB21_CURRENT_12V",
+
+				"SensorType": "current"
+			    }
+			}
+		    ]
+		},
+		"Expression": "(C0 == C0) ? C0 : NULL"
+	    },
+
+	{
+		"Desc":
+		{
+
+
+		    "Name": "RSSB22 12V Current",
+		    "SensorType": "current"
+		},
+
+                "Associations":
+		[
+		    [
+			"chassis",
+			"all_sensors",
+			"/xyz/openbmc_project/inventory/system/board/IBM_SBP1_Baseboard"
+		    ],
+		    [
+			"inventory",
+			"sensors",
+			"/xyz/openbmc_project/inventory/system/board/IBM_SBP1_Baseboard"
+		    ]
+		],
+		"Params":
+		{
+		    "DbusParam":
+		    [
+			{
+			    "ParamName": "C0",
+			    "Desc":
+			    {
+
+
+				"Name": "RSSB22_CURRENT_12V",
+
+				"SensorType": "current"
+			    }
+			}
+		    ]
+		},
+		"Expression": "(C0 == C0) ? C0 : NULL"
+	    },
+
+	{
+		"Desc":
+		{
+
+
+		    "Name": "RSSB23 12V Current",
+		    "SensorType": "current"
+		},
+
+                "Associations":
+		[
+		    [
+			"chassis",
+			"all_sensors",
+			"/xyz/openbmc_project/inventory/system/board/IBM_SBP1_Baseboard"
+		    ],
+		    [
+			"inventory",
+			"sensors",
+			"/xyz/openbmc_project/inventory/system/board/IBM_SBP1_Baseboard"
+		    ]
+		],
+		"Params":
+		{
+		    "DbusParam":
+		    [
+			{
+			    "ParamName": "C0",
+			    "Desc":
+			    {
+
+
+				"Name": "RSSB23_CURRENT_12V",
+
+				"SensorType": "current"
+			    }
+			}
+		    ]
+		},
+		"Expression": "(C0 == C0) ? C0 : NULL"
+	    },
+
+	{
+		"Desc":
+		{
+
+
+		    "Name": "RSSB24 12V Current",
+		    "SensorType": "current"
+		},
+
+                "Associations":
+		[
+		    [
+			"chassis",
+			"all_sensors",
+			"/xyz/openbmc_project/inventory/system/board/IBM_SBP1_Baseboard"
+		    ],
+		    [
+			"inventory",
+			"sensors",
+			"/xyz/openbmc_project/inventory/system/board/IBM_SBP1_Baseboard"
+		    ]
+		],
+		"Params":
+		{
+		    "DbusParam":
+		    [
+			{
+			    "ParamName": "C0",
+			    "Desc":
+			    {
+
+
+				"Name": "RSSB24_CURRENT_12V",
+
+				"SensorType": "current"
+			    }
+			}
+		    ]
+		},
+		"Expression": "(C0 == C0) ? C0 : NULL"
+	    },
+
+	{
+		"Desc":
+		{
+
+
+		    "Name": "RSSB25 12V Current",
+		    "SensorType": "current"
+		},
+
+                "Associations":
+		[
+		    [
+			"chassis",
+			"all_sensors",
+			"/xyz/openbmc_project/inventory/system/board/IBM_SBP1_Baseboard"
+		    ],
+		    [
+			"inventory",
+			"sensors",
+			"/xyz/openbmc_project/inventory/system/board/IBM_SBP1_Baseboard"
+		    ]
+		],
+		"Params":
+		{
+		    "DbusParam":
+		    [
+			{
+			    "ParamName": "C0",
+			    "Desc":
+			    {
+
+
+				"Name": "RSSB25_CURRENT_12V",
+
+				"SensorType": "current"
+			    }
+			}
+		    ]
+		},
+		"Expression": "(C0 == C0) ? C0 : NULL"
+	    },
+
+	{
+		"Desc":
+		{
+
+
+		    "Name": "RSSB26 12V Current",
+		    "SensorType": "current"
+		},
+
+                "Associations":
+		[
+		    [
+			"chassis",
+			"all_sensors",
+			"/xyz/openbmc_project/inventory/system/board/IBM_SBP1_Baseboard"
+		    ],
+		    [
+			"inventory",
+			"sensors",
+			"/xyz/openbmc_project/inventory/system/board/IBM_SBP1_Baseboard"
+		    ]
+		],
+		"Params":
+		{
+		    "DbusParam":
+		    [
+			{
+			    "ParamName": "C0",
+			    "Desc":
+			    {
+
+
+				"Name": "RSSB26_CURRENT_12V",
+
+				"SensorType": "current"
+			    }
+			}
+		    ]
+		},
+		"Expression": "(C0 == C0) ? C0 : NULL"
+	    },
+
+	{
+		"Desc":
+		{
+
+
+		    "Name": "RSSB27 12V Current",
+		    "SensorType": "current"
+		},
+
+                "Associations":
+		[
+		    [
+			"chassis",
+			"all_sensors",
+			"/xyz/openbmc_project/inventory/system/board/IBM_SBP1_Baseboard"
+		    ],
+		    [
+			"inventory",
+			"sensors",
+			"/xyz/openbmc_project/inventory/system/board/IBM_SBP1_Baseboard"
+		    ]
+		],
+		"Params":
+		{
+		    "DbusParam":
+		    [
+			{
+			    "ParamName": "C0",
+			    "Desc":
+			    {
+
+
+				"Name": "RSSB27_CURRENT_12V",
+
+				"SensorType": "current"
+			    }
+			}
+		    ]
+		},
+		"Expression": "(C0 == C0) ? C0 : NULL"
+	    },
+
+	{
+		"Desc":
+		{
+
+
+		    "Name": "RSSB28 12V Current",
+		    "SensorType": "current"
+		},
+
+                "Associations":
+		[
+		    [
+			"chassis",
+			"all_sensors",
+			"/xyz/openbmc_project/inventory/system/board/IBM_SBP1_Baseboard"
+		    ],
+		    [
+			"inventory",
+			"sensors",
+			"/xyz/openbmc_project/inventory/system/board/IBM_SBP1_Baseboard"
+		    ]
+		],
+		"Params":
+		{
+		    "DbusParam":
+		    [
+			{
+			    "ParamName": "C0",
+			    "Desc":
+			    {
+
+
+				"Name": "RSSB28_CURRENT_12V",
+
+				"SensorType": "current"
+			    }
+			}
+		    ]
+		},
+		"Expression": "(C0 == C0) ? C0 : NULL"
+	    },
+
+	{
+		"Desc":
+		{
+
+
+		    "Name": "RSSB29 12V Current",
+		    "SensorType": "current"
+		},
+
+                "Associations":
+		[
+		    [
+			"chassis",
+			"all_sensors",
+			"/xyz/openbmc_project/inventory/system/board/IBM_SBP1_Baseboard"
+		    ],
+		    [
+			"inventory",
+			"sensors",
+			"/xyz/openbmc_project/inventory/system/board/IBM_SBP1_Baseboard"
+		    ]
+		],
+		"Params":
+		{
+		    "DbusParam":
+		    [
+			{
+			    "ParamName": "C0",
+			    "Desc":
+			    {
+
+
+				"Name": "RSSB29_CURRENT_12V",
+
+				"SensorType": "current"
+			    }
+			}
+		    ]
+		},
+		"Expression": "(C0 == C0) ? C0 : NULL"
+	    },
+
+	{
+		"Desc":
+		{
+
+
+		    "Name": "RSSB30 12V Current",
+		    "SensorType": "current"
+		},
+
+                "Associations":
+		[
+		    [
+			"chassis",
+			"all_sensors",
+			"/xyz/openbmc_project/inventory/system/board/IBM_SBP1_Baseboard"
+		    ],
+		    [
+			"inventory",
+			"sensors",
+			"/xyz/openbmc_project/inventory/system/board/IBM_SBP1_Baseboard"
+		    ]
+		],
+		"Params":
+		{
+		    "DbusParam":
+		    [
+			{
+			    "ParamName": "C0",
+			    "Desc":
+			    {
+
+
+				"Name": "RSSB30_CURRENT_12V",
+
+				"SensorType": "current"
+			    }
+			}
+		    ]
+		},
+		"Expression": "(C0 == C0) ? C0 : NULL"
+	    },
+
+	{
+		"Desc":
+		{
+
+
+		    "Name": "RSSB31 12V Current",
+		    "SensorType": "current"
+		},
+
+                "Associations":
+		[
+		    [
+			"chassis",
+			"all_sensors",
+			"/xyz/openbmc_project/inventory/system/board/IBM_SBP1_Baseboard"
+		    ],
+		    [
+			"inventory",
+			"sensors",
+			"/xyz/openbmc_project/inventory/system/board/IBM_SBP1_Baseboard"
+		    ]
+		],
+		"Params":
+		{
+		    "DbusParam":
+		    [
+			{
+			    "ParamName": "C0",
+			    "Desc":
+			    {
+
+
+				"Name": "RSSB31_CURRENT_12V",
+
+				"SensorType": "current"
+			    }
+			}
+		    ]
+		},
+		"Expression": "(C0 == C0) ? C0 : NULL"
+	    },
+
+	{
+		"Desc":
+		{
+
+
+		    "Name": "RSSB32 12V Current",
+		    "SensorType": "current"
+		},
+
+                "Associations":
+		[
+		    [
+			"chassis",
+			"all_sensors",
+			"/xyz/openbmc_project/inventory/system/board/IBM_SBP1_Baseboard"
+		    ],
+		    [
+			"inventory",
+			"sensors",
+			"/xyz/openbmc_project/inventory/system/board/IBM_SBP1_Baseboard"
+		    ]
+		],
+		"Params":
+		{
+		    "DbusParam":
+		    [
+			{
+			    "ParamName": "C0",
+			    "Desc":
+			    {
+
+
+				"Name": "RSSB32_CURRENT_12V",
+
+				"SensorType": "current"
+			    }
+			}
+		    ]
+		},
+		"Expression": "(C0 == C0) ? C0 : NULL"
+	    },
+
+        {
+                "Desc":
+                {
+
+
+                    "Name": "RSSB1 12V Voltage",
+                    "SensorType": "voltage"
+                },
+
+                "Associations":
+                [
+                    [
+                        "chassis",
+                        "all_sensors",
+                        "/xyz/openbmc_project/inventory/system/board/IBM_SBP1_Baseboard"
+                    ],
+                    [
+                        "inventory",
+                        "sensors",
+                        "/xyz/openbmc_project/inventory/system/board/IBM_SBP1_Baseboard"
+                    ]
+                ],
+                "Params":
+                {
+                    "DbusParam":
+                    [
+                        {
+                            "ParamName": "V0",
+                            "Desc":
+                            {
+
+
+                                "Name": "RSSB1_VOLTAGE_12V",
+
+                                "SensorType": "voltage"
+                            }
+                        }
+                    ]
+                },
+                "Expression": "(V0 == V0) ? V0 : NULL"
+            },
+
+        {
+                "Desc":
+                {
+
+
+                    "Name": "RSSB2 12V Voltage",
+                    "SensorType": "voltage"
+                },
+
+                "Associations":
+                [
+                    [
+                        "chassis",
+                        "all_sensors",
+                        "/xyz/openbmc_project/inventory/system/board/IBM_SBP1_Baseboard"
+                    ],
+                    [
+                        "inventory",
+                        "sensors",
+                        "/xyz/openbmc_project/inventory/system/board/IBM_SBP1_Baseboard"
+                    ]
+                ],
+                "Params":
+                {
+                    "DbusParam":
+                    [
+                        {
+                            "ParamName": "V0",
+                            "Desc":
+                            {
+
+
+                                "Name": "RSSB2_VOLTAGE_12V",
+
+                                "SensorType": "voltage"
+                            }
+                        }
+                    ]
+                },
+                "Expression": "(V0 == V0) ? V0 : NULL"
+            },
+
+        {
+                "Desc":
+                {
+
+
+                    "Name": "RSSB3 12V Voltage",
+                    "SensorType": "voltage"
+                },
+
+                "Associations":
+                [
+                    [
+                        "chassis",
+                        "all_sensors",
+                        "/xyz/openbmc_project/inventory/system/board/IBM_SBP1_Baseboard"
+                    ],
+                    [
+                        "inventory",
+                        "sensors",
+                        "/xyz/openbmc_project/inventory/system/board/IBM_SBP1_Baseboard"
+                    ]
+                ],
+                "Params":
+                {
+                    "DbusParam":
+                    [
+                        {
+                            "ParamName": "V0",
+                            "Desc":
+                            {
+
+
+                                "Name": "RSSB3_VOLTAGE_12V",
+
+                                "SensorType": "voltage"
+                            }
+                        }
+                    ]
+                },
+                "Expression": "(V0 == V0) ? V0 : NULL"
+            },
+
+        {
+                "Desc":
+                {
+
+
+                    "Name": "RSSB4 12V Voltage",
+                    "SensorType": "voltage"
+                },
+
+                "Associations":
+                [
+                    [
+                        "chassis",
+                        "all_sensors",
+                        "/xyz/openbmc_project/inventory/system/board/IBM_SBP1_Baseboard"
+                    ],
+                    [
+                        "inventory",
+                        "sensors",
+                        "/xyz/openbmc_project/inventory/system/board/IBM_SBP1_Baseboard"
+                    ]
+                ],
+                "Params":
+                {
+                    "DbusParam":
+                    [
+                        {
+                            "ParamName": "V0",
+                            "Desc":
+                            {
+
+
+                                "Name": "RSSB4_VOLTAGE_12V",
+
+                                "SensorType": "voltage"
+                            }
+                        }
+                    ]
+                },
+                "Expression": "(V0 == V0) ? V0 : NULL"
+            },
+
+        {
+                "Desc":
+                {
+
+
+                    "Name": "RSSB5 12V Voltage",
+                    "SensorType": "voltage"
+                },
+
+                "Associations":
+                [
+                    [
+                        "chassis",
+                        "all_sensors",
+                        "/xyz/openbmc_project/inventory/system/board/IBM_SBP1_Baseboard"
+                    ],
+                    [
+                        "inventory",
+                        "sensors",
+                        "/xyz/openbmc_project/inventory/system/board/IBM_SBP1_Baseboard"
+                    ]
+                ],
+                "Params":
+                {
+                    "DbusParam":
+                    [
+                        {
+                            "ParamName": "V0",
+                            "Desc":
+                            {
+
+
+                                "Name": "RSSB5_VOLTAGE_12V",
+
+                                "SensorType": "voltage"
+                            }
+                        }
+                    ]
+                },
+                "Expression": "(V0 == V0) ? V0 : NULL"
+            },
+
+        {
+                "Desc":
+                {
+
+
+                    "Name": "RSSB6 12V Voltage",
+                    "SensorType": "voltage"
+                },
+
+                "Associations":
+                [
+                    [
+                        "chassis",
+                        "all_sensors",
+                        "/xyz/openbmc_project/inventory/system/board/IBM_SBP1_Baseboard"
+                    ],
+                    [
+                        "inventory",
+                        "sensors",
+                        "/xyz/openbmc_project/inventory/system/board/IBM_SBP1_Baseboard"
+                    ]
+                ],
+                "Params":
+                {
+                    "DbusParam":
+                    [
+                        {
+                            "ParamName": "V0",
+                            "Desc":
+                            {
+
+
+                                "Name": "RSSB6_VOLTAGE_12V",
+
+                                "SensorType": "voltage"
+                            }
+                        }
+                    ]
+                },
+                "Expression": "(V0 == V0) ? V0 : NULL"
+            },
+
+        {
+                "Desc":
+                {
+
+
+                    "Name": "RSSB7 12V Voltage",
+                    "SensorType": "voltage"
+                },
+
+                "Associations":
+                [
+                    [
+                        "chassis",
+                        "all_sensors",
+                        "/xyz/openbmc_project/inventory/system/board/IBM_SBP1_Baseboard"
+                    ],
+                    [
+                        "inventory",
+                        "sensors",
+                        "/xyz/openbmc_project/inventory/system/board/IBM_SBP1_Baseboard"
+                    ]
+                ],
+                "Params":
+                {
+                    "DbusParam":
+                    [
+                        {
+                            "ParamName": "V0",
+                            "Desc":
+                            {
+
+
+                                "Name": "RSSB7_VOLTAGE_12V",
+
+                                "SensorType": "voltage"
+                            }
+                        }
+                    ]
+                },
+                "Expression": "(V0 == V0) ? V0 : NULL"
+            },
+
+        {
+                "Desc":
+                {
+
+
+                    "Name": "RSSB8 12V Voltage",
+                    "SensorType": "voltage"
+                },
+
+                "Associations":
+                [
+                    [
+                        "chassis",
+                        "all_sensors",
+                        "/xyz/openbmc_project/inventory/system/board/IBM_SBP1_Baseboard"
+                    ],
+                    [
+                        "inventory",
+                        "sensors",
+                        "/xyz/openbmc_project/inventory/system/board/IBM_SBP1_Baseboard"
+                    ]
+                ],
+                "Params":
+                {
+                    "DbusParam":
+                    [
+                        {
+                            "ParamName": "V0",
+                            "Desc":
+                            {
+
+
+                                "Name": "RSSB8_VOLTAGE_12V",
+
+                                "SensorType": "voltage"
+                            }
+                        }
+                    ]
+                },
+                "Expression": "(V0 == V0) ? V0 : NULL"
+            },
+
+        {
+                "Desc":
+                {
+
+
+                    "Name": "RSSB9 12V Voltage",
+                    "SensorType": "voltage"
+                },
+
+                "Associations":
+                [
+                    [
+                        "chassis",
+                        "all_sensors",
+                        "/xyz/openbmc_project/inventory/system/board/IBM_SBP1_Baseboard"
+                    ],
+                    [
+                        "inventory",
+                        "sensors",
+                        "/xyz/openbmc_project/inventory/system/board/IBM_SBP1_Baseboard"
+                    ]
+                ],
+                "Params":
+                {
+                    "DbusParam":
+                    [
+                        {
+                            "ParamName": "V0",
+                            "Desc":
+                            {
+
+
+                                "Name": "RSSB9_VOLTAGE_12V",
+
+                                "SensorType": "voltage"
+                            }
+                        }
+                    ]
+                },
+                "Expression": "(V0 == V0) ? V0 : NULL"
+            },
+
+        {
+                "Desc":
+                {
+
+
+                    "Name": "RSSB10 12V Voltage",
+                    "SensorType": "voltage"
+                },
+
+                "Associations":
+                [
+                    [
+                        "chassis",
+                        "all_sensors",
+                        "/xyz/openbmc_project/inventory/system/board/IBM_SBP1_Baseboard"
+                    ],
+                    [
+                        "inventory",
+                        "sensors",
+                        "/xyz/openbmc_project/inventory/system/board/IBM_SBP1_Baseboard"
+                    ]
+                ],
+                "Params":
+                {
+                    "DbusParam":
+                    [
+                        {
+                            "ParamName": "V0",
+                            "Desc":
+                            {
+
+
+                                "Name": "RSSB10_VOLTAGE_12V",
+
+                                "SensorType": "voltage"
+                            }
+                        }
+                    ]
+                },
+                "Expression": "(V0 == V0) ? V0 : NULL"
+            },
+
+        {
+                "Desc":
+                {
+
+
+                    "Name": "RSSB11 12V Voltage",
+                    "SensorType": "voltage"
+                },
+
+                "Associations":
+                [
+                    [
+                        "chassis",
+                        "all_sensors",
+                        "/xyz/openbmc_project/inventory/system/board/IBM_SBP1_Baseboard"
+                    ],
+                    [
+                        "inventory",
+                        "sensors",
+                        "/xyz/openbmc_project/inventory/system/board/IBM_SBP1_Baseboard"
+                    ]
+                ],
+                "Params":
+                {
+                    "DbusParam":
+                    [
+                        {
+                            "ParamName": "V0",
+                            "Desc":
+                            {
+
+
+                                "Name": "RSSB11_VOLTAGE_12V",
+
+                                "SensorType": "voltage"
+                            }
+                        }
+                    ]
+                },
+                "Expression": "(V0 == V0) ? V0 : NULL"
+            },
+
+        {
+                "Desc":
+                {
+
+
+                    "Name": "RSSB12 12V Voltage",
+                    "SensorType": "voltage"
+                },
+
+                "Associations":
+                [
+                    [
+                        "chassis",
+                        "all_sensors",
+                        "/xyz/openbmc_project/inventory/system/board/IBM_SBP1_Baseboard"
+                    ],
+                    [
+                        "inventory",
+                        "sensors",
+                        "/xyz/openbmc_project/inventory/system/board/IBM_SBP1_Baseboard"
+                    ]
+                ],
+                "Params":
+                {
+                    "DbusParam":
+                    [
+                        {
+                            "ParamName": "V0",
+                            "Desc":
+                            {
+
+
+                                "Name": "RSSB12_VOLTAGE_12V",
+
+                                "SensorType": "voltage"
+                            }
+                        }
+                    ]
+                },
+                "Expression": "(V0 == V0) ? V0 : NULL"
+            },
+
+        {
+                "Desc":
+                {
+
+
+                    "Name": "RSSB13 12V Voltage",
+                    "SensorType": "voltage"
+                },
+
+                "Associations":
+                [
+                    [
+                        "chassis",
+                        "all_sensors",
+                        "/xyz/openbmc_project/inventory/system/board/IBM_SBP1_Baseboard"
+                    ],
+                    [
+                        "inventory",
+                        "sensors",
+                        "/xyz/openbmc_project/inventory/system/board/IBM_SBP1_Baseboard"
+                    ]
+                ],
+                "Params":
+                {
+                    "DbusParam":
+                    [
+                        {
+                            "ParamName": "V0",
+                            "Desc":
+                            {
+
+
+                                "Name": "RSSB13_VOLTAGE_12V",
+
+                                "SensorType": "voltage"
+                            }
+                        }
+                    ]
+                },
+                "Expression": "(V0 == V0) ? V0 : NULL"
+            },
+
+        {
+                "Desc":
+                {
+
+
+                    "Name": "RSSB14 12V Voltage",
+                    "SensorType": "voltage"
+                },
+
+                "Associations":
+                [
+                    [
+                        "chassis",
+                        "all_sensors",
+                        "/xyz/openbmc_project/inventory/system/board/IBM_SBP1_Baseboard"
+                    ],
+                    [
+                        "inventory",
+                        "sensors",
+                        "/xyz/openbmc_project/inventory/system/board/IBM_SBP1_Baseboard"
+                    ]
+                ],
+                "Params":
+                {
+                    "DbusParam":
+                    [
+                        {
+                            "ParamName": "V0",
+                            "Desc":
+                            {
+
+
+                                "Name": "RSSB14_VOLTAGE_12V",
+
+                                "SensorType": "voltage"
+                            }
+                        }
+                    ]
+                },
+                "Expression": "(V0 == V0) ? V0 : NULL"
+            },
+
+        {
+                "Desc":
+                {
+
+
+                    "Name": "RSSB15 12V Voltage",
+                    "SensorType": "voltage"
+                },
+
+                "Associations":
+                [
+                    [
+                        "chassis",
+                        "all_sensors",
+                        "/xyz/openbmc_project/inventory/system/board/IBM_SBP1_Baseboard"
+                    ],
+                    [
+                        "inventory",
+                        "sensors",
+                        "/xyz/openbmc_project/inventory/system/board/IBM_SBP1_Baseboard"
+                    ]
+                ],
+                "Params":
+                {
+                    "DbusParam":
+                    [
+                        {
+                            "ParamName": "V0",
+                            "Desc":
+                            {
+
+
+                                "Name": "RSSB15_VOLTAGE_12V",
+
+                                "SensorType": "voltage"
+                            }
+                        }
+                    ]
+                },
+                "Expression": "(V0 == V0) ? V0 : NULL"
+            },
+
+        {
+                "Desc":
+                {
+
+
+                    "Name": "RSSB16 12V Voltage",
+                    "SensorType": "voltage"
+                },
+
+                "Associations":
+                [
+                    [
+                        "chassis",
+                        "all_sensors",
+                        "/xyz/openbmc_project/inventory/system/board/IBM_SBP1_Baseboard"
+                    ],
+                    [
+                        "inventory",
+                        "sensors",
+                        "/xyz/openbmc_project/inventory/system/board/IBM_SBP1_Baseboard"
+                    ]
+                ],
+                "Params":
+                {
+                    "DbusParam":
+                    [
+                        {
+                            "ParamName": "V0",
+                            "Desc":
+                            {
+
+
+                                "Name": "RSSB16_VOLTAGE_12V",
+
+                                "SensorType": "voltage"
+                            }
+                        }
+                    ]
+                },
+                "Expression": "(V0 == V0) ? V0 : NULL"
+            },
+
+        {
+                "Desc":
+                {
+
+
+                    "Name": "RSSB17 12V Voltage",
+                    "SensorType": "voltage"
+                },
+
+                "Associations":
+                [
+                    [
+                        "chassis",
+                        "all_sensors",
+                        "/xyz/openbmc_project/inventory/system/board/IBM_SBP1_Baseboard"
+                    ],
+                    [
+                        "inventory",
+                        "sensors",
+                        "/xyz/openbmc_project/inventory/system/board/IBM_SBP1_Baseboard"
+                    ]
+                ],
+                "Params":
+                {
+                    "DbusParam":
+                    [
+                        {
+                            "ParamName": "V0",
+                            "Desc":
+                            {
+
+
+                                "Name": "RSSB17_VOLTAGE_12V",
+
+                                "SensorType": "voltage"
+                            }
+                        }
+                    ]
+                },
+                "Expression": "(V0 == V0) ? V0 : NULL"
+            },
+
+        {
+                "Desc":
+                {
+
+
+                    "Name": "RSSB18 12V Voltage",
+                    "SensorType": "voltage"
+                },
+
+                "Associations":
+                [
+                    [
+                        "chassis",
+                        "all_sensors",
+                        "/xyz/openbmc_project/inventory/system/board/IBM_SBP1_Baseboard"
+                    ],
+                    [
+                        "inventory",
+                        "sensors",
+                        "/xyz/openbmc_project/inventory/system/board/IBM_SBP1_Baseboard"
+                    ]
+                ],
+                "Params":
+                {
+                    "DbusParam":
+                    [
+                        {
+                            "ParamName": "V0",
+                            "Desc":
+                            {
+
+
+                                "Name": "RSSB18_VOLTAGE_12V",
+
+                                "SensorType": "voltage"
+                            }
+                        }
+                    ]
+                },
+                "Expression": "(V0 == V0) ? V0 : NULL"
+            },
+
+        {
+                "Desc":
+                {
+
+
+                    "Name": "RSSB19 12V Voltage",
+                    "SensorType": "voltage"
+                },
+
+                "Associations":
+                [
+                    [
+                        "chassis",
+                        "all_sensors",
+                        "/xyz/openbmc_project/inventory/system/board/IBM_SBP1_Baseboard"
+                    ],
+                    [
+                        "inventory",
+                        "sensors",
+                        "/xyz/openbmc_project/inventory/system/board/IBM_SBP1_Baseboard"
+                    ]
+                ],
+                "Params":
+                {
+                    "DbusParam":
+                    [
+                        {
+                            "ParamName": "V0",
+                            "Desc":
+                            {
+
+
+                                "Name": "RSSB19_VOLTAGE_12V",
+
+                                "SensorType": "voltage"
+                            }
+                        }
+                    ]
+                },
+                "Expression": "(V0 == V0) ? V0 : NULL"
+            },
+
+        {
+                "Desc":
+                {
+
+
+                    "Name": "RSSB20 12V Voltage",
+                    "SensorType": "voltage"
+                },
+
+                "Associations":
+                [
+                    [
+                        "chassis",
+                        "all_sensors",
+                        "/xyz/openbmc_project/inventory/system/board/IBM_SBP1_Baseboard"
+                    ],
+                    [
+                        "inventory",
+                        "sensors",
+                        "/xyz/openbmc_project/inventory/system/board/IBM_SBP1_Baseboard"
+                    ]
+                ],
+                "Params":
+                {
+                    "DbusParam":
+                    [
+                        {
+                            "ParamName": "V0",
+                            "Desc":
+                            {
+
+
+                                "Name": "RSSB20_VOLTAGE_12V",
+
+                                "SensorType": "voltage"
+                            }
+                        }
+                    ]
+                },
+                "Expression": "(V0 == V0) ? V0 : NULL"
+            },
+
+        {
+                "Desc":
+                {
+
+
+                    "Name": "RSSB21 12V Voltage",
+                    "SensorType": "voltage"
+                },
+
+                "Associations":
+                [
+                    [
+                        "chassis",
+                        "all_sensors",
+                        "/xyz/openbmc_project/inventory/system/board/IBM_SBP1_Baseboard"
+                    ],
+                    [
+                        "inventory",
+                        "sensors",
+                        "/xyz/openbmc_project/inventory/system/board/IBM_SBP1_Baseboard"
+                    ]
+                ],
+                "Params":
+                {
+                    "DbusParam":
+                    [
+                        {
+                            "ParamName": "V0",
+                            "Desc":
+                            {
+
+
+                                "Name": "RSSB21_VOLTAGE_12V",
+
+                                "SensorType": "voltage"
+                            }
+                        }
+                    ]
+                },
+                "Expression": "(V0 == V0) ? V0 : NULL"
+            },
+
+        {
+                "Desc":
+                {
+
+
+                    "Name": "RSSB22 12V Voltage",
+                    "SensorType": "voltage"
+                },
+
+                "Associations":
+                [
+                    [
+                        "chassis",
+                        "all_sensors",
+                        "/xyz/openbmc_project/inventory/system/board/IBM_SBP1_Baseboard"
+                    ],
+                    [
+                        "inventory",
+                        "sensors",
+                        "/xyz/openbmc_project/inventory/system/board/IBM_SBP1_Baseboard"
+                    ]
+                ],
+                "Params":
+                {
+                    "DbusParam":
+                    [
+                        {
+                            "ParamName": "V0",
+                            "Desc":
+                            {
+
+
+                                "Name": "RSSB22_VOLTAGE_12V",
+
+                                "SensorType": "voltage"
+                            }
+                        }
+                    ]
+                },
+                "Expression": "(V0 == V0) ? V0 : NULL"
+            },
+
+        {
+                "Desc":
+                {
+
+
+                    "Name": "RSSB23 12V Voltage",
+                    "SensorType": "voltage"
+                },
+
+                "Associations":
+                [
+                    [
+                        "chassis",
+                        "all_sensors",
+                        "/xyz/openbmc_project/inventory/system/board/IBM_SBP1_Baseboard"
+                    ],
+                    [
+                        "inventory",
+                        "sensors",
+                        "/xyz/openbmc_project/inventory/system/board/IBM_SBP1_Baseboard"
+                    ]
+                ],
+                "Params":
+                {
+                    "DbusParam":
+                    [
+                        {
+                            "ParamName": "V0",
+                            "Desc":
+                            {
+
+
+                                "Name": "RSSB23_VOLTAGE_12V",
+
+                                "SensorType": "voltage"
+                            }
+                        }
+                    ]
+                },
+                "Expression": "(V0 == V0) ? V0 : NULL"
+            },
+
+        {
+                "Desc":
+                {
+
+
+                    "Name": "RSSB24 12V Voltage",
+                    "SensorType": "voltage"
+                },
+
+                "Associations":
+                [
+                    [
+                        "chassis",
+                        "all_sensors",
+                        "/xyz/openbmc_project/inventory/system/board/IBM_SBP1_Baseboard"
+                    ],
+                    [
+                        "inventory",
+                        "sensors",
+                        "/xyz/openbmc_project/inventory/system/board/IBM_SBP1_Baseboard"
+                    ]
+                ],
+                "Params":
+                {
+                    "DbusParam":
+                    [
+                        {
+                            "ParamName": "V0",
+                            "Desc":
+                            {
+
+
+                                "Name": "RSSB24_VOLTAGE_12V",
+
+                                "SensorType": "voltage"
+                            }
+                        }
+                    ]
+                },
+                "Expression": "(V0 == V0) ? V0 : NULL"
+            },
+
+        {
+                "Desc":
+                {
+
+
+                    "Name": "RSSB25 12V Voltage",
+                    "SensorType": "voltage"
+                },
+
+                "Associations":
+                [
+                    [
+                        "chassis",
+                        "all_sensors",
+                        "/xyz/openbmc_project/inventory/system/board/IBM_SBP1_Baseboard"
+                    ],
+                    [
+                        "inventory",
+                        "sensors",
+                        "/xyz/openbmc_project/inventory/system/board/IBM_SBP1_Baseboard"
+                    ]
+                ],
+                "Params":
+                {
+                    "DbusParam":
+                    [
+                        {
+                            "ParamName": "V0",
+                            "Desc":
+                            {
+
+
+                                "Name": "RSSB25_VOLTAGE_12V",
+
+                                "SensorType": "voltage"
+                            }
+                        }
+                    ]
+                },
+                "Expression": "(V0 == V0) ? V0 : NULL"
+            },
+
+        {
+                "Desc":
+                {
+
+
+                    "Name": "RSSB26 12V Voltage",
+                    "SensorType": "voltage"
+                },
+
+                "Associations":
+                [
+                    [
+                        "chassis",
+                        "all_sensors",
+                        "/xyz/openbmc_project/inventory/system/board/IBM_SBP1_Baseboard"
+                    ],
+                    [
+                        "inventory",
+                        "sensors",
+                        "/xyz/openbmc_project/inventory/system/board/IBM_SBP1_Baseboard"
+                    ]
+                ],
+                "Params":
+                {
+                    "DbusParam":
+                    [
+                        {
+                            "ParamName": "V0",
+                            "Desc":
+                            {
+
+
+                                "Name": "RSSB26_VOLTAGE_12V",
+
+                                "SensorType": "voltage"
+                            }
+                        }
+                    ]
+                },
+                "Expression": "(V0 == V0) ? V0 : NULL"
+            },
+
+        {
+                "Desc":
+                {
+
+
+                    "Name": "RSSB27 12V Voltage",
+                    "SensorType": "voltage"
+                },
+
+                "Associations":
+                [
+                    [
+                        "chassis",
+                        "all_sensors",
+                        "/xyz/openbmc_project/inventory/system/board/IBM_SBP1_Baseboard"
+                    ],
+                    [
+                        "inventory",
+                        "sensors",
+                        "/xyz/openbmc_project/inventory/system/board/IBM_SBP1_Baseboard"
+                    ]
+                ],
+                "Params":
+                {
+                    "DbusParam":
+                    [
+                        {
+                            "ParamName": "V0",
+                            "Desc":
+                            {
+
+
+                                "Name": "RSSB27_VOLTAGE_12V",
+
+                                "SensorType": "voltage"
+                            }
+                        }
+                    ]
+                },
+                "Expression": "(V0 == V0) ? V0 : NULL"
+            },
+
+        {
+                "Desc":
+                {
+
+
+                    "Name": "RSSB28 12V Voltage",
+                    "SensorType": "voltage"
+                },
+
+                "Associations":
+                [
+                    [
+                        "chassis",
+                        "all_sensors",
+                        "/xyz/openbmc_project/inventory/system/board/IBM_SBP1_Baseboard"
+                    ],
+                    [
+                        "inventory",
+                        "sensors",
+                        "/xyz/openbmc_project/inventory/system/board/IBM_SBP1_Baseboard"
+                    ]
+                ],
+                "Params":
+                {
+                    "DbusParam":
+                    [
+                        {
+                            "ParamName": "V0",
+                            "Desc":
+                            {
+
+
+                                "Name": "RSSB28_VOLTAGE_12V",
+
+                                "SensorType": "voltage"
+                            }
+                        }
+                    ]
+                },
+                "Expression": "(V0 == V0) ? V0 : NULL"
+            },
+
+        {
+                "Desc":
+                {
+
+
+                    "Name": "RSSB29 12V Voltage",
+                    "SensorType": "voltage"
+                },
+
+                "Associations":
+                [
+                    [
+                        "chassis",
+                        "all_sensors",
+                        "/xyz/openbmc_project/inventory/system/board/IBM_SBP1_Baseboard"
+                    ],
+                    [
+                        "inventory",
+                        "sensors",
+                        "/xyz/openbmc_project/inventory/system/board/IBM_SBP1_Baseboard"
+                    ]
+                ],
+                "Params":
+                {
+                    "DbusParam":
+                    [
+                        {
+                            "ParamName": "V0",
+                            "Desc":
+                            {
+
+
+                                "Name": "RSSB29_VOLTAGE_12V",
+
+                                "SensorType": "voltage"
+                            }
+                        }
+                    ]
+                },
+                "Expression": "(V0 == V0) ? V0 : NULL"
+            },
+
+        {
+                "Desc":
+                {
+
+
+                    "Name": "RSSB30 12V Voltage",
+                    "SensorType": "voltage"
+                },
+
+                "Associations":
+                [
+                    [
+                        "chassis",
+                        "all_sensors",
+                        "/xyz/openbmc_project/inventory/system/board/IBM_SBP1_Baseboard"
+                    ],
+                    [
+                        "inventory",
+                        "sensors",
+                        "/xyz/openbmc_project/inventory/system/board/IBM_SBP1_Baseboard"
+                    ]
+                ],
+                "Params":
+                {
+                    "DbusParam":
+                    [
+                        {
+                            "ParamName": "V0",
+                            "Desc":
+                            {
+
+
+                                "Name": "RSSB30_VOLTAGE_12V",
+
+                                "SensorType": "voltage"
+                            }
+                        }
+                    ]
+                },
+                "Expression": "(V0 == V0) ? V0 : NULL"
+            },
+
+        {
+                "Desc":
+                {
+
+
+                    "Name": "RSSB31 12V Voltage",
+                    "SensorType": "voltage"
+                },
+
+                "Associations":
+                [
+                    [
+                        "chassis",
+                        "all_sensors",
+                        "/xyz/openbmc_project/inventory/system/board/IBM_SBP1_Baseboard"
+                    ],
+                    [
+                        "inventory",
+                        "sensors",
+                        "/xyz/openbmc_project/inventory/system/board/IBM_SBP1_Baseboard"
+                    ]
+                ],
+                "Params":
+                {
+                    "DbusParam":
+                    [
+                        {
+                            "ParamName": "V0",
+                            "Desc":
+                            {
+
+
+                                "Name": "RSSB31_VOLTAGE_12V",
+
+                                "SensorType": "voltage"
+                            }
+                        }
+                    ]
+                },
+                "Expression": "(V0 == V0) ? V0 : NULL"
+            },
+
+        {
+                "Desc":
+                {
+
+
+                    "Name": "RSSB32 12V Voltage",
+                    "SensorType": "voltage"
+                },
+
+                "Associations":
+                [
+                    [
+                        "chassis",
+                        "all_sensors",
+                        "/xyz/openbmc_project/inventory/system/board/IBM_SBP1_Baseboard"
+                    ],
+                    [
+                        "inventory",
+                        "sensors",
+                        "/xyz/openbmc_project/inventory/system/board/IBM_SBP1_Baseboard"
+                    ]
+                ],
+                "Params":
+                {
+                    "DbusParam":
+                    [
+                        {
+                            "ParamName": "V0",
+                            "Desc":
+                            {
+
+
+                                "Name": "RSSB32_VOLTAGE_12V",
+
+                                "SensorType": "voltage"
+                            }
+                        }
+                    ]
+                },
+                "Expression": "(V0 == V0) ? V0 : NULL"
+            },
+
+        {
+                "Desc":
+                {
+
+
+                    "Name": "RSSB1 3V3 Current",
+                    "SensorType": "current"
+                },
+
+                "Associations":
+                [
+                    [
+                        "chassis",
+                        "all_sensors",
+                        "/xyz/openbmc_project/inventory/system/board/IBM_SBP1_Baseboard"
+                    ],
+                    [
+                        "inventory",
+                        "sensors",
+                        "/xyz/openbmc_project/inventory/system/board/IBM_SBP1_Baseboard"
+                    ]
+                ],
+                "Params":
+                {
+                    "DbusParam":
+                    [
+                        {
+                            "ParamName": "C0",
+                            "Desc":
+                            {
+                                "Name": "RSSB1_CURRENT_3V3",
+                                "SensorType": "current"
+                            }
+                        }
+                    ]
+                },
+                "Expression": "(C0 == C0) ? C0 : NULL"
+            },
+
+        {
+                "Desc":
+                {
+                    "Name": "RSSB2 3V3 Current",
+                    "SensorType": "current"
+                },
+
+                "Associations":
+                [
+                    [
+                        "chassis",
+                        "all_sensors",
+                        "/xyz/openbmc_project/inventory/system/board/IBM_SBP1_Baseboard"
+                    ],
+                    [
+                        "inventory",
+                        "sensors",
+                        "/xyz/openbmc_project/inventory/system/board/IBM_SBP1_Baseboard"
+                    ]
+                ],
+                "Params":
+                {
+                    "DbusParam":
+                    [
+                        {
+                            "ParamName": "C0",
+                            "Desc":
+                            {
+
+
+                                "Name": "RSSB2_CURRENT_3V3",
+
+                                "SensorType": "current"
+                            }
+                        }
+                    ]
+                },
+                "Expression": "(C0 == C0) ? C0 : NULL"
+            },
+
+        {
+                "Desc":
+                {
+
+
+                    "Name": "RSSB3 3V3 Current",
+                    "SensorType": "current"
+                },
+
+                "Associations":
+                [
+                    [
+                        "chassis",
+                        "all_sensors",
+                        "/xyz/openbmc_project/inventory/system/board/IBM_SBP1_Baseboard"
+                    ],
+                    [
+                        "inventory",
+                        "sensors",
+                        "/xyz/openbmc_project/inventory/system/board/IBM_SBP1_Baseboard"
+                    ]
+                ],
+                "Params":
+                {
+                    "DbusParam":
+                    [
+                        {
+                            "ParamName": "C0",
+                            "Desc":
+                            {
+
+
+                                "Name": "RSSB3_CURRENT_3V3",
+
+                                "SensorType": "current"
+                            }
+                        }
+                    ]
+                },
+                "Expression": "(C0 == C0) ? C0 : NULL"
+            },
+
+        {
+                "Desc":
+                {
+
+
+                    "Name": "RSSB4 3V3 Current",
+                    "SensorType": "current"
+                },
+
+                "Associations":
+                [
+                    [
+                        "chassis",
+                        "all_sensors",
+                        "/xyz/openbmc_project/inventory/system/board/IBM_SBP1_Baseboard"
+                    ],
+                    [
+                        "inventory",
+                        "sensors",
+                        "/xyz/openbmc_project/inventory/system/board/IBM_SBP1_Baseboard"
+                    ]
+                ],
+                "Params":
+                {
+                    "DbusParam":
+                    [
+                        {
+                            "ParamName": "C0",
+                            "Desc":
+                            {
+
+
+                                "Name": "RSSB4_CURRENT_3V3",
+
+                                "SensorType": "current"
+                            }
+                        }
+                    ]
+                },
+                "Expression": "(C0 == C0) ? C0 : NULL"
+            },
+
+        {
+                "Desc":
+                {
+
+
+                    "Name": "RSSB5 3V3 Current",
+                    "SensorType": "current"
+                },
+
+                "Associations":
+                [
+                    [
+                        "chassis",
+                        "all_sensors",
+                        "/xyz/openbmc_project/inventory/system/board/IBM_SBP1_Baseboard"
+                    ],
+                    [
+                        "inventory",
+                        "sensors",
+                        "/xyz/openbmc_project/inventory/system/board/IBM_SBP1_Baseboard"
+                    ]
+                ],
+                "Params":
+                {
+                    "DbusParam":
+                    [
+                        {
+                            "ParamName": "C0",
+                            "Desc":
+                            {
+
+
+                                "Name": "RSSB5_CURRENT_3V3",
+
+                                "SensorType": "current"
+                            }
+                        }
+                    ]
+                },
+                "Expression": "(C0 == C0) ? C0 : NULL"
+            },
+
+        {
+                "Desc":
+                {
+
+
+                    "Name": "RSSB6 3V3 Current",
+                    "SensorType": "current"
+                },
+
+                "Associations":
+                [
+                    [
+                        "chassis",
+                        "all_sensors",
+                        "/xyz/openbmc_project/inventory/system/board/IBM_SBP1_Baseboard"
+                    ],
+                    [
+                        "inventory",
+                        "sensors",
+                        "/xyz/openbmc_project/inventory/system/board/IBM_SBP1_Baseboard"
+                    ]
+                ],
+                "Params":
+                {
+                    "DbusParam":
+                    [
+                        {
+                            "ParamName": "C0",
+                            "Desc":
+                            {
+
+
+                                "Name": "RSSB6_CURRENT_3V3",
+
+                                "SensorType": "current"
+                            }
+                        }
+                    ]
+                },
+                "Expression": "(C0 == C0) ? C0 : NULL"
+            },
+
+        {
+                "Desc":
+                {
+
+
+                    "Name": "RSSB7 3V3 Current",
+                    "SensorType": "current"
+                },
+
+                "Associations":
+                [
+                    [
+                        "chassis",
+                        "all_sensors",
+                        "/xyz/openbmc_project/inventory/system/board/IBM_SBP1_Baseboard"
+                    ],
+                    [
+                        "inventory",
+                        "sensors",
+                        "/xyz/openbmc_project/inventory/system/board/IBM_SBP1_Baseboard"
+                    ]
+                ],
+                "Params":
+                {
+                    "DbusParam":
+                    [
+                        {
+                            "ParamName": "C0",
+                            "Desc":
+                            {
+
+
+                                "Name": "RSSB7_CURRENT_3V3",
+
+                                "SensorType": "current"
+                            }
+                        }
+                    ]
+                },
+                "Expression": "(C0 == C0) ? C0 : NULL"
+            },
+
+        {
+                "Desc":
+                {
+
+
+                    "Name": "RSSB8 3V3 Current",
+                    "SensorType": "current"
+                },
+
+                "Associations":
+                [
+                    [
+                        "chassis",
+                        "all_sensors",
+                        "/xyz/openbmc_project/inventory/system/board/IBM_SBP1_Baseboard"
+                    ],
+                    [
+                        "inventory",
+                        "sensors",
+                        "/xyz/openbmc_project/inventory/system/board/IBM_SBP1_Baseboard"
+                    ]
+                ],
+                "Params":
+                {
+                    "DbusParam":
+                    [
+                        {
+                            "ParamName": "C0",
+                            "Desc":
+                            {
+
+
+                                "Name": "RSSB8_CURRENT_3V3",
+
+                                "SensorType": "current"
+                            }
+                        }
+                    ]
+                },
+                "Expression": "(C0 == C0) ? C0 : NULL"
+            },
+
+        {
+                "Desc":
+                {
+
+
+                    "Name": "RSSB9 3V3 Current",
+                    "SensorType": "current"
+                },
+
+                "Associations":
+                [
+                    [
+                        "chassis",
+                        "all_sensors",
+                        "/xyz/openbmc_project/inventory/system/board/IBM_SBP1_Baseboard"
+                    ],
+                    [
+                        "inventory",
+                        "sensors",
+                        "/xyz/openbmc_project/inventory/system/board/IBM_SBP1_Baseboard"
+                    ]
+                ],
+                "Params":
+                {
+                    "DbusParam":
+                    [
+                        {
+                            "ParamName": "C0",
+                            "Desc":
+                            {
+
+
+                                "Name": "RSSB9_CURRENT_3V3",
+
+                                "SensorType": "current"
+                            }
+                        }
+                    ]
+                },
+                "Expression": "(C0 == C0) ? C0 : NULL"
+            },
+
+        {
+                "Desc":
+                {
+
+
+                    "Name": "RSSB10 3V3 Current",
+                    "SensorType": "current"
+                },
+
+                "Associations":
+                [
+                    [
+                        "chassis",
+                        "all_sensors",
+                        "/xyz/openbmc_project/inventory/system/board/IBM_SBP1_Baseboard"
+                    ],
+                    [
+                        "inventory",
+                        "sensors",
+                        "/xyz/openbmc_project/inventory/system/board/IBM_SBP1_Baseboard"
+                    ]
+                ],
+                "Params":
+                {
+                    "DbusParam":
+                    [
+                        {
+                            "ParamName": "C0",
+                            "Desc":
+                            {
+
+
+                                "Name": "RSSB10_CURRENT_3V3",
+
+                                "SensorType": "current"
+                            }
+                        }
+                    ]
+                },
+                "Expression": "(C0 == C0) ? C0 : NULL"
+            },
+
+        {
+                "Desc":
+                {
+
+
+                    "Name": "RSSB11 3V3 Current",
+                    "SensorType": "current"
+                },
+
+                "Associations":
+                [
+                    [
+                        "chassis",
+                        "all_sensors",
+                        "/xyz/openbmc_project/inventory/system/board/IBM_SBP1_Baseboard"
+                    ],
+                    [
+                        "inventory",
+                        "sensors",
+                        "/xyz/openbmc_project/inventory/system/board/IBM_SBP1_Baseboard"
+                    ]
+                ],
+                "Params":
+                {
+                    "DbusParam":
+                    [
+                        {
+                            "ParamName": "C0",
+                            "Desc":
+                            {
+
+
+                                "Name": "RSSB11_CURRENT_3V3",
+
+                                "SensorType": "current"
+                            }
+                        }
+                    ]
+                },
+                "Expression": "(C0 == C0) ? C0 : NULL"
+            },
+
+        {
+                "Desc":
+                {
+
+
+                    "Name": "RSSB12 3V3 Current",
+                    "SensorType": "current"
+                },
+
+                "Associations":
+                [
+                    [
+                        "chassis",
+                        "all_sensors",
+                        "/xyz/openbmc_project/inventory/system/board/IBM_SBP1_Baseboard"
+                    ],
+                    [
+                        "inventory",
+                        "sensors",
+                        "/xyz/openbmc_project/inventory/system/board/IBM_SBP1_Baseboard"
+                    ]
+                ],
+                "Params":
+                {
+                    "DbusParam":
+                    [
+                        {
+                            "ParamName": "C0",
+                            "Desc":
+                            {
+
+
+                                "Name": "RSSB12_CURRENT_3V3",
+
+                                "SensorType": "current"
+                            }
+                        }
+                    ]
+                },
+                "Expression": "(C0 == C0) ? C0 : NULL"
+            },
+
+        {
+                "Desc":
+                {
+
+
+                    "Name": "RSSB13 3V3 Current",
+                    "SensorType": "current"
+                },
+
+                "Associations":
+                [
+                    [
+                        "chassis",
+                        "all_sensors",
+                        "/xyz/openbmc_project/inventory/system/board/IBM_SBP1_Baseboard"
+                    ],
+                    [
+                        "inventory",
+                        "sensors",
+                        "/xyz/openbmc_project/inventory/system/board/IBM_SBP1_Baseboard"
+                    ]
+                ],
+                "Params":
+                {
+                    "DbusParam":
+                    [
+                        {
+                            "ParamName": "C0",
+                            "Desc":
+                            {
+
+
+                                "Name": "RSSB13_CURRENT_3V3",
+
+                                "SensorType": "current"
+                            }
+                        }
+                    ]
+                },
+                "Expression": "(C0 == C0) ? C0 : NULL"
+            },
+
+        {
+                "Desc":
+                {
+
+
+                    "Name": "RSSB14 3V3 Current",
+                    "SensorType": "current"
+                },
+
+                "Associations":
+                [
+                    [
+                        "chassis",
+                        "all_sensors",
+                        "/xyz/openbmc_project/inventory/system/board/IBM_SBP1_Baseboard"
+                    ],
+                    [
+                        "inventory",
+                        "sensors",
+                        "/xyz/openbmc_project/inventory/system/board/IBM_SBP1_Baseboard"
+                    ]
+                ],
+                "Params":
+                {
+                    "DbusParam":
+                    [
+                        {
+                            "ParamName": "C0",
+                            "Desc":
+                            {
+
+
+                                "Name": "RSSB14_CURRENT_3V3",
+
+                                "SensorType": "current"
+                            }
+                        }
+                    ]
+                },
+                "Expression": "(C0 == C0) ? C0 : NULL"
+            },
+
+        {
+                "Desc":
+                {
+
+
+                    "Name": "RSSB15 3V3 Current",
+                    "SensorType": "current"
+                },
+
+                "Associations":
+                [
+                    [
+                        "chassis",
+                        "all_sensors",
+                        "/xyz/openbmc_project/inventory/system/board/IBM_SBP1_Baseboard"
+                    ],
+                    [
+                        "inventory",
+                        "sensors",
+                        "/xyz/openbmc_project/inventory/system/board/IBM_SBP1_Baseboard"
+                    ]
+                ],
+                "Params":
+                {
+                    "DbusParam":
+                    [
+                        {
+                            "ParamName": "C0",
+                            "Desc":
+                            {
+
+
+                                "Name": "RSSB15_CURRENT_3V3",
+
+                                "SensorType": "current"
+                            }
+                        }
+                    ]
+                },
+                "Expression": "(C0 == C0) ? C0 : NULL"
+            },
+
+        {
+                "Desc":
+                {
+
+
+                    "Name": "RSSB16 3V3 Current",
+                    "SensorType": "current"
+                },
+
+                "Associations":
+                [
+                    [
+                        "chassis",
+                        "all_sensors",
+                        "/xyz/openbmc_project/inventory/system/board/IBM_SBP1_Baseboard"
+                    ],
+                    [
+                        "inventory",
+                        "sensors",
+                        "/xyz/openbmc_project/inventory/system/board/IBM_SBP1_Baseboard"
+                    ]
+                ],
+                "Params":
+                {
+                    "DbusParam":
+                    [
+                        {
+                            "ParamName": "C0",
+                            "Desc":
+                            {
+
+
+                                "Name": "RSSB16_CURRENT_3V3",
+
+                                "SensorType": "current"
+                            }
+                        }
+                    ]
+                },
+                "Expression": "(C0 == C0) ? C0 : NULL"
+            },
+
+        {
+                "Desc":
+                {
+
+
+                    "Name": "RSSB17 3V3 Current",
+                    "SensorType": "current"
+                },
+
+                "Associations":
+                [
+                    [
+                        "chassis",
+                        "all_sensors",
+                        "/xyz/openbmc_project/inventory/system/board/IBM_SBP1_Baseboard"
+                    ],
+                    [
+                        "inventory",
+                        "sensors",
+                        "/xyz/openbmc_project/inventory/system/board/IBM_SBP1_Baseboard"
+                    ]
+                ],
+                "Params":
+                {
+                    "DbusParam":
+                    [
+                        {
+                            "ParamName": "C0",
+                            "Desc":
+                            {
+
+
+                                "Name": "RSSB17_CURRENT_3V3",
+
+                                "SensorType": "current"
+                            }
+                        }
+                    ]
+                },
+                "Expression": "(C0 == C0) ? C0 : NULL"
+            },
+
+        {
+                "Desc":
+                {
+
+
+                    "Name": "RSSB18 3V3 Current",
+                    "SensorType": "current"
+                },
+
+                "Associations":
+                [
+                    [
+                        "chassis",
+                        "all_sensors",
+                        "/xyz/openbmc_project/inventory/system/board/IBM_SBP1_Baseboard"
+                    ],
+                    [
+                        "inventory",
+                        "sensors",
+                        "/xyz/openbmc_project/inventory/system/board/IBM_SBP1_Baseboard"
+                    ]
+                ],
+                "Params":
+                {
+                    "DbusParam":
+                    [
+                        {
+                            "ParamName": "C0",
+                            "Desc":
+                            {
+
+
+                                "Name": "RSSB18_CURRENT_3V3",
+
+                                "SensorType": "current"
+                            }
+                        }
+                    ]
+                },
+                "Expression": "(C0 == C0) ? C0 : NULL"
+            },
+
+        {
+                "Desc":
+                {
+
+
+                    "Name": "RSSB19 3V3 Current",
+                    "SensorType": "current"
+                },
+
+                "Associations":
+                [
+                    [
+                        "chassis",
+                        "all_sensors",
+                        "/xyz/openbmc_project/inventory/system/board/IBM_SBP1_Baseboard"
+                    ],
+                    [
+                        "inventory",
+                        "sensors",
+                        "/xyz/openbmc_project/inventory/system/board/IBM_SBP1_Baseboard"
+                    ]
+                ],
+                "Params":
+                {
+                    "DbusParam":
+                    [
+                        {
+                            "ParamName": "C0",
+                            "Desc":
+                            {
+
+
+                                "Name": "RSSB19_CURRENT_3V3",
+
+                                "SensorType": "current"
+                            }
+                        }
+                    ]
+                },
+                "Expression": "(C0 == C0) ? C0 : NULL"
+            },
+
+        {
+                "Desc":
+                {
+
+
+                    "Name": "RSSB20 3V3 Current",
+                    "SensorType": "current"
+                },
+
+                "Associations":
+                [
+                    [
+                        "chassis",
+                        "all_sensors",
+                        "/xyz/openbmc_project/inventory/system/board/IBM_SBP1_Baseboard"
+                    ],
+                    [
+                        "inventory",
+                        "sensors",
+                        "/xyz/openbmc_project/inventory/system/board/IBM_SBP1_Baseboard"
+                    ]
+                ],
+                "Params":
+                {
+                    "DbusParam":
+                    [
+                        {
+                            "ParamName": "C0",
+                            "Desc":
+                            {
+
+
+                                "Name": "RSSB20_CURRENT_3V3",
+
+                                "SensorType": "current"
+                            }
+                        }
+                    ]
+                },
+                "Expression": "(C0 == C0) ? C0 : NULL"
+            },
+
+        {
+                "Desc":
+                {
+
+
+                    "Name": "RSSB21 3V3 Current",
+                    "SensorType": "current"
+                },
+
+                "Associations":
+                [
+                    [
+                        "chassis",
+                        "all_sensors",
+                        "/xyz/openbmc_project/inventory/system/board/IBM_SBP1_Baseboard"
+                    ],
+                    [
+                        "inventory",
+                        "sensors",
+                        "/xyz/openbmc_project/inventory/system/board/IBM_SBP1_Baseboard"
+                    ]
+                ],
+                "Params":
+                {
+                    "DbusParam":
+                    [
+                        {
+                            "ParamName": "C0",
+                            "Desc":
+                            {
+
+
+                                "Name": "RSSB21_CURRENT_3V3",
+
+                                "SensorType": "current"
+                            }
+                        }
+                    ]
+                },
+                "Expression": "(C0 == C0) ? C0 : NULL"
+            },
+
+        {
+                "Desc":
+                {
+
+
+                    "Name": "RSSB22 3V3 Current",
+                    "SensorType": "current"
+                },
+
+                "Associations":
+                [
+                    [
+                        "chassis",
+                        "all_sensors",
+                        "/xyz/openbmc_project/inventory/system/board/IBM_SBP1_Baseboard"
+                    ],
+                    [
+                        "inventory",
+                        "sensors",
+                        "/xyz/openbmc_project/inventory/system/board/IBM_SBP1_Baseboard"
+                    ]
+                ],
+                "Params":
+                {
+                    "DbusParam":
+                    [
+                        {
+                            "ParamName": "C0",
+                            "Desc":
+                            {
+
+
+                                "Name": "RSSB22_CURRENT_3V3",
+
+                                "SensorType": "current"
+                            }
+                        }
+                    ]
+                },
+                "Expression": "(C0 == C0) ? C0 : NULL"
+            },
+
+        {
+                "Desc":
+                {
+
+
+                    "Name": "RSSB23 3V3 Current",
+                    "SensorType": "current"
+                },
+
+                "Associations":
+                [
+                    [
+                        "chassis",
+                        "all_sensors",
+                        "/xyz/openbmc_project/inventory/system/board/IBM_SBP1_Baseboard"
+                    ],
+                    [
+                        "inventory",
+                        "sensors",
+                        "/xyz/openbmc_project/inventory/system/board/IBM_SBP1_Baseboard"
+                    ]
+                ],
+                "Params":
+                {
+                    "DbusParam":
+                    [
+                        {
+                            "ParamName": "C0",
+                            "Desc":
+                            {
+
+
+                                "Name": "RSSB23_CURRENT_3V3",
+
+                                "SensorType": "current"
+                            }
+                        }
+                    ]
+                },
+                "Expression": "(C0 == C0) ? C0 : NULL"
+            },
+
+        {
+                "Desc":
+                {
+
+
+                    "Name": "RSSB24 3V3 Current",
+                    "SensorType": "current"
+                },
+
+                "Associations":
+                [
+                    [
+                        "chassis",
+                        "all_sensors",
+                        "/xyz/openbmc_project/inventory/system/board/IBM_SBP1_Baseboard"
+                    ],
+                    [
+                        "inventory",
+                        "sensors",
+                        "/xyz/openbmc_project/inventory/system/board/IBM_SBP1_Baseboard"
+                    ]
+                ],
+                "Params":
+                {
+                    "DbusParam":
+                    [
+                        {
+                            "ParamName": "C0",
+                            "Desc":
+                            {
+
+
+                                "Name": "RSSB24_CURRENT_3V3",
+
+                                "SensorType": "current"
+                            }
+                        }
+                    ]
+                },
+                "Expression": "(C0 == C0) ? C0 : NULL"
+            },
+
+        {
+                "Desc":
+                {
+
+
+                    "Name": "RSSB25 3V3 Current",
+                    "SensorType": "current"
+                },
+
+                "Associations":
+                [
+                    [
+                        "chassis",
+                        "all_sensors",
+                        "/xyz/openbmc_project/inventory/system/board/IBM_SBP1_Baseboard"
+                    ],
+                    [
+                        "inventory",
+                        "sensors",
+                        "/xyz/openbmc_project/inventory/system/board/IBM_SBP1_Baseboard"
+                    ]
+                ],
+                "Params":
+                {
+                    "DbusParam":
+                    [
+                        {
+                            "ParamName": "C0",
+                            "Desc":
+                            {
+
+
+                                "Name": "RSSB25_CURRENT_3V3",
+
+                                "SensorType": "current"
+                            }
+                        }
+                    ]
+                },
+                "Expression": "(C0 == C0) ? C0 : NULL"
+            },
+
+        {
+                "Desc":
+                {
+
+
+                    "Name": "RSSB26 3V3 Current",
+                    "SensorType": "current"
+                },
+
+                "Associations":
+                [
+                    [
+                        "chassis",
+                        "all_sensors",
+                        "/xyz/openbmc_project/inventory/system/board/IBM_SBP1_Baseboard"
+                    ],
+                    [
+                        "inventory",
+                        "sensors",
+                        "/xyz/openbmc_project/inventory/system/board/IBM_SBP1_Baseboard"
+                    ]
+                ],
+                "Params":
+                {
+                    "DbusParam":
+                    [
+                        {
+                            "ParamName": "C0",
+                            "Desc":
+                            {
+
+
+                                "Name": "RSSB26_CURRENT_3V3",
+
+                                "SensorType": "current"
+                            }
+                        }
+                    ]
+                },
+                "Expression": "(C0 == C0) ? C0 : NULL"
+            },
+
+        {
+                "Desc":
+                {
+
+
+                    "Name": "RSSB27 3V3 Current",
+                    "SensorType": "current"
+                },
+
+                "Associations":
+                [
+                    [
+                        "chassis",
+                        "all_sensors",
+                        "/xyz/openbmc_project/inventory/system/board/IBM_SBP1_Baseboard"
+                    ],
+                    [
+                        "inventory",
+                        "sensors",
+                        "/xyz/openbmc_project/inventory/system/board/IBM_SBP1_Baseboard"
+                    ]
+                ],
+                "Params":
+                {
+                    "DbusParam":
+                    [
+                        {
+                            "ParamName": "C0",
+                            "Desc":
+                            {
+
+
+                                "Name": "RSSB27_CURRENT_3V3",
+
+                                "SensorType": "current"
+                            }
+                        }
+                    ]
+                },
+                "Expression": "(C0 == C0) ? C0 : NULL"
+            },
+
+        {
+                "Desc":
+                {
+
+
+                    "Name": "RSSB28 3V3 Current",
+                    "SensorType": "current"
+                },
+
+                "Associations":
+                [
+                    [
+                        "chassis",
+                        "all_sensors",
+                        "/xyz/openbmc_project/inventory/system/board/IBM_SBP1_Baseboard"
+                    ],
+                    [
+                        "inventory",
+                        "sensors",
+                        "/xyz/openbmc_project/inventory/system/board/IBM_SBP1_Baseboard"
+                    ]
+                ],
+                "Params":
+                {
+                    "DbusParam":
+                    [
+                        {
+                            "ParamName": "C0",
+                            "Desc":
+                            {
+
+
+                                "Name": "RSSB28_CURRENT_3V3",
+
+                                "SensorType": "current"
+                            }
+                        }
+                    ]
+                },
+                "Expression": "(C0 == C0) ? C0 : NULL"
+            },
+
+        {
+                "Desc":
+                {
+
+
+                    "Name": "RSSB29 3V3 Current",
+                    "SensorType": "current"
+                },
+
+                "Associations":
+                [
+                    [
+                        "chassis",
+                        "all_sensors",
+                        "/xyz/openbmc_project/inventory/system/board/IBM_SBP1_Baseboard"
+                    ],
+                    [
+                        "inventory",
+                        "sensors",
+                        "/xyz/openbmc_project/inventory/system/board/IBM_SBP1_Baseboard"
+                    ]
+                ],
+                "Params":
+                {
+                    "DbusParam":
+                    [
+                        {
+                            "ParamName": "C0",
+                            "Desc":
+                            {
+
+
+                                "Name": "RSSB29_CURRENT_3V3",
+
+                                "SensorType": "current"
+                            }
+                        }
+                    ]
+                },
+                "Expression": "(C0 == C0) ? C0 : NULL"
+            },
+
+        {
+                "Desc":
+                {
+
+
+                    "Name": "RSSB30 3V3 Current",
+                    "SensorType": "current"
+                },
+
+                "Associations":
+                [
+                    [
+                        "chassis",
+                        "all_sensors",
+                        "/xyz/openbmc_project/inventory/system/board/IBM_SBP1_Baseboard"
+                    ],
+                    [
+                        "inventory",
+                        "sensors",
+                        "/xyz/openbmc_project/inventory/system/board/IBM_SBP1_Baseboard"
+                    ]
+                ],
+                "Params":
+                {
+                    "DbusParam":
+                    [
+                        {
+                            "ParamName": "C0",
+                            "Desc":
+                            {
+
+
+                                "Name": "RSSB30_CURRENT_3V3",
+
+                                "SensorType": "current"
+                            }
+                        }
+                    ]
+                },
+                "Expression": "(C0 == C0) ? C0 : NULL"
+            },
+
+        {
+                "Desc":
+                {
+
+
+                    "Name": "RSSB31 3V3 Current",
+                    "SensorType": "current"
+                },
+
+                "Associations":
+                [
+                    [
+                        "chassis",
+                        "all_sensors",
+                        "/xyz/openbmc_project/inventory/system/board/IBM_SBP1_Baseboard"
+                    ],
+                    [
+                        "inventory",
+                        "sensors",
+                        "/xyz/openbmc_project/inventory/system/board/IBM_SBP1_Baseboard"
+                    ]
+                ],
+                "Params":
+                {
+                    "DbusParam":
+                    [
+                        {
+                            "ParamName": "C0",
+                            "Desc":
+                            {
+
+
+                                "Name": "RSSB31_CURRENT_3V3",
+
+                                "SensorType": "current"
+                            }
+                        }
+                    ]
+                },
+                "Expression": "(C0 == C0) ? C0 : NULL"
+            },
+
+        {
+                "Desc":
+                {
+
+
+                    "Name": "RSSB32 3V3 Current",
+                    "SensorType": "current"
+                },
+
+                "Associations":
+                [
+                    [
+                        "chassis",
+                        "all_sensors",
+                        "/xyz/openbmc_project/inventory/system/board/IBM_SBP1_Baseboard"
+                    ],
+                    [
+                        "inventory",
+                        "sensors",
+                        "/xyz/openbmc_project/inventory/system/board/IBM_SBP1_Baseboard"
+                    ]
+                ],
+                "Params":
+                {
+                    "DbusParam":
+                    [
+                        {
+                            "ParamName": "C0",
+                            "Desc":
+                            {
+
+
+                                "Name": "RSSB32_CURRENT_3V3",
+
+                                "SensorType": "current"
+                            }
+                        }
+                    ]
+                },
+                "Expression": "(C0 == C0) ? C0 : NULL"
+            },
+
+        {
+                "Desc":
+                {
+
+
+                    "Name": "RSSB1 3V3 Voltage",
+                    "SensorType": "voltage"
+                },
+
+                "Associations":
+                [
+                    [
+                        "chassis",
+                        "all_sensors",
+                        "/xyz/openbmc_project/inventory/system/board/IBM_SBP1_Baseboard"
+                    ],
+                    [
+                        "inventory",
+                        "sensors",
+                        "/xyz/openbmc_project/inventory/system/board/IBM_SBP1_Baseboard"
+                    ]
+                ],
+                "Params":
+                {
+                    "DbusParam":
+                    [
+                        {
+                            "ParamName": "V0",
+                            "Desc":
+                            {
+
+
+                                "Name": "RSSB1_VOLTAGE_3V3",
+
+                                "SensorType": "voltage"
+                            }
+                        }
+                    ]
+                },
+                "Expression": "(V0 == V0) ? V0 : NULL"
+            },
+
+        {
+                "Desc":
+                {
+
+
+                    "Name": "RSSB2 3V3 Voltage",
+                    "SensorType": "voltage"
+                },
+
+                "Associations":
+                [
+                    [
+                        "chassis",
+                        "all_sensors",
+                        "/xyz/openbmc_project/inventory/system/board/IBM_SBP1_Baseboard"
+                    ],
+                    [
+                        "inventory",
+                        "sensors",
+                        "/xyz/openbmc_project/inventory/system/board/IBM_SBP1_Baseboard"
+                    ]
+                ],
+                "Params":
+                {
+                    "DbusParam":
+                    [
+                        {
+                            "ParamName": "V0",
+                            "Desc":
+                            {
+
+
+                                "Name": "RSSB2_VOLTAGE_3V3",
+
+                                "SensorType": "voltage"
+                            }
+                        }
+                    ]
+                },
+                "Expression": "(V0 == V0) ? V0 : NULL"
+            },
+
+        {
+                "Desc":
+                {
+
+
+                    "Name": "RSSB3 3V3 Voltage",
+                    "SensorType": "voltage"
+                },
+
+                "Associations":
+                [
+                    [
+                        "chassis",
+                        "all_sensors",
+                        "/xyz/openbmc_project/inventory/system/board/IBM_SBP1_Baseboard"
+                    ],
+                    [
+                        "inventory",
+                        "sensors",
+                        "/xyz/openbmc_project/inventory/system/board/IBM_SBP1_Baseboard"
+                    ]
+                ],
+                "Params":
+                {
+                    "DbusParam":
+                    [
+                        {
+                            "ParamName": "V0",
+                            "Desc":
+                            {
+
+
+                                "Name": "RSSB3_VOLTAGE_3V3",
+
+                                "SensorType": "voltage"
+                            }
+                        }
+                    ]
+                },
+                "Expression": "(V0 == V0) ? V0 : NULL"
+            },
+
+        {
+                "Desc":
+                {
+
+
+                    "Name": "RSSB4 3V3 Voltage",
+                    "SensorType": "voltage"
+                },
+
+                "Associations":
+                [
+                    [
+                        "chassis",
+                        "all_sensors",
+                        "/xyz/openbmc_project/inventory/system/board/IBM_SBP1_Baseboard"
+                    ],
+                    [
+                        "inventory",
+                        "sensors",
+                        "/xyz/openbmc_project/inventory/system/board/IBM_SBP1_Baseboard"
+                    ]
+                ],
+                "Params":
+                {
+                    "DbusParam":
+                    [
+                        {
+                            "ParamName": "V0",
+                            "Desc":
+                            {
+
+
+                                "Name": "RSSB4_VOLTAGE_3V3",
+
+                                "SensorType": "voltage"
+                            }
+                        }
+                    ]
+                },
+                "Expression": "(V0 == V0) ? V0 : NULL"
+            },
+
+        {
+                "Desc":
+                {
+
+
+                    "Name": "RSSB5 3V3 Voltage",
+                    "SensorType": "voltage"
+                },
+
+                "Associations":
+                [
+                    [
+                        "chassis",
+                        "all_sensors",
+                        "/xyz/openbmc_project/inventory/system/board/IBM_SBP1_Baseboard"
+                    ],
+                    [
+                        "inventory",
+                        "sensors",
+                        "/xyz/openbmc_project/inventory/system/board/IBM_SBP1_Baseboard"
+                    ]
+                ],
+                "Params":
+                {
+                    "DbusParam":
+                    [
+                        {
+                            "ParamName": "V0",
+                            "Desc":
+                            {
+
+
+                                "Name": "RSSB5_VOLTAGE_3V3",
+
+                                "SensorType": "voltage"
+                            }
+                        }
+                    ]
+                },
+                "Expression": "(V0 == V0) ? V0 : NULL"
+            },
+
+        {
+                "Desc":
+                {
+
+
+                    "Name": "RSSB6 3V3 Voltage",
+                    "SensorType": "voltage"
+                },
+
+                "Associations":
+                [
+                    [
+                        "chassis",
+                        "all_sensors",
+                        "/xyz/openbmc_project/inventory/system/board/IBM_SBP1_Baseboard"
+                    ],
+                    [
+                        "inventory",
+                        "sensors",
+                        "/xyz/openbmc_project/inventory/system/board/IBM_SBP1_Baseboard"
+                    ]
+                ],
+                "Params":
+                {
+                    "DbusParam":
+                    [
+                        {
+                            "ParamName": "V0",
+                            "Desc":
+                            {
+
+
+                                "Name": "RSSB6_VOLTAGE_3V3",
+
+                                "SensorType": "voltage"
+                            }
+                        }
+                    ]
+                },
+                "Expression": "(V0 == V0) ? V0 : NULL"
+            },
+
+        {
+                "Desc":
+                {
+
+
+                    "Name": "RSSB7 3V3 Voltage",
+                    "SensorType": "voltage"
+                },
+
+                "Associations":
+                [
+                    [
+                        "chassis",
+                        "all_sensors",
+                        "/xyz/openbmc_project/inventory/system/board/IBM_SBP1_Baseboard"
+                    ],
+                    [
+                        "inventory",
+                        "sensors",
+                        "/xyz/openbmc_project/inventory/system/board/IBM_SBP1_Baseboard"
+                    ]
+                ],
+                "Params":
+                {
+                    "DbusParam":
+                    [
+                        {
+                            "ParamName": "V0",
+                            "Desc":
+                            {
+
+
+                                "Name": "RSSB7_VOLTAGE_3V3",
+
+                                "SensorType": "voltage"
+                            }
+                        }
+                    ]
+                },
+                "Expression": "(V0 == V0) ? V0 : NULL"
+            },
+
+        {
+                "Desc":
+                {
+
+
+                    "Name": "RSSB8 3V3 Voltage",
+                    "SensorType": "voltage"
+                },
+
+                "Associations":
+                [
+                    [
+                        "chassis",
+                        "all_sensors",
+                        "/xyz/openbmc_project/inventory/system/board/IBM_SBP1_Baseboard"
+                    ],
+                    [
+                        "inventory",
+                        "sensors",
+                        "/xyz/openbmc_project/inventory/system/board/IBM_SBP1_Baseboard"
+                    ]
+                ],
+                "Params":
+                {
+                    "DbusParam":
+                    [
+                        {
+                            "ParamName": "V0",
+                            "Desc":
+                            {
+
+
+                                "Name": "RSSB8_VOLTAGE_3V3",
+
+                                "SensorType": "voltage"
+                            }
+                        }
+                    ]
+                },
+                "Expression": "(V0 == V0) ? V0 : NULL"
+            },
+
+        {
+                "Desc":
+                {
+
+
+                    "Name": "RSSB9 3V3 Voltage",
+                    "SensorType": "voltage"
+                },
+
+                "Associations":
+                [
+                    [
+                        "chassis",
+                        "all_sensors",
+                        "/xyz/openbmc_project/inventory/system/board/IBM_SBP1_Baseboard"
+                    ],
+                    [
+                        "inventory",
+                        "sensors",
+                        "/xyz/openbmc_project/inventory/system/board/IBM_SBP1_Baseboard"
+                    ]
+                ],
+                "Params":
+                {
+                    "DbusParam":
+                    [
+                        {
+                            "ParamName": "V0",
+                            "Desc":
+                            {
+
+
+                                "Name": "RSSB9_VOLTAGE_3V3",
+
+                                "SensorType": "voltage"
+                            }
+                        }
+                    ]
+                },
+                "Expression": "(V0 == V0) ? V0 : NULL"
+            },
+
+        {
+                "Desc":
+                {
+
+
+                    "Name": "RSSB10 3V3 Voltage",
+                    "SensorType": "voltage"
+                },
+
+                "Associations":
+                [
+                    [
+                        "chassis",
+                        "all_sensors",
+                        "/xyz/openbmc_project/inventory/system/board/IBM_SBP1_Baseboard"
+                    ],
+                    [
+                        "inventory",
+                        "sensors",
+                        "/xyz/openbmc_project/inventory/system/board/IBM_SBP1_Baseboard"
+                    ]
+                ],
+                "Params":
+                {
+                    "DbusParam":
+                    [
+                        {
+                            "ParamName": "V0",
+                            "Desc":
+                            {
+
+
+                                "Name": "RSSB10_VOLTAGE_3V3",
+
+                                "SensorType": "voltage"
+                            }
+                        }
+                    ]
+                },
+                "Expression": "(V0 == V0) ? V0 : NULL"
+            },
+
+        {
+                "Desc":
+                {
+
+
+                    "Name": "RSSB11 3V3 Voltage",
+                    "SensorType": "voltage"
+                },
+
+                "Associations":
+                [
+                    [
+                        "chassis",
+                        "all_sensors",
+                        "/xyz/openbmc_project/inventory/system/board/IBM_SBP1_Baseboard"
+                    ],
+                    [
+                        "inventory",
+                        "sensors",
+                        "/xyz/openbmc_project/inventory/system/board/IBM_SBP1_Baseboard"
+                    ]
+                ],
+                "Params":
+                {
+                    "DbusParam":
+                    [
+                        {
+                            "ParamName": "V0",
+                            "Desc":
+                            {
+
+
+                                "Name": "RSSB11_VOLTAGE_3V3",
+
+                                "SensorType": "voltage"
+                            }
+                        }
+                    ]
+                },
+                "Expression": "(V0 == V0) ? V0 : NULL"
+            },
+
+        {
+                "Desc":
+                {
+
+
+                    "Name": "RSSB12 3V3 Voltage",
+                    "SensorType": "voltage"
+                },
+
+                "Associations":
+                [
+                    [
+                        "chassis",
+                        "all_sensors",
+                        "/xyz/openbmc_project/inventory/system/board/IBM_SBP1_Baseboard"
+                    ],
+                    [
+                        "inventory",
+                        "sensors",
+                        "/xyz/openbmc_project/inventory/system/board/IBM_SBP1_Baseboard"
+                    ]
+                ],
+                "Params":
+                {
+                    "DbusParam":
+                    [
+                        {
+                            "ParamName": "V0",
+                            "Desc":
+                            {
+
+
+                                "Name": "RSSB12_VOLTAGE_3V3",
+
+                                "SensorType": "voltage"
+                            }
+                        }
+                    ]
+                },
+                "Expression": "(V0 == V0) ? V0 : NULL"
+            },
+
+        {
+                "Desc":
+                {
+
+
+                    "Name": "RSSB13 3V3 Voltage",
+                    "SensorType": "voltage"
+                },
+
+                "Associations":
+                [
+                    [
+                        "chassis",
+                        "all_sensors",
+                        "/xyz/openbmc_project/inventory/system/board/IBM_SBP1_Baseboard"
+                    ],
+                    [
+                        "inventory",
+                        "sensors",
+                        "/xyz/openbmc_project/inventory/system/board/IBM_SBP1_Baseboard"
+                    ]
+                ],
+                "Params":
+                {
+                    "DbusParam":
+                    [
+                        {
+                            "ParamName": "V0",
+                            "Desc":
+                            {
+
+
+                                "Name": "RSSB13_VOLTAGE_3V3",
+
+                                "SensorType": "voltage"
+                            }
+                        }
+                    ]
+                },
+                "Expression": "(V0 == V0) ? V0 : NULL"
+            },
+
+        {
+                "Desc":
+                {
+
+
+                    "Name": "RSSB14 3V3 Voltage",
+                    "SensorType": "voltage"
+                },
+
+                "Associations":
+                [
+                    [
+                        "chassis",
+                        "all_sensors",
+                        "/xyz/openbmc_project/inventory/system/board/IBM_SBP1_Baseboard"
+                    ],
+                    [
+                        "inventory",
+                        "sensors",
+                        "/xyz/openbmc_project/inventory/system/board/IBM_SBP1_Baseboard"
+                    ]
+                ],
+                "Params":
+                {
+                    "DbusParam":
+                    [
+                        {
+                            "ParamName": "V0",
+                            "Desc":
+                            {
+
+
+                                "Name": "RSSB14_VOLTAGE_3V3",
+
+                                "SensorType": "voltage"
+                            }
+                        }
+                    ]
+                },
+                "Expression": "(V0 == V0) ? V0 : NULL"
+            },
+
+        {
+                "Desc":
+                {
+
+
+                    "Name": "RSSB15 3V3 Voltage",
+                    "SensorType": "voltage"
+                },
+
+                "Associations":
+                [
+                    [
+                        "chassis",
+                        "all_sensors",
+                        "/xyz/openbmc_project/inventory/system/board/IBM_SBP1_Baseboard"
+                    ],
+                    [
+                        "inventory",
+                        "sensors",
+                        "/xyz/openbmc_project/inventory/system/board/IBM_SBP1_Baseboard"
+                    ]
+                ],
+                "Params":
+                {
+                    "DbusParam":
+                    [
+                        {
+                            "ParamName": "V0",
+                            "Desc":
+                            {
+
+
+                                "Name": "RSSB15_VOLTAGE_3V3",
+
+                                "SensorType": "voltage"
+                            }
+                        }
+                    ]
+                },
+                "Expression": "(V0 == V0) ? V0 : NULL"
+            },
+
+        {
+                "Desc":
+                {
+
+
+                    "Name": "RSSB16 3V3 Voltage",
+                    "SensorType": "voltage"
+                },
+
+                "Associations":
+                [
+                    [
+                        "chassis",
+                        "all_sensors",
+                        "/xyz/openbmc_project/inventory/system/board/IBM_SBP1_Baseboard"
+                    ],
+                    [
+                        "inventory",
+                        "sensors",
+                        "/xyz/openbmc_project/inventory/system/board/IBM_SBP1_Baseboard"
+                    ]
+                ],
+                "Params":
+                {
+                    "DbusParam":
+                    [
+                        {
+                            "ParamName": "V0",
+                            "Desc":
+                            {
+
+
+                                "Name": "RSSB16_VOLTAGE_3V3",
+
+                                "SensorType": "voltage"
+                            }
+                        }
+                    ]
+                },
+                "Expression": "(V0 == V0) ? V0 : NULL"
+            },
+
+        {
+                "Desc":
+                {
+
+
+                    "Name": "RSSB17 3V3 Voltage",
+                    "SensorType": "voltage"
+                },
+
+                "Associations":
+                [
+                    [
+                        "chassis",
+                        "all_sensors",
+                        "/xyz/openbmc_project/inventory/system/board/IBM_SBP1_Baseboard"
+                    ],
+                    [
+                        "inventory",
+                        "sensors",
+                        "/xyz/openbmc_project/inventory/system/board/IBM_SBP1_Baseboard"
+                    ]
+                ],
+                "Params":
+                {
+                    "DbusParam":
+                    [
+                        {
+                            "ParamName": "V0",
+                            "Desc":
+                            {
+
+
+                                "Name": "RSSB17_VOLTAGE_3V3",
+
+                                "SensorType": "voltage"
+                            }
+                        }
+                    ]
+                },
+                "Expression": "(V0 == V0) ? V0 : NULL"
+            },
+
+        {
+                "Desc":
+                {
+
+
+                    "Name": "RSSB18 3V3 Voltage",
+                    "SensorType": "voltage"
+                },
+
+                "Associations":
+                [
+                    [
+                        "chassis",
+                        "all_sensors",
+                        "/xyz/openbmc_project/inventory/system/board/IBM_SBP1_Baseboard"
+                    ],
+                    [
+                        "inventory",
+                        "sensors",
+                        "/xyz/openbmc_project/inventory/system/board/IBM_SBP1_Baseboard"
+                    ]
+                ],
+                "Params":
+                {
+                    "DbusParam":
+                    [
+                        {
+                            "ParamName": "V0",
+                            "Desc":
+                            {
+
+
+                                "Name": "RSSB18_VOLTAGE_3V3",
+
+                                "SensorType": "voltage"
+                            }
+                        }
+                    ]
+                },
+                "Expression": "(V0 == V0) ? V0 : NULL"
+            },
+
+        {
+                "Desc":
+                {
+
+
+                    "Name": "RSSB19 3V3 Voltage",
+                    "SensorType": "voltage"
+                },
+
+                "Associations":
+                [
+                    [
+                        "chassis",
+                        "all_sensors",
+                        "/xyz/openbmc_project/inventory/system/board/IBM_SBP1_Baseboard"
+                    ],
+                    [
+                        "inventory",
+                        "sensors",
+                        "/xyz/openbmc_project/inventory/system/board/IBM_SBP1_Baseboard"
+                    ]
+                ],
+                "Params":
+                {
+                    "DbusParam":
+                    [
+                        {
+                            "ParamName": "V0",
+                            "Desc":
+                            {
+
+
+                                "Name": "RSSB19_VOLTAGE_3V3",
+
+                                "SensorType": "voltage"
+                            }
+                        }
+                    ]
+                },
+                "Expression": "(V0 == V0) ? V0 : NULL"
+            },
+
+        {
+                "Desc":
+                {
+
+
+                    "Name": "RSSB20 3V3 Voltage",
+                    "SensorType": "voltage"
+                },
+
+                "Associations":
+                [
+                    [
+                        "chassis",
+                        "all_sensors",
+                        "/xyz/openbmc_project/inventory/system/board/IBM_SBP1_Baseboard"
+                    ],
+                    [
+                        "inventory",
+                        "sensors",
+                        "/xyz/openbmc_project/inventory/system/board/IBM_SBP1_Baseboard"
+                    ]
+                ],
+                "Params":
+                {
+                    "DbusParam":
+                    [
+                        {
+                            "ParamName": "V0",
+                            "Desc":
+                            {
+
+
+                                "Name": "RSSB20_VOLTAGE_3V3",
+
+                                "SensorType": "voltage"
+                            }
+                        }
+                    ]
+                },
+                "Expression": "(V0 == V0) ? V0 : NULL"
+            },
+
+        {
+                "Desc":
+                {
+
+
+                    "Name": "RSSB21 3V3 Voltage",
+                    "SensorType": "voltage"
+                },
+
+                "Associations":
+                [
+                    [
+                        "chassis",
+                        "all_sensors",
+                        "/xyz/openbmc_project/inventory/system/board/IBM_SBP1_Baseboard"
+                    ],
+                    [
+                        "inventory",
+                        "sensors",
+                        "/xyz/openbmc_project/inventory/system/board/IBM_SBP1_Baseboard"
+                    ]
+                ],
+                "Params":
+                {
+                    "DbusParam":
+                    [
+                        {
+                            "ParamName": "V0",
+                            "Desc":
+                            {
+
+
+                                "Name": "RSSB21_VOLTAGE_3V3",
+
+                                "SensorType": "voltage"
+                            }
+                        }
+                    ]
+                },
+                "Expression": "(V0 == V0) ? V0 : NULL"
+            },
+
+        {
+                "Desc":
+                {
+
+
+                    "Name": "RSSB22 3V3 Voltage",
+                    "SensorType": "voltage"
+                },
+
+                "Associations":
+                [
+                    [
+                        "chassis",
+                        "all_sensors",
+                        "/xyz/openbmc_project/inventory/system/board/IBM_SBP1_Baseboard"
+                    ],
+                    [
+                        "inventory",
+                        "sensors",
+                        "/xyz/openbmc_project/inventory/system/board/IBM_SBP1_Baseboard"
+                    ]
+                ],
+                "Params":
+                {
+                    "DbusParam":
+                    [
+                        {
+                            "ParamName": "V0",
+                            "Desc":
+                            {
+
+
+                                "Name": "RSSB22_VOLTAGE_3V3",
+
+                                "SensorType": "voltage"
+                            }
+                        }
+                    ]
+                },
+                "Expression": "(V0 == V0) ? V0 : NULL"
+            },
+
+        {
+                "Desc":
+                {
+
+
+                    "Name": "RSSB23 3V3 Voltage",
+                    "SensorType": "voltage"
+                },
+
+                "Associations":
+                [
+                    [
+                        "chassis",
+                        "all_sensors",
+                        "/xyz/openbmc_project/inventory/system/board/IBM_SBP1_Baseboard"
+                    ],
+                    [
+                        "inventory",
+                        "sensors",
+                        "/xyz/openbmc_project/inventory/system/board/IBM_SBP1_Baseboard"
+                    ]
+                ],
+                "Params":
+                {
+                    "DbusParam":
+                    [
+                        {
+                            "ParamName": "V0",
+                            "Desc":
+                            {
+
+
+                                "Name": "RSSB23_VOLTAGE_3V3",
+
+                                "SensorType": "voltage"
+                            }
+                        }
+                    ]
+                },
+                "Expression": "(V0 == V0) ? V0 : NULL"
+            },
+
+        {
+                "Desc":
+                {
+
+
+                    "Name": "RSSB24 3V3 Voltage",
+                    "SensorType": "voltage"
+                },
+
+                "Associations":
+                [
+                    [
+                        "chassis",
+                        "all_sensors",
+                        "/xyz/openbmc_project/inventory/system/board/IBM_SBP1_Baseboard"
+                    ],
+                    [
+                        "inventory",
+                        "sensors",
+                        "/xyz/openbmc_project/inventory/system/board/IBM_SBP1_Baseboard"
+                    ]
+                ],
+                "Params":
+                {
+                    "DbusParam":
+                    [
+                        {
+                            "ParamName": "V0",
+                            "Desc":
+                            {
+
+
+                                "Name": "RSSB24_VOLTAGE_3V3",
+
+                                "SensorType": "voltage"
+                            }
+                        }
+                    ]
+                },
+                "Expression": "(V0 == V0) ? V0 : NULL"
+            },
+
+        {
+                "Desc":
+                {
+
+
+                    "Name": "RSSB25 3V3 Voltage",
+                    "SensorType": "voltage"
+                },
+
+                "Associations":
+                [
+                    [
+                        "chassis",
+                        "all_sensors",
+                        "/xyz/openbmc_project/inventory/system/board/IBM_SBP1_Baseboard"
+                    ],
+                    [
+                        "inventory",
+                        "sensors",
+                        "/xyz/openbmc_project/inventory/system/board/IBM_SBP1_Baseboard"
+                    ]
+                ],
+                "Params":
+                {
+                    "DbusParam":
+                    [
+                        {
+                            "ParamName": "V0",
+                            "Desc":
+                            {
+
+
+                                "Name": "RSSB25_VOLTAGE_3V3",
+
+                                "SensorType": "voltage"
+                            }
+                        }
+                    ]
+                },
+                "Expression": "(V0 == V0) ? V0 : NULL"
+            },
+
+        {
+                "Desc":
+                {
+
+
+                    "Name": "RSSB26 3V3 Voltage",
+                    "SensorType": "voltage"
+                },
+
+                "Associations":
+                [
+                    [
+                        "chassis",
+                        "all_sensors",
+                        "/xyz/openbmc_project/inventory/system/board/IBM_SBP1_Baseboard"
+                    ],
+                    [
+                        "inventory",
+                        "sensors",
+                        "/xyz/openbmc_project/inventory/system/board/IBM_SBP1_Baseboard"
+                    ]
+                ],
+                "Params":
+                {
+                    "DbusParam":
+                    [
+                        {
+                            "ParamName": "V0",
+                            "Desc":
+                            {
+
+
+                                "Name": "RSSB26_VOLTAGE_3V3",
+
+                                "SensorType": "voltage"
+                            }
+                        }
+                    ]
+                },
+                "Expression": "(V0 == V0) ? V0 : NULL"
+            },
+
+        {
+                "Desc":
+                {
+
+
+                    "Name": "RSSB27 3V3 Voltage",
+                    "SensorType": "voltage"
+                },
+
+                "Associations":
+                [
+                    [
+                        "chassis",
+                        "all_sensors",
+                        "/xyz/openbmc_project/inventory/system/board/IBM_SBP1_Baseboard"
+                    ],
+                    [
+                        "inventory",
+                        "sensors",
+                        "/xyz/openbmc_project/inventory/system/board/IBM_SBP1_Baseboard"
+                    ]
+                ],
+                "Params":
+                {
+                    "DbusParam":
+                    [
+                        {
+                            "ParamName": "V0",
+                            "Desc":
+                            {
+
+
+                                "Name": "RSSB27_VOLTAGE_3V3",
+
+                                "SensorType": "voltage"
+                            }
+                        }
+                    ]
+                },
+                "Expression": "(V0 == V0) ? V0 : NULL"
+            },
+
+        {
+                "Desc":
+                {
+
+
+                    "Name": "RSSB28 3V3 Voltage",
+                    "SensorType": "voltage"
+                },
+
+                "Associations":
+                [
+                    [
+                        "chassis",
+                        "all_sensors",
+                        "/xyz/openbmc_project/inventory/system/board/IBM_SBP1_Baseboard"
+                    ],
+                    [
+                        "inventory",
+                        "sensors",
+                        "/xyz/openbmc_project/inventory/system/board/IBM_SBP1_Baseboard"
+                    ]
+                ],
+                "Params":
+                {
+                    "DbusParam":
+                    [
+                        {
+                            "ParamName": "V0",
+                            "Desc":
+                            {
+
+
+                                "Name": "RSSB28_VOLTAGE_3V3",
+
+                                "SensorType": "voltage"
+                            }
+                        }
+                    ]
+                },
+                "Expression": "(V0 == V0) ? V0 : NULL"
+            },
+
+        {
+                "Desc":
+                {
+
+
+                    "Name": "RSSB29 3V3 Voltage",
+                    "SensorType": "voltage"
+                },
+
+                "Associations":
+                [
+                    [
+                        "chassis",
+                        "all_sensors",
+                        "/xyz/openbmc_project/inventory/system/board/IBM_SBP1_Baseboard"
+                    ],
+                    [
+                        "inventory",
+                        "sensors",
+                        "/xyz/openbmc_project/inventory/system/board/IBM_SBP1_Baseboard"
+                    ]
+                ],
+                "Params":
+                {
+                    "DbusParam":
+                    [
+                        {
+                            "ParamName": "V0",
+                            "Desc":
+                            {
+
+
+                                "Name": "RSSB29_VOLTAGE_3V3",
+
+                                "SensorType": "voltage"
+                            }
+                        }
+                    ]
+                },
+                "Expression": "(V0 == V0) ? V0 : NULL"
+            },
+
+        {
+                "Desc":
+                {
+
+
+                    "Name": "RSSB30 3V3 Voltage",
+                    "SensorType": "voltage"
+                },
+
+                "Associations":
+                [
+                    [
+                        "chassis",
+                        "all_sensors",
+                        "/xyz/openbmc_project/inventory/system/board/IBM_SBP1_Baseboard"
+                    ],
+                    [
+                        "inventory",
+                        "sensors",
+                        "/xyz/openbmc_project/inventory/system/board/IBM_SBP1_Baseboard"
+                    ]
+                ],
+                "Params":
+                {
+                    "DbusParam":
+                    [
+                        {
+                            "ParamName": "V0",
+                            "Desc":
+                            {
+
+
+                                "Name": "RSSB30_VOLTAGE_3V3",
+
+                                "SensorType": "voltage"
+                            }
+                        }
+                    ]
+                },
+                "Expression": "(V0 == V0) ? V0 : NULL"
+            },
+
+        {
+                "Desc":
+                {
+
+
+                    "Name": "RSSB31 3V3 Voltage",
+                    "SensorType": "voltage"
+                },
+
+                "Associations":
+                [
+                    [
+                        "chassis",
+                        "all_sensors",
+                        "/xyz/openbmc_project/inventory/system/board/IBM_SBP1_Baseboard"
+                    ],
+                    [
+                        "inventory",
+                        "sensors",
+                        "/xyz/openbmc_project/inventory/system/board/IBM_SBP1_Baseboard"
+                    ]
+                ],
+                "Params":
+                {
+                    "DbusParam":
+                    [
+                        {
+                            "ParamName": "V0",
+                            "Desc":
+                            {
+
+
+                                "Name": "RSSB31_VOLTAGE_3V3",
+
+                                "SensorType": "voltage"
+                            }
+                        }
+                    ]
+                },
+                "Expression": "(V0 == V0) ? V0 : NULL"
+            },
+
+        {
+                "Desc":
+                {
+
+
+                    "Name": "RSSB32 3V3 Voltage",
+                    "SensorType": "voltage"
+                },
+
+                "Associations":
+                [
+                    [
+                        "chassis",
+                        "all_sensors",
+                        "/xyz/openbmc_project/inventory/system/board/IBM_SBP1_Baseboard"
+                    ],
+                    [
+                        "inventory",
+                        "sensors",
+                        "/xyz/openbmc_project/inventory/system/board/IBM_SBP1_Baseboard"
+                    ]
+                ],
+                "Params":
+                {
+                    "DbusParam":
+                    [
+                        {
+                            "ParamName": "V0",
+                            "Desc":
+                            {
+
+
+                                "Name": "RSSB32_VOLTAGE_3V3",
+
+                                "SensorType": "voltage"
+                            }
+                        }
+                    ]
+                },
+                "Expression": "(V0 == V0) ? V0 : NULL"
+            },
+
+	    {
+                "Desc":
+                {
+
+
+                    "Name": "FAN1 SSB Voltage",
+                    "SensorType": "voltage"
+                },
+
+                "Associations":
+                [
+                    [
+                        "chassis",
+                        "all_sensors",
+                        "/xyz/openbmc_project/inventory/system/board/IBM_SBP1_Baseboard"
+                    ],
+                    [
+                        "inventory",
+                        "sensors",
+                        "/xyz/openbmc_project/inventory/system/board/IBM_SBP1_Baseboard"
+                    ]
+                ],
+                "Params":
+                {
+                    "DbusParam":
+                    [
+                        {
+                            "ParamName": "V0",
+                            "Desc":
+                            {
+
+
+                                "Name": "FAN1_SSB_VOLTAGE",
+
+                                "SensorType": "voltage"
+                            }
+                        }
+                    ]
+                },
+                "Expression": "(V0 == V0) ? V0 : NULL"
+            },
+
+        {
+                "Desc":
+                {
+
+
+                    "Name": "FAN2 SSB Voltage",
+                    "SensorType": "voltage"
+                },
+
+                "Associations":
+                [
+                    [
+                        "chassis",
+                        "all_sensors",
+                        "/xyz/openbmc_project/inventory/system/board/IBM_SBP1_Baseboard"
+                    ],
+                    [
+                        "inventory",
+                        "sensors",
+                        "/xyz/openbmc_project/inventory/system/board/IBM_SBP1_Baseboard"
+                    ]
+                ],
+                "Params":
+                {
+                    "DbusParam":
+                    [
+                        {
+                            "ParamName": "V0",
+                            "Desc":
+                            {
+
+
+                                "Name": "FAN2_SSB_VOLTAGE",
+
+                                "SensorType": "voltage"
+                            }
+                        }
+                    ]
+                },
+                "Expression": "(V0 == V0) ? V0 : NULL"
+            },
+
+        {
+                "Desc":
+                {
+
+
+                    "Name": "FAN3 SSB Voltage",
+                    "SensorType": "voltage"
+                },
+
+                "Associations":
+                [
+                    [
+                        "chassis",
+                        "all_sensors",
+                        "/xyz/openbmc_project/inventory/system/board/IBM_SBP1_Baseboard"
+                    ],
+                    [
+                        "inventory",
+                        "sensors",
+                        "/xyz/openbmc_project/inventory/system/board/IBM_SBP1_Baseboard"
+                    ]
+                ],
+                "Params":
+                {
+                    "DbusParam":
+                    [
+                        {
+                            "ParamName": "V0",
+                            "Desc":
+                            {
+
+
+                                "Name": "FAN3_SSB_VOLTAGE",
+
+                                "SensorType": "voltage"
+                            }
+                        }
+                    ]
+                },
+                "Expression": "(V0 == V0) ? V0 : NULL"
+            },
+
+        {
+                "Desc":
+                {
+
+
+                    "Name": "FAN4 SSB Voltage",
+                    "SensorType": "voltage"
+                },
+
+                "Associations":
+                [
+                    [
+                        "chassis",
+                        "all_sensors",
+                        "/xyz/openbmc_project/inventory/system/board/IBM_SBP1_Baseboard"
+                    ],
+                    [
+                        "inventory",
+                        "sensors",
+                        "/xyz/openbmc_project/inventory/system/board/IBM_SBP1_Baseboard"
+                    ]
+                ],
+                "Params":
+                {
+                    "DbusParam":
+                    [
+                        {
+                            "ParamName": "V0",
+                            "Desc":
+                            {
+
+
+                                "Name": "FAN4_SSB_VOLTAGE",
+
+                                "SensorType": "voltage"
+                            }
+                        }
+                    ]
+                },
+                "Expression": "(V0 == V0) ? V0 : NULL"
+            },
+
+        {
+                "Desc":
+                {
+
+
+                    "Name": "FAN5 SSB Voltage",
+                    "SensorType": "voltage"
+                },
+
+                "Associations":
+                [
+                    [
+                        "chassis",
+                        "all_sensors",
+                        "/xyz/openbmc_project/inventory/system/board/IBM_SBP1_Baseboard"
+                    ],
+                    [
+                        "inventory",
+                        "sensors",
+                        "/xyz/openbmc_project/inventory/system/board/IBM_SBP1_Baseboard"
+                    ]
+                ],
+                "Params":
+                {
+                    "DbusParam":
+                    [
+                        {
+                            "ParamName": "V0",
+                            "Desc":
+                            {
+
+
+                                "Name": "FAN5_SSB_VOLTAGE",
+
+                                "SensorType": "voltage"
+                            }
+                        }
+                    ]
+                },
+                "Expression": "(V0 == V0) ? V0 : NULL"
+            },
+
+        {
+                "Desc":
+                {
+
+
+                    "Name": "FAN6 SSB Voltage",
+                    "SensorType": "voltage"
+                },
+
+                "Associations":
+                [
+                    [
+                        "chassis",
+                        "all_sensors",
+                        "/xyz/openbmc_project/inventory/system/board/IBM_SBP1_Baseboard"
+                    ],
+                    [
+                        "inventory",
+                        "sensors",
+                        "/xyz/openbmc_project/inventory/system/board/IBM_SBP1_Baseboard"
+                    ]
+                ],
+                "Params":
+                {
+                    "DbusParam":
+                    [
+                        {
+                            "ParamName": "V0",
+                            "Desc":
+                            {
+
+
+                                "Name": "FAN6_SSB_VOLTAGE",
+
+                                "SensorType": "voltage"
+                            }
+                        }
+                    ]
+                },
+                "Expression": "(V0 == V0) ? V0 : NULL"
+            },
+
+        {
+                "Desc":
+                {
+
+
+                    "Name": "FAN7 SSB Voltage",
+                    "SensorType": "voltage"
+                },
+
+                "Associations":
+                [
+                    [
+                        "chassis",
+                        "all_sensors",
+                        "/xyz/openbmc_project/inventory/system/board/IBM_SBP1_Baseboard"
+                    ],
+                    [
+                        "inventory",
+                        "sensors",
+                        "/xyz/openbmc_project/inventory/system/board/IBM_SBP1_Baseboard"
+                    ]
+                ],
+                "Params":
+                {
+                    "DbusParam":
+                    [
+                        {
+                            "ParamName": "V0",
+                            "Desc":
+                            {
+
+
+                                "Name": "FAN7_SSB_VOLTAGE",
+
+                                "SensorType": "voltage"
+                            }
+                        }
+                    ]
+                },
+                "Expression": "(V0 == V0) ? V0 : NULL"
+            },
+
+        {
+                "Desc":
+                {
+
+
+                    "Name": "FAN8 SSB Voltage",
+                    "SensorType": "voltage"
+                },
+
+                "Associations":
+                [
+                    [
+                        "chassis",
+                        "all_sensors",
+                        "/xyz/openbmc_project/inventory/system/board/IBM_SBP1_Baseboard"
+                    ],
+                    [
+                        "inventory",
+                        "sensors",
+                        "/xyz/openbmc_project/inventory/system/board/IBM_SBP1_Baseboard"
+                    ]
+                ],
+                "Params":
+                {
+                    "DbusParam":
+                    [
+                        {
+                            "ParamName": "V0",
+                            "Desc":
+                            {
+
+
+                                "Name": "FAN8_SSB_VOLTAGE",
+
+                                "SensorType": "voltage"
+                            }
+                        }
+                    ]
+                },
+                "Expression": "(V0 == V0) ? V0 : NULL"
+            },
+
+        {
+                "Desc":
+                {
+
+
+                    "Name": "FAN9 SSB Voltage",
+                    "SensorType": "voltage"
+                },
+
+                "Associations":
+                [
+                    [
+                        "chassis",
+                        "all_sensors",
+                        "/xyz/openbmc_project/inventory/system/board/IBM_SBP1_Baseboard"
+                    ],
+                    [
+                        "inventory",
+                        "sensors",
+                        "/xyz/openbmc_project/inventory/system/board/IBM_SBP1_Baseboard"
+                    ]
+                ],
+                "Params":
+                {
+                    "DbusParam":
+                    [
+                        {
+                            "ParamName": "V0",
+                            "Desc":
+                            {
+
+
+                                "Name": "FAN9_SSB_VOLTAGE",
+
+                                "SensorType": "voltage"
+                            }
+                        }
+                    ]
+                },
+                "Expression": "(V0 == V0) ? V0 : NULL"
+            },
+
+        {
+                "Desc":
+                {
+
+
+                    "Name": "FAN10 SSB Voltage",
+                    "SensorType": "voltage"
+                },
+
+                "Associations":
+                [
+                    [
+                        "chassis",
+                        "all_sensors",
+                        "/xyz/openbmc_project/inventory/system/board/IBM_SBP1_Baseboard"
+                    ],
+                    [
+                        "inventory",
+                        "sensors",
+                        "/xyz/openbmc_project/inventory/system/board/IBM_SBP1_Baseboard"
+                    ]
+                ],
+                "Params":
+                {
+                    "DbusParam":
+                    [
+                        {
+                            "ParamName": "V0",
+                            "Desc":
+                            {
+
+
+                                "Name": "FAN10_SSB_VOLTAGE",
+
+                                "SensorType": "voltage"
+                            }
+                        }
+                    ]
+                },
+                "Expression": "(V0 == V0) ? V0 : NULL"
+            },
+
+        {
+                "Desc":
+                {
+
+
+                    "Name": "FAN11 SSB Voltage",
+                    "SensorType": "voltage"
+                },
+
+                "Associations":
+                [
+                    [
+                        "chassis",
+                        "all_sensors",
+                        "/xyz/openbmc_project/inventory/system/board/IBM_SBP1_Baseboard"
+                    ],
+                    [
+                        "inventory",
+                        "sensors",
+                        "/xyz/openbmc_project/inventory/system/board/IBM_SBP1_Baseboard"
+                    ]
+                ],
+                "Params":
+                {
+                    "DbusParam":
+                    [
+                        {
+                            "ParamName": "V0",
+                            "Desc":
+                            {
+
+
+                                "Name": "FAN11_SSB_VOLTAGE",
+
+                                "SensorType": "voltage"
+                            }
+                        }
+                    ]
+                },
+                "Expression": "(V0 == V0) ? V0 : NULL"
+            },
+
+        {
+                "Desc":
+                {
+
+
+                    "Name": "FAN12 SSB Voltage",
+                    "SensorType": "voltage"
+                },
+
+                "Associations":
+                [
+                    [
+                        "chassis",
+                        "all_sensors",
+                        "/xyz/openbmc_project/inventory/system/board/IBM_SBP1_Baseboard"
+                    ],
+                    [
+                        "inventory",
+                        "sensors",
+                        "/xyz/openbmc_project/inventory/system/board/IBM_SBP1_Baseboard"
+                    ]
+                ],
+                "Params":
+                {
+                    "DbusParam":
+                    [
+                        {
+                            "ParamName": "V0",
+                            "Desc":
+                            {
+
+
+                                "Name": "FAN12_SSB_VOLTAGE",
+
+                                "SensorType": "voltage"
+                            }
+                        }
+                    ]
+                },
+                "Expression": "(V0 == V0) ? V0 : NULL"
+            },
+
+        {
+                "Desc":
+                {
+
+
+                    "Name": "FAN13 SSB Voltage",
+                    "SensorType": "voltage"
+                },
+
+                "Associations":
+                [
+                    [
+                        "chassis",
+                        "all_sensors",
+                        "/xyz/openbmc_project/inventory/system/board/IBM_SBP1_Baseboard"
+                    ],
+                    [
+                        "inventory",
+                        "sensors",
+                        "/xyz/openbmc_project/inventory/system/board/IBM_SBP1_Baseboard"
+                    ]
+                ],
+                "Params":
+                {
+                    "DbusParam":
+                    [
+                        {
+                            "ParamName": "V0",
+                            "Desc":
+                            {
+
+
+                                "Name": "FAN13_SSB_VOLTAGE",
+
+                                "SensorType": "voltage"
+                            }
+                        }
+                    ]
+                },
+                "Expression": "(V0 == V0) ? V0 : NULL"
+            },
+
+        {
+                "Desc":
+                {
+
+
+                    "Name": "FAN14 SSB Voltage",
+                    "SensorType": "voltage"
+                },
+
+                "Associations":
+                [
+                    [
+                        "chassis",
+                        "all_sensors",
+                        "/xyz/openbmc_project/inventory/system/board/IBM_SBP1_Baseboard"
+                    ],
+                    [
+                        "inventory",
+                        "sensors",
+                        "/xyz/openbmc_project/inventory/system/board/IBM_SBP1_Baseboard"
+                    ]
+                ],
+                "Params":
+                {
+                    "DbusParam":
+                    [
+                        {
+                            "ParamName": "V0",
+                            "Desc":
+                            {
+
+
+                                "Name": "FAN14_SSB_VOLTAGE",
+
+                                "SensorType": "voltage"
+                            }
+                        }
+                    ]
+                },
+                "Expression": "(V0 == V0) ? V0 : NULL"
+            },
+
+        {
+                "Desc":
+                {
+
+
+                    "Name": "FAN15 SSB Voltage",
+                    "SensorType": "voltage"
+                },
+
+                "Associations":
+                [
+                    [
+                        "chassis",
+                        "all_sensors",
+                        "/xyz/openbmc_project/inventory/system/board/IBM_SBP1_Baseboard"
+                    ],
+                    [
+                        "inventory",
+                        "sensors",
+                        "/xyz/openbmc_project/inventory/system/board/IBM_SBP1_Baseboard"
+                    ]
+                ],
+                "Params":
+                {
+                    "DbusParam":
+                    [
+                        {
+                            "ParamName": "V0",
+                            "Desc":
+                            {
+
+
+                                "Name": "FAN15_SSB_VOLTAGE",
+
+                                "SensorType": "voltage"
+                            }
+                        }
+                    ]
+                },
+                "Expression": "(V0 == V0) ? V0 : NULL"
+            },
+
+        {
+                "Desc":
+                {
+
+
+                    "Name": "FAN16 SSB Voltage",
+                    "SensorType": "voltage"
+                },
+
+                "Associations":
+                [
+                    [
+                        "chassis",
+                        "all_sensors",
+                        "/xyz/openbmc_project/inventory/system/board/IBM_SBP1_Baseboard"
+                    ],
+                    [
+                        "inventory",
+                        "sensors",
+                        "/xyz/openbmc_project/inventory/system/board/IBM_SBP1_Baseboard"
+                    ]
+                ],
+                "Params":
+                {
+                    "DbusParam":
+                    [
+                        {
+                            "ParamName": "V0",
+                            "Desc":
+                            {
+
+
+                                "Name": "FAN16_SSB_VOLTAGE",
+
+                                "SensorType": "voltage"
+                            }
+                        }
+                    ]
+                },
+                "Expression": "(V0 == V0) ? V0 : NULL"
+            },
+
+        {
+                "Desc":
+                {
+
+
+                    "Name": "FAN1 SSB Current",
+                    "SensorType": "current"
+                },
+
+                "Associations":
+                [
+                    [
+                        "chassis",
+                        "all_sensors",
+                        "/xyz/openbmc_project/inventory/system/board/IBM_SBP1_Baseboard"
+                    ],
+                    [
+                        "inventory",
+                        "sensors",
+                        "/xyz/openbmc_project/inventory/system/board/IBM_SBP1_Baseboard"
+                    ]
+                ],
+                "Params":
+                {
+                    "DbusParam":
+                    [
+                        {
+                            "ParamName": "C0",
+                            "Desc":
+                            {
+
+
+                                "Name": "FAN1_SSB_CURRENT",
+
+                                "SensorType": "current"
+                            }
+                        }
+                    ]
+                },
+                "Expression": "(C0 == C0) ? C0 : NULL"
+            },
+
+        {
+                "Desc":
+                {
+
+
+                    "Name": "FAN2 SSB Current",
+                    "SensorType": "current"
+                },
+
+                "Associations":
+                [
+                    [
+                        "chassis",
+                        "all_sensors",
+                        "/xyz/openbmc_project/inventory/system/board/IBM_SBP1_Baseboard"
+                    ],
+                    [
+                        "inventory",
+                        "sensors",
+                        "/xyz/openbmc_project/inventory/system/board/IBM_SBP1_Baseboard"
+                    ]
+                ],
+                "Params":
+                {
+                    "DbusParam":
+                    [
+                        {
+                            "ParamName": "C0",
+                            "Desc":
+                            {
+
+
+                                "Name": "FAN2_SSB_CURRENT",
+
+                                "SensorType": "current"
+                            }
+                        }
+                    ]
+                },
+                "Expression": "(C0 == C0) ? C0 : NULL"
+            },
+
+        {
+                "Desc":
+                {
+
+
+                    "Name": "FAN3 SSB Current",
+                    "SensorType": "current"
+                },
+
+                "Associations":
+                [
+                    [
+                        "chassis",
+                        "all_sensors",
+                        "/xyz/openbmc_project/inventory/system/board/IBM_SBP1_Baseboard"
+                    ],
+                    [
+                        "inventory",
+                        "sensors",
+                        "/xyz/openbmc_project/inventory/system/board/IBM_SBP1_Baseboard"
+                    ]
+                ],
+                "Params":
+                {
+                    "DbusParam":
+                    [
+                        {
+                            "ParamName": "C0",
+                            "Desc":
+                            {
+
+
+                                "Name": "FAN3_SSB_CURRENT",
+
+                                "SensorType": "current"
+                            }
+                        }
+                    ]
+                },
+                "Expression": "(C0 == C0) ? C0 : NULL"
+            },
+
+        {
+                "Desc":
+                {
+
+
+                    "Name": "FAN4 SSB Current",
+                    "SensorType": "current"
+                },
+
+                "Associations":
+                [
+                    [
+                        "chassis",
+                        "all_sensors",
+                        "/xyz/openbmc_project/inventory/system/board/IBM_SBP1_Baseboard"
+                    ],
+                    [
+                        "inventory",
+                        "sensors",
+                        "/xyz/openbmc_project/inventory/system/board/IBM_SBP1_Baseboard"
+                    ]
+                ],
+                "Params":
+                {
+                    "DbusParam":
+                    [
+                        {
+                            "ParamName": "C0",
+                            "Desc":
+                            {
+
+
+                                "Name": "FAN4_SSB_CURRENT",
+
+                                "SensorType": "current"
+                            }
+                        }
+                    ]
+                },
+                "Expression": "(C0 == C0) ? C0 : NULL"
+            },
+
+        {
+                "Desc":
+                {
+
+
+                    "Name": "FAN5 SSB Current",
+                    "SensorType": "current"
+                },
+
+                "Associations":
+                [
+                    [
+                        "chassis",
+                        "all_sensors",
+                        "/xyz/openbmc_project/inventory/system/board/IBM_SBP1_Baseboard"
+                    ],
+                    [
+                        "inventory",
+                        "sensors",
+                        "/xyz/openbmc_project/inventory/system/board/IBM_SBP1_Baseboard"
+                    ]
+                ],
+                "Params":
+                {
+                    "DbusParam":
+                    [
+                        {
+                            "ParamName": "C0",
+                            "Desc":
+                            {
+
+
+                                "Name": "FAN5_SSB_CURRENT",
+
+                                "SensorType": "current"
+                            }
+                        }
+                    ]
+                },
+                "Expression": "(C0 == C0) ? C0 : NULL"
+            },
+
+        {
+                "Desc":
+                {
+
+
+                    "Name": "FAN6 SSB Current",
+                    "SensorType": "current"
+                },
+
+                "Associations":
+                [
+                    [
+                        "chassis",
+                        "all_sensors",
+                        "/xyz/openbmc_project/inventory/system/board/IBM_SBP1_Baseboard"
+                    ],
+                    [
+                        "inventory",
+                        "sensors",
+                        "/xyz/openbmc_project/inventory/system/board/IBM_SBP1_Baseboard"
+                    ]
+                ],
+                "Params":
+                {
+                    "DbusParam":
+                    [
+                        {
+                            "ParamName": "C0",
+                            "Desc":
+                            {
+
+
+                                "Name": "FAN6_SSB_CURRENT",
+
+                                "SensorType": "current"
+                            }
+                        }
+                    ]
+                },
+                "Expression": "(C0 == C0) ? C0 : NULL"
+            },
+
+        {
+                "Desc":
+                {
+
+
+                    "Name": "FAN7 SSB Current",
+                    "SensorType": "current"
+                },
+
+                "Associations":
+                [
+                    [
+                        "chassis",
+                        "all_sensors",
+                        "/xyz/openbmc_project/inventory/system/board/IBM_SBP1_Baseboard"
+                    ],
+                    [
+                        "inventory",
+                        "sensors",
+                        "/xyz/openbmc_project/inventory/system/board/IBM_SBP1_Baseboard"
+                    ]
+                ],
+                "Params":
+                {
+                    "DbusParam":
+                    [
+                        {
+                            "ParamName": "C0",
+                            "Desc":
+                            {
+
+
+                                "Name": "FAN7_SSB_CURRENT",
+
+                                "SensorType": "current"
+                            }
+                        }
+                    ]
+                },
+                "Expression": "(C0 == C0) ? C0 : NULL"
+            },
+
+        {
+                "Desc":
+                {
+
+
+                    "Name": "FAN8 SSB Current",
+                    "SensorType": "current"
+                },
+
+                "Associations":
+                [
+                    [
+                        "chassis",
+                        "all_sensors",
+                        "/xyz/openbmc_project/inventory/system/board/IBM_SBP1_Baseboard"
+                    ],
+                    [
+                        "inventory",
+                        "sensors",
+                        "/xyz/openbmc_project/inventory/system/board/IBM_SBP1_Baseboard"
+                    ]
+                ],
+                "Params":
+                {
+                    "DbusParam":
+                    [
+                        {
+                            "ParamName": "C0",
+                            "Desc":
+                            {
+
+
+                                "Name": "FAN8_SSB_CURRENT",
+
+                                "SensorType": "current"
+                            }
+                        }
+                    ]
+                },
+                "Expression": "(C0 == C0) ? C0 : NULL"
+            },
+
+        {
+                "Desc":
+                {
+
+
+                    "Name": "FAN9 SSB Current",
+                    "SensorType": "current"
+                },
+
+                "Associations":
+                [
+                    [
+                        "chassis",
+                        "all_sensors",
+                        "/xyz/openbmc_project/inventory/system/board/IBM_SBP1_Baseboard"
+                    ],
+                    [
+                        "inventory",
+                        "sensors",
+                        "/xyz/openbmc_project/inventory/system/board/IBM_SBP1_Baseboard"
+                    ]
+                ],
+                "Params":
+                {
+                    "DbusParam":
+                    [
+                        {
+                            "ParamName": "C0",
+                            "Desc":
+                            {
+
+
+                                "Name": "FAN9_SSB_CURRENT",
+
+                                "SensorType": "current"
+                            }
+                        }
+                    ]
+                },
+                "Expression": "(C0 == C0) ? C0 : NULL"
+            },
+
+        {
+                "Desc":
+                {
+
+
+                    "Name": "FAN10 SSB Current",
+                    "SensorType": "current"
+                },
+
+                "Associations":
+                [
+                    [
+                        "chassis",
+                        "all_sensors",
+                        "/xyz/openbmc_project/inventory/system/board/IBM_SBP1_Baseboard"
+                    ],
+                    [
+                        "inventory",
+                        "sensors",
+                        "/xyz/openbmc_project/inventory/system/board/IBM_SBP1_Baseboard"
+                    ]
+                ],
+                "Params":
+                {
+                    "DbusParam":
+                    [
+                        {
+                            "ParamName": "C0",
+                            "Desc":
+                            {
+
+
+                                "Name": "FAN10_SSB_CURRENT",
+
+                                "SensorType": "current"
+                            }
+                        }
+                    ]
+                },
+                "Expression": "(C0 == C0) ? C0 : NULL"
+            },
+
+        {
+                "Desc":
+                {
+
+
+                    "Name": "FAN11 SSB Current",
+                    "SensorType": "current"
+                },
+
+                "Associations":
+                [
+                    [
+                        "chassis",
+                        "all_sensors",
+                        "/xyz/openbmc_project/inventory/system/board/IBM_SBP1_Baseboard"
+                    ],
+                    [
+                        "inventory",
+                        "sensors",
+                        "/xyz/openbmc_project/inventory/system/board/IBM_SBP1_Baseboard"
+                    ]
+                ],
+                "Params":
+                {
+                    "DbusParam":
+                    [
+                        {
+                            "ParamName": "C0",
+                            "Desc":
+                            {
+
+
+                                "Name": "FAN11_SSB_CURRENT",
+
+                                "SensorType": "current"
+                            }
+                        }
+                    ]
+                },
+                "Expression": "(C0 == C0) ? C0 : NULL"
+            },
+
+        {
+                "Desc":
+                {
+
+
+                    "Name": "FAN12 SSB Current",
+                    "SensorType": "current"
+                },
+
+                "Associations":
+                [
+                    [
+                        "chassis",
+                        "all_sensors",
+                        "/xyz/openbmc_project/inventory/system/board/IBM_SBP1_Baseboard"
+                    ],
+                    [
+                        "inventory",
+                        "sensors",
+                        "/xyz/openbmc_project/inventory/system/board/IBM_SBP1_Baseboard"
+                    ]
+                ],
+                "Params":
+                {
+                    "DbusParam":
+                    [
+                        {
+                            "ParamName": "C0",
+                            "Desc":
+                            {
+
+
+                                "Name": "FAN12_SSB_CURRENT",
+
+                                "SensorType": "current"
+                            }
+                        }
+                    ]
+                },
+                "Expression": "(C0 == C0) ? C0 : NULL"
+            },
+
+        {
+                "Desc":
+                {
+
+
+                    "Name": "FAN13 SSB Current",
+                    "SensorType": "current"
+                },
+
+                "Associations":
+                [
+                    [
+                        "chassis",
+                        "all_sensors",
+                        "/xyz/openbmc_project/inventory/system/board/IBM_SBP1_Baseboard"
+                    ],
+                    [
+                        "inventory",
+                        "sensors",
+                        "/xyz/openbmc_project/inventory/system/board/IBM_SBP1_Baseboard"
+                    ]
+                ],
+                "Params":
+                {
+                    "DbusParam":
+                    [
+                        {
+                            "ParamName": "C0",
+                            "Desc":
+                            {
+
+
+                                "Name": "FAN13_SSB_CURRENT",
+
+                                "SensorType": "current"
+                            }
+                        }
+                    ]
+                },
+                "Expression": "(C0 == C0) ? C0 : NULL"
+            },
+
+        {
+                "Desc":
+                {
+
+
+                    "Name": "FAN14 SSB Current",
+                    "SensorType": "current"
+                },
+
+                "Associations":
+                [
+                    [
+                        "chassis",
+                        "all_sensors",
+                        "/xyz/openbmc_project/inventory/system/board/IBM_SBP1_Baseboard"
+                    ],
+                    [
+                        "inventory",
+                        "sensors",
+                        "/xyz/openbmc_project/inventory/system/board/IBM_SBP1_Baseboard"
+                    ]
+                ],
+                "Params":
+                {
+                    "DbusParam":
+                    [
+                        {
+                            "ParamName": "C0",
+                            "Desc":
+                            {
+
+
+                                "Name": "FAN14_SSB_CURRENT",
+
+                                "SensorType": "current"
+                            }
+                        }
+                    ]
+                },
+                "Expression": "(C0 == C0) ? C0 : NULL"
+            },
+
+        {
+                "Desc":
+                {
+
+
+                    "Name": "FAN15 SSB Current",
+                    "SensorType": "current"
+                },
+
+                "Associations":
+                [
+                    [
+                        "chassis",
+                        "all_sensors",
+                        "/xyz/openbmc_project/inventory/system/board/IBM_SBP1_Baseboard"
+                    ],
+                    [
+                        "inventory",
+                        "sensors",
+                        "/xyz/openbmc_project/inventory/system/board/IBM_SBP1_Baseboard"
+                    ]
+                ],
+                "Params":
+                {
+                    "DbusParam":
+                    [
+                        {
+                            "ParamName": "C0",
+                            "Desc":
+                            {
+
+
+                                "Name": "FAN15_SSB_CURRENT",
+
+                                "SensorType": "current"
+                            }
+                        }
+                    ]
+                },
+                "Expression": "(C0 == C0) ? C0 : NULL"
+            },
+
+        {
+                "Desc":
+                {
+
+
+                    "Name": "FAN16 SSB Current",
+                    "SensorType": "current"
+                },
+
+                "Associations":
+                [
+                    [
+                        "chassis",
+                        "all_sensors",
+                        "/xyz/openbmc_project/inventory/system/board/IBM_SBP1_Baseboard"
+                    ],
+                    [
+                        "inventory",
+                        "sensors",
+                        "/xyz/openbmc_project/inventory/system/board/IBM_SBP1_Baseboard"
+                    ]
+                ],
+                "Params":
+                {
+                    "DbusParam":
+                    [
+                        {
+                            "ParamName": "C0",
+                            "Desc":
+                            {
+
+
+                                "Name": "FAN16_SSB_CURRENT",
+
+                                "SensorType": "current"
+                            }
+                        }
+                    ]
+                },
+                "Expression": "(C0 == C0) ? C0 : NULL"
+            },
+	    {
+		"Desc":
+		{
+		    "Name": "M2 SSD1 SSB Voltage",
+		    "SensorType": "voltage"
+		},
+		"Associations":
+		[
+		    [
+			"chassis",
+			"all_sensors",
+			"/xyz/openbmc_project/inventory/system/board/IBM_SBP1_Baseboard"
+		    ],
+		    [
+			"inventory",
+			"sensors",
+			"/xyz/openbmc_project/inventory/system/board/IBM_SBP1_Baseboard"
+		    ]
+		],
+		"Params":
+		{
+		    "DbusParam":
+		    [
+			{
+			    "ParamName": "V0",
+			    "Desc":
+			    {
+				"Name": "M2_SSD1_Voltage",
+				"SensorType": "voltage"
+			    }
+			}
+		    ]
+		},
+		"Expression": "(V0 == V0) ? V0 : NULL"
+	    },
+	    {
+		"Desc":
+		{
+		    "Name": "M2 SSD2 SSB Voltage",
+		    "SensorType": "voltage"
+		},
+		"Associations":
+		[
+		    [
+			"chassis",
+			"all_sensors",
+			"/xyz/openbmc_project/inventory/system/board/IBM_SBP1_Baseboard"
+		    ],
+		    [
+			"inventory",
+			"sensors",
+			"/xyz/openbmc_project/inventory/system/board/IBM_SBP1_Baseboard"
+		    ]
+		],
+		"Params":
+		{
+		    "DbusParam":
+		    [
+			{
+			    "ParamName": "V0",
+			    "Desc":
+			    {
+				"Name": "M2_SSD2_Voltage",
+				"SensorType": "voltage"
+			    }
+			}
+		    ]
+		},
+		"Expression": "(V0 == V0) ? V0 : NULL"
+	    },
+	    {
+		"Desc":
+		{
+		    "Name": "M2 SSD1 SSB Current",
+		    "SensorType": "current"
+		},
+		"Associations":
+		[
+		    [
+			"chassis",
+			"all_sensors",
+			"/xyz/openbmc_project/inventory/system/board/IBM_SBP1_Baseboard"
+		    ],
+		    [
+			"inventory",
+			"sensors",
+			"/xyz/openbmc_project/inventory/system/board/IBM_SBP1_Baseboard"
+		    ]
+		],
+		"Params":
+		{
+		    "DbusParam":
+		    [
+			{
+			    "ParamName": "C0",
+			    "Desc":
+			    {
+				"Name": "M2_SSD1_Current",
+				"SensorType": "current"
+			    }
+			}
+		    ]
+		},
+		"Expression": "(C0 == C0) ? C0 : NULL"
+	    },
+	    {
+		"Desc":
+		{
+		    "Name": "M2 SSD2 SSB Current",
+		    "SensorType": "current"
+		},
+		"Associations":
+		[
+		    [
+			"chassis",
+			"all_sensors",
+			"/xyz/openbmc_project/inventory/system/board/IBM_SBP1_Baseboard"
+		    ],
+		    [
+			"inventory",
+			"sensors",
+			"/xyz/openbmc_project/inventory/system/board/IBM_SBP1_Baseboard"
+		    ]
+		],
+		"Params":
+		{
+		    "DbusParam":
+		    [
+			{
+			    "ParamName": "C0",
+			    "Desc":
+			    {
+				"Name": "M2_SSD2_Current",
+				"SensorType": "current"
+			    }
+			}
+		    ]
+		},
+		"Expression": "(C0 == C0) ? C0 : NULL"
+	    },
+	    {
+		"Desc":
+		{
+		    "Name": "QSFP1 Temperature",
+		    "SensorType": "temperature"
+		},
+		"Associations":
+		[
+		    [
+			"chassis",
+			"all_sensors",
+			"/xyz/openbmc_project/inventory/system/board/IBM_SBP1_Baseboard"
+		    ],
+		    [
+			"inventory",
+			"sensors",
+			"/xyz/openbmc_project/inventory/system/board/IBM_SBP1_Baseboard"
+		    ]
+		],
+		"Params":
+		{
+		    "DbusParam":
+		    [
+			{
+			    "ParamName": "T0",
+			    "Desc":
+			    {
+				"Name": "QSFP1_TEMP",
+				"SensorType": "temperature"
+			    }
+			}
+		    ]
+		},
+		"Expression": "(T0 == T0) ? T0 : NULL"
+	    },
+	    {
+		"Desc":
+		{
+		    "Name": "QSFP2 Temperature",
+		    "SensorType": "temperature"
+		},
+		"Associations":
+		[
+		    [
+			"chassis",
+			"all_sensors",
+			"/xyz/openbmc_project/inventory/system/board/IBM_SBP1_Baseboard"
+		    ],
+		    [
+			"inventory",
+			"sensors",
+			"/xyz/openbmc_project/inventory/system/board/IBM_SBP1_Baseboard"
+		    ]
+		],
+		"Params":
+		{
+		    "DbusParam":
+		    [
+			{
+			    "ParamName": "T0",
+			    "Desc":
+			    {
+				"Name": "QSFP2_TEMP",
+				"SensorType": "temperature"
+			    }
+			}
+		    ]
+		},
+		"Expression": "(T0 == T0) ? T0 : NULL"
+	    },
+	    {
+		"Desc":
+		{
+		    "Name": "QSFP3 Temperature",
+		    "SensorType": "temperature"
+		},
+		"Associations":
+		[
+		    [
+			"chassis",
+			"all_sensors",
+			"/xyz/openbmc_project/inventory/system/board/IBM_SBP1_Baseboard"
+		    ],
+		    [
+			"inventory",
+			"sensors",
+			"/xyz/openbmc_project/inventory/system/board/IBM_SBP1_Baseboard"
+		    ]
+		],
+		"Params":
+		{
+		    "DbusParam":
+		    [
+			{
+			    "ParamName": "T0",
+			    "Desc":
+			    {
+				"Name": "QSFP3_TEMP",
+				"SensorType": "temperature"
+			    }
+			}
+		    ]
+		},
+		"Expression": "(T0 == T0) ? T0 : NULL"
+	    },
+	    {
+		"Desc":
+		{
+		    "Name": "QSFP4 Temperature",
+		    "SensorType": "temperature"
+		},
+		"Associations":
+		[
+		    [
+			"chassis",
+			"all_sensors",
+			"/xyz/openbmc_project/inventory/system/board/IBM_SBP1_Baseboard"
+		    ],
+		    [
+			"inventory",
+			"sensors",
+			"/xyz/openbmc_project/inventory/system/board/IBM_SBP1_Baseboard"
+		    ]
+		],
+		"Params":
+		{
+		    "DbusParam":
+		    [
+			{
+			    "ParamName": "T0",
+			    "Desc":
+			    {
+				"Name": "QSFP4_TEMP",
+				"SensorType": "temperature"
+			    }
+			}
+		    ]
+		},
+		"Expression": "(T0 == T0) ? T0 : NULL"
+	    }
+    ]
