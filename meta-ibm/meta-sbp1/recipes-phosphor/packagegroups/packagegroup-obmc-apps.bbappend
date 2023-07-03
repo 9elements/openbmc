@@ -13,6 +13,7 @@ RDEPENDS:${PN}-devtools:append = " \
     net-tools \
     lmsensors-sensors \
     screen \
+    zram \
     "
 
 PACKAGES += " \
