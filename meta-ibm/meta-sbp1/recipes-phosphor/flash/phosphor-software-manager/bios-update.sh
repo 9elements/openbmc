@@ -125,3 +125,5 @@ power_off
 # Disable FM_FLASH_SEC_OVRD
 gpioset $(gpiofind FM_FLASH_SEC_OVRD)=0
 
+# Delete cached bios version file if it exist.
+rm /var/cache/bios_version || true
