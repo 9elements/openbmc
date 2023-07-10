@@ -49,3 +49,6 @@ echo "Reset ME to boot from new bios"
 # busctl call "$IPMB_OBJ" "$IPMB_PATH" "$IPMB_INTF" $IPMB_CALL $ME_CMD_RESET
 
 busctl set-property xyz.openbmc_project.State.Chassis /xyz/openbmc_project/state/chassis0 xyz.openbmc_project.State.Chassis RequestedPowerTransition s xyz.openbmc_project.State.Chassis.Transition.Off
+
+# Delete cached bios version file if it exist.
+rm /var/cache/bios_version || true
