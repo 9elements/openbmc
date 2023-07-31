@@ -1,0 +1,26 @@
+From ce4cc2055aba322387096811b1ab3cf79e4f814b Mon Sep 17 00:00:00 2001
+From: Patrick Rudolph <patrick.rudolph@9elements.com>
+Date: Fri, 28 Jul 2023 12:56:27 +0200
+Subject: [PATCH] bmcweb: Fix PowerRestorePolicyTypes
+
+Signed-off-by: Patrick Rudolph <patrick.rudolph@9elements.com>
+---
+ redfish-core/lib/systems.hpp | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+diff --git a/redfish-core/lib/systems.hpp b/redfish-core/lib/systems.hpp
+index 54dbd703..188ff32d 100644
+--- a/redfish-core/lib/systems.hpp
++++ b/redfish-core/lib/systems.hpp
+@@ -1357,7 +1357,7 @@ inline computer_system::PowerRestorePolicyTypes
+         return computer_system::PowerRestorePolicyTypes::AlwaysOff;
+     }
+     if (value ==
+-        "xyz.openbmc_project.Control.Power.RestorePolicy.Policy.AlwaysRestore")
++        "xyz.openbmc_project.Control.Power.RestorePolicy.Policy.Restore")
+     {
+         return computer_system::PowerRestorePolicyTypes::LastState;
+     }
+-- 
+2.41.0
+

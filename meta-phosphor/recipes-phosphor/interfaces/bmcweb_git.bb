@@ -19,6 +19,7 @@ PV = "1.0+git${SRCPV}"
 SRC_URI = "git://github.com/openbmc/bmcweb.git;branch=master;protocol=https"
 SRC_URI += " \
     file://run-ptest \
+    file://0001-bmcweb-Fix-PowerRestorePolicyTypes.patch \
 "
 
 S = "${WORKDIR}/git"
