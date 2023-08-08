@@ -58,11 +58,13 @@ RDEPENDS_PN_SYSTEM_EXTRAS:fb-withhost = " \
 
 SUMMARY:${PN}-system = "Facebook System"
 RDEPENDS:${PN}-system = " \
+        bmcweb \
         entity-manager \
         dbus-sensors \
         phosphor-virtual-sensor \
         phosphor-fan-sensor-monitor \
         phosphor-gpio-monitor-monitor \
         tzdata-core \
+        webui-vue \
         ${RDEPENDS_PN_SYSTEM_EXTRAS} \
         "
