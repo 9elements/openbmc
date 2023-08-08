@@ -8,12 +8,9 @@ inherit native
 PROVIDES += "virtual/phosphor-led-manager-config-native"
 
 SRC_URI += "file://led.yaml \
-            file://bmc_booted.conf \
            "
 S = "${WORKDIR}"
 
-# Overwrite the example led layout yaml file prior
-# to building the phosphor-led-manager package
 do_install() {
     SRC=${S}
     DEST=${D}${datadir}/phosphor-led-manager
