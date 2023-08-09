@@ -3,6 +3,15 @@ Description=OpenBMC Fan Control Daemon
 
 [Service]
 Type=simple
+ExecStartPre=/bin/sh -c 'for ADDR in $(ls /sys/bus/i2c/drivers/max6639/|grep 2e); do i2cset -f -y $${ADDR/-00/ 0x} 0x03 0x55; done'
+ExecStartPre=/bin/sh -c 'for ADDR in $(ls /sys/bus/i2c/drivers/max6639/|grep 2e); do i2cset -f -y $${ADDR/-00/ 0x} 0x08 0x28; done'
+ExecStartPre=/bin/sh -c 'for ADDR in $(ls /sys/bus/i2c/drivers/max6639/|grep 2e); do i2cset -f -y $${ADDR/-00/ 0x} 0x0a 0x3c; done'
+ExecStartPre=/bin/sh -c 'for ADDR in $(ls /sys/bus/i2c/drivers/max6639/|grep 2e); do i2cset -f -y $${ADDR/-00/ 0x} 0x0c 0x32; done'
+ExecStartPre=/bin/sh -c 'for ADDR in $(ls /sys/bus/i2c/drivers/max6639/|grep 2e); do i2cset -f -y $${ADDR/-00/ 0x} 0x10 0x83; done'
+ExecStartPre=/bin/sh -c 'for ADDR in $(ls /sys/bus/i2c/drivers/max6639/|grep 2e); do i2cset -f -y $${ADDR/-00/ 0x} 0x11 0x01; done'
+ExecStartPre=/bin/sh -c 'for ADDR in $(ls /sys/bus/i2c/drivers/max6639/|grep 2e); do i2cset -f -y $${ADDR/-00/ 0x} 0x13 0x83; done'
+ExecStartPre=/bin/sh -c 'for ADDR in $(ls /sys/bus/i2c/drivers/max6639/|grep 2e); do i2cset -f -y $${ADDR/-00/ 0x} 0x22 0xfe; done'
+ExecStartPre=/bin/sh -c 'for ADDR in $(ls /sys/bus/i2c/drivers/max6639/|grep 2e); do i2cset -f -y $${ADDR/-00/ 0x} 0x24 0x40; done'
 ExecStart=/usr/bin/swampd -t
 Restart=always
 RestartSec=5
