@@ -1,0 +1,97 @@
+From 13faf431d1d27b2a4b6f4834b66c729949a24cab Mon Sep 17 00:00:00 2001
+From: Patrick Rudolph <patrick.rudolph@9elements.com>
+Date: Wed, 30 Aug 2023 14:10:01 +0200
+Subject: [PATCH 2/2] sbp1: Add PCH and AUX VRs to PID loop
+
+Add the following regulators:
+- P5V_AUX
+- P3V3_AUX
+- P1V05_PCH_AUX
+- P1V8_PCH_AUX
+
+Change-Id: I93a96e7977d586e0d553cf0d1df8b0e09c8ca490
+Signed-off-by: Patrick Rudolph <patrick.rudolph@9elements.com>
+---
+ configurations/sbp1_baseboard.json |  2 +-
+ configurations/sbp1_chassis.json   | 52 ++++++++++++++++++++++++++++++
+ 2 files changed, 53 insertions(+), 1 deletion(-)
+
+diff --git a/configurations/sbp1_baseboard.json b/configurations/sbp1_baseboard.json
+index a3b8fa6..1750522 100644
+--- a/configurations/sbp1_baseboard.json
++++ b/configurations/sbp1_baseboard.json
+@@ -450,7 +450,7 @@
+         },
+         {
+             "Address": "0x40",
+-            "Bus": "24",
++            "Bus": "34",
+             "Labels": [
+                 "iout1",
+                 "vin",
+diff --git a/configurations/sbp1_chassis.json b/configurations/sbp1_chassis.json
+index e3411cc..5d14c18 100644
+--- a/configurations/sbp1_chassis.json
++++ b/configurations/sbp1_chassis.json
+@@ -1877,6 +1877,58 @@
+                 "PSU"
+             ]
+         },
++        {
++            "Class": "temp",
++            "FFGainCoefficient": 0,
++            "FFOffCoefficient": 0,
++            "ICoefficient": -4.6,
++            "ILimitMax": 32000,
++            "ILimitMin": 2500,
++            "Inputs": [
++                "P1V05_PCH_AUX Temperature",
++                "P1V8_PCH_AUX Temperature"
++            ],
++            "Name": "PCH VR Temperature",
++            "NegativeHysteresis": 2,
++            "OutLimitMax": 32000,
++            "OutLimitMin": 2500,
++            "Outputs": [],
++            "PCoefficient": -536,
++            "PositiveHysteresis": 0,
++            "SetPoint": 60,
++            "SlewNeg": 0,
++            "SlewPos": 0,
++            "Type": "Pid",
++            "Zones": [
++                "PSU"
++            ]
++        },
++        {
++            "Class": "temp",
++            "FFGainCoefficient": 0,
++            "FFOffCoefficient": 0,
++            "ICoefficient": -4.6,
++            "ILimitMax": 32000,
++            "ILimitMin": 2500,
++            "Inputs": [
++                "P5V_AUX Temperature",
++                "P3V3_AUX Temperature"
++            ],
++            "Name": "AUX VR Temperature",
++            "NegativeHysteresis": 2,
++            "OutLimitMax": 32000,
++            "OutLimitMin": 2500,
++            "Outputs": [],
++            "PCoefficient": -536,
++            "PositiveHysteresis": 0,
++            "SetPoint": 60,
++            "SlewNeg": 0,
++            "SlewPos": 0,
++            "Type": "Pid",
++            "Zones": [
++                "PSU"
++            ]
++        },
+         {
+             "FailSafePercent": 100,
+             "MinThermalOutput": 2500,
+-- 
+2.41.0
+

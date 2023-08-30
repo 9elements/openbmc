@@ -1,0 +1,84 @@
+From aec5dcd4efcf09135256e7c082dd8b226aaf06be Mon Sep 17 00:00:00 2001
+From: Patrick Rudolph <patrick.rudolph@9elements.com>
+Date: Thu, 31 Aug 2023 10:41:03 +0200
+Subject: [PATCH] sbp1: Add ruler drives to PID loop
+
+SBP1 has up to 32 ruler drive NVMes. Add them to the
+PID loop as well.
+
+Change-Id: Ibde9b96cd0b33ded650e9c550831697a4eb68d02
+Signed-off-by: Patrick Rudolph <patrick.rudolph@9elements.com>
+---
+ configurations/sbp1_chassis.json | 56 ++++++++++++++++++++++++++++++++
+ 1 file changed, 56 insertions(+)
+
+diff --git a/configurations/sbp1_chassis.json b/configurations/sbp1_chassis.json
+index 5d14c18..d23eeec 100644
+--- a/configurations/sbp1_chassis.json
++++ b/configurations/sbp1_chassis.json
+@@ -1929,6 +1929,62 @@
+                 "PSU"
+             ]
+         },
++        {
++            "Class": "temp",
++            "FFGainCoefficient": 0,
++            "FFOffCoefficient": 0,
++            "ICoefficient": -4.6,
++            "ILimitMax": 32000,
++            "ILimitMin": 2500,
++            "Inputs": [
++                "NVMe_1 Temp",
++                "NVMe_2 Temp",
++                "NVMe_3 Temp",
++                "NVMe_4 Temp",
++                "NVMe_5 Temp",
++                "NVMe_6 Temp",
++                "NVMe_7 Temp",
++                "NVMe_8 Temp",
++                "NVMe_9 Temp",
++                "NVMe_10 Temp",
++                "NVMe_11 Temp",
++                "NVMe_12 Temp",
++                "NVMe_13 Temp",
++                "NVMe_14 Temp",
++                "NVMe_15 Temp",
++                "NVMe_16 Temp",
++                "NVMe_17 Temp",
++                "NVMe_18 Temp",
++                "NVMe_19 Temp",
++                "NVMe_20 Temp",
++                "NVMe_21 Temp",
++                "NVMe_22 Temp",
++                "NVMe_23 Temp",
++                "NVMe_24 Temp",
++                "NVMe_25 Temp",
++                "NVMe_26 Temp",
++                "NVMe_27 Temp",
++                "NVMe_28 Temp",
++                "NVMe_29 Temp",
++                "NVMe_30 Temp",
++                "NVMe_31 Temp",
++                "NVMe_32 Temp"
++            ],
++            "Name": "Rulder drive SSD Temperature",
++            "NegativeHysteresis": 2,
++            "OutLimitMax": 32000,
++            "OutLimitMin": 2500,
++            "Outputs": [],
++            "PCoefficient": -536,
++            "PositiveHysteresis": 0,
++            "SetPoint": 60,
++            "SlewNeg": 0,
++            "SlewPos": 0,
++            "Type": "Pid",
++            "Zones": [
++                "PSU"
++            ]
++        },
+         {
+             "FailSafePercent": 100,
+             "MinThermalOutput": 2500,
+-- 
+2.41.0
+
