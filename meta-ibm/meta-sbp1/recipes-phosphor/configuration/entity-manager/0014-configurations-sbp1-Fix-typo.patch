@@ -1,0 +1,56 @@
+From fcf814a1b9eef4581f2a0b39dd6cf117bf785f44 Mon Sep 17 00:00:00 2001
+From: Patrick Rudolph <patrick.rudolph@9elements.com>
+Date: Tue, 24 Oct 2023 08:25:57 +0200
+Subject: [PATCH 14/15] configurations: sbp1: Fix typo
+
+Rename PVCDD_HV_CPU to PVCCD_HV_CPU.
+
+Change-Id: I9f95c7bd61fd2e0cb8b97805d41e93a522b30429
+Signed-off-by: Patrick Rudolph <patrick.rudolph@9elements.com>
+---
+ configurations/sbp1_baseboard.json | 8 ++++----
+ 1 file changed, 4 insertions(+), 4 deletions(-)
+
+diff --git a/configurations/sbp1_baseboard.json b/configurations/sbp1_baseboard.json
+index 4073629..e2f9f77 100644
+--- a/configurations/sbp1_baseboard.json
++++ b/configurations/sbp1_baseboard.json
+@@ -3526,7 +3526,7 @@
+                 "pout1",
+                 "temp1"
+             ],
+-            "Name": "PVCDD_HV_CPU3",
++            "Name": "PVCCD_HV_CPU3",
+             "PollRate": 5.0,
+             "PowerState": "Always",
+             "Thresholds": [
+@@ -3587,7 +3587,7 @@
+                 "pout1",
+                 "temp1"
+             ],
+-            "Name": "PVCDD_HV_CPU1",
++            "Name": "PVCCD_HV_CPU1",
+             "PollRate": 5.0,
+             "PowerState": "Always",
+             "Thresholds": [
+@@ -3648,7 +3648,7 @@
+                 "pout1",
+                 "temp1"
+             ],
+-            "Name": "PVCDD_HV_CPU2",
++            "Name": "PVCCD_HV_CPU2",
+             "PollRate": 5.0,
+             "PowerState": "Always",
+             "Thresholds": [
+@@ -3709,7 +3709,7 @@
+                 "pout1",
+                 "temp1"
+             ],
+-            "Name": "PVCDD_HV_CPU0",
++            "Name": "PVCCD_HV_CPU0",
+             "PollRate": 5.0,
+             "PowerState": "Always",
+             "Thresholds": [
+-- 
+2.41.0
+
