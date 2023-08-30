@@ -1,0 +1,81 @@
+From 0650e7d59d2fcdfdbe6455f92911cae69f393dd7 Mon Sep 17 00:00:00 2001
+From: Patrick Rudolph <patrick.rudolph@9elements.com>
+Date: Mon, 11 Sep 2023 15:32:38 +0200
+Subject: [PATCH 7/8] sbp1: Add M.2 NVMe temperature sensors
+
+SBP1 has two M.2 slots that either host a NVMe or SATA drive.
+When a NVMe is pluged the temperature can be read using nvmesensor.
+
+Add a custom name for each M.2 drive and add it to a separate
+temperature zone.
+
+Change-Id: I3449450069329fb9241ca5a3cff4feba62e13555
+Signed-off-by: Patrick Rudolph <patrick.rudolph@9elements.com>
+---
+ configurations/sbp1_baseboard.json | 12 ++++++++++++
+ configurations/sbp1_chassis.json   | 26 ++++++++++++++++++++++++++
+ 2 files changed, 38 insertions(+)
+
+diff --git a/configurations/sbp1_baseboard.json b/configurations/sbp1_baseboard.json
+index da49eab..157239b 100644
+--- a/configurations/sbp1_baseboard.json
++++ b/configurations/sbp1_baseboard.json
+@@ -3421,6 +3421,18 @@
+             "in1_Name": "SSB_RSSD28 P3V3 Output Voltage",
+             "curr2_Name": "SSB_RSSD28 P3V3 Output Current"
+         },
++        {
++            "Address": "0x6a",
++            "Bus": "50",
++            "Name": "M2 SSD1 Temperature",
++            "Type": "NVME1000"
++        },
++        {
++            "Address": "0x6a",
++            "Bus": "52",
++            "Name": "M2 SSD2 Temperature",
++            "Type": "NVME1000"
++        },
+         {
+             "Address": "0x30",
+             "Bus": 0,
+diff --git a/configurations/sbp1_chassis.json b/configurations/sbp1_chassis.json
+index 84243cd..5953040 100644
+--- a/configurations/sbp1_chassis.json
++++ b/configurations/sbp1_chassis.json
+@@ -1985,6 +1985,32 @@
+                 "PSU"
+             ]
+         },
++        {
++            "Class": "temp",
++            "FFGainCoefficient": 0,
++            "FFOffCoefficient": 0,
++            "ICoefficient": -4.6,
++            "ILimitMax": 32000,
++            "ILimitMin": 2500,
++            "Inputs": [
++                "M2 SSD1 Temperature",
++                "M2 SSD2 Temperature"
++            ],
++            "Name": "M2 SSD Temperature",
++            "NegativeHysteresis": 0,
++            "OutLimitMax": 32000,
++            "OutLimitMin": 2500,
++            "Outputs": [],
++            "PCoefficient": -536,
++            "PositiveHysteresis": 0,
++            "SetPoint": 80,
++            "SlewNeg": 0,
++            "SlewPos": 0,
++            "Type": "Pid",
++            "Zones": [
++                "PSU"
++            ]
++        },
+         {
+             "FailSafePercent": 100,
+             "MinThermalOutput": 2500,
+-- 
+2.41.0
+
