@@ -1,15 +1,34 @@
-From d17013303d6b48722b61c77623fb84fef4d1cb7c Mon Sep 17 00:00:00 2001
+From 46d12d0ca27af1ac7451cbe3b60921a32ccb3ca6 Mon Sep 17 00:00:00 2001
 From: Patrick Rudolph <patrick.rudolph@9elements.com>
 Date: Sat, 29 Apr 2023 09:53:30 +0200
-Subject: [PATCH] Overlay: Remove installed drivers when probe is false
+Subject: [PATCH 11/15] Overlay: Remove installed drivers when probe is false
 
 When the FRU device is gone the probe condition is no longer true.
+On a mainboard there might be devices that are only accessible under
+certain conditions, which change during the normal operation.
+
+An example would be memory DIMMs that can only be read when the
+x86 host power is off, due to PECI accessing the DIMMs when on.
+
+Another example would be Intel XEON PIROM that can only be read when
+the x86 host is powered on.
+
+The probe condition thus not only changes on presence change, but
+also on host power update.
+
 In that case unload the installed drivers to make sure they won't
 missbehave. As with all ungraceful removals there is a chance that
 the driver or other services missbehave in the meantime.
 
-Change-Id: I48e9c64d7eeb18e464c66732e841fe28d5a36c6a
+Tested: The entity-manager config was updated to expose 24C01 EEPROMs
+        when the probe condition matches. When the probe condition is
+        no longer true the eeprom driver is unloaded as it's no longer
+        functional. As the EEPROMs do not have an IPMI FRU format they
+        cannot be detected using FruDevice.
+
+Change-Id: If78cfcaf71b8708e86c045f93271a2c8a8c5e8ec
 Signed-off-by: Patrick Rudolph <patrick.rudolph@9elements.com>
+Signed-off-by: Chris Cain <cjcain@us.ibm.com>
 ---
  src/entity_manager.cpp |  1 +
  src/overlay.cpp        | 95 +++++++++++++++++++++++++++++++++++-------
@@ -29,87 +48,88 @@ index db1dfb8..560345d 100644
  }
  
 diff --git a/src/overlay.cpp b/src/overlay.cpp
-index 3810c31..2aab100 100644
+index 3810c31..52e389e 100644
 --- a/src/overlay.cpp
 +++ b/src/overlay.cpp
-@@ -69,8 +69,9 @@ static std::string deviceDirName(uint64_t bus, uint64_t address)
+@@ -69,8 +69,10 @@ static std::string deviceDirName(uint64_t bus, uint64_t address)
      return name.str();
  }
  
 -void linkMux(const std::string& muxName, uint64_t busIndex, uint64_t address,
 -             const nlohmann::json::array_t& channelNames)
-+void linkOrUnlinkMux(const std::string& muxName, uint64_t busIndex, uint64_t address,
++void linkOrUnlinkMux(const std::string& muxName, uint64_t busIndex,
++                     uint64_t address,
 +                     const nlohmann::json::array_t& channelNames,
 +                     const bool create)
  {
      std::error_code ec;
      std::filesystem::path muxSymlinkDirPath(muxSymlinkDir);
-@@ -110,11 +111,19 @@ void linkMux(const std::string& muxName, uint64_t busIndex, uint64_t address,
+@@ -110,11 +112,22 @@ void linkMux(const std::string& muxName, uint64_t busIndex, uint64_t address,
          std::filesystem::path fp("/dev" / bus.filename());
          std::filesystem::path link(linkDir / *channelName);
  
 -        std::filesystem::create_symlink(fp, link, ec);
 -        if (ec)
--        {
++        if (create)
+         {
 -            std::cerr << "Failure creating symlink for " << fp << " to " << link
 -                      << "\n";
-+        if (create) {
 +            std::filesystem::create_symlink(fp, link, ec);
 +            if (ec)
 +            {
-+                std::cerr << "Failure creating symlink for " << fp << " to " << link
-+                          << "\n";
++                std::cerr << "Failure creating symlink for " << fp << " to "
++                          << link << "\n";
 +            }
-+        } else {
++        }
++        else
++        {
 +            std::filesystem::remove(link, ec);
 +            if (ec)
 +            {
-+                std::cerr << "Failure deleteting symlink for "<< link << "\n";
++                std::cerr << "Failure deleteting symlink for " << link << "\n";
 +            }
          }
      }
  }
-@@ -214,9 +223,10 @@ static int buildDevice(const std::string& busPath,
+@@ -214,9 +227,10 @@ static int buildDevice(const std::string& busPath,
      return 0;
  }
  
 -void exportDevice(const std::string& type,
-+void exportOrRemoveDevice(const std::string& type,
-                   const devices::ExportTemplate& exportTemplate,
+-                  const devices::ExportTemplate& exportTemplate,
 -                  const nlohmann::json& configuration)
-+                  const nlohmann::json& configuration,
-+                  const bool expose)
++void exportOrRemoveDevice(const std::string& type,
++                          const devices::ExportTemplate& exportTemplate,
++                          const nlohmann::json& configuration,
++                          const bool expose)
  {
      std::string parameters = exportTemplate.parameters;
      std::string busPath = exportTemplate.busPath;
-@@ -270,13 +280,21 @@ void exportDevice(const std::string& type,
+@@ -270,12 +284,18 @@ void exportDevice(const std::string& type,
          return;
      }
  
 -    int err = buildDevice(busPath, parameters, *bus, *address, constructor,
-+    if (expose) {
-+        int err = buildDevice(busPath, parameters, *bus, *address, constructor,
-                           destructor, hasHWMonDir);
+-                          destructor, hasHWMonDir);
 -
 -    if ((err == 0) && boost::ends_with(type, "Mux") && (channels != nullptr))
--    {
++    if (expose)
+     {
 -        linkMux(name, *bus, *address, *channels);
-+        if ((err == 0) && boost::ends_with(type, "Mux") && (channels != nullptr))
++        int err = buildDevice(busPath, parameters, *bus, *address, constructor,
++                              destructor, hasHWMonDir);
++        if (err != 0)
 +        {
-+            linkOrUnlinkMux(name, *bus, *address, *channels, true);
++            return;
 +        }
-+    } else {
-+        if (boost::ends_with(type, "Mux") && (channels != nullptr))
-+        {
-+            linkOrUnlinkMux(name, *bus, *address, *channels, false);
-+        }
-+        deleteDevice(busPath, *address, destructor);
++    }
++    if (boost::ends_with(type, "Mux") && (channels != nullptr))
++    {
++        linkOrUnlinkMux(name, *bus, *address, *channels, expose);
      }
-+
  }
  
- bool loadOverlays(const nlohmann::json& systemConfiguration)
-@@ -310,7 +328,7 @@ bool loadOverlays(const nlohmann::json& systemConfiguration)
+@@ -310,7 +330,7 @@ bool loadOverlays(const nlohmann::json& systemConfiguration)
              auto device = devices::exportTemplates.find(type.c_str());
              if (device != devices::exportTemplates.end())
              {
@@ -118,7 +138,7 @@ index 3810c31..2aab100 100644
                  continue;
              }
  
-@@ -328,3 +346,50 @@ bool loadOverlays(const nlohmann::json& systemConfiguration)
+@@ -328,3 +348,48 @@ bool loadOverlays(const nlohmann::json& systemConfiguration)
  
      return true;
  }
@@ -134,7 +154,7 @@ index 3810c31..2aab100 100644
 +        return;
 +    }
 +
-+    for (auto& configuration : *findExposes)
++    for (const auto& configuration : *findExposes)
 +    {
 +        auto findStatus = configuration.find("Status");
 +        // status missing is assumed to be 'okay'
@@ -166,8 +186,6 @@ index 3810c31..2aab100 100644
 +                      << " not found in export map whitelist\n";
 +        }
 +    }
-+
-+    return;
 +}
 diff --git a/src/overlay.hpp b/src/overlay.hpp
 index 8e818c2..343ee01 100644

@@ -1,0 +1,32 @@
+From 8ea7678493ec9654a8206cda0eac032b38758ccc Mon Sep 17 00:00:00 2001
+From: Patrick Rudolph <patrick.rudolph@9elements.com>
+Date: Wed, 30 Aug 2023 09:07:38 +0200
+Subject: [PATCH 03/15] configurations: Blacklist P4510 in PXXX
+
+The existing configuration for PXXXX assumes that all devices use
+a non standard NVMe-MI address. Tests on P4510 showed that it uses
+the correct address for NVMe-MI (0x6a). Blacklist P4510 to make sure
+it's not matched.
+
+Change-Id: I5ab3a6e7259cb98940b12c692682335a0f0bac50
+Signed-off-by: Patrick Rudolph <patrick.rudolph@9elements.com>
+---
+ configurations/nvme_p4000.json | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+diff --git a/configurations/nvme_p4000.json b/configurations/nvme_p4000.json
+index a75e87a..4860fbb 100644
+--- a/configurations/nvme_p4000.json
++++ b/configurations/nvme_p4000.json
+@@ -42,7 +42,7 @@
+     ],
+     "Logging": "Off",
+     "Name": "NVMe $index",
+-    "Probe": "xyz.openbmc_project.FruDevice({'PRODUCT_PRODUCT_NAME': 'P\\d{4}\\w?'})",
++    "Probe": "xyz.openbmc_project.FruDevice({'PRODUCT_PRODUCT_NAME': 'P(?!4510)\\d{4}\\w?'})",
+     "Type": "NVMe",
+     "xyz.openbmc_project.Inventory.Decorator.Asset": {
+         "Manufacturer": "$PRODUCT_MANUFACTURER",
+-- 
+2.41.0
+

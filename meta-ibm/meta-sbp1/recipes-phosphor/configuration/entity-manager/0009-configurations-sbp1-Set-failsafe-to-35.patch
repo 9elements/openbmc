@@ -1,0 +1,33 @@
+From d44bdcbc874d8094d72c4f9cc375f5597fb30d26 Mon Sep 17 00:00:00 2001
+From: Patrick Rudolph <patrick.rudolph@9elements.com>
+Date: Fri, 13 Oct 2023 17:33:12 +0200
+Subject: [PATCH 09/15] configurations: sbp1: Set failsafe to 35%
+
+Set a failsafe of 35% that will keep all mainboard components
+cool enough to prevent a thermal initiated emergency shutdown.
+
+This value will also be used when the BMC is restarting or when the
+phosphor-pid-control has been stopped.
+
+Change-Id: I86f53a5e890840f9d5f3a62e90a1a3bc43c4374a
+Signed-off-by: Patrick Rudolph <patrick.rudolph@9elements.com>
+---
+ configurations/sbp1_chassis.json | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+diff --git a/configurations/sbp1_chassis.json b/configurations/sbp1_chassis.json
+index f8b2610..142dc3a 100644
+--- a/configurations/sbp1_chassis.json
++++ b/configurations/sbp1_chassis.json
+@@ -2035,7 +2035,7 @@
+             ]
+         },
+         {
+-            "FailSafePercent": 100,
++            "FailSafePercent": 35,
+             "MinThermalOutput": 2500,
+             "Name": "PSU",
+             "Type": "Pid.Zone"
+-- 
+2.41.0
+
