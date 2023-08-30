@@ -1,0 +1,100 @@
+From a75f28248c4f065f82879c920f2edcfcddf6a20a Mon Sep 17 00:00:00 2001
+From: Patrick Rudolph <patrick.rudolph@9elements.com>
+Date: Thu, 21 Sep 2023 12:23:25 +0200
+Subject: [PATCH 03/10] configurations: sbp1: Add PCH temperature sensor
+
+Add PCH temperature reported by Intel ME over IPMB and add it
+to the fan PID loop.
+
+Tested: PCH temperature is read and visible on the webui.
+
+Change-Id: Ic4e3d8b53a1113ae2dc8d8eccc31a52ed2740a17
+Signed-off-by: Patrick Rudolph <patrick.rudolph@9elements.com>
+---
+ configurations/sbp1_baseboard.json | 33 ++++++++++++++++++++++++++++++
+ configurations/sbp1_chassis.json   | 25 ++++++++++++++++++++++
+ 2 files changed, 58 insertions(+)
+
+diff --git a/configurations/sbp1_baseboard.json b/configurations/sbp1_baseboard.json
+index 50efc38..e97bf91 100644
+--- a/configurations/sbp1_baseboard.json
++++ b/configurations/sbp1_baseboard.json
+@@ -1207,6 +1207,39 @@
+             ],
+             "Type": "IntelFanConnector"
+         },
++        {
++            "Address": "0x8",
++            "Class": "METemp",
++            "Name": "PCH Temperature",
++            "PowerState": "On",
++            "Thresholds": [
++                {
++                    "Direction": "greater than",
++                    "Name": "upper critical",
++                    "Severity": 1,
++                    "Value": 103
++                },
++                {
++                    "Direction": "greater than",
++                    "Name": "upper non critical",
++                    "Severity": 0,
++                    "Value": 98
++                },
++                {
++                    "Direction": "less than",
++                    "Name": "lower non critical",
++                    "Severity": 0,
++                    "Value": 5
++                },
++                {
++                    "Direction": "less than",
++                    "Name": "lower critical",
++                    "Severity": 1,
++                    "Value": 0
++                }
++            ],
++            "Type": "IpmbSensor"
++        },
+         {
+             "Address": "0x58",
+             "Bus": "98",
+diff --git a/configurations/sbp1_chassis.json b/configurations/sbp1_chassis.json
+index 67257f0..ec9a67b 100644
+--- a/configurations/sbp1_chassis.json
++++ b/configurations/sbp1_chassis.json
+@@ -1983,6 +1983,31 @@
+                 "PSU"
+             ]
+         },
++        {
++            "Class": "temp",
++            "FFGainCoefficient": 0,
++            "FFOffCoefficient": 0,
++            "ICoefficient": -5,
++            "ILimitMax": 18000,
++            "ILimitMin": 2500,
++            "Inputs": [
++                "PCH Temperature"
++            ],
++            "Name": "PCH Temperature",
++            "NegativeHysteresis": 0,
++            "OutLimitMax": 18000,
++            "OutLimitMin": 2500,
++            "Outputs": [],
++            "PCoefficient": -500,
++            "PositiveHysteresis": 0,
++            "SetPoint": 85,
++            "SlewNeg": 0,
++            "SlewPos": 0,
++            "Type": "Pid",
++            "Zones": [
++                "PSU"
++            ]
++        },
+         {
+             "FailSafePercent": 100,
+             "MinThermalOutput": 2500,
+-- 
+2.41.0
+

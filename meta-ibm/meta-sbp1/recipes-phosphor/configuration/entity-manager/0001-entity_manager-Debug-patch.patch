@@ -1,0 +1,150 @@
+From 6eccfe0d8db52164734bf6d0daae0d0270e026a6 Mon Sep 17 00:00:00 2001
+From: Patrick Rudolph <patrick.rudolph@9elements.com>
+Date: Tue, 10 Oct 2023 09:36:34 +0200
+Subject: [PATCH] entity_manager: Debug patch
+
+Change-Id: I68cc8d642f86420c087ba23cee3cdc7d72a4743d
+Signed-off-by: Patrick Rudolph <patrick.rudolph@9elements.com>
+---
+ src/entity_manager.cpp | 24 ++++++++++++++++++++++++
+ src/overlay.cpp        |  3 +++
+ 2 files changed, 27 insertions(+)
+
+diff --git a/src/entity_manager.cpp b/src/entity_manager.cpp
+index db1dfb8..a44d2d0 100644
+--- a/src/entity_manager.cpp
++++ b/src/entity_manager.cpp
+@@ -107,8 +107,11 @@ static std::shared_ptr<sdbusplus::asio::dbus_interface>
+     // on first add we have no reason to check for null before add, as there
+     // won't be any. For dynamically added interfaces, we check for null so that
+     // a constant delete/add will not create a memory leak
++    std::cerr << "createInterface " << path << " " << interface << " " << parent <<"\n";
+ 
+     auto ptr = objServer.add_interface(path, interface);
++    std::cerr << "still alive\n";
++
+     auto& dataVector = inventory[parent];
+     if (checkNull)
+     {
+@@ -164,6 +167,8 @@ void addArrayToDbus(const std::string& name, const nlohmann::json& array,
+                     const std::string& jsonPointerString)
+ {
+     std::vector<PropertyType> values;
++    std::cerr << "addArrayToDbus " << name << " " << jsonPointerString << "\n";
++
+     for (const auto& property : array)
+     {
+         auto ptr = property.get_ptr<const PropertyType*>();
+@@ -209,6 +214,8 @@ void addProperty(const std::string& name, const PropertyType& value,
+                  const std::string& jsonPointerString,
+                  sdbusplus::asio::PropertyPermission permission)
+ {
++    std::cerr << "addProperty " << name << " " << jsonPointerString << "\n";
++
+     if (permission == sdbusplus::asio::PropertyPermission::readOnly)
+     {
+         iface->register_property(name, value);
+@@ -440,6 +447,8 @@ void createAddObjectMethod(const std::string& jsonPointerPath,
+                            sdbusplus::asio::object_server& objServer,
+                            const std::string& board)
+ {
++    std::cerr << "createAddObjectMethod " << jsonPointerPath << " " << path << " " << board << "\n";
++
+     std::shared_ptr<sdbusplus::asio::dbus_interface> iface = createInterface(
+         objServer, path, "xyz.openbmc_project.AddObject", board);
+ 
+@@ -568,6 +577,7 @@ void postToDbus(const nlohmann::json& newConfiguration,
+ 
+ {
+     std::map<std::string, std::string> newBoards; // path -> name
++        std::cerr << "postToDbus\n";
+ 
+     // iterate through boards
+     for (const auto& [boardId, boardConfig] : newConfiguration.items())
+@@ -575,6 +585,8 @@ void postToDbus(const nlohmann::json& newConfiguration,
+         std::string boardName = boardConfig["Name"];
+         std::string boardNameOrig = boardConfig["Name"];
+         std::string jsonPointerPath = "/" + boardId;
++        std::cerr << "boardName " << boardName << " boardNameOrig " << boardNameOrig << "\n";
++
+         // loop through newConfiguration, but use values from system
+         // configuration to be able to modify via dbus later
+         auto boardValues = systemConfiguration[boardId];
+@@ -593,6 +605,8 @@ void postToDbus(const nlohmann::json& newConfiguration,
+                       << " reverting to Chassis.\n";
+             boardType = "Chassis";
+         }
++        std::cerr << "boardType " << boardType << "\n";
++
+         std::string boardtypeLower = boost::algorithm::to_lower_copy(boardType);
+ 
+         std::regex_replace(boardName.begin(), boardName.begin(),
+@@ -979,6 +993,8 @@ static void pruneConfiguration(nlohmann::json& systemConfiguration,
+         auto sharedPtr = iface.lock();
+         if (!!sharedPtr)
+         {
++          std::cerr << "remove_interface " << name << " " << device["Name"].get<std::string>() << "\n";
++
+             objServer.remove_interface(sharedPtr);
+         }
+     }
+@@ -1019,6 +1035,8 @@ static void publishNewConfiguration(
+     const nlohmann::json newConfiguration,
+     sdbusplus::asio::object_server& objServer)
+ {
++    std::cerr << "publishNewConfiguration\n";
++
+     loadOverlays(newConfiguration);
+ 
+     boost::asio::post(io, [systemConfiguration]() {
+@@ -1053,6 +1071,8 @@ void propertiesChangedCallback(nlohmann::json& systemConfiguration,
+     // setup an async wait as we normally get flooded with new requests
+     timer.async_wait([&systemConfiguration, &objServer,
+                       count](const boost::system::error_code& ec) {
++        std::cerr << "propertiesChangedCallback timer timeout\n";
++
+         if (ec == boost::asio::error::operation_aborted)
+         {
+             // we were cancelled
+@@ -1088,6 +1108,8 @@ void propertiesChangedCallback(nlohmann::json& systemConfiguration,
+             objServer,
+             [&systemConfiguration, &objServer, count, oldConfiguration,
+              missingConfigurations]() {
++            std::cerr << "perfScan\n";
++
+             // this is something that since ac has been applied to the bmc
+             // we saw, and we no longer see it
+             bool powerOff = !isPowerOn();
+@@ -1113,6 +1135,8 @@ void propertiesChangedCallback(nlohmann::json& systemConfiguration,
+                                     count, std::ref(timer),
+                                     std::ref(systemConfiguration),
+                                     newConfiguration, std::ref(objServer)));
++            std::cerr << "perfScan done\n";
++				    
+             });
+         perfScan->run();
+     });
+diff --git a/src/overlay.cpp b/src/overlay.cpp
+index 3810c31..0f35610 100644
+--- a/src/overlay.cpp
++++ b/src/overlay.cpp
+@@ -281,6 +281,8 @@ void exportDevice(const std::string& type,
+ 
+ bool loadOverlays(const nlohmann::json& systemConfiguration)
+ {
++    std::cerr << "loadOverlays\n";
++
+     std::filesystem::create_directory(outputDir);
+     for (auto entity = systemConfiguration.begin();
+          entity != systemConfiguration.end(); entity++)
+@@ -325,6 +327,7 @@ bool loadOverlays(const nlohmann::json& systemConfiguration)
+             }
+         }
+     }
++    std::cerr << "loadOverlay done\n";
+ 
+     return true;
+ }
+-- 
+2.41.0
+

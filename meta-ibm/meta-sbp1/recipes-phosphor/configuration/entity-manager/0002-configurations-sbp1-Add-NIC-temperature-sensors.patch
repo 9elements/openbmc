@@ -1,0 +1,93 @@
+From 5c6efe330d97965a547186a57c24a487ea46a431 Mon Sep 17 00:00:00 2001
+From: Patrick Rudolph <patrick.rudolph@9elements.com>
+Date: Wed, 20 Sep 2023 16:46:27 +0200
+Subject: [PATCH 02/10] configurations: sbp1: Add NIC temperature sensors
+
+Add I2C temperature sensors for the two onboard NICs.
+The temperature sensor is compatible to ADM1021.
+
+Add both sensors to the fan PID loop.
+
+Tested: Both temperature sensors are working and the
+        temperature is visible on the webui.
+
+Change-Id: Ib1c4614b49969148b4610f689507ea418d04f9b8
+Signed-off-by: Patrick Rudolph <patrick.rudolph@9elements.com>
+---
+ configurations/sbp1_baseboard.json | 22 ++++++++++++++++++++++
+ configurations/sbp1_chassis.json   | 26 ++++++++++++++++++++++++++
+ 2 files changed, 48 insertions(+)
+
+diff --git a/configurations/sbp1_baseboard.json b/configurations/sbp1_baseboard.json
+index 9dc22f5..50efc38 100644
+--- a/configurations/sbp1_baseboard.json
++++ b/configurations/sbp1_baseboard.json
+@@ -372,6 +372,28 @@
+             ],
+             "Type": "ADC"
+         },
++        {
++            "Address": "0x1f",
++            "Bus": 41,
++            "Labels": [
++                "temp2"
++            ],
++            "Name": "NIC1_0",
++            "Name1": "NIC1",
++            "PowerState": "On",
++            "Type": "ADM1021"
++        },
++        {
++            "Address": "0x1f",
++            "Bus": 44,
++            "Labels": [
++                "temp2"
++            ],
++            "Name": "NIC2_0",
++            "Name1": "NIC2",
++            "PowerState": "On",
++            "Type": "ADM1021"
++        },
+         {
+             "Address": "0x40",
+             "Bus": "58",
+diff --git a/configurations/sbp1_chassis.json b/configurations/sbp1_chassis.json
+index 3e41b26..67257f0 100644
+--- a/configurations/sbp1_chassis.json
++++ b/configurations/sbp1_chassis.json
+@@ -1689,6 +1689,32 @@
+                 "PSU"
+             ]
+         },
++        {
++            "Class": "temp",
++            "FFGainCoefficient": 0,
++            "FFOffCoefficient": 0,
++            "ICoefficient": -5,
++            "ILimitMax": 18000,
++            "ILimitMin": 2500,
++            "Inputs": [
++                "NIC1 Temperature",
++                "NIC2 Temperature"
++            ],
++            "Name": "NIC Temperature",
++            "NegativeHysteresis": 0,
++            "OutLimitMax": 18000,
++            "OutLimitMin": 2500,
++            "Outputs": [],
++            "PCoefficient": -500,
++            "PositiveHysteresis": 0,
++            "SetPoint": 85,
++            "SlewNeg": 0,
++            "SlewPos": 0,
++            "Type": "Pid",
++            "Zones": [
++                "PSU"
++            ]
++        },
+         {
+             "Class": "temp",
+             "FFGainCoefficient": 0,
+-- 
+2.41.0
+

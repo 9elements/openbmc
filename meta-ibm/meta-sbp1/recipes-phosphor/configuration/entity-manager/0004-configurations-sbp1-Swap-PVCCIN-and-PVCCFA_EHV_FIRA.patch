@@ -1,0 +1,66 @@
+From 50ebe11df1bd8d64c327ebbe8c0541c042c48b63 Mon Sep 17 00:00:00 2001
+From: Patrick Rudolph <patrick.rudolph@9elements.com>
+Date: Tue, 10 Oct 2023 11:05:52 +0200
+Subject: [PATCH 04/10] configurations: sbp1: Swap PVCCIN and PVCCFA_EHV_FIRA
+
+PVCCIN and PVCCFA_EHV_FIRA are on the same VR, but the channels
+got mixed up. PVCCIN is actually the first channel and
+PVCCFA_EHV_FIRA the second.
+
+Change-Id: I3eded98f9ea85b35d925b574b091492c58017bb8
+Signed-off-by: Patrick Rudolph <patrick.rudolph@9elements.com>
+---
+ configurations/sbp1_baseboard.json | 16 ++++++++--------
+ 1 file changed, 8 insertions(+), 8 deletions(-)
+
+diff --git a/configurations/sbp1_baseboard.json b/configurations/sbp1_baseboard.json
+index e97bf91..8bf1d17 100644
+--- a/configurations/sbp1_baseboard.json
++++ b/configurations/sbp1_baseboard.json
+@@ -1627,8 +1627,8 @@
+                 "pout2",
+                 "temp1"
+             ],
+-            "Name": "PVCCFA_EHV_FIRA_CPU0",
+-            "Name1": "PVCCIN_CPU0",
++            "Name": "PVCCIN_CPU0",
++            "Name1": "PVCCFA_EHV_FIRA_CPU0",
+             "PollRate": 5.0,
+             "PowerState": "Always",
+             "Thresholds": [
+@@ -1720,8 +1720,8 @@
+                 "pout2",
+                 "temp1"
+             ],
+-            "Name": "PVCCFA_EHV_FIRA_CPU1",
+-            "Name1": "PVCCIN_CPU1",
++            "Name": "PVCCIN_CPU1",
++            "Name1": "PVCCFA_EHV_FIRA_CPU1",
+             "PollRate": 5.0,
+             "PowerState": "Always",
+             "Thresholds": [
+@@ -1813,8 +1813,8 @@
+                 "pout2",
+                 "temp1"
+             ],
+-            "Name": "PVCCFA_EHV_FIRA_CPU2",
+-            "Name1": "PVCCIN_CPU2",
++            "Name": "PVCCIN_CPU2",
++            "Name1": "PVCCFA_EHV_FIRA_CPU2",
+             "PollRate": 5.0,
+             "PowerState": "Always",
+             "Thresholds": [
+@@ -1906,8 +1906,8 @@
+                 "pout2",
+                 "temp1"
+             ],
+-            "Name": "PVCCFA_EHV_FIRA_CPU3",
+-            "Name1": "PVCCIN_CPU3",
++            "Name": "PVCCIN_CPU3",
++            "Name1": "PVCCFA_EHV_FIRA_CPU3",
+             "PollRate": 5.0,
+             "PowerState": "Always",
+             "Thresholds": [
+-- 
+2.41.0
+

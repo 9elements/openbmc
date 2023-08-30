@@ -1,0 +1,78 @@
+From 3d9df65c88f7dff8c6256b5830f97cc410d36c27 Mon Sep 17 00:00:00 2001
+From: Patrick Rudolph <patrick.rudolph@9elements.com>
+Date: Tue, 10 Oct 2023 11:29:32 +0200
+Subject: [PATCH 05/10] configurations: sbp1: Update PHY LDOs
+
+The 1.2V PHY LDOs operate on 1.25V with a non-uniform
+margin. Update the thresholds to prevent a sensor warning,
+while the LDOs are within their normal operating condition.
+
+Change-Id: Icfc65e4563223248b07984e52a6b80912c9c1eff
+Signed-off-by: Patrick Rudolph <patrick.rudolph@9elements.com>
+---
+ configurations/sbp1_baseboard.json | 32 ++++--------------------------
+ 1 file changed, 4 insertions(+), 28 deletions(-)
+
+diff --git a/configurations/sbp1_baseboard.json b/configurations/sbp1_baseboard.json
+index 8bf1d17..2e73ea8 100644
+--- a/configurations/sbp1_baseboard.json
++++ b/configurations/sbp1_baseboard.json
+@@ -241,25 +241,13 @@
+                     "Direction": "greater than",
+                     "Name": "upper critical",
+                     "Severity": 1,
+-                    "Value": 1.26
+-                },
+-                {
+-                    "Direction": "greater than",
+-                    "Name": "upper non critical",
+-                    "Severity": 0,
+-                    "Value": 1.236
+-                },
+-                {
+-                    "Direction": "less than",
+-                    "Name": "lower non critical",
+-                    "Severity": 0,
+-                    "Value": 1.164
++                    "Value": 1.32
+                 },
+                 {
+                     "Direction": "less than",
+                     "Name": "lower critical",
+                     "Severity": 1,
+-                    "Value": 1.14
++                    "Value": 1.23
+                 }
+             ],
+             "Type": "ADC"
+@@ -274,25 +262,13 @@
+                     "Direction": "greater than",
+                     "Name": "upper critical",
+                     "Severity": 1,
+-                    "Value": 1.26
+-                },
+-                {
+-                    "Direction": "greater than",
+-                    "Name": "upper non critical",
+-                    "Severity": 0,
+-                    "Value": 1.236
+-                },
+-                {
+-                    "Direction": "less than",
+-                    "Name": "lower non critical",
+-                    "Severity": 0,
+-                    "Value": 1.164
++                    "Value": 1.32
+                 },
+                 {
+                     "Direction": "less than",
+                     "Name": "lower critical",
+                     "Severity": 1,
+-                    "Value": 1.14
++                    "Value": 1.23
+                 }
+             ],
+             "Type": "ADC"
+-- 
+2.41.0
+
