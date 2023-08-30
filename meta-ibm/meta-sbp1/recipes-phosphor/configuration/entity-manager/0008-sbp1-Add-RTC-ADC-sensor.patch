@@ -1,0 +1,74 @@
+From 458108f113a081a4cf1a33bae5b8b51ddbbfdaac Mon Sep 17 00:00:00 2001
+From: Patrick Rudolph <patrick.rudolph@9elements.com>
+Date: Tue, 12 Sep 2023 12:26:01 +0200
+Subject: [PATCH 08/11] sbp1: Add RTC ADC sensor
+
+On SBP1 the RTC battery voltage can be read using an ADC when
+RTC_BATT_TEST is set high.
+
+Expose the sensor reading by adding the configuration.
+
+Tested: No RTC battery present. Cannot test.
+
+Change-Id: I5c1da4f8943faad01f696469cc9f9c86ebdc9954
+Signed-off-by: Patrick Rudolph <patrick.rudolph@9elements.com>
+---
+ configurations/sbp1_baseboard.json | 42 ++++++++++++++++++++++++++++++
+ 1 file changed, 42 insertions(+)
+
+diff --git a/configurations/sbp1_baseboard.json b/configurations/sbp1_baseboard.json
+index da49eab..1a85efb 100644
+--- a/configurations/sbp1_baseboard.json
++++ b/configurations/sbp1_baseboard.json
+@@ -330,6 +330,48 @@
+             ],
+             "Type": "ADC"
+         },
++	{
++            "BridgeGpio": [
++                {
++                    "Name": "RTC_BATT_TEST",
++                    "Polarity": "High",
++                    "SetupTime": 0.125
++                }
++            ],
++            "Index": 10,
++            "MaxValue": 3.57,
++            "MinValue": 0,
++            "Name": "VBAT_RTC",
++            "PollRate": 86400,
++            "ScaleFactor": 1.0,
++            "Thresholds": [
++                {
++                    "Direction": "greater than",
++                    "Name": "upper critical",
++                    "Severity": 1,
++                    "Value": 3.556
++                },
++                {
++                    "Direction": "greater than",
++                    "Name": "upper non critical",
++                    "Severity": 0,
++                    "Value": 3.458
++                },
++                {
++                    "Direction": "less than",
++                    "Name": "lower critical",
++                    "Severity": 1,
++                    "Value": 2.212
++                },
++                {
++                    "Direction": "less than",
++                    "Name": "lower non critical",
++                    "Severity": 0,
++                    "Value": 2.31
++                }
++            ],
++            "Type": "ADC"
++        },
+         {
+             "Address": "0x40",
+             "Bus": "58",
+-- 
+2.41.0
+

@@ -1,15 +1,24 @@
-From d17013303d6b48722b61c77623fb84fef4d1cb7c Mon Sep 17 00:00:00 2001
+From 1e9f1a5bcd04784ddb5ad110881d12adeb3e9b28 Mon Sep 17 00:00:00 2001
 From: Patrick Rudolph <patrick.rudolph@9elements.com>
 Date: Sat, 29 Apr 2023 09:53:30 +0200
-Subject: [PATCH] Overlay: Remove installed drivers when probe is false
+Subject: [PATCH 09/11] Add support to unload drivers
+
+Overlay: Remove installed drivers when probe is false
 
 When the FRU device is gone the probe condition is no longer true.
 In that case unload the installed drivers to make sure they won't
 missbehave. As with all ungraceful removals there is a chance that
 the driver or other services missbehave in the meantime.
 
-Change-Id: I48e9c64d7eeb18e464c66732e841fe28d5a36c6a
+Tested: The entity-manager config was updated to expose 24C01 EEPROMs
+        when the probe condition matches. When the probe condition is
+        no longer true the eeprom driver is unloaded as it's no longer
+        functional. As the EEPROMs do not have an IPMI FRU format they
+        cannot be detected using FruDevice.
+
+Change-Id: If78cfcaf71b8708e86c045f93271a2c8a8c5e8ec
 Signed-off-by: Patrick Rudolph <patrick.rudolph@9elements.com>
+Signed-off-by: Chris Cain <cjcain@us.ibm.com>
 ---
  src/entity_manager.cpp |  1 +
  src/overlay.cpp        | 95 +++++++++++++++++++++++++++++++++++-------
