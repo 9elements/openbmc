@@ -1,4 +1,5 @@
 SUMMARY = "X11 image viewer aimed mostly at console users"
+AUTHOR = "Tom Gilbert & Daniel Friesel"
 HOMEPAGE = "https://feh.finalrewind.org/"
 SECTION = "x11/utils"
 LICENSE = "MIT"

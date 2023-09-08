@@ -75,5 +75,3 @@ python() {
     if 'meta-python2' not in d.getVar('BBFILE_COLLECTIONS').split():
         raise bb.parse.SkipRecipe('Requires meta-python2 to be present.')
 }
-
-CVE_PRODUCT += "cherokee_web_server"

@@ -16,8 +16,6 @@ python do_compile_ptest_cargo() {
     cargo_build_flags = d.getVar("CARGO_BUILD_FLAGS", True)
     rust_flags = d.getVar("RUSTFLAGS", True)
     manifest_path = d.getVar("MANIFEST_PATH", True)
-    project_manifest_path = os.path.normpath(manifest_path)
-    manifest_dir = os.path.dirname(manifest_path)
 
     env = os.environ.copy()
     env['RUSTFLAGS'] = rust_flags
@@ -48,15 +46,13 @@ python do_compile_ptest_cargo() {
             pass
         else:
             try:
-                # Filter the test packages coming from the current project:
-                #    - test binaries from the root manifest
-                #    - test binaries from sub manifest of the current project if any
+                # Filter the test packages coming from the current manifest
                 current_manifest_path = os.path.normpath(data['manifest_path'])
-                common_path = os.path.commonpath([current_manifest_path, project_manifest_path])
-                if common_path in [manifest_dir, current_manifest_path]:
+                project_manifest_path = os.path.normpath(manifest_path)
+                if current_manifest_path == project_manifest_path:
                     if (data['target']['test'] or data['target']['doctest']) and data['executable']:
                         test_bins.append(data['executable'])
-            except (KeyError, ValueError) as e:
+            except KeyError as e:
                 # skip lines that do not meet the requirements
                 pass
 

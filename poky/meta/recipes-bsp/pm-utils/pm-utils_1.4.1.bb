@@ -17,7 +17,7 @@ inherit pkgconfig autotools manpages
 
 PACKAGECONFIG[manpages] = "--enable-doc, --disable-doc, libxslt-native xmlto-native"
 
-RDEPENDS:${PN} = "bash"
+RDEPENDS:${PN} = "grep bash"
 
 EXTRA_OECONF = "--libdir=${nonarch_libdir}"
 

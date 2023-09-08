@@ -71,13 +71,8 @@ class LtpTest(LtpTestBase):
             cmd = '/opt/ltp/runltp -f %s -q -r /opt/ltp -l /opt/ltp/results/%s -I 1 -d /opt/ltp' % (ltp_group, ltp_group)
 
             starttime = time.time()
-            (status, output) = self.target.run(cmd, timeout=1200)
+            (status, output) = self.target.run(cmd)
             endtime = time.time()
-
-            # status of 1 is 'just' tests failing. 255 likely was a command output timeout 
-            if status and status != 1:
-                msg = 'Command %s returned exit code %s' % (cmd, status)
-                self.target.logger.warning(msg)
 
             # Write the console log to disk for convenience
             with open(os.path.join(self.ltptest_log_dir, "%s-raw.log" % ltp_group), 'w') as f:
