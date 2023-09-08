@@ -11,7 +11,9 @@ SRC_URI:append:class-target = " file://usemake-docfile-native.patch"
 
 SRC_URI[sha256sum] = "ee21182233ef3232dc97b486af2d86e14042dbb65bbc535df562c3a858232488"
 
-CVE_STATUS[CVE-2007-6109] = "fixed-version: The CPE in the NVD database doesn't reflect correctly the vulnerable versions."
+CVE_CHECK_IGNORE = "\
+    CVE-2007-6109 \
+"
 
 PACKAGECONFIG[gnutls] = "--with-gnutls=yes,--with-gnutls=no,gnutls"
 PACKAGECONFIG[kerberos] = "--with-kerberos=yes,--with-kerberos=no,krb5"

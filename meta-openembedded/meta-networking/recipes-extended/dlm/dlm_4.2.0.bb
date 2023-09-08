@@ -39,7 +39,6 @@ export EXTRA_OEMAKE = ""
 CFPROTECTION ?= "-fcf-protection=full"
 CFPROTECTION:riscv64 = ""
 CFPROTECTION:arm = ""
-CFPROTECTION:aarch64 = ""
 
 CFLAGS += "${CFPROTECTION}"
 

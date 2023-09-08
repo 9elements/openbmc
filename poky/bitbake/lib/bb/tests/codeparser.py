@@ -44,7 +44,6 @@ class VariableReferenceTest(ReferenceTest):
     def parseExpression(self, exp):
         parsedvar = self.d.expandWithRefs(exp, None)
         self.references = parsedvar.references
-        self.execs = parsedvar.execs
 
     def test_simple_reference(self):
         self.setEmptyVars(["FOO"])
@@ -61,11 +60,6 @@ class VariableReferenceTest(ReferenceTest):
         self.setEmptyVars(["BAR"])
         self.parseExpression("${@d.getVar('BAR') + 'foo'}")
         self.assertReferences(set(["BAR"]))
-
-    def test_python_exec_reference(self):
-        self.parseExpression("${@eval('3 * 5')}")
-        self.assertReferences(set())
-        self.assertExecs(set(["eval"]))
 
 class ShellReferenceTest(ReferenceTest):
 

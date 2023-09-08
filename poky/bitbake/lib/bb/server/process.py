@@ -860,10 +860,11 @@ class ConnectionWriter(object):
                 process.queue_signals = True
                 self._send(obj)
                 process.queue_signals = False
-
-                while len(process.signal_received) > 0:
-                    sig = process.signal_received.pop()
-                    process.handle_sig(sig, None)
+                try:
+                    for sig in process.signal_received.pop():
+                        process.handle_sig(sig, None)
+                except IndexError:
+                    pass
         else:
             self._send(obj)
 

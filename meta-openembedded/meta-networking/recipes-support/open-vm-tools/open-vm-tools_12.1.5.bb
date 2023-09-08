@@ -119,5 +119,3 @@ python() {
     if 'filesystems-layer' not in d.getVar('BBFILE_COLLECTIONS').split():
         raise bb.parse.SkipRecipe('Requires meta-filesystems to be present to provide fuse.')
 }
-
-CVE_PRODUCT = "open-vm-tools vmware:tools"

@@ -81,4 +81,5 @@ do_configure:prepend() {
 
 BBCLASSEXTEND = "native nativesdk"
 
-CVE_STATUS[CVE-2019-14906] = "not-applicable-platform: Applies on RHEL only"
+#CVE-2019-14906 is a RHEL specific vulnerability.
+CVE_CHECK_IGNORE += "CVE-2019-14906"
