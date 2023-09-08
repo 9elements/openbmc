@@ -18,7 +18,6 @@ RPI_KERNEL_DEVICETREE_OVERLAYS ?= " \
     overlays/overlay_map.dtb \
     overlays/at86rf233.dtbo \
     overlays/disable-bt.dtbo \
-    overlays/disable-wifi.dtbo \
     overlays/dwc2.dtbo \
     overlays/gpio-ir.dtbo \
     overlays/gpio-ir-tx.dtbo \
@@ -112,6 +111,9 @@ SERIAL_CONSOLES_CHECK ??= "${SERIAL_CONSOLES}"
 # The name of the deploy directory for raspberry pi boot files.
 # This variable is referred to by recipes fetching / generating the files.
 BOOTFILES_DIR_NAME ?= "bootfiles"
+
+# Set Raspberrypi splash image
+SPLASH ?= "psplash-raspberrypi"
 
 def make_dtb_boot_files(d):
     # Generate IMAGE_BOOT_FILES entries for device tree files listed in

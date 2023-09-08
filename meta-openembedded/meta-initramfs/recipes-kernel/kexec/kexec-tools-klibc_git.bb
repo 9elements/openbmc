@@ -1,5 +1,6 @@
 # the binaries are statically linked against klibc
 SUMMARY = "Kexec tools, statically compiled against klibc"
+AUTHOR = "Eric Biederman"
 HOMEPAGE = "http://kernel.org/pub/linux/utils/kernel/kexec/"
 SECTION = "kernel/userland"
 LICENSE = "GPL-2.0-only"

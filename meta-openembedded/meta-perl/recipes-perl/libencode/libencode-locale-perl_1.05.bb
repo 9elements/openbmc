@@ -1,4 +1,5 @@
 SUMMARY = "Encode::Locale - Determine the locale encoding"
+AUTHOR = "Gisle Aas <gisle@activestate.com>"
 HOMEPAGE = "https://metacpan.org/module/Encode::Locale"
 SECTION = "libs"
 LICENSE = "Artistic-1.0 | GPL-1.0-or-later"
