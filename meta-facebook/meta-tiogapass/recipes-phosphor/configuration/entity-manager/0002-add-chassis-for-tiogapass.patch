@@ -1,0 +1,51 @@
+From ec9249a300aa9650ad63ff995cb8cf0a7ba65129 Mon Sep 17 00:00:00 2001
+From: Alexander Hansen <alexander.hansen@9elements.com>
+Date: Mon, 11 Sep 2023 11:54:36 +0200
+Subject: [PATCH 2/2] add chassis for tiogapass
+
+Change-Id: I520c33ee09f47c91f8d9cf13f5e8fbe7a4a88a98
+Signed-off-by: Alexander Hansen <alexander.hansen@9elements.com>
+---
+ configurations/fbtp-chassis.json | 17 +++++++++++++++++
+ meson.build                      |  1 +
+ 2 files changed, 18 insertions(+)
+ create mode 100644 configurations/fbtp-chassis.json
+
+diff --git a/configurations/fbtp-chassis.json b/configurations/fbtp-chassis.json
+new file mode 100644
+index 0000000..73cb7cb
+--- /dev/null
++++ b/configurations/fbtp-chassis.json
+@@ -0,0 +1,17 @@
++{
++    "Exposes": [
++    ],
++    "Name": "TiogaPass Chassis",
++    "Probe": "xyz.openbmc_project.FruDevice({'PRODUCT_PRODUCT_NAME': '.*Tioga Pass.*'})",
++    "Type": "Chassis",
++    "xyz.openbmc_project.Inventory.Decorator.Asset": {
++        "Manufacturer": "$PRODUCT_MANUFACTURER",
++        "Model": "$PRODUCT_PRODUCT_NAME",
++        "PartNumber": "$PRODUCT_PART_NUMBER",
++        "SerialNumber": "$PRODUCT_SERIAL_NUMBER"
++    },
++    "xyz.openbmc_project.Inventory.Decorator.AssetTag": {
++        "AssetTag": "$PRODUCT_ASSET_TAG"
++    },
++    "xyz.openbmc_project.Inventory.Item.Chassis": {}
++}
+diff --git a/meson.build b/meson.build
+index 5b9ca0d..8a1acb6 100644
+--- a/meson.build
++++ b/meson.build
+@@ -107,6 +107,7 @@ configs = [
+     'f2u12x35_hsbp.json',
+     'f2u8x25_hsbp.json',
+     'fbtp.json',
++    'fbtp-chassis.json',
+     'fbyv2.json',
+     'fbyv35.json',
+     'fbyv35_nic_mellanox.json',
+-- 
+2.42.0
+
