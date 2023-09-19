@@ -1,0 +1,27 @@
+---
+# action.yml
+name: 'Build OpenBmc for Tiogapass'
+description: 'Build OpenBmc for Tiogapass'
+inputs:
+  artifact-path:
+    description: 'The key used to retrieve the uploaded artifact.'
+    required: true
+  tar-artifact-path:
+    description: 'The key used to retrieve the uploaded artifact.'
+    required: true
+runs:
+  using: 'composite'
+  steps:
+    - name: Configure the Build for tiogapass target and Build OpenBmc
+      shell: bash
+      run: . setup tiogapass && bitbake obmc-phosphor-image
+
+    - uses: actions/upload-artifact@v3
+      with:
+        name: ${{ inputs.artifact-path }}
+        path: /home/runner/actions-runner/_work/netflix-openbmc/netflix-openbmc/build/tiogapass/tmp/deploy/images/tiogapass/obmc-phosphor-image-tiogapass.static.mtd
+
+    - uses: actions/upload-artifact@v3
+      with:
+        name: ${{ inputs.tar-artifact-path }}
+        path: /home/runner/actions-runner/_work/netflix-openbmc/netflix-openbmc/build/tiogapass/tmp/deploy/images/tiogapass/obmc-phosphor-image-tiogapass.static.mtd.tar
