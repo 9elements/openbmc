@@ -1,0 +1,35 @@
+---
+# workflow
+
+name: Build
+
+on:
+  push:
+    branches:
+      - tiogapass-fixes
+  pull_request:
+    branches:
+      - tiogapass-fixes
+
+jobs:
+
+  BuildTiogapass:
+    runs-on: [self-hosted]
+    outputs:
+      binaryArtifact: ${{ env.artifact }}
+      tarArtifact: ${{ env.tarArtifact }}
+    steps:
+      - name: Clone
+        uses: actions/checkout@v3
+        with:
+          repository: 9elements/openbmc
+      - name: Write Path to ENV
+        run: |
+              echo "artifact=obmc-phosphor-image-tiogapass.static.mtd" >> $GITHUB_ENV
+              echo "tarArtifact=obmc-phosphor-image-tiogapass.static.mtd.tar" >> $GITHUB_ENV
+      - name: Build Action
+        uses: ./.github/actions/build-tiogapass
+        with:
+          artifact-path: ${{ env.artifact }}
+          tar-artifact-path: ${{ env.tarArtifact }}
+
