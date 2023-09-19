@@ -1,0 +1,13 @@
+{
+    "leds": [
+        {
+            "group" : "power_on",
+            "members" : [
+                {
+                    "Name" : "power",
+                    "Action" : "On"
+                }
+            ]
+        }
+    ]
+}
