@@ -1,0 +1,26 @@
+From 5c16622a07260f41df4adab73cf0efcd22d3e92c Mon Sep 17 00:00:00 2001
+From: Patrick Rudolph <patrick.rudolph@9elements.com>
+Date: Wed, 20 Sep 2023 16:53:38 +0200
+Subject: [PATCH 3/3] Hwmon: Add support for ADM1021
+
+Change-Id: Ic50822df39d2c3930e25b64a1d1bc8ec2234395f
+Signed-off-by: Patrick Rudolph <patrick.rudolph@9elements.com>
+---
+ src/HwmonTempMain.cpp | 1 +
+ 1 file changed, 1 insertion(+)
+
+diff --git a/src/HwmonTempMain.cpp b/src/HwmonTempMain.cpp
+index bb2f6a4..8d41fab 100644
+--- a/src/HwmonTempMain.cpp
++++ b/src/HwmonTempMain.cpp
+@@ -52,6 +52,7 @@ static constexpr double minValueTemperature = -128;     // DegreesC
+ namespace fs = std::filesystem;
+ 
+ static const I2CDeviceTypeMap sensorTypes{
++    {"ADM1021", I2CDeviceType{"adm1021", true}},
+     {"DPS310", I2CDeviceType{"dps310", false}},
+     {"EMC1412", I2CDeviceType{"emc1412", true}},
+     {"EMC1413", I2CDeviceType{"emc1413", true}},
+-- 
+2.41.0
+
