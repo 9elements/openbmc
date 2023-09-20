@@ -18,12 +18,24 @@ RPROVIDES:${PN}-chassis = "virtual-obmc-chassis-mgmt"
 RPROVIDES:${PN}-system = "virtual-obmc-system-mgmt"
 RPROVIDES:${PN}-flash = "virtual-obmc-flash-mgmt"
 
+SUMMARY:${PN}-flash = "Tiogapass Flash"
+RDEPENDS:${PN}-flash = " \
+ phosphor-software-manager \
+"
+
 SUMMARY:${PN}-system = "Tiogapass System"
 RDEPENDS:${PN}-system = " \
  entity-manager \
  dbus-sensors \
  phosphor-sel-logger \
+ phosphor-hostlogger \
  ipmitool \
+ bmcweb \
+ webui-vue \
+"
+
+RDEPENDS:${PN}-extras:append = " \
+ webui-vue \
 "
 
 SUMMARY:${PN}-chassis = "Tiogapass Chassis"
