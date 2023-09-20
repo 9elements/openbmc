@@ -431,6 +431,12 @@
 &i2c7 {
 	status = "okay";
 	multi-master;
+
+	adm1278@0x45 {
+		compatible = "adi,adm1278";
+		reg = <0x45>;
+		shunt-resistor-micro-ohms = <250>;
+	};
 };
 
 &i2c8 {

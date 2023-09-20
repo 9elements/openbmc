@@ -37,7 +37,11 @@ RDEPENDS:${PN}-extras:append = " \
  webui-vue \
 "
 
+RDEPENDS:${PN}-extras:remove = "phosphor-nslcd-cert-config"
+RDEPENDS:${PN}-extras:remove = "phosphor-nslcd-authority-cert-config"
+
 SUMMARY:${PN}-chassis = "Tiogapass Chassis"
 RDEPENDS:${PN}-chassis = " \
  x86-power-control \
+ fb-powerctrl \
 "
