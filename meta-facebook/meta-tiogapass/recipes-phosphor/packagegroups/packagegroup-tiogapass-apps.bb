@@ -28,7 +28,6 @@ RDEPENDS:${PN}-system = " \
  entity-manager \
  dbus-sensors \
  phosphor-sel-logger \
- phosphor-hostlogger \
  ipmitool \
  bmcweb \
  webui-vue \
