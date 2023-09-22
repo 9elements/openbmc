@@ -1,0 +1,38 @@
+From 03cb86e7ce24f39fd858eaa1e3d0bc350ef44e61 Mon Sep 17 00:00:00 2001
+From: Patrick Rudolph <patrick.rudolph@9elements.com>
+Date: Fri, 22 Sep 2023 11:32:54 +0200
+Subject: [PATCH] hwmontemp: Fix NULL pointer dereference
+
+When createSensors is called with activateOnly=false and
+a sensor does not have a hwmonFile it added to sensors as
+nullptr;
+
+This causes interfaceRemoved() to crash as it dereferences
+that sensor without first checking if it's null.
+
+TEST: hwmontempsensor no longer crashes when some random
+      interface is removed.
+
+Change-Id: I8f63f753cca7341be5a0683e7b446f63ae92f8cb
+Signed-off-by: Patrick Rudolph <patrick.rudolph@9elements.com>
+---
+ src/HwmonTempMain.cpp | 3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
+
+diff --git a/src/HwmonTempMain.cpp b/src/HwmonTempMain.cpp
+index 8d41fab..d6b0c61 100644
+--- a/src/HwmonTempMain.cpp
++++ b/src/HwmonTempMain.cpp
+@@ -538,7 +538,8 @@ void interfaceRemoved(
+     auto sensorIt = sensors.begin();
+     while (sensorIt != sensors.end())
+     {
+-        if ((sensorIt->second->configurationPath == path) &&
++        if (sensorIt->second &&
++            (sensorIt->second->configurationPath == path) &&
+             (std::find(interfaces.begin(), interfaces.end(),
+                        sensorIt->second->configInterface) != interfaces.end()))
+         {
+-- 
+2.41.0
+
