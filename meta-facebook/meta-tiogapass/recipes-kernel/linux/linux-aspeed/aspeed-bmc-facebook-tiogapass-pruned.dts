@@ -452,12 +452,44 @@
 	};
 };
 
-//TODO: continue here later...
-
 &i2c6 {
 	status = "okay";
 	multi-master;
+
+	tpm@0x20 {
+		compatible = "infineon,slb9645tt";
+		reg = <0x20>;
+	};
+	tmp421@0x4e { /* Inlet Air Temp */
+		compatible = "ti,tmp421";
+		reg = <0x4e>;
+	};
+	tmp421@0x4f { /* Outlet Air Temp */
+		compatible = "ti,tmp421";
+		reg = <0x4f>;
+	};
+	eeprom@0x54 {
+		compatible = "atmel,24c64";
+		reg = <0x54>;
+	};
+
+	//TODO: this one does not work when added via devicetree.
+	// when instantiating manually, it works
+	gpio@0x21 {
+		compatible = "nxp,pca9554";
+		reg = <0x20>;
+		gpio-controller;
+		gpio-line-names =
+			"FM_MB_SLOT0", // pullup to P3V3_STBY
+			"FM_MB_SLOT1", // pullup to P3V3_STBY
+			"FM_MB_SLOT2", // pullup to P3V3_STBY
+			"FM_CPU_BMC_INIT",
+			"","","",""; //these are unused
+	};
+	//TODO: device at 0x50
 };
+
+//TODO: continue here later
 
 &i2c7 {
 	status = "okay";
@@ -473,6 +505,11 @@
 &i2c8 {
 	status = "okay";
 	multi-master;
+	tmp421@0x1f {
+		compatible = "ti,tmp421";
+		reg = <0x1f>;
+	};
+	//TODO: device at 0x61
 };
 
 &i2c9 {
@@ -484,9 +521,28 @@
 		reg = <(0x10 | I2C_OWN_SLAVE_ADDRESS)>;
 		i2c-protocol;
 	};
-
-	// probably the below are due to the debug card being attached
-	//TODO 0x27
+	pca9555@0x27 {
+		compatible = "nxp,pca9555";
+		reg = <0x27>;
+		gpio-controller;
+		gpio-line-names =
+			"LED_POSTCODE_0",
+			"LED_POSTCODE_1",
+			"LED_POSTCODE_2",
+			"LED_POSTCODE_3",
+			"LED_POSTCODE_4",
+			"LED_POSTCODE_5",
+			"LED_POSTCODE_6",
+			"LED_POSTCODE_7",
+			"FM_DEBUG_RST_BTN_N",
+			"FP_PWR_BTN_R_N",
+			"PWRGD_SYS_PWROK",
+			"RST_PLTRST_N",
+			"PWRGD_DSW_PWROK",
+			"FM_CPU_CATERR_MSMI_LVT3_N",
+			"FM_SLPS3_N",
+			"FM_UART_SWITCH_N";
+	};
 	//TODO 0x54
 };
 
