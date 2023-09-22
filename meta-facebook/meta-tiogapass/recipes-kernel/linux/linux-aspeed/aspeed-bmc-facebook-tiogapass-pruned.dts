@@ -123,6 +123,10 @@
 	aspeed,lpc-io-reg = <0xca2>;
 };
 
+&peci0 {
+	status = "okay";
+};
+
 &gpio {
 	status = "okay";
 	gpio-line-names =
