@@ -31,6 +31,9 @@ RDEPENDS:${PN}-system = " \
  ipmitool \
  bmcweb \
  webui-vue \
+ obmc-ikvm \
+ phosphor-post-code-manager \
+ phosphor-host-postd \
 "
 
 RDEPENDS:${PN}-extras:append = " \
