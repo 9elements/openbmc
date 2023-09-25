@@ -1,7 +1,7 @@
-From 9d06f86b729030962fdad5ba1229b86dae192057 Mon Sep 17 00:00:00 2001
+From 26a2c67c2743452b9e7f1d2beeb305924b986004 Mon Sep 17 00:00:00 2001
 From: Patrick Rudolph <patrick.rudolph@9elements.com>
 Date: Wed, 30 Aug 2023 13:21:59 +0200
-Subject: [PATCH 02/11] sbp1: Update PID settings
+Subject: [PATCH 03/12] configurations: sbp1: Update PID settings
 
 Change settings as requested by IBM.
 

@@ -1,7 +1,7 @@
-From b78d0f4430ff987fd9bdc2bb88e01d47e0631a98 Mon Sep 17 00:00:00 2001
+From f606fa39868c5dd6a929f66dd591c8a80aef7018 Mon Sep 17 00:00:00 2001
 From: Patrick Rudolph <patrick.rudolph@9elements.com>
 Date: Wed, 30 Aug 2023 09:07:38 +0200
-Subject: [PATCH 01/11] configurations: Add Intel P4510 SSD
+Subject: [PATCH 02/12] configurations: Add Intel P4510 SSD
 
 The existing configuration for PXXXX assumes that all devices use
 a non standard NVMe-MI address. Tests on P4510 showed that it uses

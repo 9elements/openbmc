@@ -1,7 +1,7 @@
-From 60d53d5ce367be8e802eb7cfa39bd7c464ad2bda Mon Sep 17 00:00:00 2001
+From 4310afb2d5a93d64eb3992c539db60fde520cc98 Mon Sep 17 00:00:00 2001
 From: Patrick Rudolph <patrick.rudolph@9elements.com>
 Date: Wed, 30 Aug 2023 14:10:01 +0200
-Subject: [PATCH 03/11] sbp1: Add PCH and AUX VRs to PID loop
+Subject: [PATCH 04/12] configurations: sbp1: Add PCH and AUX VRs to PID loop
 
 Add the following missing regulators to PID loop:
 - P5V_AUX

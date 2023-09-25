@@ -1,7 +1,7 @@
-From 61de6ebbc2be4407bfaaf81c3dd9878b26ce31c7 Mon Sep 17 00:00:00 2001
+From 02948c6e70d9c81772780f1a76f4b50afe1313e3 Mon Sep 17 00:00:00 2001
 From: Patrick Rudolph <patrick.rudolph@9elements.com>
 Date: Wed, 20 Sep 2023 16:46:27 +0200
-Subject: [PATCH 10/11] configurations: Add NIC temperature sensors
+Subject: [PATCH 10/12] configurations: sbp1: Add NIC temperature sensors
 
 Add I2C temperature sensors for the two onboard NICs.
 The temperature sensor is compatible to ADM1021.
@@ -19,12 +19,12 @@ Signed-off-by: Patrick Rudolph <patrick.rudolph@9elements.com>
  2 files changed, 48 insertions(+)
 
 diff --git a/configurations/sbp1_baseboard.json b/configurations/sbp1_baseboard.json
-index 1a85efb..805f64d 100644
+index 198332b..160dc8a 100644
 --- a/configurations/sbp1_baseboard.json
 +++ b/configurations/sbp1_baseboard.json
-@@ -3463,6 +3463,28 @@
-             "in1_Name": "SSB_RSSD28 P3V3 Output Voltage",
-             "curr2_Name": "SSB_RSSD28 P3V3 Output Current"
+@@ -372,6 +372,28 @@
+             ],
+             "Type": "ADC"
          },
 +        {
 +            "Address": "0x1f",
@@ -34,8 +34,8 @@ index 1a85efb..805f64d 100644
 +            ],
 +            "Name": "NIC1_0",
 +            "Name1": "NIC1",
-+            "Type": "ADM1021",
-+            "PowerState": "On"
++            "PowerState": "On",
++            "Type": "ADM1021"
 +        },
 +        {
 +            "Address": "0x1f",
@@ -45,12 +45,12 @@ index 1a85efb..805f64d 100644
 +            ],
 +            "Name": "NIC2_0",
 +            "Name1": "NIC2",
-+            "Type": "ADM1021",
-+            "PowerState": "On"
++            "PowerState": "On",
++            "Type": "ADM1021"
 +        },
          {
-             "Address": "0x30",
-             "Bus": 0,
+             "Address": "0x40",
+             "Bus": "58",
 diff --git a/configurations/sbp1_chassis.json b/configurations/sbp1_chassis.json
 index 472aeee..a26f5fb 100644
 --- a/configurations/sbp1_chassis.json

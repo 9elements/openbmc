@@ -1,0 +1,38 @@
+From 1c39d7b833aaf438d13554e8b2d7d3bf90fd8072 Mon Sep 17 00:00:00 2001
+From: Patrick Rudolph <patrick.rudolph@9elements.com>
+Date: Thu, 21 Sep 2023 15:50:20 +0200
+Subject: [PATCH 01/12] test: Add test for string matching
+
+Add test for regex (?!) to not match a specific sequence.
+This is useful to exclude specific matches while using
+wildcard patterns.
+
+Change-Id: I54aec4b5a956af0e815b7a57c715f4f58af8a4e6
+Signed-off-by: Patrick Rudolph <patrick.rudolph@9elements.com>
+---
+ test/test_entity-manager.cpp | 9 +++++++++
+ 1 file changed, 9 insertions(+)
+
+diff --git a/test/test_entity-manager.cpp b/test/test_entity-manager.cpp
+index 4cd841a..1f73607 100644
+--- a/test/test_entity-manager.cpp
++++ b/test/test_entity-manager.cpp
+@@ -267,6 +267,15 @@ TEST(MatchProbe, stringRegexError)
+     EXPECT_FALSE(matchProbe(j, v));
+ }
+ 
++TEST(MatchProbe, stringRegexNotPrefix)
++{
++    nlohmann::json j = R"("foo(?!bar)...foo")"_json;
++    DBusValueVariant v1 = "foobarfoo"s;
++    DBusValueVariant v2 = "foofoofoo"s;
++    EXPECT_FALSE(matchProbe(j, v1));
++    EXPECT_TRUE(matchProbe(j, v2));
++}
++
+ TEST(MatchProbe, stringZeroNeqFalse)
+ {
+     nlohmann::json j = R"("0")"_json;
+-- 
+2.41.0
+

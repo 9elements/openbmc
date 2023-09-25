@@ -1,10 +1,13 @@
-From 12fa3bcc71029b9599a087b9301cd6108cd2b361 Mon Sep 17 00:00:00 2001
+From ff1a01371f9c2101b9710662ce453267d04bf416 Mon Sep 17 00:00:00 2001
 From: Patrick Rudolph <patrick.rudolph@9elements.com>
 Date: Thu, 31 Aug 2023 10:41:03 +0200
-Subject: [PATCH 04/11] sbp1: Add ruler drives to PID loop
+Subject: [PATCH 05/12] configurations: sbp1: Add ruler drives to PID loop
 
 SBP1 has up to 32 ruler drive NVMes. Add them to the
 PID loop as well.
+
+Tested: Verified that swampd uses the NVMe rulerdrive
+        temperatures.
 
 Change-Id: Ibde9b96cd0b33ded650e9c550831697a4eb68d02
 Signed-off-by: Patrick Rudolph <patrick.rudolph@9elements.com>

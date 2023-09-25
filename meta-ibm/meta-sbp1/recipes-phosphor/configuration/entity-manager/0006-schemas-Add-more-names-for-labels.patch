@@ -1,7 +1,7 @@
-From 36e2040b2135d1085be5389cf31a02e0ac6afac5 Mon Sep 17 00:00:00 2001
+From b7c2febf41601484480f63cc94ecf8e6c6b9c6d1 Mon Sep 17 00:00:00 2001
 From: Patrick Rudolph <patrick.rudolph@9elements.com>
 Date: Tue, 12 Sep 2023 10:44:50 +0200
-Subject: [PATCH 05/11] schemas: Add more names for labels
+Subject: [PATCH 06/12] schemas: Add more names for labels
 
 The MAX5970 has two separate outputs, so add the ability to name
 both channels. This will be used in the following commit that adds
@@ -12,11 +12,11 @@ Tested: The configuration passes validation.
 Change-Id: I28c1c5b6e70fe7b8489e6946cb1a2e2abda12ae8
 Signed-off-by: Patrick Rudolph <patrick.rudolph@9elements.com>
 ---
- schemas/legacy.json | 6 ++++++
- 1 file changed, 6 insertions(+)
+ schemas/legacy.json | 12 ++++++++++++
+ 1 file changed, 12 insertions(+)
 
 diff --git a/schemas/legacy.json b/schemas/legacy.json
-index 5a616d3..f09bc1c 100644
+index 5a616d3..5d25c8a 100644
 --- a/schemas/legacy.json
 +++ b/schemas/legacy.json
 @@ -252,6 +252,9 @@
@@ -24,7 +24,7 @@ index 5a616d3..f09bc1c 100644
                      "$ref": "#/definitions/Types/vin_Name"
                  },
 +                "in0_Name": {
-+                    "$ref": "#/definitions/Types/in1_Name"
++                    "$ref": "#/definitions/Types/in0_Name"
 +                },
                  "in1_Name": {
                      "$ref": "#/definitions/Types/in1_Name"
@@ -34,11 +34,31 @@ index 5a616d3..f09bc1c 100644
                      "$ref": "#/definitions/Types/curr1_Name"
                  },
 +                "curr2_Name": {
-+                    "$ref": "#/definitions/Types/curr1_Name"
++                    "$ref": "#/definitions/Types/curr2_Name"
 +                },
                  "iout1_Max": {
                      "$ref": "#/definitions/Types/iout1_Max"
                  },
+@@ -810,6 +816,9 @@
+             "vin_Name": {
+                 "type": "string"
+             },
++            "in0_Name": {
++                "type": "string"
++            },
+             "in1_Name": {
+                 "type": "string"
+             },
+@@ -819,6 +828,9 @@
+             "curr1_Name": {
+                 "type": "string"
+             },
++            "curr2_Name": {
++                "type": "string"
++            },
+             "iout1_Max": {
+                 "type": "number"
+             },
 -- 
 2.41.0
 
