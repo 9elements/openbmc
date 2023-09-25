@@ -430,23 +430,23 @@
 	// turning host off/on does not change anything here
 	//compared to upstream dt we are missing some...
 
-	regulator@0x48 { //pxe1610C
+	regulator@0x48 { //pxe1610C, CPU0 VCCIN,VSA
 		compatible = "infineon,pxe1610";
 		register = <0x48>;
 	};
-	regulator@0x4a { //pxe1110C
+	regulator@0x4a { //pxe1110C, CPU0 VCCIO
 		compatible = "infineon,pxe1610";
 		register = <0x4a>;
 	};
-	regulator@0x68 { //pxe1110C
+	regulator@0x68 { //pxe1110C, PCH VNN, PCH P1V05
 		compatible = "infineon,pxe1610";
 		register = <0x68>;
 	};
-	regulator@0x70 { //pxm1310C
+	regulator@0x70 { //pxm1310C, CPU0 VddqABC
 		compatible = "infineon,pxe1610";
 		register = <0x70>;
 	};
-	regulator@0x72 { //pxm1310C
+	regulator@0x72 { //pxm1310C, CPU0 VddqDEF
 		compatible = "infineon,pxe1610";
 		register = <0x72>;
 	};
