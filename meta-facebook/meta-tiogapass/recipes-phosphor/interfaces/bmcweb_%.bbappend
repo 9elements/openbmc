@@ -1,2 +1,2 @@
 
-EXTRA_OEMESON:append = " -Dhttp-body-limit=65 -Dredfish-bmc-journal=enabled "
+EXTRA_OEMESON:append = " -Dhttp-body-limit=65 -Dredfish-bmc-journal=enabled -Dbmcweb-logging=debug "

@@ -1,0 +1,88 @@
+From 8f3900eae6cbc2b22ee28e73c115058c9d6f8a2c Mon Sep 17 00:00:00 2001
+From: Alexander Hansen <alexander.hansen@9elements.com>
+Date: Tue, 26 Sep 2023 14:41:02 +0200
+Subject: [PATCH] intelcpu sensor creates intel cpu inventory
+
+Change-Id: Ide0c3707d6e8167ea0669fda338fb6787e67d515
+Signed-off-by: Alexander Hansen <alexander.hansen@9elements.com>
+---
+ src/IntelCPUSensorMain.cpp | 34 ++++++++++++++++++++++++++++++++++
+ src/Utils.hpp              |  3 ++-
+ 2 files changed, 36 insertions(+), 1 deletion(-)
+
+diff --git a/src/IntelCPUSensorMain.cpp b/src/IntelCPUSensorMain.cpp
+index 011f2fb..1826182 100644
+--- a/src/IntelCPUSensorMain.cpp
++++ b/src/IntelCPUSensorMain.cpp
+@@ -156,6 +156,25 @@ bool createSensors(boost::asio::io_context& io,
+             iface->register_property("PrettyName", cpu.name);
+             iface->register_property("Present", true);
+             iface->initialize();
++
++            std::shared_ptr<sdbusplus::asio::dbus_interface>& iface2 =
++                inventoryIfaces[cpu.name+"_cpu"];
++            if (iface2 != nullptr)
++            {
++                continue;
++            }
++            // create cpu inventory
++            std::cout << "created cpu inventory" << std::endl;
++            iface2 = objectServer.add_interface(
++                cpuInventoryPath + std::string("/") + cpu.name,
++                "xyz.openbmc_project.Inventory.Item.Cpu");
++            iface2->register_property("PrettyName", cpu.name);
++            iface2->register_property("Present", true);
++            iface2->initialize();
++
++            auto association = objectServer.add_interface(
++                cpuInventoryPath + std::string("/") + cpu.name, association::interface);
++            createInventoryAssoc(dbusConnection, association, cpuInventoryPath + std::string("/") + cpu.name);
+         }
+     }
+     if (!available)
+@@ -642,6 +661,7 @@ bool getCpuConfig(const std::shared_ptr<sdbusplus::asio::connection>& systemBus,
+                   ManagedObjectType& sensorConfigs,
+                   sdbusplus::asio::object_server& objectServer)
+ {
++    std::cout << "getCpuConfig" << std::endl;
+     bool useCache = false;
+     sensorConfigs.clear();
+     // use new data the first time, then refresh
+@@ -698,6 +718,20 @@ bool getCpuConfig(const std::shared_ptr<sdbusplus::asio::connection>& systemBus,
+                     iface->register_property("Present", *present);
+                     iface->initialize();
+                     inventoryIfaces[name] = std::move(iface);
++
++                    // create the cpu inventory
++                    std::cout << "created cpu inventory" << std::endl;
++                    auto iface2 = objectServer.add_interface(
++                        cpuInventoryPath + std::string("/") + name,
++                        "xyz.openbmc_project.Inventory.Item.Cpu");
++                    iface2->register_property("PrettyName", name);
++                    iface2->register_property("Present", *present);
++                    iface2->initialize();
++                    inventoryIfaces[name+"_cpu"] = std::move(iface2);
++
++                    auto association = objectServer.add_interface(
++                        cpuInventoryPath + std::string("/") + name, association::interface);
++                    createInventoryAssoc(systemBus, association, cpuInventoryPath + std::string("/") + name);
+                 }
+ 
+                 auto findBus = cfg.find("Bus");
+diff --git a/src/Utils.hpp b/src/Utils.hpp
+index 444030c..8ad810c 100644
+--- a/src/Utils.hpp
++++ b/src/Utils.hpp
+@@ -27,7 +27,8 @@ const constexpr char* inventoryPath = "/xyz/openbmc_project/inventory";
+ const constexpr char* entityManagerName = "xyz.openbmc_project.EntityManager";
+ 
+ constexpr const char* cpuInventoryPath =
+-    "/xyz/openbmc_project/inventory/system/chassis/motherboard";
++//    "/xyz/openbmc_project/inventory/system/chassis/motherboard";
++    "/xyz/openbmc_project/inventory/system/board/TiogaPass_Baseboard";
+ const std::regex illegalDbusRegex("[^A-Za-z0-9_]");
+ 
+ using BasicVariantType =
+-- 
+2.42.0
+
