@@ -1,7 +1,7 @@
-From ff1a01371f9c2101b9710662ce453267d04bf416 Mon Sep 17 00:00:00 2001
+From 5aaaf2b7fa5d4285347bd0fdb89292c1d1cb4ad3 Mon Sep 17 00:00:00 2001
 From: Patrick Rudolph <patrick.rudolph@9elements.com>
 Date: Thu, 31 Aug 2023 10:41:03 +0200
-Subject: [PATCH 05/12] configurations: sbp1: Add ruler drives to PID loop
+Subject: [PATCH 05/13] configurations: sbp1: Add ruler drives to PID loop
 
 SBP1 has up to 32 ruler drive NVMes. Add them to the
 PID loop as well.
@@ -16,7 +16,7 @@ Signed-off-by: Patrick Rudolph <patrick.rudolph@9elements.com>
  1 file changed, 56 insertions(+)
 
 diff --git a/configurations/sbp1_chassis.json b/configurations/sbp1_chassis.json
-index c60df58..3e41b26 100644
+index 33506de..1c4277a 100644
 --- a/configurations/sbp1_chassis.json
 +++ b/configurations/sbp1_chassis.json
 @@ -1901,6 +1901,62 @@

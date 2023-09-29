@@ -1,7 +1,7 @@
-From 039c668cd9d17469d7a4aa46f7f42772820adb1c Mon Sep 17 00:00:00 2001
+From ef558226f842fe11c211d3dc12031318909d988d Mon Sep 17 00:00:00 2001
 From: Patrick Rudolph <patrick.rudolph@9elements.com>
 Date: Tue, 12 Sep 2023 12:26:01 +0200
-Subject: [PATCH 09/12] configurations: sbp1: Add RTC ADC sensor
+Subject: [PATCH 09/13] configurations: sbp1: Add RTC ADC sensor
 
 On SBP1 the RTC battery voltage can be read using an ADC when
 RTC_BATT_TEST is set high.

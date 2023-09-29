@@ -1,7 +1,7 @@
-From ce328c23e1be30dcd808ea6c6da655d8eeb1dcf7 Mon Sep 17 00:00:00 2001
+From 3b816eb46a3505161cc2e1f1829f5b0abb290454 Mon Sep 17 00:00:00 2001
 From: Patrick Rudolph <patrick.rudolph@9elements.com>
 Date: Mon, 11 Sep 2023 15:32:38 +0200
-Subject: [PATCH 08/12] configurations: sbp1: Add M.2 NVMe temperature sensors
+Subject: [PATCH 08/13] configurations: sbp1: Add M.2 NVMe temperature sensors
 
 SBP1 has two M.2 slots that hosts NVMe drives. When a NVMe is pluged
 the temperature can be read using nvmesensor.
@@ -11,8 +11,9 @@ temperature zone.
 
 Tested: M.2 NVMe temperatures are not visible as the M.2 drives do
         not have a provision IPMI FRU EEPROM.
-        The M.2 NVMe temperature can be read when the configuration
-        is put into configurations/sbp1_baseboard.json instead.
+        The M.2 NVMe temperature is visible on the webui when the
+        configuration is put into configurations/sbp1_baseboard.json
+        instead.
 
 Change-Id: I3449450069329fb9241ca5a3cff4feba62e13555
 Signed-off-by: Patrick Rudolph <patrick.rudolph@9elements.com>
@@ -24,7 +25,7 @@ Signed-off-by: Patrick Rudolph <patrick.rudolph@9elements.com>
  create mode 100644 configurations/sbp1_nvme.json
 
 diff --git a/configurations/sbp1_chassis.json b/configurations/sbp1_chassis.json
-index 3e41b26..472aeee 100644
+index 1c4277a..ce9dfe7 100644
 --- a/configurations/sbp1_chassis.json
 +++ b/configurations/sbp1_chassis.json
 @@ -1957,6 +1957,32 @@

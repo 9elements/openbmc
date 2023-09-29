@@ -1,7 +1,7 @@
 From 1c39d7b833aaf438d13554e8b2d7d3bf90fd8072 Mon Sep 17 00:00:00 2001
 From: Patrick Rudolph <patrick.rudolph@9elements.com>
 Date: Thu, 21 Sep 2023 15:50:20 +0200
-Subject: [PATCH 01/12] test: Add test for string matching
+Subject: [PATCH 01/13] test: Add test for string matching
 
 Add test for regex (?!) to not match a specific sequence.
 This is useful to exclude specific matches while using

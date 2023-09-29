@@ -1,7 +1,7 @@
-From c5fd1fdaa3a71a98989947c1d0d0a8525544c876 Mon Sep 17 00:00:00 2001
+From c60411cc890294df8623060439fcf6f53151556a Mon Sep 17 00:00:00 2001
 From: Patrick Rudolph <patrick.rudolph@9elements.com>
 Date: Mon, 11 Sep 2023 15:26:00 +0200
-Subject: [PATCH 07/12] [NOTFORMERGE]sbp1: Add MAX5970 SSB
+Subject: [PATCH 07/13] [NOTFORMERGE]sbp1: Add MAX5970 SSB
 
 The HWMON support for MAX5970 is currently being upstreamed [1].
 Once it has been merged:

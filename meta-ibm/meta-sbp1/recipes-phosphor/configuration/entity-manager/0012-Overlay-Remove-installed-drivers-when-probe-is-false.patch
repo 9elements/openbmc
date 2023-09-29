@@ -1,7 +1,7 @@
-From e6993361ed6a7dc3ea55318b16d17e4647fda0e4 Mon Sep 17 00:00:00 2001
+From 617de913f50a31989a78ee08718d891def0a92fd Mon Sep 17 00:00:00 2001
 From: Patrick Rudolph <patrick.rudolph@9elements.com>
 Date: Sat, 29 Apr 2023 09:53:30 +0200
-Subject: [PATCH 12/12] Overlay: Remove installed drivers when probe is false
+Subject: [PATCH 12/13] Overlay: Remove installed drivers when probe is false
 
 When the FRU device is gone the probe condition is no longer true.
 On a mainboard there might be devices that are only accessible under

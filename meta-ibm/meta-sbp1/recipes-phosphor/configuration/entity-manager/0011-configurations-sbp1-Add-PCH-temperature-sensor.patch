@@ -1,7 +1,7 @@
-From 1c88adfe8a43c2317750b462e0d60eb9feb79e22 Mon Sep 17 00:00:00 2001
+From d0ad35756644ca9a96a21249487d8461cfb7d321 Mon Sep 17 00:00:00 2001
 From: Patrick Rudolph <patrick.rudolph@9elements.com>
 Date: Thu, 21 Sep 2023 12:23:25 +0200
-Subject: [PATCH 11/12] configurations: sbp1: Add PCH temperature sensor
+Subject: [PATCH 11/13] configurations: sbp1: Add PCH temperature sensor
 
 Add PCH temperature reported by Intel ME over IPMB and add it
 to the fan PID loop.
@@ -60,7 +60,7 @@ index 160dc8a..d6d2e8c 100644
              "Address": "0x3a",
              "Bus": "51",
 diff --git a/configurations/sbp1_chassis.json b/configurations/sbp1_chassis.json
-index a26f5fb..00fa420 100644
+index bdd806b..58aeca4 100644
 --- a/configurations/sbp1_chassis.json
 +++ b/configurations/sbp1_chassis.json
 @@ -2009,6 +2009,31 @@

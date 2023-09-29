@@ -15,6 +15,7 @@ SRC_URI:append:sbp1 = " \
     file://0010-configurations-sbp1-Add-NIC-temperature-sensors.patch \
     file://0011-configurations-sbp1-Add-PCH-temperature-sensor.patch \
     file://0012-Overlay-Remove-installed-drivers-when-probe-is-false.patch \
+    file://0013-configurations-sbp1-Add-InputUnavailableAsFailed.patch \
     "
 
 do_install:append:sbp1 () {
