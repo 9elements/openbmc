@@ -11,10 +11,9 @@ LICENSE = "GPL-2.0-only"
 
 PR = "r9"
 
-PACKAGECONFIG ??= "python tui libunwind libtraceevent"
+PACKAGECONFIG ??= "scripting tui libunwind libtraceevent"
 PACKAGECONFIG[dwarf] = ",NO_DWARF=1"
-PACKAGECONFIG[perl] = ",NO_LIBPERL=1,perl"
-PACKAGECONFIG[python] = ",NO_LIBPYTHON=1,python3 python3-setuptools-native"
+PACKAGECONFIG[scripting] = ",NO_LIBPERL=1 NO_LIBPYTHON=1,perl python3 python3-setuptools-native"
 # gui support was added with kernel 3.6.35
 # since 3.10 libnewt was replaced by slang
 # to cover a wide range of kernel we add both dependencies
@@ -31,8 +30,6 @@ PACKAGECONFIG[cap] = ",,libcap"
 PACKAGECONFIG[libtraceevent] = ",NO_LIBTRACEEVENT=1,libtraceevent"
 # Arm CoreSight
 PACKAGECONFIG[coresight] = "CORESIGHT=1,,opencsd"
-PACKAGECONFIG[pfm4] = ",NO_LIBPFM4=1,libpfm4"
-PACKAGECONFIG[babeltrace] = ",NO_LIBBABELTRACE=1,babeltrace"
 
 # libunwind is not yet ported for some architectures
 PACKAGECONFIG:remove:arc = "libunwind"
@@ -52,7 +49,7 @@ PROVIDES = "virtual/perf"
 inherit linux-kernel-base kernel-arch manpages
 
 # needed for building the tools/perf Python bindings
-inherit ${@bb.utils.contains('PACKAGECONFIG', 'python', 'python3targetconfig', '', d)}
+inherit ${@bb.utils.contains('PACKAGECONFIG', 'scripting', 'python3targetconfig', '', d)}
 inherit python3-dir
 export PYTHON_SITEPACKAGES_DIR
 
@@ -62,7 +59,7 @@ export WERROR = "0"
 do_populate_lic[depends] += "virtual/kernel:do_shared_workdir"
 
 # needed for building the tools/perf Perl binding
-include ${@bb.utils.contains('PACKAGECONFIG', 'perl', 'perf-perl.inc', '', d)}
+include ${@bb.utils.contains('PACKAGECONFIG', 'scripting', 'perf-perl.inc', '', d)}
 
 inherit kernelsrc
 
@@ -76,7 +73,6 @@ LDFLAGS="-ldl -lutil"
 
 EXTRA_OEMAKE = '\
     V=1 \
-    VF=1 \
     -C ${S}/tools/perf \
     O=${B} \
     CROSS_COMPILE=${TARGET_PREFIX} \
@@ -108,7 +104,7 @@ EXTRA_OEMAKE += "\
     'sharedir=${@os.path.relpath(datadir, prefix)}' \
     'mandir=${@os.path.relpath(mandir, prefix)}' \
     'infodir=${@os.path.relpath(infodir, prefix)}' \
-    ${@bb.utils.contains('PACKAGECONFIG', 'python', 'PYTHON=python3 PYTHON_CONFIG=python3-config', '', d)} \
+    ${@bb.utils.contains('PACKAGECONFIG', 'scripting', 'PYTHON=python3 PYTHON_CONFIG=python3-config', '', d)} \
 "
 
 # During do_configure, we might run a 'make clean'. That often breaks
@@ -153,7 +149,7 @@ do_install() {
 	unset CFLAGS
 	oe_runmake install
 	# we are checking for this make target to be compatible with older perf versions
-	if ${@bb.utils.contains('PACKAGECONFIG', 'python', 'true', 'false', d)} && grep -q install-python_ext ${S}/tools/perf/Makefile*; then
+	if ${@bb.utils.contains('PACKAGECONFIG', 'scripting', 'true', 'false', d)} && grep -q install-python_ext ${S}/tools/perf/Makefile*; then
 	    oe_runmake DESTDIR=${D} install-python_ext
 	    if [ -e ${D}${libdir}/python*/site-packages/perf-*/SOURCES.txt ]; then
 		sed -i -e 's#${WORKDIR}##g' ${D}${libdir}/python*/site-packages/perf-*/SOURCES.txt
@@ -324,9 +320,6 @@ do_configure:prepend () {
     if [ -e "${S}/tools/build/Makefile.feature" ]; then
         sed -i 's,CFLAGS=,CC="\$(CC)" CFLAGS=,' ${S}/tools/build/Makefile.feature
     fi
-    # The libperl feature check produces fatal warnings due to -Werror being
-    # used, silence enough errors that the check passes.
-    sed -i 's/\(FLAGS_PERL_EMBED=.*\)/\1 -Wno-error=unused-function -Wno-error=attributes/' ${S}/tools/build/feature/Makefile
 
     # 3.17-rc1+ has a include issue for arm/powerpc. Temporarily sed in the appropriate include
     if [ -e "${S}/tools/perf/arch/$ARCH/util/skip-callchain-idx.c" ]; then
@@ -371,10 +364,9 @@ RDEPENDS:${PN}-python =+ "bash python3 python3-modules ${@bb.utils.contains('PAC
 RDEPENDS:${PN}-perl =+ "bash perl perl-modules"
 RDEPENDS:${PN}-tests =+ "python3 bash"
 
-RSUGGESTS:${PN} += "${PN}-archive ${PN}-tests \
-                    ${@bb.utils.contains('PACKAGECONFIG', 'perl', '${PN}-perl', '', d)} \
-                    ${@bb.utils.contains('PACKAGECONFIG', 'python', '${PN}-python', '', d)} \
-                    "
+RSUGGESTS_SCRIPTING = "${@bb.utils.contains('PACKAGECONFIG', 'scripting', '${PN}-perl ${PN}-python', '',d)}"
+RSUGGESTS:${PN} += "${PN}-archive ${PN}-tests ${RSUGGESTS_SCRIPTING}"
+
 FILES_SOLIBSDEV = ""
 FILES:${PN} += "${libexecdir}/perf-core ${exec_prefix}/libexec/perf-core ${libdir}/traceevent* ${libdir}/libperf-jvmti.so"
 FILES:${PN}-archive = "${libdir}/perf/perf-core/perf-archive"

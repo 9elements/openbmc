@@ -1,4 +1,5 @@
 SUMMARY = "Forward a serial using TCP/IP"
+AUTHOR = "Holger 'Zecke' Freyther'"
 LICENSE = "GPL-2.0-only"
 LIC_FILES_CHKSUM = "file://COPYING;md5=ebb5c50ab7cab4baeffba14977030c07"
 SECTION = "console/devel"

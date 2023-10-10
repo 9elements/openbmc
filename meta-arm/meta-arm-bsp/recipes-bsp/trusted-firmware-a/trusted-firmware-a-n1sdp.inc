@@ -1,9 +1,5 @@
 # N1SDP specific TFA support
 
-# Align with N1SDP-2023.06.22 Manifest
-SRCREV_tfa  = "31f60a968347497562b0129134928d7ac4767710"
-PV .= "+git"
-
 COMPATIBLE_MACHINE = "n1sdp"
 TFA_PLATFORM       = "n1sdp"
 TFA_BUILD_TARGET   = "all fip"
@@ -12,12 +8,6 @@ TFA_DEBUG          = "1"
 TFA_MBEDTLS        = "1"
 TFA_UBOOT          = "0"
 TFA_UEFI           = "1"
-
-FILESEXTRAPATHS:prepend := "${THISDIR}/files/n1sdp:"
-
-SRC_URI:append = " \ 
-    file://0001-Reserve-OP-TEE-memory-from-nwd.patch \
-    "
 
 TFA_ROT_KEY= "plat/arm/board/common/rotpk/arm_rotprivk_rsa.pem"
 

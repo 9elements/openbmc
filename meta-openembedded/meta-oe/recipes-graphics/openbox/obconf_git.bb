@@ -1,4 +1,5 @@
 SUMMARY = "Openbox configuration tool"
+AUTHOR = "Dana Jansens & Tim Riley & Javeed Shaikh"
 HOMEPAGE = "http://openbox.org/wiki/ObConf:About"
 SECTION = "x11/wm"
 LICENSE = "GPL-2.0-or-later"

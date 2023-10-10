@@ -3,7 +3,6 @@ KBRANCH ?= "v6.1/standard/base"
 require recipes-kernel/linux/linux-yocto.inc
 
 # CVE exclusions
-include recipes-kernel/linux/cve-exclusion.inc
 include recipes-kernel/linux/cve-exclusion_6.1.inc
 
 # board specific branches
@@ -18,25 +17,25 @@ KBRANCH:qemux86-64 ?= "v6.1/standard/base"
 KBRANCH:qemuloongarch64  ?= "v6.1/standard/base"
 KBRANCH:qemumips64 ?= "v6.1/standard/mti-malta64"
 
-SRCREV_machine:qemuarm ?= "8c81de99a4b9f69345873b06077f9d4e1321298e"
-SRCREV_machine:qemuarm64 ?= "526b5bf2f74f881356bce8b44840dc86785fb7bf"
-SRCREV_machine:qemuloongarch64 ?= "526b5bf2f74f881356bce8b44840dc86785fb7bf"
-SRCREV_machine:qemumips ?= "733cb5842aeac106f5606df4da7c64a180f0c500"
-SRCREV_machine:qemuppc ?= "526b5bf2f74f881356bce8b44840dc86785fb7bf"
-SRCREV_machine:qemuriscv64 ?= "526b5bf2f74f881356bce8b44840dc86785fb7bf"
-SRCREV_machine:qemuriscv32 ?= "526b5bf2f74f881356bce8b44840dc86785fb7bf"
-SRCREV_machine:qemux86 ?= "526b5bf2f74f881356bce8b44840dc86785fb7bf"
-SRCREV_machine:qemux86-64 ?= "526b5bf2f74f881356bce8b44840dc86785fb7bf"
-SRCREV_machine:qemumips64 ?= "1c11fe963667e9380725bef0650aeaea8544ea8b"
-SRCREV_machine ?= "526b5bf2f74f881356bce8b44840dc86785fb7bf"
-SRCREV_meta ?= "f845a7f37d7114230d6609e2bd630070f2f6cd9b"
+SRCREV_machine:qemuarm ?= "a74344429a095a5941cd8dfac532160349344c92"
+SRCREV_machine:qemuarm64 ?= "b110cf9bbc395fe757956839d8110e72368699f4"
+SRCREV_machine:qemuloongarch64 ?= "b110cf9bbc395fe757956839d8110e72368699f4"
+SRCREV_machine:qemumips ?= "78c81e178f8e2ffbb7c03cd324cf50ee0c5c4cf2"
+SRCREV_machine:qemuppc ?= "b110cf9bbc395fe757956839d8110e72368699f4"
+SRCREV_machine:qemuriscv64 ?= "b110cf9bbc395fe757956839d8110e72368699f4"
+SRCREV_machine:qemuriscv32 ?= "b110cf9bbc395fe757956839d8110e72368699f4"
+SRCREV_machine:qemux86 ?= "b110cf9bbc395fe757956839d8110e72368699f4"
+SRCREV_machine:qemux86-64 ?= "b110cf9bbc395fe757956839d8110e72368699f4"
+SRCREV_machine:qemumips64 ?= "6c6b1170464e1f64f78a45cf7e78d5c678f38f48"
+SRCREV_machine ?= "b110cf9bbc395fe757956839d8110e72368699f4"
+SRCREV_meta ?= "cba89f406c6e07a16018cb77b51950cbae8ec654"
 
 # set your preferred provider of linux-yocto to 'linux-yocto-upstream', and you'll
 # get the <version>/base branch, which is pure upstream -stable, and the same
 # meta SRCREV as the linux-yocto-standard builds. Select your version using the
 # normal PREFERRED_VERSION settings.
 BBCLASSEXTEND = "devupstream:target"
-SRCREV_machine:class-devupstream ?= "c2cbfe5f51227dfe6ef7be013f0d56a32c040faa"
+SRCREV_machine:class-devupstream ?= "61fd484b2cf6bc8022e8e5ea6f693a9991740ac2"
 PN:class-devupstream = "linux-yocto-upstream"
 KBRANCH:class-devupstream = "v6.1/base"
 
@@ -45,9 +44,9 @@ SRC_URI = "git://git.yoctoproject.org/linux-yocto.git;name=machine;branch=${KBRA
 SRC_URI += "file://0001-perf-cpumap-Make-counter-as-unsigned-ints.patch"
 
 LIC_FILES_CHKSUM = "file://COPYING;md5=6bc538ed5bd9a7fc9398086aedcd7e46"
-LINUX_VERSION ?= "6.1.51"
+LINUX_VERSION ?= "6.1.38"
 
-PV = "${LINUX_VERSION}+git"
+PV = "${LINUX_VERSION}+git${SRCPV}"
 
 KMETA = "kernel-meta"
 KCONF_BSP_AUDIT_LEVEL = "1"

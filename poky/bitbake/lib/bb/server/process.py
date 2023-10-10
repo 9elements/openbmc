@@ -38,11 +38,8 @@ logger = logging.getLogger('BitBake')
 class ProcessTimeout(SystemExit):
     pass
 
-def currenttime():
-    return datetime.datetime.now().strftime('%H:%M:%S.%f')
-
 def serverlog(msg):
-    print(str(os.getpid()) + " " +  currenttime() + " " + msg)
+    print(str(os.getpid()) + " " +  datetime.datetime.now().strftime('%H:%M:%S.%f') + " " + msg)
     sys.stdout.flush()
 
 #
@@ -292,9 +289,7 @@ class ProcessServer():
                     continue
                 try:
                     serverlog("Running command %s" % command)
-                    reply = self.cooker.command.runCommand(command, self)
-                    serverlog("Sending reply %s" % repr(reply))
-                    self.command_channel_reply.send(reply)
+                    self.command_channel_reply.send(self.cooker.command.runCommand(command, self))
                     serverlog("Command Completed (socket: %s)" % os.path.exists(self.sockname))
                 except Exception as e:
                    stack = traceback.format_exc()
@@ -507,9 +502,9 @@ class ServerCommunicator():
     def runCommand(self, command):
         self.connection.send(command)
         if not self.recv.poll(30):
-            logger.info("No reply from server in 30s (for command %s at %s)" % (command[0], currenttime()))
+            logger.info("No reply from server in 30s (for command %s)" % command[0])
             if not self.recv.poll(30):
-                raise ProcessTimeout("Timeout while waiting for a reply from the bitbake server (60s at %s)" % currenttime())
+                raise ProcessTimeout("Timeout while waiting for a reply from the bitbake server (60s)")
         ret, exc = self.recv.get()
         # Should probably turn all exceptions in exc back into exceptions?
         # For now, at least handle BBHandledException
@@ -865,10 +860,11 @@ class ConnectionWriter(object):
                 process.queue_signals = True
                 self._send(obj)
                 process.queue_signals = False
-
-                while len(process.signal_received) > 0:
-                    sig = process.signal_received.pop()
-                    process.handle_sig(sig, None)
+                try:
+                    for sig in process.signal_received.pop():
+                        process.handle_sig(sig, None)
+                except IndexError:
+                    pass
         else:
             self._send(obj)
 

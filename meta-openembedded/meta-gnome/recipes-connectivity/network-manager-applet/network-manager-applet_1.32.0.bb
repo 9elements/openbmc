@@ -5,11 +5,9 @@ LIC_FILES_CHKSUM = "file://COPYING;md5=b234ee4d69f5fce4486a80fdaf4a4263"
 DEPENDS = "gtk+3 libnma libnotify libsecret libgudev networkmanager iso-codes nss"
 
 GNOMEBASEBUILDCLASS = "meson"
-inherit features_check gnomebase gsettings gtk-icon-cache gettext pkgconfig
+inherit features_check gnomebase gsettings gtk-icon-cache gettext
 
-ANY_OF_DISTRO_FEATURES = "${GTK3DISTROFEATURES}"
-
-SRC_URI:append:libc-musl = " file://0001-linker-script-Do-not-export-_IO_stdin_used.patch"
+REQUIRED_DISTRO_FEATURES = "x11 opengl"
 
 SRC_URI[archive.sha256sum] = "a2b5affa1505ad43902959fdbe09e5bcec57b11ed333fa60458ffb9c62efba38"
 

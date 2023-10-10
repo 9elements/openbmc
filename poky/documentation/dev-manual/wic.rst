@@ -92,7 +92,7 @@ system needs to meet the following requirements:
 -  You must build several native tools, which are built to run on the
    build system::
 
-      $ bitbake wic-tools
+      $ bitbake parted-native dosfstools-native mtools-native
 
 -  Include "wic" as part of the
    :term:`IMAGE_FSTYPES`

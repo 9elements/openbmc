@@ -36,7 +36,6 @@ PACKAGECONFIG[stemming] = "-Dstemming=true,-Dstemming=false,libstemmer"
 
 FILES:${PN} += "${datadir}"
 
-EXTRA_OEMESON:append = " -Ddocs=false"
 EXTRA_OEMESON:class-target += "--cross-file=${WORKDIR}/meson-${PN}.cross"
 
 do_write_config:append:class-target() {

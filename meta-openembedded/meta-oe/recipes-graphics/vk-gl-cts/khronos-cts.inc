@@ -74,9 +74,9 @@ python __anonymous() {
     distrofeatures = (d.getVar("DISTRO_FEATURES") or "")
     if not bb.utils.contains_any("PACKAGECONFIG", ["surfaceless", "wayland", "x11_egl", "x11_glx", "x11_egl_glx"], True, False, d):
         if "wayland" in distrofeatures:
-            d.appendVar("DEPENDS", " wayland-native ${MLPREFIX}wayland ${MLPREFIX}wayland-protocols")
+            d.appendVar("DEPENDS", " wayland-native wayland wayland-protocols")
         if "x11" in distrofeatures:
-            d.appendVar("DEPENDS", " virtual/${MLPREFIX}libx11 virtual/${MLPREFIX}egl ")
+            d.appendVar("DEPENDS", " virtual/libx11 virtual/egl ")
 }
 
 CTSDIR = "/usr/lib/${BPN}"

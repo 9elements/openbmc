@@ -12,15 +12,13 @@ PROVIDES = "udev"
 SRC_URI = "${GITHUB_BASE_URI}/download/v${PV}/${BP}.tar.gz \
            file://init \
            file://local.rules \
-           file://0001-Export-dummies-for.patch \
-           file://0002-Bump-udev-version-to-251.patch \
-           "
+"
 
 SRC_URI[sha256sum] = "ccdd64ec3c381d3c3ed0e99d2e70d1f62988c7763de89ca7bdffafa5eacb9ad8"
 
 GITHUB_BASE_URI = "https://github.com/eudev-project/eudev/releases"
 
-inherit autotools update-rc.d qemu pkgconfig features_check manpages github-releases
+inherit autotools update-rc.d qemu pkgconfig features_check manpages github-releases useradd
 
 CONFLICT_DISTRO_FEATURES = "systemd"
 
@@ -87,3 +85,6 @@ pkg_postinst:${PN}-hwdb () {
 pkg_prerm:${PN}-hwdb () {
 	rm -f $D${sysconfdir}/udev/hwdb.bin
 }
+
+USERADD_PACKAGES = "${PN}"
+GROUPADD_PARAM:${PN} = "-r sgx"

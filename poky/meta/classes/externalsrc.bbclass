@@ -63,7 +63,6 @@ python () {
         else:
             d.setVar('B', '${WORKDIR}/${BPN}-${PV}')
 
-        bb.fetch.get_hashvalue(d)
         local_srcuri = []
         fetch = bb.fetch2.Fetch((d.getVar('SRC_URI') or '').split(), d)
         for url in fetch.urls:
@@ -74,8 +73,8 @@ python () {
 
         d.setVar('SRC_URI', ' '.join(local_srcuri))
 
-        # sstate is never going to work for external source trees, disable it
-        d.setVar('SSTATE_SKIP_CREATION', '1')
+        # Dummy value because the default function can't be called with blank SRC_URI
+        d.setVar('SRCPV', '999')
 
         if d.getVar('CONFIGUREOPT_DEPTRACK') == '--disable-dependency-tracking':
             d.setVar('CONFIGUREOPT_DEPTRACK', '')
@@ -83,7 +82,10 @@ python () {
         tasks = filter(lambda k: d.getVarFlag(k, "task"), d.keys())
 
         for task in tasks:
-            if os.path.realpath(d.getVar('S')) == os.path.realpath(d.getVar('B')):
+            if task.endswith("_setscene"):
+                # sstate is never going to work for external source trees, disable it
+                bb.build.deltask(task, d)
+            elif os.path.realpath(d.getVar('S')) == os.path.realpath(d.getVar('B')):
                 # Since configure will likely touch ${S}, ensure only we lock so one task has access at a time
                 d.appendVarFlag(task, "lockfiles", " ${S}/singletask.lock")
 
@@ -124,9 +126,6 @@ python () {
 
         d.setVarFlag('do_compile', 'file-checksums', '${@srctree_hash_files(d)}')
         d.setVarFlag('do_configure', 'file-checksums', '${@srctree_configure_hash_files(d)}')
-
-        d.appendVarFlag('do_compile', 'prefuncs', ' fetcher_hashes_dummyfunc')
-        d.appendVarFlag('do_configure', 'prefuncs', ' fetcher_hashes_dummyfunc')
 
         # We don't want the workdir to go away
         d.appendVar('RM_WORK_EXCLUDE', ' ' + d.getVar('PN'))

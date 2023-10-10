@@ -107,7 +107,7 @@ class ToasterSetting(models.Model):
 
 
 class ProjectManager(models.Manager):
-    def create_project(self, name, release, existing_project=None, imported=False):
+    def create_project(self, name, release, existing_project=None):
         if existing_project and (release is not None):
             prj = existing_project
             prj.bitbake_version = release.bitbake_version
@@ -134,19 +134,19 @@ class ProjectManager(models.Manager):
 
         if release is None:
             return prj
-        if not imported:
-            for rdl in release.releasedefaultlayer_set.all():
-                lv = Layer_Version.objects.filter(
-                    layer__name=rdl.layer_name,
-                    release=release).first()
 
-                if lv:
-                    ProjectLayer.objects.create(project=prj,
-                                                layercommit=lv,
-                                                optional=False)
-                else:
-                    logger.warning("Default project layer %s not found" %
-                                rdl.layer_name)
+        for rdl in release.releasedefaultlayer_set.all():
+            lv = Layer_Version.objects.filter(
+                layer__name=rdl.layer_name,
+                release=release).first()
+
+            if lv:
+                ProjectLayer.objects.create(project=prj,
+                                            layercommit=lv,
+                                            optional=False)
+            else:
+                logger.warning("Default project layer %s not found" %
+                               rdl.layer_name)
 
         return prj
 

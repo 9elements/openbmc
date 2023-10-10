@@ -13,5 +13,3 @@ BBCLASSEXTEND = "native"
 S = "${WORKDIR}/lcms2-${PV}"
 
 inherit autotools
-
-CVE_PRODUCT += "littlecms:little_cms_color_engine"

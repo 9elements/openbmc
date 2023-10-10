@@ -4,7 +4,7 @@ SECTION = "console/tests"
 LICENSE = "GPL-2.0-only"
 LIC_FILES_CHKSUM = "file://COPYING;md5=b234ee4d69f5fce4486a80fdaf4a4263"
 
-DEPENDS = "libtool luajit concurrencykit"
+DEPENDS = "libtool libaio luajit concurrencykit"
 
 inherit autotools-brokensep pkgconfig
 
@@ -17,7 +17,7 @@ S = "${WORKDIR}/git"
 
 COMPATIBLE_HOST = "(arm|aarch64|i.86|x86_64).*-linux*"
 
-EXTRA_OECONF += "--enable-largefile --with-system-luajit --with-system-ck --without-gcc-arch --with-lib-prefix=no"
+EXTRA_OECONF += "--enable-largefile --with-system-luajit --with-system-ck --without-gcc-arch"
 PACKAGECONFIG ??= ""
 PACKAGECONFIG[aio] = "--enable-aio,--disable-aio,libaio,"
 PACKAGECONFIG[mysql] = "--with-mysql \

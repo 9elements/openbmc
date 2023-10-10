@@ -50,8 +50,11 @@ SRC_URI:append:toolchain-clang = "\
 
 S = "${WORKDIR}/git"
 
-CVE_STATUS[CVE-2014-8180] = "not-applicable-config: Not affecting our configuration so it can be safely ignored."
-CVE_STATUS[CVE-2017-2665] = "not-applicable-config: Not affecting our configuration so it can be safely ignored."
+CVE_CHECK_IGNORE += "\
+    CVE-2014-8180 \
+    CVE-2017-18381 \
+    CVE-2017-2665 \
+"
 
 COMPATIBLE_HOST ?= '(x86_64|i.86|powerpc64|arm|aarch64).*-linux'
 
@@ -91,7 +94,6 @@ EXTRA_OESCONS = "PREFIX=${prefix} \
                  --use-system-zlib \
                  --nostrip \
                  --endian=${@oe.utils.conditional('SITEINFO_ENDIANNESS', 'le', 'little', 'big', d)} \
-                 --use-hardware-crc32=${@bb.utils.contains('TUNE_FEATURES', 'crc', 'on', 'off', d)} \
                  --wiredtiger='${WIREDTIGER}' \
                  --separate-debug \
                  ${PACKAGECONFIG_CONFARGS}"

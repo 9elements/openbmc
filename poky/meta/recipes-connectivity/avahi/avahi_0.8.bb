@@ -5,6 +5,7 @@ with no specific configuration. This tool implements IPv4LL, "Dynamic Configurat
 IPv4 Link-Local Addresses" (IETF RFC3927), a protocol for automatic IP address \
 configuration from the link-local 169.254.0.0/16 range without the need for a central \
 server.'
+AUTHOR = "Lennart Poettering <lennart@poettering.net>"
 HOMEPAGE = "http://avahi.org"
 BUGTRACKER = "https://github.com/lathiat/avahi/issues"
 SECTION = "network"
@@ -25,7 +26,6 @@ SRC_URI = "${GITHUB_BASE_URI}/download/v${PV}/avahi-${PV}.tar.gz \
            file://0001-Fix-opening-etc-resolv.conf-error.patch \
            file://handle-hup.patch \
            file://local-ping.patch \
-           file://invalid-service.patch \
            "
 
 GITHUB_BASE_URI = "https://github.com/lathiat/avahi/releases/"

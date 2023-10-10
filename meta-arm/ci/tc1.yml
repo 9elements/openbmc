@@ -9,3 +9,4 @@ machine: tc1
 
 target:
   - core-image-minimal
+  - trusted-firmware-m

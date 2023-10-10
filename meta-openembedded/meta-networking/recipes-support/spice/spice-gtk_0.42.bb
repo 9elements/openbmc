@@ -40,23 +40,19 @@ DEPENDS = " \
 "
 DEPENDS:append:libc-musl = " libucontext"
 
-RDEPENDS:${PN} = "python3-pyparsing python3-six usbids"
+RDEPENDS:${PN} = "python3-pyparsing python3-six"
 
-inherit meson pkgconfig vala gobject-introspection features_check gtk-doc
+inherit meson pkgconfig vala gobject-introspection features_check
 
 REQUIRED_DISTRO_FEATURES = "opengl"
 
 GIR_MESON_ENABLE_FLAG = 'enabled'
 GIR_MESON_DISABLE_FLAG = 'disabled'
-GTKDOC_MESON_OPTION = 'gtk_doc'
-GTKDOC_MESON_ENABLE_FLAG = 'enabled'
-GTKDOC_MESON_DISABLE_FLAG = 'disabled'
 
-PACKAGECONFIG ??= "${@bb.utils.contains('GI_DATA_ENABLED', 'True', 'vapi', '', d)} smartcard"
+PACKAGECONFIG ??= "${@bb.utils.contains('GI_DATA_ENABLED', 'True', 'vapi', '', d)}"
 PACKAGECONFIG[vapi] = "-Dvapi=enabled,-Dvapi=disabled"
-PACKAGECONFIG[smartcard] = "-Dsmartcard=enabled,-Dsmartcard=disabled,libcacard"
 
-EXTRA_OEMESON = "-Dpie=true -Dusb-ids-path=${datadir}/usb.ids "
+EXTRA_OEMESON = "-Dpie=true"
 EXTRA_OEMESON:append:libc-musl = " -Dcoroutine=libucontext"
 
 LDFLAGS += "${@bb.utils.contains('DISTRO_FEATURES', 'ld-is-lld', ' -Wl,--undefined-version', '', d)}"

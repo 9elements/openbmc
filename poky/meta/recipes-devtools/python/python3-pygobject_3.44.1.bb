@@ -8,12 +8,9 @@ LIC_FILES_CHKSUM = "file://COPYING;md5=a916467b91076e631dd8edb7424769c7"
 GNOMEBASEBUILDCLASS = "meson"
 GIR_MESON_OPTION = ""
 
-inherit gnomebase setuptools3-base gobject-introspection upstream-version-is-even
+inherit gnomebase setuptools3-base gobject-introspection upstream-version-is-even features_check
 
-python() {
-    if d.getVar('CLASSOVERRIDE') == "class-target" and not bb.utils.to_boolean(d.getVar("GI_DATA_ENABLED")):
-        raise bb.parse.SkipRecipe("GI not available")
-}
+REQUIRED_DISTRO_FEATURES = "gobject-introspection-data"
 
 DEPENDS += "python3 glib-2.0"
 
