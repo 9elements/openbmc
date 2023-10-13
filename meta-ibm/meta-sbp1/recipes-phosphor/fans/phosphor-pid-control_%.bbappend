@@ -3,7 +3,9 @@ FILESEXTRAPATHS:prepend:sbp1 := "${THISDIR}/${PN}:"
 SRC_URI:append:sbp1 = " file://phosphor-pid-control.service"
 SRC_URI:append:sbp1 = " file://fan-reboot-control.service"
 SRC_URI:append:sbp1 = " file://fan-setup.service"
-
+SRC_URI:append = " file://0001-main-Gracefully-handle-SIGTERM.patch \
+                   file://0002-pid-fancontroller-Set-failsafe-PWM-in-destructor.patch \
+                 "
 RDEPENDS:${PN} += "bash"
 
 SYSTEMD_SERVICE:${PN}:append:sbp1 = " phosphor-pid-control.service"
