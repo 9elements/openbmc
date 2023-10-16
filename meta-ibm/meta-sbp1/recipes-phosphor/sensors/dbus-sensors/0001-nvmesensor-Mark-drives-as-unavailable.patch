@@ -1,0 +1,39 @@
+From 01f1f5fa6ca4e49a67a74dc2b65b217b7d9dc69b Mon Sep 17 00:00:00 2001
+From: Patrick Rudolph <patrick.rudolph@9elements.com>
+Date: Mon, 16 Oct 2023 17:06:54 +0200
+Subject: [PATCH] nvmesensor: Mark drives as unavailable
+
+Fix a race condition where the NVMe sensor is marked available
+even though there's no NVMe drive plugged. When the power is already
+on when the sensor is created it will never be marked as unavailable,
+but 'not operational' when the communication failed multiple times.
+It will remain in this state until power is turned off.
+
+Mark the sensor as unavailable in the constructor to catch this
+corner case. For present NVMe drives this will set the available
+state after the first NVMe MI packet has been received.
+
+Fixes failSafe mode in phosphor-pid-control when no drive is present.
+
+Change-Id: Ifa3dcc080ecc9ef21213b2a901cf41b2ca0a3de2
+Signed-off-by: Patrick Rudolph <patrick.rudolph@9elements.com>
+---
+ src/NVMeSensor.cpp | 2 ++
+ 1 file changed, 2 insertions(+)
+
+diff --git a/src/NVMeSensor.cpp b/src/NVMeSensor.cpp
+index d265a02..4e631ea 100644
+--- a/src/NVMeSensor.cpp
++++ b/src/NVMeSensor.cpp
+@@ -54,6 +54,8 @@ NVMeSensor::NVMeSensor(sdbusplus::asio::object_server& objectServer,
+         association::interface);
+ 
+     setInitialProperties(sensor_paths::unitDegreesC);
++    // Mark as unavailable until the first packet has been received over NVMe MI.
++    markAvailable(false);
+ }
+ 
+ NVMeSensor::~NVMeSensor()
+-- 
+2.41.0
+
