@@ -1,0 +1,31 @@
+From d7c7e1aa7faad400f2354bcef7934708e6550269 Mon Sep 17 00:00:00 2001
+From: Patrick Rudolph <patrick.rudolph@9elements.com>
+Date: Mon, 23 Oct 2023 14:13:06 +0200
+Subject: [PATCH] hwmontemp: Add MAX6639
+
+Add device max6639 HWMON reading support.
+The device is present on IBM servers for inlet fan control.
+
+Tested:
+
+Change-Id: I38dea751940dfabd0df42c9d78caf3fb03500710
+Signed-off-by: Patrick Rudolph <patrick.rudolph@9elements.com>
+---
+ src/HwmonTempMain.cpp | 1 +
+ 1 file changed, 1 insertion(+)
+
+diff --git a/src/HwmonTempMain.cpp b/src/HwmonTempMain.cpp
+index 7cc758c..4f0398f 100644
+--- a/src/HwmonTempMain.cpp
++++ b/src/HwmonTempMain.cpp
+@@ -65,6 +65,7 @@ static const I2CDeviceTypeMap sensorTypes{
+     {"MAX31730", I2CDeviceType{"max31730", true}},
+     {"MAX6581", I2CDeviceType{"max6581", true}},
+     {"MAX6654", I2CDeviceType{"max6654", true}},
++    {"MAX6639", I2CDeviceType{"max6639", true}},
+     {"NCT6779", I2CDeviceType{"nct6779", true}},
+     {"NCT7802", I2CDeviceType{"nct7802", true}},
+     {"SBTSI", I2CDeviceType{"sbtsi", true}},
+-- 
+2.41.0
+
