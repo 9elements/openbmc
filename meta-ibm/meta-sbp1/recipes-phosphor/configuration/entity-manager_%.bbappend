@@ -18,6 +18,10 @@ SRC_URI:append:sbp1 = " \
     file://0013-configurations-sbp1-Add-MAX6639.patch \
     file://0014-configurations-sbp1-Fix-typo.patch \
     file://0015-configurations-sbp1-Update-input-label-name.patch \
+    file://0016-configurations-sbp1-Update-NIC-threshold.patch \
+    file://0017-configuration-sbp1-Update-threshold-for-BCM.patch \
+    file://0018-schema-Add-iin_Name.patch \
+    file://0019-configuration-sbp1-Configure-PowerState-of-some-supl.patch \
 "
 
 do_install:append:sbp1 () {
