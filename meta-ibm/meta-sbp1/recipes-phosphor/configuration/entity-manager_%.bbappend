@@ -17,6 +17,7 @@ SRC_URI:append:sbp1 = " \
     file://0012-configurations-sbp1-Increase-fan-OutLimitMin.patch \
     file://0013-configurations-sbp1-Add-MAX6639.patch \
     file://0014-configurations-sbp1-Fix-typo.patch \
+    file://0015-configurations-sbp1-Update-input-label-name.patch \
 "
 
 do_install:append:sbp1 () {
