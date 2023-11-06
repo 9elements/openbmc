@@ -1,12 +1,15 @@
-From b95f2375280d61e9820efe20d76645692faaf4c6 Mon Sep 17 00:00:00 2001
+From 77ff6b48ef027d05c6951e13167c0e72f0cf7f13 Mon Sep 17 00:00:00 2001
 From: Patrick Rudolph <patrick.rudolph@9elements.com>
 Date: Tue, 10 Oct 2023 11:29:32 +0200
-Subject: [PATCH 02/15] configurations: sbp1: Update PHY LDOs
+Subject: [PATCH 04/13] configurations: sbp1: Update PHY LDOs
 
 According to the KSZ9131RNX's datasheet the 1.2V PHY LDOs operate
 on 1.25V with a non-uniform margin. Update the thresholds to prevent
 a sensor warning, while the LDOs are within their normal operating
 condition. Account for ADC noise and use slightly relaxed thresholds.
+
+Tested: Confirmed on the webui that the PHY LDOs are no longer marked
+        as critical.
 
 Change-Id: Icfc65e4563223248b07984e52a6b80912c9c1eff
 Signed-off-by: Patrick Rudolph <patrick.rudolph@9elements.com>

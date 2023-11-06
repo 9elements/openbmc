@@ -1,7 +1,7 @@
-From a1f647bedcef7d0d2e9dc02fcbc8080861877337 Mon Sep 17 00:00:00 2001
+From f5373d5a00b3e228955c3f136100dc3a0962c887 Mon Sep 17 00:00:00 2001
 From: Patrick Rudolph <patrick.rudolph@9elements.com>
 Date: Fri, 13 Oct 2023 08:34:49 +0200
-Subject: [PATCH 04/15] configurations: Add Intel P4510 SSD
+Subject: [PATCH 13/13] configurations: Add Intel P4510 SSD
 
 Add support for P4510 SSD by adding a new config.
 
@@ -76,11 +76,11 @@ index 0000000..01622e3
 +    "xyz.openbmc_project.Inventory.Item.Chassis": {}
 +}
 diff --git a/meson.build b/meson.build
-index b11a77a..269e134 100644
+index 42d00c0..6f124bd 100644
 --- a/meson.build
 +++ b/meson.build
-@@ -128,6 +128,7 @@ configs = [
-     'mtmitchell_mb.json',
+@@ -130,6 +130,7 @@ configs = [
+     'mudflap.json',
      'nisqually.json',
      'nvme_p4000.json',
 +    'nvme_p4510.json',

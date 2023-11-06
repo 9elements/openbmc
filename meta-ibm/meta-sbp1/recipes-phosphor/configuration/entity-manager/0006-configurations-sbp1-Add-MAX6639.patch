@@ -1,7 +1,12 @@
-From c64b1b88fc8dbda358efa9a08c551fe082bfcb10 Mon Sep 17 00:00:00 2001
+From 77aa0aaff646a5838de56eba80c0de9df9ecad21 Mon Sep 17 00:00:00 2001
 From: Patrick Rudolph <patrick.rudolph@9elements.com>
 Date: Mon, 23 Oct 2023 14:09:08 +0200
-Subject: [PATCH 13/15] configurations: sbp1: Add MAX6639
+Subject: [PATCH 06/13] configurations: sbp1: Add MAX6639
+
+Add the air inlet temperature sensors that are connected to the
+MAX6639 that also control the fan PWM.
+
+Tested: All 24 temperature sensors are visible on the webui.
 
 Change-Id: I4831a4cbf0f4e4b00b75e6d6d5bd58ab484e59eb
 Signed-off-by: Patrick Rudolph <patrick.rudolph@9elements.com>
@@ -10,7 +15,7 @@ Signed-off-by: Patrick Rudolph <patrick.rudolph@9elements.com>
  1 file changed, 264 insertions(+)
 
 diff --git a/configurations/sbp1_baseboard.json b/configurations/sbp1_baseboard.json
-index 522d01e..4073629 100644
+index cf8e351..aab4acc 100644
 --- a/configurations/sbp1_baseboard.json
 +++ b/configurations/sbp1_baseboard.json
 @@ -2018,6 +2018,270 @@

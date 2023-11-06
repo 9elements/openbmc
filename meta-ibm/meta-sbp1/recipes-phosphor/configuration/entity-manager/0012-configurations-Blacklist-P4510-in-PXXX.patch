@@ -1,7 +1,7 @@
-From 8ea7678493ec9654a8206cda0eac032b38758ccc Mon Sep 17 00:00:00 2001
+From 196ee74b846be21c58551885ba0f9cef37ac1ac9 Mon Sep 17 00:00:00 2001
 From: Patrick Rudolph <patrick.rudolph@9elements.com>
 Date: Wed, 30 Aug 2023 09:07:38 +0200
-Subject: [PATCH 03/15] configurations: Blacklist P4510 in PXXX
+Subject: [PATCH 12/13] configurations: Blacklist P4510 in PXXX
 
 The existing configuration for PXXXX assumes that all devices use
 a non standard NVMe-MI address. Tests on P4510 showed that it uses

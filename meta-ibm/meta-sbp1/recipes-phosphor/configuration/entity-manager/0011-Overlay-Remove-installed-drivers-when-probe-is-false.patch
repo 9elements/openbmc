@@ -1,7 +1,7 @@
-From 46d12d0ca27af1ac7451cbe3b60921a32ccb3ca6 Mon Sep 17 00:00:00 2001
+From c1ff0f7df6f09e8955de4276ca75f09a3daa8831 Mon Sep 17 00:00:00 2001
 From: Patrick Rudolph <patrick.rudolph@9elements.com>
 Date: Sat, 29 Apr 2023 09:53:30 +0200
-Subject: [PATCH 11/15] Overlay: Remove installed drivers when probe is false
+Subject: [PATCH 11/13] Overlay: Remove installed drivers when probe is false
 
 When the FRU device is gone the probe condition is no longer true.
 On a mainboard there might be devices that are only accessible under
@@ -36,7 +36,7 @@ Signed-off-by: Chris Cain <cjcain@us.ibm.com>
  3 files changed, 82 insertions(+), 15 deletions(-)
 
 diff --git a/src/entity_manager.cpp b/src/entity_manager.cpp
-index db1dfb8..560345d 100644
+index 6a4580d..5a6b858 100644
 --- a/src/entity_manager.cpp
 +++ b/src/entity_manager.cpp
 @@ -986,6 +986,7 @@ static void pruneConfiguration(nlohmann::json& systemConfiguration,

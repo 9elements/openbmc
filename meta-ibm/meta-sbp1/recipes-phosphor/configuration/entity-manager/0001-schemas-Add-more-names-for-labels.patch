@@ -1,35 +1,40 @@
-From f666675d059f3a6050607551bc8e1b8dbc377a3c Mon Sep 17 00:00:00 2001
+From abf398cee1279f1ba5ec2e0254f90505e2e29929 Mon Sep 17 00:00:00 2001
 From: Patrick Rudolph <patrick.rudolph@9elements.com>
 Date: Tue, 12 Sep 2023 10:44:50 +0200
-Subject: [PATCH 05/15] schemas: Add more names for labels
+Subject: [PATCH 01/13] schemas: Add more names for labels
 
 The MAX5970 has two separate outputs, so add the ability to name
 both channels. This will be used in the following commit that adds
 MAX5970 support on SBP1.
+
+All add to name input current.
 
 Tested: The configuration passes validation.
 
 Change-Id: I28c1c5b6e70fe7b8489e6946cb1a2e2abda12ae8
 Signed-off-by: Patrick Rudolph <patrick.rudolph@9elements.com>
 ---
- schemas/legacy.json | 12 ++++++++++++
- 1 file changed, 12 insertions(+)
+ schemas/legacy.json | 18 ++++++++++++++++++
+ 1 file changed, 18 insertions(+)
 
 diff --git a/schemas/legacy.json b/schemas/legacy.json
-index 5a616d3..5d25c8a 100644
+index 5a616d3..f5267e2 100644
 --- a/schemas/legacy.json
 +++ b/schemas/legacy.json
-@@ -252,6 +252,9 @@
+@@ -252,6 +252,12 @@
                  "vin_Name": {
                      "$ref": "#/definitions/Types/vin_Name"
                  },
++                "iin_Name": {
++                    "$ref": "#/definitions/Types/iin_Name"
++                },
 +                "in0_Name": {
 +                    "$ref": "#/definitions/Types/in0_Name"
 +                },
                  "in1_Name": {
                      "$ref": "#/definitions/Types/in1_Name"
                  },
-@@ -261,6 +264,9 @@
+@@ -261,6 +267,9 @@
                  "curr1_Name": {
                      "$ref": "#/definitions/Types/curr1_Name"
                  },
@@ -39,17 +44,20 @@ index 5a616d3..5d25c8a 100644
                  "iout1_Max": {
                      "$ref": "#/definitions/Types/iout1_Max"
                  },
-@@ -810,6 +816,9 @@
+@@ -810,6 +819,12 @@
              "vin_Name": {
                  "type": "string"
              },
++            "iin_Name": {
++                "type": "string"
++            },
 +            "in0_Name": {
 +                "type": "string"
 +            },
              "in1_Name": {
                  "type": "string"
              },
-@@ -819,6 +828,9 @@
+@@ -819,6 +834,9 @@
              "curr1_Name": {
                  "type": "string"
              },

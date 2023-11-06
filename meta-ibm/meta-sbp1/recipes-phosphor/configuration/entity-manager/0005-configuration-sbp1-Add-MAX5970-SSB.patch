@@ -1,17 +1,12 @@
-From 70e0ff4241f444a1dbb09738bc94b4f5e49f6943 Mon Sep 17 00:00:00 2001
+From 8005efee31b4300e497253a1432c9020fdcb9612 Mon Sep 17 00:00:00 2001
 From: Patrick Rudolph <patrick.rudolph@9elements.com>
 Date: Mon, 11 Sep 2023 15:26:00 +0200
-Subject: [PATCH 06/15] [NOTFORMERGE]sbp1: Add MAX5970 SSB
-
-The HWMON support for MAX5970 is currently being upstreamed [1].
-Once it has been merged:
+Subject: [PATCH 05/13] configuration: sbp1: Add MAX5970 SSB
 
 Add the soft switch breakers MAX5970 to be able to measure the
 voltage and current accross those regulators.
 
 Tested: All 59 MAX5970 channels provide sane readings.
-
-1: https://lore.kernel.org/lkml/202309011547.EoLU88a1-lkp@intel.com/T/
 
 Change-Id: Ifb0216335a25215ae464e709e7db7f757e96baf1
 Signed-off-by: Patrick Rudolph <patrick.rudolph@9elements.com>

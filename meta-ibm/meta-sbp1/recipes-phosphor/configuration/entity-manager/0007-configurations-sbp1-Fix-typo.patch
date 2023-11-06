@@ -1,7 +1,7 @@
-From fcf814a1b9eef4581f2a0b39dd6cf117bf785f44 Mon Sep 17 00:00:00 2001
+From 033d4f9d6200b1e3f41e9fb2fe605ae183d87590 Mon Sep 17 00:00:00 2001
 From: Patrick Rudolph <patrick.rudolph@9elements.com>
 Date: Tue, 24 Oct 2023 08:25:57 +0200
-Subject: [PATCH 14/15] configurations: sbp1: Fix typo
+Subject: [PATCH 07/13] configurations: sbp1: Fix typo
 
 Rename PVCDD_HV_CPU to PVCCD_HV_CPU.
 
@@ -12,7 +12,7 @@ Signed-off-by: Patrick Rudolph <patrick.rudolph@9elements.com>
  1 file changed, 4 insertions(+), 4 deletions(-)
 
 diff --git a/configurations/sbp1_baseboard.json b/configurations/sbp1_baseboard.json
-index 4073629..e2f9f77 100644
+index aab4acc..92ce2e5 100644
 --- a/configurations/sbp1_baseboard.json
 +++ b/configurations/sbp1_baseboard.json
 @@ -3526,7 +3526,7 @@

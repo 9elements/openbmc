@@ -1,7 +1,7 @@
-From 80234b991f35f12c69ca9de0b7416527a65d675d Mon Sep 17 00:00:00 2001
+From 8190b0c3834af4e3c41a93fd6853b3bfbdc2295f Mon Sep 17 00:00:00 2001
 From: Patrick Rudolph <patrick.rudolph@9elements.com>
 Date: Mon, 11 Sep 2023 15:32:38 +0200
-Subject: [PATCH 07/15] configurations: sbp1: Add M.2 NVMe temperature sensors
+Subject: [PATCH 02/13] configurations: sbp1: Add M.2 NVMe temperature sensors
 
 SBP1 has two M.2 slots that hosts NVMe drives. When a NVMe is pluged
 the temperature can be read using nvmesensor.
@@ -26,10 +26,10 @@ Signed-off-by: Patrick Rudolph <patrick.rudolph@9elements.com>
  create mode 100644 configurations/sbp1_nvme.json
 
 diff --git a/configurations/sbp1_chassis.json b/configurations/sbp1_chassis.json
-index ec9a67b..f8b2610 100644
+index 92490aa..a9c9c9b 100644
 --- a/configurations/sbp1_chassis.json
 +++ b/configurations/sbp1_chassis.json
-@@ -2008,6 +2008,32 @@
+@@ -2021,6 +2021,32 @@
                  "PSU"
              ]
          },
@@ -60,7 +60,7 @@ index ec9a67b..f8b2610 100644
 +            ]
 +        },
          {
-             "FailSafePercent": 100,
+             "FailSafePercent": 35,
              "MinThermalOutput": 2500,
 diff --git a/configurations/sbp1_nvme.json b/configurations/sbp1_nvme.json
 new file mode 100644
@@ -89,10 +89,10 @@ index 0000000..a5a329d
 +    "Type": "NVMe"
 +}
 diff --git a/meson.build b/meson.build
-index 269e134..870005b 100644
+index 5cd6abb..42d00c0 100644
 --- a/meson.build
 +++ b/meson.build
-@@ -143,6 +143,7 @@ configs = [
+@@ -144,6 +144,7 @@ configs = [
      'sas_module.json',
      'sbp1_baseboard.json',
      'sbp1_chassis.json',

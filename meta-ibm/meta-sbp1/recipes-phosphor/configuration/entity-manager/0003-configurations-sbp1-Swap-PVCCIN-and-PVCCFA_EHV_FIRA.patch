@@ -1,7 +1,7 @@
-From 7d28712eff3ee8a7d3d57a9631b52f148078a962 Mon Sep 17 00:00:00 2001
+From 8ba1bfee911530102ff970d57312b67d25651216 Mon Sep 17 00:00:00 2001
 From: Patrick Rudolph <patrick.rudolph@9elements.com>
 Date: Tue, 24 Oct 2023 08:40:34 +0200
-Subject: [PATCH 01/15] configurations: sbp1: Swap PVCCIN and PVCCFA_EHV_FIRA
+Subject: [PATCH 03/13] configurations: sbp1: Swap PVCCIN and PVCCFA_EHV_FIRA
 
 PVCCIN and PVCCFA_EHV_FIRA are on the same VR, but the channels
 got mixed up. PVCCIN is actually the first channel and
