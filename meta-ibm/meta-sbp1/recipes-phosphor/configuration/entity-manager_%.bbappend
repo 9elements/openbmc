@@ -5,7 +5,7 @@ SRC_URI = "git://github.com/9elements/entity-manager.git;branch=sbp1;protocol=ht
           "
 SRC_URI[sha256sum] = "f561e5a70eaeb880387036de1353751606b6f98b2dafb52bf3c03025a5fa126d"
 
-SRCREV = "6205545345c39800d2ddfb7f56bf2eda05380613"
+SRCREV = "1b9c0918ab19e7b0281b6d470e06730601191064"
 
 SRC_URI:append:sbp1 = " \
     file://blacklist.json \
