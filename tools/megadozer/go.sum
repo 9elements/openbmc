@@ -1,0 +1,12 @@
+github.com/Jeffail/gabs v1.4.0 h1://5fYRRTq1edjfIrQGvdkcd22pkYUrHZ5YC/H2GJVAo=
+github.com/Jeffail/gabs v1.4.0/go.mod h1:6xMvQMK4k33lb7GUUpaAPh6nKMmemQeg5d4gn7/bOXc=
+github.com/facebook/openbmc/tools/flashy v0.0.0-20231111010732-9f3d88af8def h1:1JtTEyvAbI+P/6lpyfN09nEzVnEt7oUd476HHyJDA0E=
+github.com/facebook/openbmc/tools/flashy v0.0.0-20231111010732-9f3d88af8def/go.mod h1:daPrJC/9vvtcRUA/uicSW8BTsnQb+lUDV5k3ZEnF7j8=
+github.com/pierrec/lz4/v4 v4.1.14 h1:+fL8AQEZtz/ijeNnpduH0bROTu0O3NZAlPjQxGn8LwE=
+github.com/pierrec/lz4/v4 v4.1.14/go.mod h1:gZWDp/Ze/IJXGXf23ltt2EXimqmTUXEy0GFuRQyBid4=
+github.com/pkg/errors v0.9.1 h1:FEBLx1zS214owpjy7qsBeixbURkuhQAwrK5UwLGTwt4=
+github.com/pkg/errors v0.9.1/go.mod h1:bwawxfHBFNV+L2hUp1rHADufV3IMtnDRdf1r5NINEl0=
+github.com/u-root/u-root v0.11.0 h1:6gCZLOeRyevw7gbTwMj3fKxnr9+yHFlgF3N7udUVNO8=
+github.com/u-root/u-root v0.11.0/go.mod h1:DBkDtiZyONk9hzVEdB/PWI9B4TxDkElWlVTHseglrZY=
+github.com/vtolstov/go-ioctl v0.0.0-20151206205506-6be9cced4810 h1:X6ps8XHfpQjw8dUStzlMi2ybiKQ2Fmdw7UM+TinwvyM=
+github.com/vtolstov/go-ioctl v0.0.0-20151206205506-6be9cced4810/go.mod h1:dF0BBJ2YrV1+2eAIyEI+KeSidgA6HqoIP1u5XTlMq/o=
