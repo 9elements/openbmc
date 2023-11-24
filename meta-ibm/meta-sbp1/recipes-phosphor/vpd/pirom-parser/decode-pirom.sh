@@ -93,6 +93,7 @@ function ReadQuadHex() {
 PIROM_SIZE=$(ReadUInt16 1)
 PIROM_DATA_ADDRESS=$(ReadUInt8 3)
 PIROM_CORE_ADDRESS=$(ReadUInt8 4)
+PIROM_UNCORE_ADDRESS=$(ReadUInt8 5)
 PIROM_PART_ADDRESS=$(ReadUInt8 9)
 PIROM_THER_ADDRESS=$(ReadUInt8 10)
 PIROM_PPIN_ADDRESS=$(ReadUInt8 12)
@@ -143,6 +144,12 @@ if [ ${PIROM_CORE_ADDRESS} -gt 0 ]; then
  SetPropertyQuad ${CPU} "Step" $((CPUID & 0xf))
 
  SetPropertyUInt ${CPU} "MaxSpeedInMhz" ${MAX_P1_CORE_FREQ}
+fi
+if [ ${PIROM_UNCORE_ADDRESS} -gt 0 ]; then
+ HBM=$(ReadUInt8 $((PIROM_UNCORE_ADDRESS + 8)))
+ if [ $HBM -gt 0 ]; then
+  DESC+=" HBM"
+ fi
 fi
 if [ ${PIROM_PART_ADDRESS} -gt 0 ]; then
  FAMILY=$(ReadString $((PIROM_PART_ADDRESS + 0)) 7)
