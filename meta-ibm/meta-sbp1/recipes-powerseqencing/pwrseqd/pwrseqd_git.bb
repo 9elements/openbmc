@@ -9,7 +9,7 @@ LIC_FILES_CHKSUM = "file://LICENSE.txt;md5=3b83ef96387f14655fc854ddc3c6bd57"
 
 BRANCH = "main"
 SRC_URI = "git://github.com/9elements/pwrseqd.git;branch=${BRANCH};protocol=https"
-SRCREV = "5f2b4939b2d8d10e43db91c19671bca2539387fb"
+SRCREV = "b54978661aadd19a438f9bd9fbafd19173eaa324"
 
 S = "${WORKDIR}/git"
 
@@ -22,6 +22,7 @@ DEPENDS += "libyaml"
 DEPENDS += "yaml-cpp"
 DEPENDS += "sdbusplus"
 DEPENDS += "phosphor-logging"
+DEPENDS += "libnl"
 
 EXTRA_OECMAKE = "\
                  -DBUILD_TESTS=OFF \
