@@ -1,24 +1,18 @@
 package main
 
 import (
+	"flag"
 	"log"
-	"os"
 	"os/exec"
 	"syscall"
-
-	_ "embed"
 
 	"github.com/facebook/openbmc/tools/flashy/lib/flash/flashcp"
 )
 
-//go:embed flash.img
-var img []byte
-
 func main() {
-	log.Println("Writing out obmc image...")
-	if err := os.WriteFile("/var/obmc.img", img, 0o666); err != nil {
-		log.Fatalf("Failed to write image: %v", err)
-	}
+	img := flag.String("image", "/var/obmc.img", "Path to obmc image")
+	dev := flag.String("device", "/dev/mtd0", "Path to flash device")
+	flag.Parse()
 
 	log.Println("Remounting flash as read-only...")
 	c := exec.Command("echo", "u", ">", "/proc/sysrq-trigger")
@@ -27,7 +21,7 @@ func main() {
 	}
 
 	log.Println("Overwriting flash contents...")
-	if err := flashcp.FlashCp("/var/obmc.img", "/dev/mtd0", 0); err != nil {
+	if err := flashcp.FlashCp(*img, *dev, 0); err != nil {
 		log.Fatalf("Failed to overwrite flash: %v", err)
 	}
 
