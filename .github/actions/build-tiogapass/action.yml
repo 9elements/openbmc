@@ -16,12 +16,12 @@ runs:
       shell: bash
       run: . setup tiogapass && bitbake obmc-phosphor-image
 
-    - uses: actions/upload-artifact@v3
+    - uses: actions/upload-artifact@v4
       with:
         name: ${{ inputs.artifact-path }}
-        path: /home/runner/actions-runner/_work/netflix-openbmc/netflix-openbmc/build/tiogapass/tmp/deploy/images/tiogapass/obmc-phosphor-image-tiogapass.static.mtd
+        path: /home/runner/actions-runner/_work/openbmc/openbmc/build/tiogapass/tmp/deploy/images/tiogapass/obmc-phosphor-image-tiogapass.static.mtd
 
-    - uses: actions/upload-artifact@v3
+    - uses: actions/upload-artifact@v4
       with:
         name: ${{ inputs.tar-artifact-path }}
-        path: /home/runner/actions-runner/_work/netflix-openbmc/netflix-openbmc/build/tiogapass/tmp/deploy/images/tiogapass/obmc-phosphor-image-tiogapass.static.mtd.tar
+        path: /home/runner/actions-runner/_work/openbmc/openbmc/build/tiogapass/tmp/deploy/images/tiogapass/obmc-phosphor-image-tiogapass.static.mtd.tar
