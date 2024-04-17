@@ -1,0 +1,26 @@
+From a644a68098be7c3a059621781b7f1b37f3184e82 Mon Sep 17 00:00:00 2001
+From: olekatpyle <olekatpyle@gmail.com>
+Date: Fri, 15 Mar 2024 15:35:51 +0100
+Subject: [PATCH 4/4] NCSI-remove-skip-of-set-vlan-filter-for-MLX-NIC
+
+---
+ net/ncsi/ncsi-manage.c | 3 +++
+ 1 file changed, 3 insertions(+)
+
+diff --git a/net/ncsi/ncsi-manage.c b/net/ncsi/ncsi-manage.c
+index 8746662956a9..9f62f4201c3e 100644
+--- a/net/ncsi/ncsi-manage.c
++++ b/net/ncsi/ncsi-manage.c
+@@ -1046,6 +1046,9 @@ static void ncsi_configure_channel(struct ncsi_dev_priv *ndp)
+ 		ret = -1;
+ 
+ #if IS_ENABLED(CONFIG_NCSI_OEM_CMD_GET_MAC)
++        if (nc->version.mf_id == NCSI_OEM_MFR_MLX_ID)
++            nd->state = ncsi_dev_state_config_sma;
++
+ 		nca.type = NCSI_PKT_CMD_OEM;
+ 		nca.package = np->id;
+ 		nca.channel = nc->id;
+-- 
+2.44.0
+

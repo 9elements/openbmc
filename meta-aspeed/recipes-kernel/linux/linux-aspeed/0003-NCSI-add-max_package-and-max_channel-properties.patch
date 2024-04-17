@@ -1,0 +1,99 @@
+From c6910cf8d794282f608806c720e25cd2c5be93da Mon Sep 17 00:00:00 2001
+From: olekatpyle <olekatpyle@gmail.com>
+Date: Fri, 15 Mar 2024 14:39:20 +0100
+Subject: [PATCH 3/4] NCSI add max_package and max_channel properties
+
+---
+ net/ncsi/internal.h    |  2 ++
+ net/ncsi/ncsi-manage.c | 19 ++++++++++++++-----
+ 2 files changed, 16 insertions(+), 5 deletions(-)
+
+diff --git a/net/ncsi/internal.h b/net/ncsi/internal.h
+index 5dbc52692b96..cef6b3f77bd6 100644
+--- a/net/ncsi/internal.h
++++ b/net/ncsi/internal.h
+@@ -348,6 +348,8 @@ struct ncsi_dev_priv {
+ 	bool                mlx_multi_host;  /* Enable multi host Mellanox */
+ 	u32                 package_whitelist; /* Packages to configure    */
+     unsigned int        ctrl_flags;      /* NCSI control flags         */
++    unsigned char       max_package;     /* Num of packages to probe   */
++    unsigned char       max_channel;     /* Num of channels to probe   */
+ };
+ 
+ struct ncsi_cmd_arg {
+diff --git a/net/ncsi/ncsi-manage.c b/net/ncsi/ncsi-manage.c
+index 305627ebe883..8746662956a9 100644
+--- a/net/ncsi/ncsi-manage.c
++++ b/net/ncsi/ncsi-manage.c
+@@ -1362,12 +1362,12 @@ static void ncsi_probe_channel(struct ncsi_dev_priv *ndp)
+ 		nd->state = ncsi_dev_state_probe_deselect;
+ 		fallthrough;
+ 	case ncsi_dev_state_probe_deselect:
+-		ndp->pending_req_num = 8;
++		ndp->pending_req_num = ndp->max_package;
+ 
+ 		/* Deselect all possible packages */
+ 		nca.type = NCSI_PKT_CMD_DP;
+ 		nca.channel = NCSI_RESERVED_CHANNEL;
+-		for (index = 0; index < 8; index++) {
++		for (index = 0; index < ndp->max_package; index++) {
+ 			nca.package = index;
+ 			ret = ncsi_xmit_cmd(&nca);
+ 			if (ret)
+@@ -1431,12 +1431,12 @@ static void ncsi_probe_channel(struct ncsi_dev_priv *ndp)
+ 		break;
+ #endif /* CONFIG_NCSI_OEM_CMD_GET_MAC */
+ 	case ncsi_dev_state_probe_cis:
+-		ndp->pending_req_num = NCSI_RESERVED_CHANNEL;
++		ndp->pending_req_num = ndp->max_channel;
+ 
+ 		/* Clear initial state */
+ 		nca.type = NCSI_PKT_CMD_CIS;
+ 		nca.package = ndp->active_package->id;
+-		for (index = 0; index < NCSI_RESERVED_CHANNEL; index++) {
++		for (index = 0; index < ndp->max_channel; index++) {
+ 			nca.channel = index;
+ 			ret = ncsi_xmit_cmd(&nca);
+ 			if (ret)
+@@ -1503,7 +1503,7 @@ static void ncsi_probe_channel(struct ncsi_dev_priv *ndp)
+ 
+ 		/* Probe next package */
+ 		ndp->package_probe_id++;
+-		if (ndp->package_probe_id >= 8) {
++		if (ndp->package_probe_id >= ndp->max_package) {
+ 			/* Probe finished */
+ 			ndp->flags |= NCSI_DEV_PROBED;
+ 			break;
+@@ -1759,6 +1759,7 @@ struct ncsi_dev *ncsi_register_dev(struct net_device *dev,
+ 	struct device_node *np;
+ 	unsigned long flags;
+ 	int i;
++    u32 property;
+ 
+ 	/* Check if the device has been registered or not */
+ 	nd = ncsi_find_dev(dev);
+@@ -1790,6 +1791,8 @@ struct ncsi_dev *ncsi_register_dev(struct net_device *dev,
+ 		ndp->requests[i].ndp = ndp;
+ 		timer_setup(&ndp->requests[i].timer, ncsi_request_timeout, 0);
+ 	}
++    ndp->max_package = NCSI_MAX_PACKAGE;
++    ndp->max_channel = NCSI_RESERVED_CHANNEL;
+ 
+ 	spin_lock_irqsave(&ncsi_dev_lock, flags);
+ 	list_add_tail_rcu(&ndp->node, &ncsi_dev_list);
+@@ -1807,6 +1810,12 @@ struct ncsi_dev *ncsi_register_dev(struct net_device *dev,
+ 		if (np && (of_property_read_bool(np, "mellanox,multi-host") ||
+ 			   of_property_read_bool(np, "mlx,multi-host")))
+ 			ndp->mlx_multi_host = true;
++        if (np && (!of_property_read_u32(np, "ncsi_package", &property))
++                && (property < NCSI_MAX_PACKAGE))
++                ndp->max_package = (u8)property;
++        if (np && (!of_property_read_u32(np, "ncsi_channel", &property))
++                && (property < NCSI_RESERVED_CHANNEL))
++                ndp->max_channel = (u8)property;
+         if (np && (of_get_property(np, "ncsi-ctrl,skip-aen-handler", NULL)))
+                 ndp->ctrl_flags |= NCSI_CTRL_FLAG_SKIP_AEN_HANDLER;
+ 	}
+-- 
+2.44.0
+

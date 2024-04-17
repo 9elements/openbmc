@@ -8,13 +8,13 @@
 	model = "OCP YosemiteV3 BMC";
 	compatible = "ocp,yosemitev3-bmc", "aspeed,ast2500";
 
-	aliases {
-		serial0 = &uart5;
-		serial1 = &uart1;
-		serial2 = &uart2;
-		serial3 = &uart3;
-		serial4 = &uart4;
-	};
+	// aliases {
+	// 	serial0 = &uart5;
+	// 	serial1 = &uart1;
+	// 	serial2 = &uart2;
+	// 	serial3 = &uart3;
+	// 	serial4 = &uart4;
+	// };
 
 	chosen {
 		stdout-path = &uart5;
@@ -65,21 +65,81 @@
 
 &fmc {
 	status = "okay";
-	flash@0 {
-		reg = < 1 >;
-		status = "okay";
-		m25p,fast-read;
-		label = "spi0.1";
-		spi-max-frequency = <40000000>;
-#include "openbmc-flash-layout-128.dtsi"
-	};
+	// flash@0 {
+	// 	reg = < 1 >;
+	// 	status = "okay";
+	// 	m25p,fast-read;
+	// 	label = "spi0.1";
+	// 	spi-max-frequency = <40000000>;
+ //        partitions {
+ //            compatible = "fixed-partitions";
+ //            #address-cells = <1>;
+ //            #size-cells = <1>;
+	//
+ //            u-boot@0 {
+ //                reg = <0x0 0x60000>; // 384KiB
+ //                label = "u-boot";
+ //            };
+	//
+ //            u-boot-env@60000 {
+ //                reg = <0x60000 0x20000>; // 128KiB
+ //                label = "u-boot-env";
+ //            };
+	//
+ //            kernel@100000 {
+ //                reg = <0x100000 0x900000>; // 9MB
+ //                label = "kernel";
+ //            };
+	//
+ //            rofs@a00000 {
+ //                reg = <0xa00000 0x5600000>; // 86MB
+ //                label = "rofs";
+ //            };
+	//
+ //            rwfs@6000000 {
+ //                reg = <0x6000000 0x2000000>; // 32MB
+ //                label = "rwfs";
+ //            };
+ //        };
+// #include "openbmc-flash-layout-128.dtsi"
+	// };
 	flash@1 {
 		reg = < 0 >;
 		status = "okay";
 		m25p,fast-read;
 		label = "spi0.0";
 		spi-max-frequency = <40000000>;
-#include "openbmc-flash-layout-128.dtsi"
+        partitions {
+            compatible = "fixed-partitions";
+            #address-cells = <1>;
+            #size-cells = <1>;
+
+            u-boot@0 {
+                reg = <0x0 0x60000>; // 384KiB
+                label = "u-boot";
+            };
+
+            u-boot-env@60000 {
+                reg = <0x60000 0x20000>; // 128KiB
+                label = "u-boot-env";
+            };
+
+            kernel@100000 {
+                reg = <0x100000 0x900000>; // 9MB
+                label = "kernel";
+            };
+
+            rofs@a00000 {
+                reg = <0xa00000 0x5600000>; // 86MB
+                label = "rofs";
+            };
+
+            rwfs@6000000 {
+                reg = <0x6000000 0x2000000>; // 32MB
+                label = "rwfs";
+            };
+        };
+// #include "openbmc-flash-layout-128.dtsi"
 	};
 };
 
@@ -136,8 +196,12 @@
 	no-hw-checksum;
 	use-ncsi;
 	mlx,multi-host;
-	ncsi-ctrl,start-redo-probe;
-	ncsi-ctrl,no-channel-monitor;
+    /* These options are used to test NIC hot plugging
+       https://github.com/facebook/openbmc-linux/commit/b5bbbb2a9cda6eb52e74b7ee9aca09a05068b437 */
+	// ncsi-ctrl,start-redo-probe; // need PATCH
+	// ncsi-ctrl,no-channel-monitor; // need PATCH
+
+    /* To disable Async Event Notifications */
 	ncsi-ctrl,skip-aen-handler;
 	ncsi-package = <1>;
 	ncsi-channel = <1>;
@@ -149,6 +213,7 @@
 };
 
 &i2c0 {
+    // BIC Slot1
 	multi-master;
 	bus-frequency = <1000000>;
 	tck-high = <10>;
@@ -158,6 +223,7 @@
 };
 
 &i2c1 {
+    // BIC Slot2
 	multi-master;
 	bus-frequency = <1000000>;
 	tck-high = <10>;
@@ -167,6 +233,7 @@
 };
 
 &i2c2 {
+    // BIC Slot3
 	multi-master;
 	bus-frequency = <1000000>;
 	tck-high = <10>;
@@ -176,6 +243,7 @@
 };
 
 &i2c3 {
+    // BIC Slot4
 	multi-master;
 	bus-frequency = <1000000>;
 	tck-high = <10>;
@@ -205,6 +273,7 @@
 };
 
 &i2c9 {
+    // NIC
 	multi-master;
 	bus-frequency = <100000>;
 	aspeed,hw-timeout-ms = <1000>;
@@ -262,4 +331,242 @@
 		aspeed,pwm-typem-tach-unit = /bits/ 16 <0x1000>;    // 4096
 		aspeed,pwm-typem-tach-clk-div = /bits/ 8 <0x04>;    // div 1024
 	};
+};
+
+&gpio {
+    status = "okay";
+
+    gpio-line-names =
+    /*A0*/      "BMC_READY",
+    /*A1*/      "SMB_HOTSWAP_BMC_ALERT_N",
+    /*A2*/      "FM_HSC_BMC_FAULT_N",
+    /*A3*/      "FM_NIC_WAKE_BMC_N",
+    /*A4*/      "SMB_PRIMARY_SCL",
+    /*A5*/      "SMB_PRIMARY_SDA",
+    /*A6*/      "NC",
+    /*A7*/      "NC",
+    /*B0*/      "SMB_BMC_SLOT1_ALT_N",
+    /*B1*/      "SMB_BMC_SLOT2_ALT_N",
+    /*B2*/      "SMB_BMC_SLOT3_ALT_N",
+    /*B3*/      "SMB_BMC_SLOT4_ALT_N",
+    /*B4*/      "PRSNT_MB_SLOT1_BB_N",
+    /*B5*/      "PRSNT_MB_SLOT2_BB_N",
+    /*B6*/      "PRSNT_MB_SLOT3_BB_N",
+    /*B7*/      "PRSNT_MB_SLOT4_BB_N",
+    /*C0*/      "SMB_BMC_DEBUG_SCL",
+    /*C1*/      "SMB_BMC_DEBUG_SDA",
+    /*C2*/      "SMB_TPM_BMC_SCL",
+    /*C3*/      "SMB_TPM_BMC_SDA",
+    /*C4*/      "SMB_BMC_HOTSWAP_CPLD_SCL",
+    /*C5*/      "SMB_BMC_HOTSWAP_CPLD_SDA",
+    /*C6*/      "SMB_BMC_TEMP_SCL",
+    /*C7*/      "SMB_BMC_TEMP_SDA",
+    /*D0*/      "EMMC_SD2CLK",
+    /*D1*/      "EMMC_SD2CMD",
+    /*D2*/      "EMMC_SD2DAT0",
+    /*D3*/      "EMMC_SD2DAT1",
+    /*D4*/      "EMMC_SD2DAT2",
+    /*D5*/      "EMMC_SD2DAT3",
+    /*D6*/      "EMMC_SD2DET_N", // Vee / Vss ?
+    /*D7*/      "EMMC_SD2WPT_N",
+    /*E0*/      "P3V3_NIC_FAULT_N",
+    /*E1*/      "NIC_POWER_BMC_EN",
+    /*E2*/      "P12V_NIC_FAULT_N",
+    /*E3*/      "ADAPTER_BUTTON_BMC_N",
+    /*E4*/      "RST_USB_HUB_N",
+    /*E5*/      "EMMC_RST_N",
+    /*E6*/      "UART_BMC_SLOT3_RX",
+    /*E7*/      "UART_BMC_SLOT3_TX",
+    /*F0*/      "BOARD_ID0",
+    /*F1*/      "BOARD_ID1",
+    /*F2*/      "BOARD_ID2",
+    /*F3*/      "BOARD_ID3",
+    /*F4*/      "SMB_RST_PRIMARY_N",
+    /*F5*/      "NC",
+    /*F6*/      "UART_BMC_SLOT4_RX",
+    /*F7*/      "UART_BMC_SLOT4_TX",
+    /*G0*/      "NC",
+    /*G1*/      "NC",
+    /*G2*/      "NC",
+    /*G3*/      "SMB_RST_SECONDARY_N",
+    /*G4*/      "TP45", // TP_SLOT2_BMC_RSVD5
+    /*G5*/      "TP46", // TP_SLOT2_BMC_RSVD6
+    /*G6*/      "TP47", // TP_SLOT3_BMC_RSVD4
+    /*G7*/      "TP48", // TP_SLOT3_BMC_RSVD5
+    /*H0*/      "NC",
+    /*H1*/      "NC",
+    /*H2*/      "NC",
+    /*H3*/      "NC",
+    /*H4*/      "NC",
+    /*H5*/      "NC",
+    /*H6*/      "UART_NIC_TX",
+    /*H7*/      "UART_NIC_RX",
+    /*I0*/      "FAN0_BMC_CPLD_EN",
+    /*I1*/      "FAN1_BMC_CPLD_EN",
+    /*I2*/      "FAN2_BMC_CPLD_EN",
+    /*I3*/      "FAN3_BMC_CPLD_EN",
+    /*I4*/      "FM_RESBTN_SLOT3_N",
+    /*I5*/      "TP50", // TP_SLOT4_BMC_RSVD4
+    /*I6*/      "FM_RESBTN_SLOT4_N",
+    /*I7*/      "TP52", // TP_SLOT4_BMC_RSVD6
+    /*J0*/      "TP41", // TP_SLOT1_BMC_RSVD4
+    /*J1*/      "TP42", // TP_SLOT1_BMC_RSVD5
+    /*J2*/      "TP43", // TP_SLOT1_BMC_RSVD6
+    /*J3*/      "TP44", // TP_SLOT2_BMC_RSVD4
+    /*J4*/      "RST_PCIE_RESET_SLOT1_N",
+    /*J5*/      "RST_PCIE_RESET_SLOT2_N",
+    /*J6*/      "RST_PCIE_RESET_SLOT3_N",
+    /*J7*/      "RST_PCIE_RESET_SLOT4_N",
+    /*K0*/      "SMB_BMC_SLOT1_SCL",
+    /*K1*/      "SMB_BMC_SLOT1_SDA",
+    /*K2*/      "SMB_BMC_SLOT2_SCL",
+    /*K3*/      "SMB_BMC_SLOT2_SDA",
+    /*K4*/      "SMB_BMC_SLOT3_SCL",
+    /*K5*/      "SMB_BMC_SLOT3_SDA",
+    /*K6*/      "SMB_BMC_SLOT4_SCL",
+    /*K7*/      "SMB_BMC_SLOT4_SDA",
+    /*L0*/      "AC_ON_OFF_BTN_SLOT1_N", /* POWER_OUT1, AC_ON_OFF_BTN_SLOT1_N */
+    /*L1*/      "AC_ON_OFF_BTN_SLOT2_N",
+    /*L2*/      "AC_ON_OFF_BTN_SLOT3_N",
+    /*L3*/      "AC_ON_OFF_BTN_SLOT4_N",
+    /*L4*/      "FAST_PROCHOT_N",
+    /*L5*/      "USB_CPLD_EN",
+    /*L6*/      "UART_BMC_SLOT1_RX",
+    /*L7*/      "UART_BMC_SLOT1_TX",
+    /*M0*/      "HSC_FAULT_SLOT1_N",
+    /*M1*/      "HSC_FAULT_SLOT2_N",
+    /*M2*/      "HSC_FAULT_SLOT3_N",
+    /*M3*/      "HSC_FAULT_SLOT4_N",
+    /*M4*/      "FM_PWRBRK_PRIMARY",
+    /*M5*/      "OCP_NIC_PRSNT_BMC_N",
+    /*M6*/      "UART_BMC_SLOT2_RX",
+    /*M7*/      "UART_BMC_SLOT2_TX",
+    /*N0*/      "FAN_BMC_PWM_0",
+    /*N1*/      "FAN_BMC_PWM_1",
+    /*N2*/      "FAN_BMC_PWM_2",
+    /*N3*/      "FAN_BMC_PWM_3",
+    /*N4*/      "DUAL_FAN0_DETECT_N",
+    /*N5*/      "DUAL_FAN1_DETECT_N",
+    /*N6*/      "NC",
+    /*N7*/      "NC",
+    /*O0*/      "FAN_BMC_TACH_0",
+    /*O1*/      "FAN_BMC_TACH_1",
+    /*O2*/      "FAN_BMC_TACH_2",
+    /*O3*/      "FAN_BMC_TACH_3",
+    /*O4*/      "FAN_BMC_TACH_4",
+    /*O5*/      "FAN_BMC_TACH_5",
+    /*O6*/      "FAN_BMC_TACH_6",
+    /*O7*/      "FAN_BMC_TACH_7",
+    /*P0*/      "SLOT1_ID1_DETECT_N",
+    /*P1*/      "SLOT1_ID0_DETECT_N",
+    /*P2*/      "SLOT2_ID1_DETECT_N",
+    /*P3*/      "SLOT2_ID0_DETECT_N",
+    /*P4*/      "SLOT3_ID1_DETECT_N",
+    /*P5*/      "SLOT3_ID0_DETECT_N",
+    /*P6*/      "SLOT4_ID1_DETECT_N",
+    /*P7*/      "SLOT4_ID0_DETECT_N",
+    /*Q0*/      "SMB_IPMB_BMC_SLOT3_SCL",
+    /*Q1*/      "SMB_IPMB_BMC_SLOT3_SDA",
+    /*Q2*/      "SMB_IPMB_BMC_SLOT4_SCL",
+    /*Q3*/      "SMB_IPMB_BMC_SLOT4_SDA",
+    /*Q4*/      "SMB_SECONDARY_SCL",
+    /*Q5*/      "SMB_SECONDARY_SDA",
+    /*Q6*/      "USB_OC_N",
+    /*Q7*/      "FM_BMC_TPM_PRSNT_N",
+    /*R0*/      "SPI_BMC_CS1_N",
+    /*R1*/      "NC",
+    /*R2*/      "SPI_TPM_CS_N",
+    /*R3*/      "SPI_TPM_CLK",
+    /*R4*/      "SPI_TPM_MOSI",
+    /*R5*/      "SPI_TPM_MISO",
+    /*R6*/      "TP39", // TP_BMC_D8
+    /*R7*/      "TP40", // TP_BMC_E10
+    /*S0*/      "PWROK_STBY_BMC_SLOT1",
+    /*S1*/      "PWROK_STBY_BMC_SLOT2",
+    /*S2*/      "PWROK_STBY_BMC_SLOT3",
+    /*S3*/      "PWROK_STBY_BMC_SLOT4",
+    /*S4*/      "BMC_STRAP03",
+    /*S5*/      "BMC_STRAP04",
+    /*S6*/      "BMC_STRAP05",
+    /*S7*/      "BMC_STRAP15",
+    /*T0*/      "TP38",
+    /*T1*/      "NCSI_RBT_BMC_TX_EN",
+    /*T2*/      "NCSI_RBT_BMC_TXD0",
+    /*T3*/      "NCSI_RBT_BMC_TXD1",
+    /*T4*/      "BMC_STRAP16",
+    /*T5*/      "BMC_STRAP19",
+    /*T6*/      "NC",
+    /*T7*/      "NC",
+    /*U0*/      "BMC_STRAP21",
+    /*U1*/      "BMC_STRAP22",
+    /*U2*/      "BMC_STRAP23",
+    /*U3*/      "BMC_STRAP24",
+    /*U4*/      "NC",
+    /*U5*/      "NC", // Vee / Vss?
+    /*U6*/      "NCSI_RBT_BMC_RXD0",
+    /*U7*/      "NCSI_RBT_BMC_RXD1",
+    /*V0*/      "NCSI_RBT_BMC_CSR_DV",
+    /*V1*/      "NC", // Vee / Vss?
+    /*V2*/      "NC", // Vee / Vss?
+    /*V3*/      "NC", // Vee / Vss?
+    /*V4*/      "NC", // Vee / Vss?
+    /*V5*/      "NC", // Vee / Vss?
+    /*V6*/      "NC", // Vee / Vss?
+    /*V7*/      "NC", // Vee / Vss?
+    /*W0*/      "", /* not found */
+    /*W1*/      "", /* not found */
+    /*W2*/      "", /* not found */
+    /*W3*/      "", /* not found */
+    /*W4*/      "", /* not found */
+    /*W5*/      "", /* not found */
+    /*W6*/      "", /* not found */
+    /*W7*/      "", /* not found */
+    /*X0*/      "", /* not found */
+    /*X1*/      "", /* not found */
+    /*X2*/      "", /* not found */
+    /*X3*/      "", /* not found */
+    /*X4*/      "", /* not found */
+    /*X5*/      "", /* not found */
+    /*X6*/      "", /* not found */
+    /*X7*/      "", /* not found */
+    /*Y0*/      "TP29", /* TP_SLOT2_BMC_RSVD0 */
+    /*Y1*/      "TP26", /* TP_SLOT2_BMC_RSVD1 */
+    /*Y2*/      "TP27", /* TP_SLOT2_BMC_RSVD2 */
+    /*Y3*/      "TP28", /* TP_SLOT2_BMC_RSVD3 */
+    /*Y4*/      "SMB_IPMB_BMC_SLOT1_SCL",
+    /*Y5*/      "SMB_IPMB_BMC_SLOT1_SDA",
+    /*Y6*/      "SMB_IPMB_BMC_SLOT2_SCL",
+    /*Y7*/      "SMB_IPMB_BMC_SLOT2_SDA",
+    /*Z0*/      "FM_SLOT1_ISOLATED_EN",
+    /*Z1*/      "FM_SLOT2_ISOLATED_EN",
+    /*Z2*/      "FM_SLOT3_ISOLATED_EN",
+    /*Z3*/      "FM_SLOT4_ISOLATED_EN",
+    /*Z4*/      "BMC_STRAP17",
+    /*Z5*/      "BMC_STRAP18",
+    /*Z6*/      "BMC_STRAP20",
+    /*Z7*/      "BMC_STRAP27",
+    /*AA0*/     "TP30", /* TP_SLOT3_BMC_RSVD0 */
+    /*AA1*/     "TP31", /* TP_SLOT3_BMC_RSVD1 */
+    /*AA2*/     "TP32", /* TP_SLOT3_BMC_RSVD2 */
+    /*AA3*/     "TP33", /* TP_SLOT3_BMC_RSVD3 */
+    /*AA4*/     "TP34", /* TP_SLOT4_BMC_RSVD0 */
+    /*AA5*/     "TP35", /* TP_SLOT4_BMC_RSVD1 */
+    /*AA6*/     "TP36", /* TP_SLOT4_BMC_RSVD2 */
+    /*AA7*/     "TP37", /* TP_SLOT4_BMC_RSVD3 */
+    /*AB0*/     "PWRGD_NIC_BMC",
+    /*AB1*/     "OCP_DEBUG_PRSNT_N",
+    /*AB2*/     "RST_BMC_WDRST1",
+    /*AB3*/     "RST_BMC_WDRST2",
+    /*AB4*/     "", /* not found */
+    /*AB5*/     "", /* not found */
+    /*AB6*/     "", /* not found */
+    /*AB7*/     "", /* not found */
+    /*AC0*/     "TP22", /* TP_SLOT1_BMC_RSVD0 */
+    /*AC1*/     "TP23", /* TP_SLOT1_BMC_RSVD1 */
+    /*AC2*/     "FM_RESBTN_SLOT1_N", /*RESET_OUT1 FM_RESBTN_SLOT1_N */
+    /*AC3*/     "FM_RESBTN_SLOT2_N",
+    /*AC4*/     "EMMC_PRESENT_N",
+    /*AC5*/     "SMB_TEMP_INLET_ALERT_N",
+    /*AC6*/     "SMB_TEMP_OUTLET_ALERT_N",
+    /*AC7*/     "NC";
 };

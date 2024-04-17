@@ -31,8 +31,19 @@ RDEPENDS:${PN}-flash = " \
 
 SUMMARY:${PN}-system = "OCP System"
 RDEPENDS:${PN}-system = " \
+        entity-manager \
+        dbus-sensors \
         "
 
 SUMMARY:${PN}-fans = "OCP Fans"
 RDEPENDS:${PN}-fans = " \
+        phosphor-pid-control \
+        "
+RDEPENDS_PN_SYSTEM_EXTRAS: = " \
+        phosphor-ipmi-ipmb \
+        phosphor-hostlogger \
+        phosphor-sel-logger \
+        phosphor-post-code-manager \
+        phosphor-host-postd \
+        phosphor-state-manager \
         "
