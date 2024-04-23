@@ -1,46 +1,31 @@
-#include "internal.h"
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
 #include <unistd.h>
 
+#include "gpio.h"
+#include "internal.h"
+#include "print_buffer.h"
+
 #define EXIT_SUCCESS 0
 #define TIMEOUT_IPMB 8
 
-// Power sequence HIGH -> LOW -> sleep 1 -> HIGH
 #define POWER_BTN_HIGH 0x3
 #define POWER_BTN_LOW 0x2
 
 #define NETFN_APP_REQ 0x06
 #define CMD_APP_MASTER_WRITE_READ 0x52
 
-void print_usage()
+const static char *gpio_server_stby_pwr_sts[] =
 {
-	printf("Usage: raw_power [slot_id]\n");
-	printf("slot_id: 1-4\n");
-}
+  "", // index with 1-basde 'slot'
+  "PWROK_STBY_BMC_SLOT1",
+  "PWROK_STBY_BMC_SLOT2",
+  "PWROK_STBY_BMC_SLOT3",
+  "PWROK_STBY_BMC_SLOT4"
+};
 
-int parse_args(int argc, char *argv[])
-{
-	int bus = 0;
-	if (1 == argc) {
-		print_usage();
-		return EXIT_FAILURE;
-	} else if (argc > 2) {
-		print_usage();
-		return EXIT_FAILURE;
-	} else {
-		int arg = atoi(argv[1]);
-		if (arg < 1 || arg > 4) {
-			print_usage();
-			return EXIT_FAILURE;
-		}
-		bus = arg - 1;
-	}
-	return bus;
-}
-
-ipmb_req_t *create_request(int val)
+ipmb_req_t *create_request(int val, size_t* tlen)
 {
 	ipmb_req_t *req = (ipmb_req_t *)malloc(sizeof(ipmb_req_t));
 	if (req == NULL) {
@@ -50,15 +35,21 @@ ipmb_req_t *create_request(int val)
 
 	uint16_t txlen = 5;
 	uint8_t txbuf[5] = { 0 };
+	*tlen = txlen;
 
+	// reference for these bytes: 'static int bic_server_power_control' in fb tree
 	txbuf[0] = 0x05; //bus id
 	txbuf[1] = 0x42; //slave addr
 	txbuf[2] = 0x01; //read 1 byte
 	txbuf[3] = 0x00; //register offset
+
 	txbuf[4] = val; //power signal
 
 	// write tx buffer into request data array
 	memcpy(req->data, txbuf, txlen);
+
+	// debug
+	print_buffer(txbuf, txlen);
 
 	req->res_slave_addr = BRIDGE_SLAVE_ADDR << 1;
 	req->netfn_lun = NETFN_APP_REQ << LUN_OFFSET;
@@ -67,18 +58,23 @@ ipmb_req_t *create_request(int val)
 	req->req_slave_addr = BMC_SLAVE_ADDR << 1;
 	req->seq_lun = 0x00;
 	req->cmd = CMD_APP_MASTER_WRITE_READ;
+
+	//TODO: create the checksum at the end of the request
+	printf("TODO: checksum\n");
+	//TODO: create the BIC UART debug setup
+	exit(1);
 	return req;
 }
 
 int send_power_signal(int fd, uint8_t val)
 {
-	uint8_t tlen;
-	// 5 bytes of request data
-	uint8_t txlen = 5;
-	tlen = IPMB_HDR_SIZE + IPMI_REQ_HDR_SIZE + txlen;
+
+	size_t txlen;
 	// build request
 	ipmb_req_t *req;
-	req = create_request(val);
+	req = create_request(val, &txlen);
+
+	unsigned short tlen = IPMB_HDR_SIZE + IPMI_REQ_HDR_SIZE + txlen;
 
 	// write raw i2c
 
@@ -91,29 +87,40 @@ int send_power_signal(int fd, uint8_t val)
 	return EXIT_SUCCESS;
 }
 
-int main(int argc, char *argv[])
-{
-	int bus = 0, ret;
-	struct ipmb_svc *svc = (ipmb_svc*)calloc(1, sizeof(*svc));
-	if (!svc)
-		return EXIT_FAILURE;
+int enable_i2c_gpio(uint8_t slot){
 
-	ret = parse_args(argc, argv);
-	if (ret < 0) {
-		return EXIT_FAILURE;
+	if(slot <= 0){
+		return -1;
 	}
 
-	init_i2c_bus(bus, svc);
+	char* tmplt = (char*)"gpioset $(gpiofind \"FM_SLOT%d_ISOLATED_EN\")=1";
+	char buf[100];
+	sprintf(buf, tmplt, slot);
 
-	send_power_signal(svc->i2c_fd, POWER_BTN_HIGH);
-	send_power_signal(svc->i2c_fd, POWER_BTN_LOW);
-	sleep(1);
-	send_power_signal(svc->i2c_fd, POWER_BTN_HIGH);
+	printf("running '%s'\n", buf);
 
-	free(svc);
-
-	return EXIT_SUCCESS;
+	int status = system(buf);
+	return WEXITSTATUS(status);
 }
 
-//
-// tlen = IPMB_HDR_SIZE + IPMI_REQ_HDR_SIZE + txlen;
+int bic_power_blade(int fd, uint8_t slot) {
+
+	int status = 0;
+
+	status = enable_i2c_gpio(slot);
+	if (status != 0) return status;
+
+	status |= send_power_signal(fd, POWER_BTN_HIGH);
+	status |= send_power_signal(fd, POWER_BTN_LOW);
+	sleep(1);
+	status |= send_power_signal(fd, POWER_BTN_HIGH);
+
+	return status;
+}
+
+bool gpio_check_blade_power(uint8_t slot){
+
+	char* gpio_name = (char*)gpio_server_stby_pwr_sts[slot];
+	return gpio_read_by_name(gpio_name) == 1;
+}
+

@@ -6,11 +6,24 @@ LIC_FILES_CHKSUM = "file://${COREBASE}/meta/files/common-licenses/Apache-2.0;md5
 
 inherit pkgconfig autotools-brokensep
 
+DEPENDS += " libipmi "
+DEPENDS += " libipmb "
+DEPENDS += " libgpiod "
+
+RDEPENDS:${PN} += " libipmi "
+RDEPENDS:${PN} += " libipmb "
+RDEPENDS:${PN} += " libgpiod "
+
 SRC_URI = "\
 file://internal.h \
 file://internal.c \
+file://raw_power.h \
 file://raw_power.c \
-file://enable-i2c \
+file://gpio.h \
+file://gpio.c \
+file://main.c \
+file://print_buffer.h \
+file://print_buffer.c \
 file://Makefile \
 "
 
@@ -22,5 +35,4 @@ do_install() {
 
     # install the application into the /usr/bin folder with default permissions
     install -m 0755 ${WORKDIR}/raw_power ${D}${bindir}
-    install -m 0755 ${WORKDIR}/enable-i2c ${D}${bindir}
 }

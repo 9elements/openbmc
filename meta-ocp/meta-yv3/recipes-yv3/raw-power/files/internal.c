@@ -5,34 +5,15 @@
 #include <linux/i2c-dev.h>
 #include <linux/limits.h>
 #include <stdio.h>
-// #include <stdlib.h>
 #include <string.h>
 #include <sys/ioctl.h>
 #include <time.h>
 #include <unistd.h>
 
+#include "print_buffer.h"
+
 #define I2C_RETRIES_MAX 15
 #define I2C_RETRY_DELAY 20 /* unit: millisecond */
-
-// void ipmb_handle(int fd, unsigned char *request, unsigned short req_len,
-// 		 unsigned char *response, unsigned char *res_len)
-// {
-// 	ipmb_req_t *req = (ipmb_req_t *)request;
-// 	int i, ret;
-// 	uint16_t addr = 0;
-//
-// 	req->req_slave_addr = addr << 1;
-//
-// 	// Calculate/update header Cksum
-// 	req->hdr_cksum = req->res_slave_addr + req->netfn_lun;
-// 	req->hdr_cksum = ZERO_CKSUM_CONST - req->hdr_cksum;
-//
-// 	// Calculate/update dataCksum
-// 	// Note: dataCkSum byte is last byte
-// 	request[req_len - 1] = 0;
-//
-// 	ipmb_write(fd, request, req_len);
-// }
 
 void msleep(int msec)
 {
@@ -61,6 +42,9 @@ int ipmb_write(int fd, unsigned char *request, unsigned short req_len)
 	msg.len = req_len - 1; // 1st byte in addr
 	msg.buf = &request[1];
 
+	printf("raw request:\n");
+	print_buffer(request, req_len);
+
 	data.msgs = &msg;
 	data.nmsgs = 1;
 
@@ -68,12 +52,12 @@ int ipmb_write(int fd, unsigned char *request, unsigned short req_len)
 		msleep(I2C_RETRY_DELAY);
 	}
 	if (rc < 0) {
-		DEBUG("Error %d: Failed to send %u bytes to device @%#x", errno,
+		DEBUG("Error %d: Failed to send %u bytes to device @%#x\n", errno,
 		      req_len, msg.addr);
 		return -1;
 	}
 
-	DEBUG("Successfully send i2c request to @%#x", data.msgs->addr);
+	DEBUG("Successfully send i2c request to @%#x\n", data.msgs->addr);
 	return 0;
 }
 
@@ -84,19 +68,14 @@ int init_i2c_bus(int bus, struct ipmb_svc *svc)
 	return 0;
 }
 
-char *i2c_cdev_master_abspath(char *buf, size_t size, int bus)
-{
-	snprintf(buf, size, "/dev/i2c-%d", bus);
-	return buf;
-}
-
 int i2c_cdev_slave_open(int bus, uint16_t addr)
 {
 	int fd;
 	unsigned long request;
 	char cdev_path[PATH_MAX];
 
-	i2c_cdev_master_abspath(cdev_path, sizeof(cdev_path), bus);
+	snprintf(cdev_path, sizeof(cdev_path), "/dev/i2c-%d", bus);
+
 	fd = open(cdev_path, O_RDWR);
 	if (fd < 0) {
 		DEBUG("Error %d in i2c_cdev_slave_open: Failed to open i2c device",
@@ -109,8 +88,19 @@ int i2c_cdev_slave_open(int bus, uint16_t addr)
 		int save_errno = errno;
 		close(fd); /* ignore errors */
 		errno = save_errno;
-		DEBUG("Error: %d in i2c_cdev_slave_open, ioctl operation\n",
+		fprintf(stderr, "Error: %d in i2c_cdev_slave_open, ioctl operation\n",
 		      errno);
+		return -1;
+	}
+
+	// check required functions
+	unsigned long funcs;
+	if (ioctl(fd, I2C_FUNCS, &funcs) < 0){
+		fprintf(stderr, "Error requesting I2C_FUNCS\n");
+		return -1;
+	}
+	if((funcs & I2C_FUNC_I2C) == 0) {
+		fprintf(stderr, "Error: adapter does not support I2C_FUNCS_I2C\n");
 		return -1;
 	}
 
