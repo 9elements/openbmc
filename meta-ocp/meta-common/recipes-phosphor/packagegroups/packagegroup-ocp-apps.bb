@@ -23,6 +23,7 @@ RPROVIDES:${PN}-fans += "virtual-obmc-fan-mgmt"
 
 SUMMARY:${PN}-chassis = "OCP Chassis"
 RDEPENDS:${PN}-chassis = " \
+        phosphor-ipmi-ipmb \
         "
 
 SUMMARY:${PN}-flash = "OCP Flash"

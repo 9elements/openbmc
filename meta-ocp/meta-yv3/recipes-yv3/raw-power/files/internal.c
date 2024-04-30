@@ -42,8 +42,7 @@ int ipmb_write(int fd, unsigned char *request, unsigned short req_len)
 	msg.len = req_len - 1; // 1st byte in addr
 	msg.buf = &request[1];
 
-	printf("raw request:\n");
-	print_buffer(request, req_len);
+	print_buffer((char*)"raw request", request, req_len);
 
 	data.msgs = &msg;
 	data.nmsgs = 1;
@@ -59,6 +58,50 @@ int ipmb_write(int fd, unsigned char *request, unsigned short req_len)
 
 	DEBUG("Successfully send i2c request to @%#x\n", data.msgs->addr);
 	return 0;
+}
+
+int ipmb_read(int fd, uint8_t* txbuf, uint16_t txlen, uint8_t* rxbuf, uint16_t* rxlen){
+
+	(void)txlen;
+	struct i2c_rdwr_ioctl_data data;
+	struct i2c_msg msg;
+
+	memset(&msg, 0, sizeof(msg));
+	msg.addr = txbuf[0] >> 1;
+
+	msg.flags = I2C_M_RD; // read flag
+	msg.len = *rxlen - 1; // 1st byte in addr
+	msg.buf = &rxbuf[1];
+
+	data.msgs = &msg;
+	data.nmsgs = 1;
+
+	int rc;
+	int i = 0;
+
+	while ((rc = ioctl(fd, I2C_RDWR, &data)) < 0 && ++i < I2C_RETRIES_MAX) {
+		msleep(I2C_RETRY_DELAY);
+	}
+	if (rc < 0) {
+		fprintf(stderr, "Error %d: Failed to read %hn bytes from device @%#x\n", errno,
+		      rxlen, msg.addr);
+		return -1;
+	}
+
+	print_buffer((char*)"raw read request response", rxbuf, (size_t)(*rxlen));
+
+	return 0;
+}
+
+int ipmb_write_read(int fd, uint8_t* txbuf, uint16_t txlen, uint8_t* rxbuf, uint16_t* rxlen){
+
+	int status = 0;
+
+	status = ipmb_write(fd, txbuf, txlen);
+	if(status != 0) return status;
+	status = ipmb_read(fd, txbuf, txlen, rxbuf, rxlen);
+
+	return status;
 }
 
 int init_i2c_bus(int bus, struct ipmb_svc *svc)

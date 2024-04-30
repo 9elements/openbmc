@@ -6,26 +6,31 @@ LIC_FILES_CHKSUM = "file://${COREBASE}/meta/files/common-licenses/Apache-2.0;md5
 
 inherit pkgconfig autotools-brokensep
 
-DEPENDS += " libipmi "
-DEPENDS += " libipmb "
 DEPENDS += " libgpiod "
+DEPENDS += " systemd "
+DEPENDS += " sdbusplus "
 
-RDEPENDS:${PN} += " libipmi "
-RDEPENDS:${PN} += " libipmb "
-RDEPENDS:${PN} += " libgpiod "
+#RDEPENDS:${PN} += " libgpiod "
 
 SRC_URI = "\
 file://internal.h \
 file://internal.c \
 file://raw_power.h \
 file://raw_power.c \
-file://gpio.h \
-file://gpio.c \
 file://main.c \
 file://print_buffer.h \
 file://print_buffer.c \
+file://bic.h \
+file://bic.c \
+file://subcmd_power_dbus.cpp \
+file://subcmd_power_dbus.hpp \
 file://Makefile \
 "
+
+#file://raw-power-gpio.h
+#file://raw-power-gpio.c
+
+
 
 S = "${WORKDIR}"
 

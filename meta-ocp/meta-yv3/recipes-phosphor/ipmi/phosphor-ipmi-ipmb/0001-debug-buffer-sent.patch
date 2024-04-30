@@ -1,0 +1,69 @@
+From c4edba9e4fa783c3214dc4e190b092f4dabe00b7 Mon Sep 17 00:00:00 2001
+From: Alexander Hansen <alexander.hansen@9elements.com>
+Date: Fri, 26 Apr 2024 14:11:15 +0200
+Subject: [PATCH] debug buffer sent
+
+---
+ ipmbbridged.cpp | 32 ++++++++++++++++++++++++++++++++
+ 1 file changed, 32 insertions(+)
+
+diff --git a/ipmbbridged.cpp b/ipmbbridged.cpp
+index a6efc7c..2b8f733 100644
+--- a/ipmbbridged.cpp
++++ b/ipmbbridged.cpp
+@@ -715,6 +715,34 @@ void IpmbChannel::addFilter(const uint8_t respNetFn, const uint8_t cmd)
+     }
+ }
+ 
++#include <sstream>
++
++template<typename T >
++std::string int_to_hex(T i){
++
++	char buf[10];
++	sprintf((char*)buf, "0x%x", i);
++	return std::string((char*)buf);
++}
++
++std::string vector_to_string(std::vector<uint8_t>& v){
++
++	std::stringstream ss;
++
++	ss << "buffer (" << v.size() << " bytes): ";
++
++	for(size_t i = 0; i < v.size(); i++){
++
++		if(i != 0) ss << ",";
++		ss << int_to_hex(v[i]);
++	}
++
++	std::string s = ss.str();
++
++	return s;
++}
++
++
+ std::tuple<int, uint8_t, uint8_t, uint8_t, uint8_t, std::vector<uint8_t>>
+     IpmbChannel::requestAdd(boost::asio::yield_context& yield,
+                             std::shared_ptr<IpmbRequest> request)
+@@ -727,6 +755,9 @@ std::tuple<int, uint8_t, uint8_t, uint8_t, uint8_t, std::vector<uint8_t>>
+         return returnStatus(ipmbResponseStatus::error);
+     }
+ 
++    std::string strBuf = vector_to_string(buffer);
++    phosphor::logging::log<phosphor::logging::level::ERR>(strBuf.c_str());
++
+     for (int i = 0; i < ipmbNumberOfTries; i++)
+     {
+         boost::system::error_code ec;
+@@ -746,6 +777,7 @@ std::tuple<int, uint8_t, uint8_t, uint8_t, uint8_t, std::vector<uint8_t>>
+ 
+         if (i2cRetryCnt == ipmbI2cNumberOfRetries)
+         {
++
+             std::string msgToLog =
+                 "requestAdd: Sent to I2C failed after retries."
+                 " busId=" +
+-- 
+2.44.0
+

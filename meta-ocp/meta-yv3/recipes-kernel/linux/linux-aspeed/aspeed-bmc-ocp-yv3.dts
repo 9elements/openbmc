@@ -213,7 +213,7 @@
 };
 
 &i2c0 {
-    // BIC Slot1
+	// BIC Slot1
 	multi-master;
 	bus-frequency = <1000000>;
 	tck-high = <10>;
