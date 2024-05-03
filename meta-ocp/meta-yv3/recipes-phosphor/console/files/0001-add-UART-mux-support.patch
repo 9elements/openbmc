@@ -1,0 +1,414 @@
+From a73fde167f0284ab9f4ab843e8366e69ec9a055b Mon Sep 17 00:00:00 2001
+From: Alexander Hansen <alexander.hansen@9elements.com>
+Date: Thu, 2 May 2024 14:44:01 +0200
+Subject: [PATCH] add UART mux support
+
+(Work in progress) implementation of UART mux support.
+
+Change-Id: I91a4de1962554adf4302a2a59d2b371f492dc21d
+Signed-off-by: Alexander Hansen <alexander.hansen@9elements.com>
+---
+ README.md                                     | 101 ++++++++++++++
+ call-mapper.c                                 |  77 ++++++++++
+ call-mapper.h                                 |   3 +
+ .../server-uart-muxed-console1-example.conf   |   9 ++
+ .../server-uart-muxed-console2-example.conf   |   9 ++
+ console-ctl.c                                 | 132 ++++++++++++++++++
+ meson.build                                   |   8 ++
+ 7 files changed, 339 insertions(+)
+ create mode 100644 call-mapper.c
+ create mode 100644 call-mapper.h
+ create mode 100644 conf/example/muxed-uart/server-uart-muxed-console1-example.conf
+ create mode 100644 conf/example/muxed-uart/server-uart-muxed-console2-example.conf
+ create mode 100644 console-ctl.c
+
+diff --git a/README.md b/README.md
+index 76fd158..b16f5e8 100644
+--- a/README.md
++++ b/README.md
+@@ -60,3 +60,104 @@ portion for the unix domain socket created by the obmc-console-server instance.
+ The server needs to know this because it needs to know what to name the pipe;
+ the client needs to know it as it needs to form the abstract socket name to
+ which to connect.
++
++## Mux Support
++
++In some hardware designs, multiple UARTS may be available behind a Mux, which
++requires obmc-console to select one at a time. The kernel will not be aware of
++this mux and the support can be implemented in userspace.
++
++For example, let's say behind `/dev/ttyS1` there are `UART0` and `UART1`, behind
++a mux. GPIO `UART-MUX-CTL` can be used to select one. Then there will be 2
++obmc-console-server processes, and one of them will be started with `--inactive`
++flag.
++
++They will both receive configuration detailing the gpios to be used to control
++the mux and the values they should have when their `--console-id` is active.
++
++## Mux Support - Mux Control
++
++The utility `obmc-console-ctl` can be used to select the active UART, using the
++`--console-id`.
++
++It can find all the servers implementing 'xyz.openbmc_project.Console.Control'
++dbus interface via object-mapper and find out which device is being used by the
++server with `--console-id` by querying `Device` dbus property.
++
++Then it can disconnect all the servers using the same device.
++
++### Example with `/dev/ttyS1`
++
++```
++$ obmc-console-ctl activate --console-id console-2
++deactivated 'console-1'
++activated 'console-2'
++```
++
++First, obmc-console-ctl uses object-mapper to find all obmc-console-server
++instances via `xyz.openbmc_project.Console.Control` interface.
++
++Then it makes a list of those using the `Device` `/dev/ttyS1`
++
++Then obmc-console-ctl calls dbus method `Activate(false)` on those servers
++(except the one which is gaining connection, in case it's already connected)
++which will cause them to:
++
++1. stop forwarding bytes
++2. print a log message to its clients, if the server was connected before
++
++Then it calls `Activate(true)` on the server gaining connection, which causes it
++to:
++
++1. switch the mux using the gpios
++2. print a log message to its clients, if the server was disconnected before
++3. start forwarding bytes.
++
++## Mux Support - Dbus interface
++
++```
++NAME                                 TYPE      SIGNATURE RESULT/VALUE FLAGS
++xyz.openbmc_project.Console.Control  interface -         -            -
++.Activate                            method    b         i            -
++.Device                              property  s         /dev/ttyS1   -
++```
++
++## Mux Support - Example Diagram with 2 server instances
++
++```
++                   UART2 -------+
++                   UART1 -----+ |
++                              | |
++                              | |
++             +------------+  +------+
++             | /dev/ttyS1 |--| Mux  |
++             +--+---+-----+  +-+----+
++                |   |          |
+++---------+-----+   |          | gpio
++|console-1|---------|----------+
+++---------+         |          |
+++---------+---------+          |
++|console-2|--------------------+
+++---------+
++```
++
++## Sample Development Setup
++
++For developing obmc-console, we can use pseudo terminals (pty's) in Linux.
++
++The socat command will output names of 2 pty's, one of which is the master and
++the other one is the slave. The master pty can be used to emulate a UART.
++
++```
++$ socat -d -d pty,raw,echo=0 pty,raw,echo=0
++N PTY is /dev/pts/1
++N PTY is /dev/pts/2
++
++$ obmc-console-server --console-id dev /dev/pts/2
++
++$ obmc-console-client -i dev
++
++# this message should appear for the client
++$ echo "hi" > /dev/pts/1
++
++```
+diff --git a/call-mapper.c b/call-mapper.c
+new file mode 100644
+index 0000000..b1a2f73
+--- /dev/null
++++ b/call-mapper.c
+@@ -0,0 +1,77 @@
++#include <stdio.h>
++#include <stdlib.h>
++#include <systemd/sd-bus.h>
++
++#include "call-mapper.h"
++
++
++int call_objectmapper_getsubtree(char* dbus_interface) {
++
++	printf("DEBUG: calling objectmapper\n");
++
++    sd_bus_error error = SD_BUS_ERROR_NULL;
++    sd_bus_message *response = NULL;
++    sd_bus *bus = NULL;
++    int ret;
++
++    // Open the system bus
++    ret = sd_bus_open_system(&bus);
++    if (ret < 0) {
++        fprintf(stderr, "Failed to connect to system bus: %s\n", strerror(-ret));
++        return -1;
++    }
++
++    char *interfaces[] = {dbus_interface, NULL};
++
++    // Call the GetSubTree method
++    ret = sd_bus_call_method(bus,
++                             "xyz.openbmc_project.ObjectMapper", // Service to connect to
++                             "/xyz/openbmc_project/object_mapper", // Path
++                             "xyz.openbmc_project.ObjectMapper", // Interface
++                             "GetSubTree", // Method name
++                             &error, // sd_bus_error
++                             &response, // Response message
++                             "sias", // Input signature
++                             "/", // Object path
++                             0, // Depth
++                             interfaces // Interfaces to filter by`
++                            );
++    if (ret < 0) {
++        fprintf(stderr, "Failed to issue method call: %s\n", error.message);
++        sd_bus_error_free(&error);
++        sd_bus_unref(bus);
++        return -1;
++    }
++
++    printf("DEBUG: call completed, parsing response\n");
++
++    // Parse the response message
++    ret = sd_bus_message_enter_container(response, 'a', "(sa{sv}as)"); // Array of tuples
++    if (ret < 0) {
++        fprintf(stderr, "Failed to enter container: %s\n", strerror(-ret));
++        sd_bus_message_unref(response);
++        sd_bus_unref(bus);
++        return -1;
++    }
++
++    while ((ret = sd_bus_message_enter_container(response, 'r', "sa{sv}as")) > 0) {
++        const char *path;
++        ret = sd_bus_message_read(response, "s", &path);
++        if (ret < 0) {
++            fprintf(stderr, "Failed to read the path: %s\n", strerror(-ret));
++            break;
++        }
++
++        printf("Object path: %s implements xyz.openbmc_project.Console.Control\n", path);
++
++        // Skip the rest of the container
++        sd_bus_message_skip(response, "a{sv}as");
++        sd_bus_message_exit_container(response);
++    }
++
++    sd_bus_message_exit_container(response);
++    sd_bus_message_unref(response);
++    sd_bus_unref(bus);
++
++    return 0;
++}
+diff --git a/call-mapper.h b/call-mapper.h
+new file mode 100644
+index 0000000..6f048d4
+--- /dev/null
++++ b/call-mapper.h
+@@ -0,0 +1,3 @@
++#pragma once
++
++int call_objectmapper_getsubtree(char* dbus_interface);
+diff --git a/conf/example/muxed-uart/server-uart-muxed-console1-example.conf b/conf/example/muxed-uart/server-uart-muxed-console1-example.conf
+new file mode 100644
+index 0000000..da3db91
+--- /dev/null
++++ b/conf/example/muxed-uart/server-uart-muxed-console1-example.conf
+@@ -0,0 +1,9 @@
++lpc-address = 0x3f8
++sirq = 4
++upstream-tty = ttyVUART0
++local-tty = ttyS0
++local-tty-baud = 115200
++console-id = console-1
++mux-gpio-1 = "MUX_CTL"
++mux-gpio-1-value = 0
++inactive = false
+diff --git a/conf/example/muxed-uart/server-uart-muxed-console2-example.conf b/conf/example/muxed-uart/server-uart-muxed-console2-example.conf
+new file mode 100644
+index 0000000..ddb0ae0
+--- /dev/null
++++ b/conf/example/muxed-uart/server-uart-muxed-console2-example.conf
+@@ -0,0 +1,9 @@
++lpc-address = 0x3f8
++sirq = 4
++upstream-tty = ttyVUART0
++local-tty = ttyS0
++local-tty-baud = 115200
++console-id = console-2
++mux-gpio-1 = "MUX_CTL"
++mux-gpio-1-value = 1
++inactive = true
+\ No newline at end of file
+diff --git a/console-ctl.c b/console-ctl.c
+new file mode 100644
+index 0000000..d458eff
+--- /dev/null
++++ b/console-ctl.c
+@@ -0,0 +1,132 @@
++#include <err.h>
++#include <getopt.h>
++#include <stdbool.h>
++#include <stdio.h>
++#include <stdlib.h>
++#include <systemd/sd-bus.h>
++
++#include "call-mapper.h"
++
++static const struct option options[] = {
++	{ "activate", no_argument, 0, 'a' },
++	{ "console-id", required_argument, 0, 'i' },
++	{ 0, 0, 0, 0 },
++};
++
++static void usage(const char *progname)
++{
++	fprintf(stderr,
++		"usage: %s --activate --console-id <NAME> \n"
++		"\n"
++		"Options:\n"
++		"  --activate \tActivate the console specified by --console-id\n"
++		"  --console-id <NAME>\tSelect a console\n"
++		"",
++		progname);
++}
++
++static int call_activate(char* dbus_name, char* dbus_path, bool arg){
++
++	printf("DEBUG: call_activate\n");
++	
++	char* dbus_interface = "xyz.openbmc_project.Console.Control";
++	
++	struct sd_bus *bus;
++	int r;
++
++	r = sd_bus_default_system(&bus);
++	if (r < 0) {
++		warnx("Failed to connect to system bus: %s", strerror(-r));
++		return EXIT_FAILURE;
++	}
++
++	sd_bus_error err;
++	sd_bus_message *reply = NULL;
++	int status = sd_bus_call_method(bus, dbus_name, dbus_path, dbus_interface, 
++		"Activate", &err, &reply, "b", arg);
++
++	if(status < 0){
++		warnx("dbus call 'Activate(%d)' failed", arg);
++		return EXIT_FAILURE;
++	}
++
++	int reply_status;
++	status = sd_bus_message_read(reply, "i", &reply_status);
++
++	if(status < 0){
++		warnx("dbus call 'Activate(%d)': could not read from response", arg);
++		return EXIT_FAILURE;
++	}
++
++	printf("debug: reply status: %d\n", reply_status);
++
++	return reply_status;
++}
++
++static int console_ctl(char* console_id){
++
++	const size_t dbus_obj_path_len = 1024;
++	char dbus_name_active_console[dbus_obj_path_len];
++	char dbus_path_active_console[dbus_obj_path_len];
++	char* dbus_interface = "xyz.openbmc_project.Console.Control";
++	
++	struct sd_bus *bus;
++	int r;
++	sprintf(dbus_name_active_console, "xyz.openbmc_project.Console.%s", console_id);
++	sprintf(dbus_path_active_console, "/xyz/openbmc_project/console/%s", console_id);
++
++	r = sd_bus_default_system(&bus);
++	if (r < 0) {
++		warnx("Failed to connect to system bus: %s", strerror(-r));
++		return EXIT_FAILURE;
++	}
++
++	//TODO: get the 'Device' property of that dbus id.
++
++	//TODO: query all dbus service with that 'Device' via objectmapper
++	call_objectmapper_getsubtree(dbus_interface);
++
++	//TODO: call Activate(false) on all these dbus objects
++
++	//TODO: call Activate(true) on our dbus object
++	int status;
++
++	status = call_activate(dbus_name_active_console, dbus_path_active_console, true);
++	
++	return status;
++}
++
++int main(int argc, char **argv)
++{
++	char *console_id = NULL;
++	bool activate = false;
++	for (;;) {
++		int c;
++		int idx;
++
++		c = getopt_long(argc, argv, "i:", options, &idx);
++		if (c == -1) {
++			break;
++		}
++
++		switch (c) {
++		case 'a':
++			activate = true;
++			break;
++		case 'i':
++			console_id = optarg;
++			break;
++		case 'h':
++		case '?':
++			usage(argv[0]);
++			return EXIT_SUCCESS;
++		}
++	}
++
++	if(!activate){
++		usage(argv[0]);
++		return EXIT_FAILURE;
++	}
++
++	return console_ctl(console_id);
++}
+diff --git a/meson.build b/meson.build
+index 06a7200..f946aea 100644
+--- a/meson.build
++++ b/meson.build
+@@ -83,4 +83,12 @@ executable('obmc-console-client',
+            ],
+            install: true)
+ 
++executable('obmc-console-ctl',
++          'console-ctl.c',
++          'call-mapper.c',
++          dependencies: [
++             dependency('libsystemd'),
++          ],
++          install: true)
++
+ subdir('test')
+-- 
+2.44.0
+

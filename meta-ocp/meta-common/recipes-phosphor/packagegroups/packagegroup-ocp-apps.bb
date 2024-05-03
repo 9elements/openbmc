@@ -34,6 +34,7 @@ SUMMARY:${PN}-system = "OCP System"
 RDEPENDS:${PN}-system = " \
         entity-manager \
         dbus-sensors \
+        socat \
         "
 
 SUMMARY:${PN}-fans = "OCP Fans"
