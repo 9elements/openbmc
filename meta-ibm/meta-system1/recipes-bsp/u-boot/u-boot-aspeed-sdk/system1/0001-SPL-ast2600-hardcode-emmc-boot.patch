@@ -5,6 +5,8 @@ Subject: [PATCH] SPL: ast2600: hardcode emmc boot
 
 To workaround OTPs not reflecting in SCU register.
 
+Upstream-Status: Pending
+
 Signed-off-by: Eddie James <eajames@linux.ibm.com>
 ---
  arch/arm/mach-aspeed/ast2600/spl.c         | 2 +-
