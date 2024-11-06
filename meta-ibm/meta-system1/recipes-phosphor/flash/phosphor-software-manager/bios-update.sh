@@ -68,7 +68,15 @@ me_reset() {
     busctl call "$IPMB_OBJ" "$IPMB_PATH" "$IPMB_INTF" sendRequest yyyyay "${ME_CMD_RESET[@]}"
 }
 
-# Enable FM_FLASH_SEC_OVRD
+reset_and_cleanup_env() {
+    echo "Reset ME and disable GPIO"
+    me_reset
+    sleep 5
+    # Disable flash-write-override
+    gpioset "${gpiochip}" "${gpio_line}=0"
+}
+
+# Enable flash-write-override
 gpio_info="$(gpiofind flash-write-override)"
 read -r gpiochip gpio_line <<< "$gpio_info"
 gpioset "${gpiochip}" "${gpio_line}=1"
