@@ -1,7 +1,7 @@
-From 7af0a8c53fe21a652e2208bd880374c85134133a Mon Sep 17 00:00:00 2001
+From 6506f28f5b491dc4c3ff2a8087930ae93c82d676 Mon Sep 17 00:00:00 2001
 From: Asmitha Karunanithi <asmitk01@in.ibm.com>
 Date: Fri, 7 Feb 2025 11:31:13 -0600
-Subject: [PATCH] Add PCIeSlots Redfish Endpoint for Chassis
+Subject: [PATCH 1/2] Add PCIeSlots Redfish Endpoint for Chassis
 
 This commit introduces support for retrieving PCIe slot information
 from the inventory and exposing it via the /Chassis/<id>/PCIeSlots

@@ -1,0 +1,241 @@
+From ea44c55675864e1415634e90c5adcef2cd698a44 Mon Sep 17 00:00:00 2001
+From: Asmitha Karunanithi <asmitk01@in.ibm.com>
+Date: Tue, 25 Feb 2025 11:58:08 -0600
+Subject: [PATCH 2/2] Refactor DHCPv4 handling in Ethernet interface
+
+This change ensures handleDHCPPatch is called only when DHCPv4 or DHCPv6
+is present. Currently, it runs even when absent in the Redfish request,
+causing the IPv4 default gateway to be set to null. This results in the
+gateway being lost and the network going down.
+
+Upstream-Status: Pending
+
+Tested By:
+
+* Enable DHCPv4 when a static IP is configured
+'''
+PATCH -D patch.txt -d '{"DHCPv4" : {"DHCPEnabled": true}}' https://${bmc}/redfish/v1/Managers/bmc/EthernetInterfaces/eth0
+'''
+
+* Configure Static IP or did a patch operation of any other property
+  other than DHCPv4/v6
+
+Signed-off-by: Asmitha Karunanithi <asmitk01@in.ibm.com>
+---
+ redfish-core/lib/ethernet.hpp | 136 +++++++++++++++++++---------------
+ 1 file changed, 75 insertions(+), 61 deletions(-)
+
+diff --git a/redfish-core/lib/ethernet.hpp b/redfish-core/lib/ethernet.hpp
+index 53e21c530c..13b2dc8e86 100644
+--- a/redfish-core/lib/ethernet.hpp
++++ b/redfish-core/lib/ethernet.hpp
+@@ -2351,83 +2351,108 @@ inline void requestEthernetInterfacesRoutes(App& app)
+                 std::optional<std::vector<std::string>> staticNameServers;
+                 std::optional<bool> ipv6AutoConfigEnabled;
+                 std::optional<bool> interfaceEnabled;
++                std::optional<bool> ipv6Enabled;
+                 std::optional<size_t> mtuSize;
++
++                std::optional<nlohmann::json::object_t> dhcpv4;
++                std::optional<nlohmann::json::object_t> dhcpv6;
+                 DHCPParameters v4dhcpParms;
+                 DHCPParameters v6dhcpParms;
+ 
+-                if (!json_util::readJsonPatch(                             //
+-                        req, asyncResp->res,                               //
+-                        "DHCPv4/DHCPEnabled", v4dhcpParms.dhcpv4Enabled,   //
+-                        "DHCPv4/UseDNSServers", v4dhcpParms.useDnsServers, //
+-                        "DHCPv4/UseDomainName", v4dhcpParms.useDomainName, //
+-                        "DHCPv4/UseNTPServers", v4dhcpParms.useNtpServers, //
+-                        "DHCPv6/OperatingMode",
+-                        v6dhcpParms.dhcpv6OperatingMode,                   //
+-                        "DHCPv6/UseDNSServers", v6dhcpParms.useDnsServers, //
+-                        "DHCPv6/UseDomainName", v6dhcpParms.useDomainName, //
+-                        "DHCPv6/UseNTPServers", v6dhcpParms.useNtpServers, //
+-                        "FQDN", fqdn,                                      //
+-                        "HostName", hostname,                              //
+-                        "InterfaceEnabled", interfaceEnabled,              //
+-                        "IPv4StaticAddresses", ipv4StaticAddresses,        //
+-                        "IPv6DefaultGateway", ipv6DefaultGateway,          //
+-                        "IPv6StaticAddresses", ipv6StaticAddresses,        //
+-                        "IPv6StaticDefaultGateways",
+-                        ipv6StaticDefaultGateways,                         //
+-                        "InterfaceEnabled", interfaceEnabled,              //
+-                        "MACAddress", macAddress,                          //
+-                        "MTUSize", mtuSize,                                //
++                if (!json_util::readJsonPatch(
++                        req, asyncResp->res, 
++                        "DHCPv4", dhcpv4,
++                        "DHCPv6", dhcpv6, 
++                        "FQDN", fqdn, 
++                        "HostName", hostname,
++                        "InterfaceEnabled", interfaceEnabled,
++                        "IPv4StaticAddresses", ipv4StaticAddresses,
++                        "IPv6Enabled", ipv6Enabled,
++                        "IPv6StaticAddresses", ipv6StaticAddresses,
++                        "IPv6StaticDefaultGateways", ipv6StaticDefaultGateways,
++                        "MACAddress", macAddress, 
++                        "MTUSize", mtuSize,
+                         "StatelessAddressAutoConfig/IPv6AutoConfigEnabled",
+-                        ipv6AutoConfigEnabled,                             //
+-                        "StaticNameServers", staticNameServers             //
+-                        ))
++                        ipv6AutoConfigEnabled, 
++                        "StaticNameServers", staticNameServers))
+                 {
+                     return;
+                 }
+ 
+-                // Get single eth interface data, and call the below callback
+-                // for JSON preparation
++                if (dhcpv4)
++                {
++                    // Use readJsonObject for object_t types
++                    if (!json_util::readJsonObject(*dhcpv4, asyncResp->res, 
++                                            "DHCPEnabled", v4dhcpParms.dhcpv4Enabled, 
++                                            "UseDNSServers", v4dhcpParms.useDnsServers, 
++                                            "UseNTPServers", v4dhcpParms.useNtpServers, 
++                                            "UseDomainName", v4dhcpParms.useDomainName))
++                    {
++                        return;
++                    }
++                }
++                if (dhcpv6)
++                {
++                    if (!json_util::readJsonObject(*dhcpv6, asyncResp->res, 
++                                            "OperatingMode", v6dhcpParms.dhcpv6OperatingMode,
++                                            "UseDNSServers", v6dhcpParms.useDnsServers,
++                                            "UseNTPServers", v6dhcpParms.useNtpServers,
++                                            "UseDomainName", v6dhcpParms.useDomainName))
++                    {
++                        return;
++                    }
++                }
++
+                 getEthernetIfaceData(
+                     ifaceId,
+                     [asyncResp, ifaceId, hostname = std::move(hostname),
+                      fqdn = std::move(fqdn), macAddress = std::move(macAddress),
+                      ipv4StaticAddresses = std::move(ipv4StaticAddresses),
+-                     ipv6DefaultGateway = std::move(ipv6DefaultGateway),
+                      ipv6StaticAddresses = std::move(ipv6StaticAddresses),
+-                     ipv6StaticDefaultGateway =
+-                         std::move(ipv6StaticDefaultGateways),
++                     ipv6Enabled,
++                     ipv6StaticDefaultGateway = std::move(ipv6StaticDefaultGateways),
+                      staticNameServers = std::move(staticNameServers), mtuSize,
+-                     ipv6AutoConfigEnabled,
+-                     v4dhcpParms = std::move(v4dhcpParms),
++                     ipv6AutoConfigEnabled, dhcpv4 = std::move(dhcpv4),
++                     dhcpv6 = std::move(dhcpv6), v4dhcpParms = std::move(v4dhcpParms),
+                      v6dhcpParms = std::move(v6dhcpParms), interfaceEnabled](
+                         const bool success,
+                         const EthernetInterfaceData& ethData,
+                         const std::vector<IPv4AddressData>& ipv4Data,
+                         const std::vector<IPv6AddressData>& ipv6Data,
+-                        const std::vector<StaticGatewayData>&
+-                            ipv6GatewayData) mutable {
++                        const std::vector<StaticGatewayData>& ipv6GatewayData) mutable {
+                         if (!success)
+                         {
+-                            // ... otherwise return error
+-                            // TODO(Pawel)consider distinguish between non
+-                            // existing object, and other errors
+-                            messages::resourceNotFound(
+-                                asyncResp->res, "EthernetInterface", ifaceId);
++                            messages::resourceNotFound(asyncResp->res,
++                                                       "EthernetInterface", ifaceId);
+                             return;
+                         }
+ 
+-                        handleDHCPPatch(ifaceId, ethData, v4dhcpParms,
+-                                        v6dhcpParms, asyncResp);
++                        if (dhcpv4 || dhcpv6)
++                        {
++                            handleDHCPPatch(ifaceId, ethData, v4dhcpParms,
++                                            v6dhcpParms, asyncResp);
++                        }
+ 
+                         if (hostname)
+                         {
+                             handleHostnamePatch(*hostname, asyncResp);
+                         }
+ 
++                        if (ipv6Enabled)
++                        {
++                            // Per Schema: If false, interface shall not contain assigned 
++                            // IPv6 addresses or initiate DHCPv6.
++                            setDbusProperty(
++                                asyncResp, "IPv6Enabled", "xyz.openbmc_project.Network",
++                                sdbusplus::message::object_path("/xyz/openbmc_project/network") / ifaceId,
++                                "xyz.openbmc_project.Network.EthernetInterface",
++                                "IPv6ControlEnabled", *ipv6Enabled);
++                        }
++
+                         if (ipv6AutoConfigEnabled)
+                         {
+-                            handleSLAACAutoConfigPatch(
+-                                ifaceId, *ipv6AutoConfigEnabled, asyncResp);
++                            handleSLAACAutoConfigPatch(ifaceId, *ipv6AutoConfigEnabled,
++                                                       asyncResp);
+                         }
+ 
+                         if (fqdn)
+@@ -2437,8 +2462,7 @@ inline void requestEthernetInterfacesRoutes(App& app)
+ 
+                         if (macAddress)
+                         {
+-                            handleMACAddressPatch(ifaceId, *macAddress,
+-                                                  asyncResp);
++                            handleMACAddressPatch(ifaceId, *macAddress, asyncResp);
+                         }
+ 
+                         if (ipv4StaticAddresses)
+@@ -2449,28 +2473,20 @@ inline void requestEthernetInterfacesRoutes(App& app)
+ 
+                         if (staticNameServers)
+                         {
+-                            handleStaticNameServersPatch(
+-                                ifaceId, *staticNameServers, asyncResp);
+-                        }
+-
+-                        if (ipv6DefaultGateway)
+-                        {
+-                            messages::propertyNotWritable(asyncResp->res,
+-                                                          "IPv6DefaultGateway");
++                            handleStaticNameServersPatch(ifaceId, *staticNameServers,
++                                                         asyncResp);
+                         }
+ 
+                         if (ipv6StaticAddresses)
+                         {
+-                            handleIPv6StaticAddressesPatch(ifaceId,
+-                                                           *ipv6StaticAddresses,
++                            handleIPv6StaticAddressesPatch(ifaceId, *ipv6StaticAddresses,
+                                                            ipv6Data, asyncResp);
+                         }
+ 
+                         if (ipv6StaticDefaultGateway)
+                         {
+-                            handleIPv6DefaultGateway(
+-                                ifaceId, *ipv6StaticDefaultGateway,
+-                                ipv6GatewayData, asyncResp);
++                            handleIPv6DefaultGateway(ifaceId, *ipv6StaticDefaultGateway,
++                                                     ipv6GatewayData, asyncResp);
+                         }
+ 
+                         if (interfaceEnabled)
+@@ -2478,9 +2494,7 @@ inline void requestEthernetInterfacesRoutes(App& app)
+                             setDbusProperty(
+                                 asyncResp, "InterfaceEnabled",
+                                 "xyz.openbmc_project.Network",
+-                                sdbusplus::message::object_path(
+-                                    "/xyz/openbmc_project/network") /
+-                                    ifaceId,
++                                sdbusplus::message::object_path("/xyz/openbmc_project/network") / ifaceId,
+                                 "xyz.openbmc_project.Network.EthernetInterface",
+                                 "NICEnabled", *interfaceEnabled);
+                         }
+-- 
+2.43.0
+
