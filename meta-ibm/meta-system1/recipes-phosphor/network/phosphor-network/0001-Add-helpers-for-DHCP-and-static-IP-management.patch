@@ -17,7 +17,7 @@ IP configuration:
       DHCP is disabled before applying the static configuration to the
       network.
 
-Upstream-Status: Embedded-Project-Specific
+Upstream-Status: Pending
 
 Tested By:
 
