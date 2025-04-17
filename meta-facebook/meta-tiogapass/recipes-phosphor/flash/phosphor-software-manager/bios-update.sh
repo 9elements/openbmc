@@ -13,7 +13,7 @@ IPMB_CALL="sendRequest yyyyay"
 ME_CMD_RECOVER="1 0x2e 0 0xdf 4 0x57 0x01 0x00 0x01"
 ME_CMD_RESET="1 6 0 0x2 0"
 SPI_DEV="1e630000.spi"
-SPI_PATH="/sys/bus/platform/drivers/aspeed-smc"
+SPI_PATH="/sys/bus/platform/drivers/spi-aspeed-smc"
 
 set_gpio_to_bmc()
 {
@@ -84,7 +84,7 @@ echo "Set GPIO $GPIO to access SPI flash from BMC used by host"
 set_gpio_to_bmc
 
 #Bind spi driver to access flash
-echo "bind aspeed-smc spi driver"
+echo "bind smi-aspeed-smc spi driver"
 echo -n $SPI_DEV > $SPI_PATH/bind
 sleep 1
 
@@ -114,7 +114,7 @@ fi
 
 #Unbind spi driver
 sleep 1
-echo "Unbind aspeed-smc spi driver"
+echo "Unbind smi-aspeed-smc spi driver"
 echo -n $SPI_DEV > $SPI_PATH/unbind
 sleep 10
 
