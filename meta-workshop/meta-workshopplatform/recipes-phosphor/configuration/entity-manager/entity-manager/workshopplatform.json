@@ -1,0 +1,13 @@
+{
+  "Exposes": [],
+  "Name": "Workshop Custom Board",
+  "Probe": "TRUE",
+  "Type": "Chassis",
+  "xyz.openbmc_project.Inventory.Decorator.Asset": {
+    "Manufacturer": "Workshop Labs",
+    "Model": "WS-2025",
+    "PartNumber": "WS-2025-PART",
+    "SerialNumber": "WS20250001"
+  },
+  "xyz.openbmc_project.Inventory.Item.Chassis": {}
+}
