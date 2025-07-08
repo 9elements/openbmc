@@ -1,0 +1,11 @@
+[Unit]
+Description=Workshop Hello Service
+After=phosphor-ipmi-host.service
+
+[Service]
+Type=oneshot
+ExecStart=/usr/bin/workshop-hello.sh
+RemainAfterExit=yes
+
+[Install]
+WantedBy=multi-user.target
