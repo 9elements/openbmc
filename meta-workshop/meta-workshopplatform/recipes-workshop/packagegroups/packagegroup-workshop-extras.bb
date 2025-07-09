@@ -11,4 +11,5 @@ RDEPENDS:${PN} = " \
     entity-manager \
     hello-service \
     hello-cpp \
+    sensor-history \
 "
