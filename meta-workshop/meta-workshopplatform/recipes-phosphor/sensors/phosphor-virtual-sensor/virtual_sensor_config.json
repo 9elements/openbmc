@@ -1,0 +1,66 @@
+[
+  {
+    "Desc": {
+      "Config": "D-Bus"
+    }
+  },
+  {
+    "Desc": {
+      "Name": "workshop_temp",
+      "SensorType": "temperature"
+    },
+    "Threshold": {
+      "CriticalHigh": 80,
+      "CriticalLow": 0,
+      "WarningHigh": 70,
+      "WarningLow": 5
+    },
+    "Associations": [
+      [
+        "chassis",
+        "all_sensors",
+        "/xyz/openbmc_project/inventory/system/chassis/workshop"
+      ],
+      [
+        "inventory",
+        "sensors",
+        "/xyz/openbmc_project/inventory/system/chassis/workshop"
+      ]
+    ],
+    "Params": {
+      "DbusParam": [
+        {
+          "ParamName": "P1",
+          "Desc": {
+            "Name": "ambient_temp",
+            "SensorType": "temperature"
+          }
+        }
+      ]
+    },
+    "Expression": "35 + 10 * sin(elapsed_time / 3600)"
+  },
+  {
+    "Desc": {
+      "Name": "workshop_power",
+      "SensorType": "power"
+    },
+    "Threshold": {
+      "CriticalHigh": 500
+    },
+    "Associations": [
+      [
+        "chassis",
+        "all_sensors",
+        "/xyz/openbmc_project/inventory/system/chassis/workshop"
+      ],
+      [
+        "inventory",
+        "sensors",
+        "/xyz/openbmc_project/inventory/system/chassis/workshop"
+      ]
+    ],
+    "Params": {},
+    "Expression": "250 + 50 * sin(elapsed_time / 1800)"
+  }
+]
