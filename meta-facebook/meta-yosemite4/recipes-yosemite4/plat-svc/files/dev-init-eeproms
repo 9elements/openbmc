@@ -1,0 +1,14 @@
+#!/bin/bash
+
+# initialize yosemite4 board and chassis eeproms
+
+addr_enclosure="0x51"
+addr_board="0x54"
+addr_chassis="0x55"
+
+echo "24c32 $addr_enclosure" > /sys/bus/i2c/devices/i2c-1/new_device
+
+for i in {1..8}; do
+    echo "24c32 $addr_board" > /sys/bus/i2c/devices/i2c-$i/new_device
+    echo "24c32 $addr_chassis" > /sys/bus/i2c/devices/i2c-$i/new_device
+done

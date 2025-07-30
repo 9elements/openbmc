@@ -1,0 +1,11 @@
+[Unit]
+Description=Initialize Yosemite4 board, chassis, enclosure eeproms
+Before=xyz.openbmc_project.FruDevice.service
+
+[Service]
+Type=oneshot
+ExecStart=/usr/libexec/dev-init-eeproms
+SyslogIdentifier=Yosemite4 Init Eeproms
+
+[Install]
+WantedBy=multi-user.target
