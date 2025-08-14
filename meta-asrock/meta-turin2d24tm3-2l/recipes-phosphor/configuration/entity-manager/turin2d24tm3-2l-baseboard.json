@@ -1,0 +1,763 @@
+{
+    "Exposes": [
+        {
+            "Name": "Fan 1 connector",
+            "Pwm": 0,
+            "Tachs": [0, 1],
+            "Type": "FanConnector"
+        },
+        {
+            "Name": "Fan 2 connector",
+            "Pwm": 1,
+            "Tachs": [2, 3],
+            "Type": "FanConnector"
+        },
+        {
+            "Name": "Fan 3 connector",
+            "Pwm": 2,
+            "Tachs": [4, 5],
+            "Type": "FanConnector"
+        },
+        {
+            "Name": "Fan 4 connector",
+            "Pwm": 3,
+            "Tachs": [6, 7],
+            "Type": "FanConnector"
+        },
+        {
+            "Name": "Fan 5 connector",
+            "Pwm": 4,
+            "Tachs": [8, 9],
+            "Type": "FanConnector"
+        },
+        {
+            "Name": "Fan 6 connector",
+            "Pwm": 5,
+            "Tachs": [10, 11],
+            "Type": "FanConnector"
+        },
+        {
+            "Name": "Fan 7 connector",
+            "Pwm": 6,
+            "Tachs": [12, 13],
+            "Type": "FanConnector"
+        },
+        {
+            "Name": "Fan 8 connector",
+            "Pwm": 7,
+            "Tachs": [14, 15],
+            "Type": "FanConnector"
+        },
+        {
+            "Address": "0x4C",
+            "Bus": 2,
+            "Name": "CPU0",
+            "Thresholds": [
+                {
+                    "Direction": "greater than",
+                    "Name": "upper critical",
+                    "Severity": 1,
+                    "Value": 95
+                },
+                {
+                    "Direction": "greater than",
+                    "Name": "upper non critical",
+                    "Severity": 0,
+                    "Value": 80
+                },
+                {
+                    "Direction": "less than",
+                    "Name": "lower non critical",
+                    "Severity": 0,
+                    "Value": 5
+                },
+                {
+                    "Direction": "less than",
+                    "Name": "lower critical",
+                    "Severity": 1,
+                    "Value": 0
+                }
+            ],
+            "Type": "SBTSI"
+        },
+        {
+            "Address": "0x48",
+            "Bus": 3,
+            "Name": "CPU1",
+            "Thresholds": [
+                {
+                    "Direction": "greater than",
+                    "Name": "upper critical",
+                    "Severity": 1,
+                    "Value": 95
+                },
+                {
+                    "Direction": "greater than",
+                    "Name": "upper non critical",
+                    "Severity": 0,
+                    "Value": 80
+                },
+                {
+                    "Direction": "less than",
+                    "Name": "lower non critical",
+                    "Severity": 0,
+                    "Value": 5
+                },
+                {
+                    "Direction": "less than",
+                    "Name": "lower critical",
+                    "Severity": 1,
+                    "Value": 0
+                }
+            ],
+            "Type": "SBTSI"
+        },
+        {
+            "Address": "0x4C",
+            "Bus": 7,
+            "Name": "MB1_Temp",
+            "Thresholds": [
+                {
+                    "Direction": "greater than",
+                    "Name": "upper critical",
+                    "Severity": 1,
+                    "Value": 50
+                }
+            ],
+            "Type": "W83773G"
+        },
+        {
+            "Address": "0x4C",
+            "Bus": 11,
+            "Name": "NIC_Temp",
+            "Thresholds": [
+                {
+                    "Direction": "greater than",
+                    "Name": "upper critical",
+                    "Severity": 1,
+                    "Value": 85
+                },
+                {
+                    "Direction": "greater than",
+                    "Name": "upper non critical",
+                    "Severity": 0,
+                    "Value": 75
+                },
+                {
+                    "Direction": "less than",
+                    "Name": "lower non critical",
+                    "Severity": 0,
+                    "Value": 5
+                },
+                {
+                    "Direction": "less than",
+                    "Name": "lower critical",
+                    "Severity": 1,
+                    "Value": 0
+                }
+            ],
+            "Type": "W83773G"
+        },
+        {
+            "Index": 0,
+            "Name": "VOLT_3VSB",
+            "ScaleFactor": 1.0,
+            "Thresholds": [
+                {
+                    "Direction": "greater than",
+                    "Name": "upper critical",
+                    "Severity": 1,
+                    "Value": 3.88
+                },
+                {
+                    "Direction": "greater than",
+                    "Name": "upper non critical",
+                    "Severity": 0,
+                    "Value": 3.72
+                },
+                {
+                    "Direction": "less than",
+                    "Name": "lower non critical",
+                    "Severity": 0,
+                    "Value": 3.04
+                },
+                {
+                    "Direction": "less than",
+                    "Name": "lower critical",
+                    "Severity": 1,
+                    "Value": 2.86
+                }
+            ],
+            "Type": "ADC"
+        },
+        {
+            "Index": 1,
+            "Name": "VOLT_5VSB",
+            "ScaleFactor": 1.0,
+            "Thresholds": [
+                {
+                    "Direction": "greater than",
+                    "Name": "upper critical",
+                    "Severity": 1,
+                    "Value": 5.76
+                },
+                {
+                    "Direction": "greater than",
+                    "Name": "upper non critical",
+                    "Severity": 0,
+                    "Value": 5.49
+                },
+                {
+                    "Direction": "less than",
+                    "Name": "lower non critical",
+                    "Severity": 0,
+                    "Value": 4.5
+                },
+                {
+                    "Direction": "less than",
+                    "Name": "lower critical",
+                    "Severity": 1,
+                    "Value": 4.26
+                }
+            ],
+            "Type": "ADC"
+        },
+        {
+            "Index": 2,
+            "Name": "VOLT_P0_VCORE0",
+            "ScaleFactor": 1.0,
+            "Thresholds": [
+                {
+                    "Direction": "greater than",
+                    "Name": "upper critical",
+                    "Severity": 1,
+                    "Value": 1.73
+                },
+                {
+                    "Direction": "greater than",
+                    "Name": "upper non critical",
+                    "Severity": 0,
+                    "Value": 1.65
+                }
+            ],
+            "Type": "ADC"
+        },
+        {
+            "Index": 3,
+            "Name": "VOLT_P0_VCORE1",
+            "ScaleFactor": 1.0,
+            "Thresholds": [
+                {
+                    "Direction": "greater than",
+                    "Name": "upper critical",
+                    "Severity": 1,
+                    "Value": 1.73
+                },
+                {
+                    "Direction": "greater than",
+                    "Name": "upper non critical",
+                    "Severity": 0,
+                    "Value": 1.65
+                }
+            ],
+            "Type": "ADC"
+        },
+        {
+            "Index": 4,
+            "Name": "VOLT_P0_VSOC",
+            "ScaleFactor": 1.0,
+            "Thresholds": [
+                {
+                    "Direction": "greater than",
+                    "Name": "upper critical",
+                    "Severity": 1,
+                    "Value": 1.38
+                },
+                {
+                    "Direction": "greater than",
+                    "Name": "upper non critical",
+                    "Severity": 0,
+                    "Value": 1.32
+                },
+                {
+                    "Direction": "less than",
+                    "Name": "lower non critical",
+                    "Severity": 0,
+                    "Value": 0.68
+                },
+                {
+                    "Direction": "less than",
+                    "Name": "lower critical",
+                    "Severity": 1,
+                    "Value": 0.64
+                }
+            ],
+            "Type": "ADC"
+        },
+        {
+            "Index": 5,
+            "Name": "VOLT_P0_VDD_18",
+            "ScaleFactor": 1.0,
+            "Thresholds": [
+                {
+                    "Direction": "greater than",
+                    "Name": "upper critical",
+                    "Severity": 1,
+                    "Value": 2.07
+                },
+                {
+                    "Direction": "greater than",
+                    "Name": "upper non critical",
+                    "Severity": 0,
+                    "Value": 1.98
+                },
+                {
+                    "Direction": "less than",
+                    "Name": "lower non critical",
+                    "Severity": 0,
+                    "Value": 1.62
+                },
+                {
+                    "Direction": "less than",
+                    "Name": "lower critical",
+                    "Severity": 1,
+                    "Value": 1.53
+                }
+            ],
+            "Type": "ADC"
+        },
+        {
+            "Index": 6,
+            "Name": "VOLT_P0_VDD_11",
+            "ScaleFactor": 1.0,
+            "Thresholds": [
+                {
+                    "Direction": "greater than",
+                    "Name": "upper critical",
+                    "Severity": 1,
+                    "Value": 1.27
+                },
+                {
+                    "Direction": "greater than",
+                    "Name": "upper non critical",
+                    "Severity": 0,
+                    "Value": 1.21
+                },
+                {
+                    "Direction": "less than",
+                    "Name": "lower non critical",
+                    "Severity": 0,
+                    "Value": 0.99
+                },
+                {
+                    "Direction": "less than",
+                    "Name": "lower critical",
+                    "Severity": 1,
+                    "Value": 0.94
+                }
+            ],
+            "Type": "ADC"
+        },
+        {
+            "Index": 7,
+            "Name": "VOLT_P1_VCORE0",
+            "ScaleFactor": 1.0,
+            "Thresholds": [
+                {
+                    "Direction": "greater than",
+                    "Name": "upper critical",
+                    "Severity": 1,
+                    "Value": 1.73
+                },
+                {
+                    "Direction": "greater than",
+                    "Name": "upper non critical",
+                    "Severity": 0,
+                    "Value": 1.65
+                }
+            ],
+            "Type": "ADC"
+        },
+        {
+            "Index": 8,
+            "Name": "VOLT_P1_VCORE1",
+            "ScaleFactor": 1.0,
+            "Thresholds": [
+                {
+                    "Direction": "greater than",
+                    "Name": "upper critical",
+                    "Severity": 1,
+                    "Value": 1.73
+                },
+                {
+                    "Direction": "greater than",
+                    "Name": "upper non critical",
+                    "Severity": 0,
+                    "Value": 1.65
+                }
+            ],
+            "Type": "ADC"
+        },
+        {
+            "Index": 9,
+            "Name": "VOLT_P1_VSOC",
+            "ScaleFactor": 1.0,
+            "Thresholds": [
+                {
+                    "Direction": "greater than",
+                    "Name": "upper critical",
+                    "Severity": 1,
+                    "Value": 1.38
+                },
+                {
+                    "Direction": "greater than",
+                    "Name": "upper non critical",
+                    "Severity": 0,
+                    "Value": 1.32
+                },
+                {
+                    "Direction": "less than",
+                    "Name": "lower non critical",
+                    "Severity": 0,
+                    "Value": 0.68
+                },
+                {
+                    "Direction": "less than",
+                    "Name": "lower critical",
+                    "Severity": 1,
+                    "Value": 0.64
+                }
+            ],
+            "Type": "ADC"
+        },
+        {
+            "Index": 10,
+            "Name": "VOLT_P1_VDD_18",
+            "ScaleFactor": 1.0,
+            "Thresholds": [
+                {
+                    "Direction": "greater than",
+                    "Name": "upper critical",
+                    "Severity": 1,
+                    "Value": 2.07
+                },
+                {
+                    "Direction": "greater than",
+                    "Name": "upper non critical",
+                    "Severity": 0,
+                    "Value": 1.98
+                },
+                {
+                    "Direction": "less than",
+                    "Name": "lower non critical",
+                    "Severity": 0,
+                    "Value": 1.62
+                },
+                {
+                    "Direction": "less than",
+                    "Name": "lower critical",
+                    "Severity": 1,
+                    "Value": 1.53
+                }
+            ],
+            "Type": "ADC"
+        },
+        {
+            "Index": 11,
+            "Name": "VOLT_P1_VDD_11",
+            "ScaleFactor": 1.0,
+            "Thresholds": [
+                {
+                    "Direction": "greater than",
+                    "Name": "upper critical",
+                    "Severity": 1,
+                    "Value": 1.27
+                },
+                {
+                    "Direction": "greater than",
+                    "Name": "upper non critical",
+                    "Severity": 0,
+                    "Value": 1.21
+                },
+                {
+                    "Direction": "less than",
+                    "Name": "lower non critical",
+                    "Severity": 0,
+                    "Value": 0.99
+                },
+                {
+                    "Direction": "less than",
+                    "Name": "lower critical",
+                    "Severity": 1,
+                    "Value": 0.94
+                }
+            ],
+            "Type": "ADC"
+        },
+        {
+            "Index": 12,
+            "Name": "VOLT_BAT",
+            "ScaleFactor": 1.0,
+            "Thresholds": [
+                {
+                    "Direction": "greater than",
+                    "Name": "upper critical",
+                    "Severity": 1,
+                    "Value": 3.46
+                },
+                {
+                    "Direction": "greater than",
+                    "Name": "upper non critical",
+                    "Severity": 0,
+                    "Value": 3.3
+                },
+                {
+                    "Direction": "less than",
+                    "Name": "lower non critical",
+                    "Severity": 0,
+                    "Value": 2.4
+                },
+                {
+                    "Direction": "less than",
+                    "Name": "lower critical",
+                    "Severity": 1,
+                    "Value": 2.22
+                }
+            ],
+            "Type": "ADC"
+        },
+        {
+            "Index": 13,
+            "Name": "VOLT_P0_VDDIO",
+            "ScaleFactor": 1.0,
+            "Thresholds": [
+                {
+                    "Direction": "greater than",
+                    "Name": "upper critical",
+                    "Severity": 1,
+                    "Value": 1.38
+                },
+                {
+                    "Direction": "greater than",
+                    "Name": "upper non critical",
+                    "Severity": 0,
+                    "Value": 1.32
+                },
+                {
+                    "Direction": "less than",
+                    "Name": "lower non critical",
+                    "Severity": 0,
+                    "Value": 0.81
+                },
+                {
+                    "Direction": "less than",
+                    "Name": "lower critical",
+                    "Severity": 1,
+                    "Value": 0.77
+                }
+            ],
+            "Type": "ADC"
+        },
+        {
+            "Index": 14,
+            "Name": "VOLT_P1_VDDIO",
+            "ScaleFactor": 1.0,
+            "Thresholds": [
+                {
+                    "Direction": "greater than",
+                    "Name": "upper critical",
+                    "Severity": 1,
+                    "Value": 1.38
+                },
+                {
+                    "Direction": "greater than",
+                    "Name": "upper non critical",
+                    "Severity": 0,
+                    "Value": 1.32
+                },
+                {
+                    "Direction": "less than",
+                    "Name": "lower non critical",
+                    "Severity": 0,
+                    "Value": 0.81
+                },
+                {
+                    "Direction": "less than",
+                    "Name": "lower critical",
+                    "Severity": 1,
+                    "Value": 0.77
+                }
+            ],
+            "Type": "ADC"
+        },
+        {
+            "Index": 15,
+            "Name": "VOLT_12V",
+            "ScaleFactor": 1.0,
+            "Thresholds": [
+                {
+                    "Direction": "greater than",
+                    "Name": "upper critical",
+                    "Severity": 1,
+                    "Value": 13.8
+                },
+                {
+                    "Direction": "greater than",
+                    "Name": "upper non critical",
+                    "Severity": 0,
+                    "Value": 13.2
+                },
+                {
+                    "Direction": "less than",
+                    "Name": "lower non critical",
+                    "Severity": 0,
+                    "Value": 10.8
+                },
+                {
+                    "Direction": "less than",
+                    "Name": "lower critical",
+                    "Severity": 1,
+                    "Value": 10.2
+                }
+            ],
+            "Type": "ADC"
+        },
+        {
+            "Address": "0x61",
+            "Bus": 6,
+            "Labels": [
+                "vin",
+                "vmon",
+                "vout1",
+                "vout2",
+                "iin1",
+                "iin2",
+                "iout1",
+                "iout2",
+                "pin1",
+                "pin2",
+                "pout1",
+                "pout2"
+            ],
+            "Name": "CPU0_SOC_VR",
+            "Type": "ISL68137"
+        },
+        {
+            "Address": "0x62",
+            "Bus": 6,
+            "Labels": [
+                "vin",
+                "vmon",
+                "vout1",
+                "vout2",
+                "iin1",
+                "iin2",
+                "iout1",
+                "iout2",
+                "pin1",
+                "pin2",
+                "pout1",
+                "pout2"
+            ],
+            "Name": "CPU0_VDD11_VR",
+            "Type": "ISL68137"
+        },
+        {
+            "Address": "0x63",
+            "Bus": 6,
+            "Labels": [
+                "vin",
+                "vmon",
+                "vout1",
+                "vout2",
+                "iin1",
+                "iin2",
+                "iout1",
+                "iout2",
+                "pin1",
+                "pin2",
+                "pout1",
+                "pout2"
+            ],
+            "Name": "CPU0_VDDIO_VR",
+            "Type": "ISL68137"
+        },
+        {
+            "Address": "0x72",
+            "Bus": 6,
+            "Labels": [
+                "vin",
+                "vmon",
+                "vout1",
+                "vout2",
+                "iin1",
+                "iin2",
+                "iout1",
+                "iout2",
+                "pin1",
+                "pin2",
+                "pout1",
+                "pout2"
+            ],
+            "Name": "CPU1_SOC_VR",
+            "Type": "ISL68137"
+        },
+        {
+            "Address": "0x74",
+            "Bus": 6,
+            "Labels": [
+                "vin",
+                "vmon",
+                "vout1",
+                "vout2",
+                "iin1",
+                "iin2",
+                "iout1",
+                "iout2",
+                "pin1",
+                "pin2",
+                "pout1",
+                "pout2"
+            ],
+            "Name": "CPU1_VDD11_VR",
+            "Type": "ISL68137"
+        },
+        {
+            "Address": "0x75",
+            "Bus": 6,
+            "Labels": [
+                "vin",
+                "vmon",
+                "vout1",
+                "vout2",
+                "iin1",
+                "iin2",
+                "iout1",
+                "iout2",
+                "pin1",
+                "pin2",
+                "pout1",
+                "pout2"
+            ],
+            "Name": "CPU1_VDDIO_VR",
+            "Type": "ISL68137"
+        },
+        {
+            "Address": "0x50",
+            "Bus": 7,
+            "Name": "Baseboard_FRU",
+            "Type": "EEPROM"
+        }
+    ],
+    "Name": "ASRock TURIN2D24TM3-2L Baseboard",
+    "Probe": "TRUE",
+    "Type": "Board",
+    "ProductId": 1,
+    "xyz.openbmc_project.Inventory.Decorator.Asset": {
+        "Manufacturer": "ASRock",
+        "Model": "TURIN2D24TM3-2L",
+        "PartNumber": "TURIN2D24TM3-2L",
+        "SerialNumber": "SN12345"
+    },
+    "xyz.openbmc_project.Inventory.Item.System": {}
+}

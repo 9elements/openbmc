@@ -1,0 +1,63 @@
+From 0000000000000000000000000000000000000000 Mon Sep 17 00:00:00 2001
+From: Christian Walter <christian.walter@9elements.com>
+Date: Mon, 27 Oct 2025 13:00:00 +0000
+Subject: [PATCH] board: aspeed: evb_ast2600: disable GPIO passthrough for
+ turin2d24tm3-2l
+
+Disable hardware GPIO passthrough by clearing SCU51C[9] during
+board initialization to allow x86-power-control software passthrough
+to function correctly.
+
+Hardware passthrough locks GPIO pins making them uncontrollable by
+software, preventing BMC power button control functionality.
+
+Upstream-Status: Inappropriate [embedded specific]
+
+Signed-off-by: Christian Walter <christian.walter@9elements.com>
+---
+ board/aspeed/evb_ast2600/evb_ast2600.c | 31 ++++++++++++++++++++++++++
+ 1 file changed, 31 insertions(+)
+
+diff --git a/board/aspeed/evb_ast2600/evb_ast2600.c b/board/aspeed/evb_ast2600/evb_ast2600.c
+index 1234567890..abcdef1234 100644
+--- a/board/aspeed/evb_ast2600/evb_ast2600.c
++++ b/board/aspeed/evb_ast2600/evb_ast2600.c
+@@ -131,3 +131,36 @@ int board_early_init_f(void)
+ 	espi_init();
+ 	return 0;
+ }
++
++int board_late_init(void)
++{
++	u32 val_before, val_after;
++
++	printf("\n");
++	printf("========================================\n");
++	printf("ASRock Turin2D24TM3-2L Board Init\n");
++	printf("========================================\n");
++
++	/* Disable GPIO hardware passthrough (SCU51C[9])
++	 * This allows software control of power button GPIOs
++	 * via x86-power-control instead of hardware passthrough
++	 */
++	val_before = readl(SCU_BASE + 0x51C);
++	printf("SCU51C before: 0x%08x\n", val_before);
++
++	val_after = val_before & ~(1 << 9);  /* Clear bit 9 */
++	writel(val_after, SCU_BASE + 0x51C);
++
++	val_after = readl(SCU_BASE + 0x51C);
++	printf("SCU51C after:  0x%08x\n", val_after);
++
++	if (val_before & (1 << 9)) {
++		printf("GPIO hardware passthrough DISABLED\n");
++	} else {
++		printf("GPIO hardware passthrough was already disabled\n");
++	}
++	printf("========================================\n");
++	printf("\n");
++
++	return 0;
++}
+--
+2.50.1

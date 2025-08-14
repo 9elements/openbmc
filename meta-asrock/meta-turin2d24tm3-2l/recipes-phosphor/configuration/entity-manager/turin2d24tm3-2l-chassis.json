@@ -1,0 +1,127 @@
+{
+    "Exposes": [
+        {
+            "Index": 0,
+            "BindConnector": "Fan 1 connector",
+            "MaxReading": 25000,
+            "Name": "Fan1",
+            "Type": "AspeedFan",
+            "Thresholds": [
+                {
+                    "Direction": "less than",
+                    "Name": "lower critical",
+                    "Severity": 1,
+                    "Value": 0
+                }
+            ]
+        },
+        {
+            "Index": 1,
+            "BindConnector": "Fan 2 connector",
+            "MaxReading": 25000,
+            "Name": "Fan2",
+            "Type": "AspeedFan",
+            "Thresholds": [
+                {
+                    "Direction": "less than",
+                    "Name": "lower critical",
+                    "Severity": 1,
+                    "Value": 0
+                }
+            ]
+        },
+        {
+            "Index": 2,
+            "BindConnector": "Fan 3 connector",
+            "MaxReading": 25000,
+            "Name": "Fan3",
+            "Type": "AspeedFan",
+            "Thresholds": [
+                {
+                    "Direction": "less than",
+                    "Name": "lower critical",
+                    "Severity": 1,
+                    "Value": 0
+                }
+            ]
+        },
+        {
+            "Index": 3,
+            "BindConnector": "Fan 4 connector",
+            "MaxReading": 25000,
+            "Name": "Fan4",
+            "Type": "AspeedFan",
+            "Thresholds": [
+                {
+                    "Direction": "less than",
+                    "Name": "lower critical",
+                    "Severity": 1,
+                    "Value": 0
+                }
+            ]
+        },
+        {
+            "Index": 4,
+            "BindConnector": "Fan 5 connector",
+            "MaxReading": 25000,
+            "Name": "Fan5",
+            "Type": "AspeedFan",
+            "Thresholds": [
+                {
+                    "Direction": "less than",
+                    "Name": "lower critical",
+                    "Severity": 1,
+                    "Value": 0
+                }
+            ]
+        },
+        {
+            "Index": 5,
+            "BindConnector": "Fan 6 connector",
+            "MaxReading": 25000,
+            "Name": "Fan6",
+            "Type": "AspeedFan",
+            "Thresholds": [
+                {
+                    "Direction": "less than",
+                    "Name": "lower critical",
+                    "Severity": 1,
+                    "Value": 0
+                }
+            ]
+        },
+        {
+            "Index": 6,
+            "BindConnector": "Fan 7 connector",
+            "MaxReading": 25000,
+            "Name": "Fan7",
+            "Type": "AspeedFan",
+            "Thresholds": [
+                {
+                    "Direction": "less than",
+                    "Name": "lower critical",
+                    "Severity": 1,
+                    "Value": 0
+                }
+            ]
+        },
+        {
+            "Index": 7,
+            "BindConnector": "Fan 8 connector",
+            "MaxReading": 25000,
+            "Name": "Fan8",
+            "Type": "AspeedFan",
+            "Thresholds": [
+                {
+                    "Direction": "less than",
+                    "Name": "lower critical",
+                    "Severity": 1,
+                    "Value": 0
+                }
+            ]
+        }
+    ],
+    "Name": "ASRock TURIN2D24TM3-2L Chassis",
+    "Probe": "FOUND('ASRock TURIN2D24TM3-2L Baseboard')",
+    "Type": "Chassis"
+}

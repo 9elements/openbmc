@@ -1,0 +1,33 @@
+From 74189302e1992006022745a04dae9211bcfdc4ca Mon Sep 17 00:00:00 2001
+From: Marvin Drees <marvin.drees@9elements.com>
+Date: Fri, 17 May 2024 17:49:44 +0200
+Subject: [PATCH 03/26] dt-bindings: fix: ast2600 pcie reset number declaration
+
+Signed-off-by: Marvin Drees <marvin.drees@9elements.com>
+Upstream-Status: Pending
+---
+ include/dt-bindings/clock/ast2600-clock.h | 8 ++++----
+ 1 file changed, 4 insertions(+), 4 deletions(-)
+
+diff --git a/include/dt-bindings/clock/ast2600-clock.h b/include/dt-bindings/clock/ast2600-clock.h
+index 712782177c90..22d26432b952 100644
+--- a/include/dt-bindings/clock/ast2600-clock.h
++++ b/include/dt-bindings/clock/ast2600-clock.h
+@@ -117,10 +117,10 @@
+ #define ASPEED_RESET_DEV_MCTP		24
+ #define ASPEED_RESET_RC_MCTP		23
+ #define ASPEED_RESET_JTAG_MASTER	22
+-#define ASPEED_RESET_PCIE_DEV_O		21
+-#define ASPEED_RESET_PCIE_DEV_OEN	20
+-#define ASPEED_RESET_PCIE_RC_O		19
+-#define ASPEED_RESET_PCIE_RC_OEN	18
++#define ASPEED_RESET_PCIE_DEV_OE		21
++#define ASPEED_RESET_PCIE_DEV_O	20
++#define ASPEED_RESET_PCIE_RC_OE		19
++#define ASPEED_RESET_PCIE_RC_O	18
+ #define ASPEED_RESET_PCI_DP		5
+ #define ASPEED_RESET_HACE		4
+ #define ASPEED_RESET_AHB		1
+-- 
+2.49.0
+

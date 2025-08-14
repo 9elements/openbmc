@@ -1,0 +1,6 @@
+{
+    "comments": [
+        "Blocklist for configurations that should not be loaded"
+    ],
+    "BlockList": []
+}
