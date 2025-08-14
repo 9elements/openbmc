@@ -1,0 +1,40 @@
+From bbd89af72f693078c8f6b1830da8a84906842bd8 Mon Sep 17 00:00:00 2001
+From: Loic Prylli <lprylli@netflix.com>
+Date: Thu, 2 Nov 2023 15:26:44 +0100
+Subject: [PATCH 04/26] spi: prevent bmc getting stuck in reboot
+
+apparently WDT3 was triggering SPI address mode
+which prevented reliable reboot.
+
+This patch catches the SPI reset commands
+and does nothing with them.
+
+Disclaimer: temporary and incomplete patch.
+Proper solution would be different.
+
+TODO: provide detailed description of the issue.
+
+Upstream-Status: Pending
+---
+ drivers/spi/spi-aspeed-smc.c | 5 +++++
+ 1 file changed, 5 insertions(+)
+
+diff --git a/drivers/spi/spi-aspeed-smc.c b/drivers/spi/spi-aspeed-smc.c
+index 38a0613d434a..9823c45a0e0d 100644
+--- a/drivers/spi/spi-aspeed-smc.c
++++ b/drivers/spi/spi-aspeed-smc.c
+@@ -318,6 +318,11 @@ static int do_aspeed_spi_exec_op(struct spi_mem *mem, const struct spi_mem_op *o
+ 
+ 	ctl_val |= op->cmd.opcode << CTRL_COMMAND_SHIFT;
+ 
++	if(op->cmd.opcode == 0x66 || op->cmd.opcode == 0x99) {
++		dev_warn(aspi->dev, "Op reset: 0x%x ignored \n", op->cmd.opcode);
++		return 0;
++	}
++
+ 	/* 4BYTE address mode */
+ 	if (op->addr.nbytes) {
+ 		if (op->addr.nbytes == 4)
+-- 
+2.49.0
+

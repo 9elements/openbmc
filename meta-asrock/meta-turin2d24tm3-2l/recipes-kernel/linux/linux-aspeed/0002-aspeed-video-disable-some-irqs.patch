@@ -1,0 +1,42 @@
+From 93277d50bd0fb7a78d57472cf7aa2b4d10addf62 Mon Sep 17 00:00:00 2001
+From: Marvin Drees <marvin.drees@9elements.com>
+Date: Tue, 18 Jun 2024 16:52:24 +0200
+Subject: [PATCH 02/26] aspeed-video: disable some irqs
+
+These IRQs are known to be spurious and should be ignored, at least
+according to a patch in the vendors kernel.
+
+Signed-off-by: Marvin Drees <marvin.drees@9elements.com>
+Upstream-Status: Pending
+---
+ drivers/media/platform/aspeed/aspeed-video.c | 7 +++++++
+ 1 file changed, 7 insertions(+)
+
+diff --git a/drivers/media/platform/aspeed/aspeed-video.c b/drivers/media/platform/aspeed/aspeed-video.c
+index a9c2c69b2ed9..3965513a23e7 100644
+--- a/drivers/media/platform/aspeed/aspeed-video.c
++++ b/drivers/media/platform/aspeed/aspeed-video.c
+@@ -725,6 +725,10 @@ static void aspeed_video_swap_src_buf(struct aspeed_video *v)
+ 	}
+ }
+ 
++#define VE_SPURIOUS_IRQS \
++	(VE_INTERRUPT_CAPTURE_COMPLETE | VE_INTERRUPT_FRAME_COMPLETE \
++	 | VE_INTERRUPT_COMP_READY)
++
+ static irqreturn_t aspeed_video_irq(int irq, void *arg)
+ {
+ 	struct aspeed_video *video = arg;
+@@ -824,6 +828,9 @@ static irqreturn_t aspeed_video_irq(int irq, void *arg)
+ 			aspeed_video_start_frame(video);
+ 	}
+ 
++	/* Squash known bogus interrupts */
++	sts &= ~VE_SPURIOUS_IRQS;
++
+ 	return sts ? IRQ_NONE : IRQ_HANDLED;
+ }
+ 
+-- 
+2.49.0
+

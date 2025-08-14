@@ -1,0 +1,129 @@
+From 7dd3c56cc60d2ea583347dbaee028c365186de9f Mon Sep 17 00:00:00 2001
+From: Marvin Drees <marvin.drees@9elements.com>
+Date: Thu, 14 Aug 2025 12:18:56 +0200
+Subject: [PATCH] ast2600: add ASRock Turin2d24tm3-2l dts
+
+Signed-off-by: Marvin Drees <marvin.drees@9elements.com>
+Upstream-Status: Pending
+---
+ .../arm/dts/asrock-turin2d24tm3-2l-u-boot.dts | 108 ++++++++++++++++++
+ 1 file changed, 108 insertions(+)
+ create mode 100644 arch/arm/dts/asrock-turin2d24tm3-2l-u-boot.dts
+
+diff --git a/arch/arm/dts/asrock-turin2d24tm3-2l-u-boot.dts b/arch/arm/dts/asrock-turin2d24tm3-2l-u-boot.dts
+new file mode 100644
+index 0000000000..d7ccf65fa9
+--- /dev/null
++++ b/arch/arm/dts/asrock-turin2d24tm3-2l-u-boot.dts
+@@ -0,0 +1,108 @@
++// SPDX-License-Identifier: GPL-2.0+
++
++/dts-v1/;
++
++#include "ast2600-u-boot.dtsi"
++
++/ {
++	memory {
++		device_type = "memory";
++		reg = <0x80000000 0x20000000>;
++	};
++
++	chosen {
++		stdout-path = &uart5;
++	};
++
++	reserved-memory {
++		mctp0_reserved: mctp0_reserved@b1000000 {
++			reg = <0xb1000000 0x10000>;
++			no-map;
++		};
++
++		mctp1_reserved: mctp0_reserved@b1010000 {
++			reg = <0xb1010000 0x10000>;
++			no-map;
++		};
++	};
++
++	cpus {
++		cpu@0 {
++			clock-frequency = <800000000>;
++		};
++		cpu@1 {
++			clock-frequency = <800000000>;
++		};
++	};
++};
++
++&uart5 {
++	bootph-all;
++	status = "okay";
++};
++
++&sdrammc {
++	clock-frequency = <400000000>;
++	aspeed,ecc-enabled;
++};
++
++&wdt1 {
++	status = "okay";
++};
++
++&fmc {
++	status = "okay";
++	pinctrl-names = "default";
++	pinctrl-0 = <&pinctrl_fmcquad_default>;
++
++	flash@0 {
++		status = "okay";
++		spi-max-frequency = <50000000>;
++		spi-tx-bus-width = <4>;
++		spi-rx-bus-width = <4>;
++	};
++};
++
++&i2c7 {
++	status = "okay";
++
++	eeprom@50 {
++		compatible = "atmel,24c256";
++		reg = <0x50>;
++		pagesize = <64>;
++	};
++};
++
++&mdio0 {
++	status = "okay";
++	#address-cells = <1>;
++	#size-cells = <0>;
++	ethphy0: ethernet-phy@0 {
++		reg = <0>;
++	};
++};
++
++&mac2 {
++	status = "okay";
++	phy-mode = "rgmii";
++	phy-handle = <&ethphy0>;
++	pinctrl-names = "default";
++	pinctrl-0 = <&pinctrl_rgmii3_default>;
++};
++
++&mac3 {
++	status = "okay";
++	phy-mode = "rmii";
++	pinctrl-names = "default";
++	pinctrl-0 = <&pinctrl_rmii4_default>;
++};
++
++&hace {
++	bootph-all;
++	status = "okay";
++};
++
++&acry {
++	bootph-all;
++	status = "okay";
++};
+-- 
+2.50.1
+
