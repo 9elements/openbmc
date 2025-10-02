@@ -12,6 +12,6 @@ BBLAYERS ?= " \
   ##OEROOT##/meta-openembedded/meta-python \
   ##OEROOT##/meta-phosphor \
   ##OEROOT##/meta-aspeed \
-  ##OEROOT##/meta-asrock \
-  ##OEROOT##/meta-asrock/meta-turin2d24tm3-2l \
+  ##OEROOT##/meta-u-bmc \
+  ##OEROOT##/meta-u-bmc/meta-turin2d24tm3-2l \
   "
