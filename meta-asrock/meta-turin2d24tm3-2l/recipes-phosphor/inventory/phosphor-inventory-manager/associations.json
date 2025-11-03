@@ -222,5 +222,39 @@
                 ]
             }
         ]
+    },
+    {
+        "path": "system/chassis/ASRock_TURIN2D24TM3_2L_Chassis/PowerSupply1",
+        "endpoints":
+        [
+            {
+                "types":
+                {
+                    "rType": "powering",
+                    "fType": "powered_by"
+                },
+                "paths":
+                [
+                    "/xyz/openbmc_project/inventory/system/chassis/ASRock_TURIN2D24TM3_2L_Chassis"
+                ]
+            }
+        ]
+    },
+    {
+        "path": "system/chassis/ASRock_TURIN2D24TM3_2L_Chassis/PowerSupply2",
+        "endpoints":
+        [
+            {
+                "types":
+                {
+                    "rType": "powering",
+                    "fType": "powered_by"
+                },
+                "paths":
+                [
+                    "/xyz/openbmc_project/inventory/system/chassis/ASRock_TURIN2D24TM3_2L_Chassis"
+                ]
+            }
+        ]
     }
 ]

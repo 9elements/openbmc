@@ -1,0 +1,12 @@
+[
+    { "Name": "Fan1", "LineName": "FAN1_PRSNT", "ActiveLow": true, "Bias": "PULL_UP", "Inventory": "/system/chassis/ASRock_TURIN2D24TM3_2L_Chassis/Fan1" },
+    { "Name": "Fan2", "LineName": "FAN2_PRSNT", "ActiveLow": true, "Bias": "PULL_UP", "Inventory": "/system/chassis/ASRock_TURIN2D24TM3_2L_Chassis/Fan2" },
+    { "Name": "Fan3", "LineName": "FAN3_PRSNT", "ActiveLow": true, "Bias": "PULL_UP", "Inventory": "/system/chassis/ASRock_TURIN2D24TM3_2L_Chassis/Fan3" },
+    { "Name": "Fan4", "LineName": "FAN4_PRSNT", "ActiveLow": true, "Bias": "PULL_UP", "Inventory": "/system/chassis/ASRock_TURIN2D24TM3_2L_Chassis/Fan4" },
+    { "Name": "Fan5", "LineName": "FAN5_PRSNT", "ActiveLow": true, "Bias": "PULL_UP", "Inventory": "/system/chassis/ASRock_TURIN2D24TM3_2L_Chassis/Fan5" },
+    { "Name": "Fan6", "LineName": "FAN6_PRSNT", "ActiveLow": true, "Bias": "PULL_UP", "Inventory": "/system/chassis/ASRock_TURIN2D24TM3_2L_Chassis/Fan6" },
+    { "Name": "Fan7", "LineName": "FAN7_PRSNT", "ActiveLow": true, "Bias": "PULL_UP", "Inventory": "/system/chassis/ASRock_TURIN2D24TM3_2L_Chassis/Fan7" },
+    { "Name": "Fan8", "LineName": "FAN8_PRSNT", "ActiveLow": true, "Bias": "PULL_UP", "Inventory": "/system/chassis/ASRock_TURIN2D24TM3_2L_Chassis/Fan8" },
+    { "Name": "PSU1", "LineName": "PSU1_PRSNT", "ActiveLow": true, "Bias": "PULL_UP", "Inventory": "/system/chassis/ASRock_TURIN2D24TM3_2L_Chassis/PowerSupply1" },
+    { "Name": "PSU2", "LineName": "PSU2_PRSNT", "ActiveLow": true, "Bias": "PULL_UP", "Inventory": "/system/chassis/ASRock_TURIN2D24TM3_2L_Chassis/PowerSupply2" }
+]

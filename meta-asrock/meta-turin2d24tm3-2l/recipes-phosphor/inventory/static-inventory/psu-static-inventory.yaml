@@ -1,0 +1,44 @@
+description: >
+    ASRock TURIN2D24TM3-2L Power Supply Inventory
+
+events:
+    - name: Add PSU 1
+      description: >
+          Add PSU 1 to inventory
+      type: startup
+      actions:
+          - name: createObjects
+            objs:
+                /system/chassis/ASRock_TURIN2D24TM3_2L_Chassis/PowerSupply1:
+                  xyz.openbmc_project.Inventory.Item:
+                      Present:
+                          value: true
+                          type: boolean
+                      PrettyName:
+                          value: "PSU 1"
+                          type: string
+                  xyz.openbmc_project.Inventory.Item.PowerSupply:
+                  xyz.openbmc_project.State.Decorator.OperationalStatus:
+                      Functional:
+                          value: true
+                          type: boolean
+    - name: Add PSU 2
+      description: >
+          Add PSU 2 to inventory
+      type: startup
+      actions:
+          - name: createObjects
+            objs:
+                /system/chassis/ASRock_TURIN2D24TM3_2L_Chassis/PowerSupply2:
+                  xyz.openbmc_project.Inventory.Item:
+                      Present:
+                          value: true
+                          type: boolean
+                      PrettyName:
+                          value: "PSU 2"
+                          type: string
+                  xyz.openbmc_project.Inventory.Item.PowerSupply:
+                  xyz.openbmc_project.State.Decorator.OperationalStatus:
+                      Functional:
+                          value: true
+                          type: boolean
