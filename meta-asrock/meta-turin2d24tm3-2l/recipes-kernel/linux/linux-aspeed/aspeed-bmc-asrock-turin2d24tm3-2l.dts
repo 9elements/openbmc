@@ -32,7 +32,7 @@
 
     chosen {
         stdout-path = &uart5;
-        bootargs = "console=ttyS4,115200 earlycon dyndbg='module aspeed_g6_pwm_tach +p' dyndbg='module pinctrl_aspeed +p'";
+        bootargs = "console=ttyS4,115200 earlycon";
     };
 
     memory@80000000 {
@@ -68,84 +68,6 @@
             <&adc1 4>, <&adc1 5>, <&adc1 6>, <&adc1 7>;
     };
 
-    pwmfans {
-        compatible = "simple-bus";
-        #address-cells = <1>;
-        #size-cells = <0>;
-
-        fanctl0: fan0 {
-            compatible = "pwm-fan";
-            reg = <0>;
-            pwms = <&pwm_tach 0 40000 0>;
-            cooling-levels = <0 64 128 192 255>;
-            #cooling-cells = <2>;
-            status = "okay";
-        };
-
-        fanctl1: fan1 {
-            compatible = "pwm-fan";
-            reg = <1>;
-            pwms = <&pwm_tach 1 40000 0>;
-            cooling-levels = <0 64 128 192 255>;
-            #cooling-cells = <2>;
-            status = "okay";
-        };
-
-        fanctl2: fan2 {
-            compatible = "pwm-fan";
-            reg = <2>;
-            pwms = <&pwm_tach 2 40000 0>;
-            cooling-levels = <0 64 128 192 255>;
-            #cooling-cells = <2>;
-            status = "okay";
-        };
-
-        fanctl3: fan3 {
-            compatible = "pwm-fan";
-            reg = <3>;
-            pwms = <&pwm_tach 3 40000 0>;
-            cooling-levels = <0 64 128 192 255>;
-            #cooling-cells = <2>;
-            status = "okay";
-        };
-
-        fanctl4: fan4 {
-            compatible = "pwm-fan";
-            reg = <4>;
-            pwms = <&pwm_tach 4 40000 0>;
-            cooling-levels = <0 64 128 192 255>;
-            #cooling-cells = <2>;
-            status = "okay";
-        };
-
-        fanctl5: fan5 {
-            compatible = "pwm-fan";
-            reg = <5>;
-            pwms = <&pwm_tach 5 40000 0>;
-            cooling-levels = <0 64 128 192 255>;
-            #cooling-cells = <2>;
-            status = "okay";
-        };
-
-        fanctl6: fan6 {
-            compatible = "pwm-fan";
-            reg = <6>;
-            pwms = <&pwm_tach 6 40000 0>;
-            cooling-levels = <0 64 128 192 255>;
-            #cooling-cells = <2>;
-            status = "okay";
-        };
-
-        fanctl7: fan7 {
-            compatible = "pwm-fan";
-            reg = <7>;
-            pwms = <&pwm_tach 7 40000 0>;
-            cooling-levels = <0 64 128 192 255>;
-            #cooling-cells = <2>;
-            status = "okay";
-        };
-    };
-
     leds {
         compatible = "gpio-leds";
 
@@ -163,6 +85,78 @@
             gpios = <&gpio0 ASPEED_GPIO(G, 0) GPIO_ACTIVE_LOW>;
             default-state = "off";
         };
+    };
+
+    fan0: pwm-fan0 {
+        compatible = "pwm-fan";
+        pwms = <&pwm_tach 0 40000 0>;
+        cooling-min-state = <0>;
+        cooling-max-state = <3>;
+        #cooling-cells = <2>;
+        cooling-levels = <0 64 128 192 255>;
+    };
+
+    fan1: pwm-fan1 {
+        compatible = "pwm-fan";
+        pwms = <&pwm_tach 1 40000 0>;
+        cooling-min-state = <0>;
+        cooling-max-state = <3>;
+        #cooling-cells = <2>;
+        cooling-levels = <0 64 128 192 255>;
+    };
+
+    fan2: pwm-fan2 {
+        compatible = "pwm-fan";
+        pwms = <&pwm_tach 2 40000 0>;
+        cooling-min-state = <0>;
+        cooling-max-state = <3>;
+        #cooling-cells = <2>;
+        cooling-levels = <0 64 128 192 255>;
+    };
+
+    fan3: pwm-fan3 {
+        compatible = "pwm-fan";
+        pwms = <&pwm_tach 3 40000 0>;
+        cooling-min-state = <0>;
+        cooling-max-state = <3>;
+        #cooling-cells = <2>;
+        cooling-levels = <0 64 128 192 255>;
+    };
+
+    fan4: pwm-fan4 {
+        compatible = "pwm-fan";
+        pwms = <&pwm_tach 4 40000 0>;
+        cooling-min-state = <0>;
+        cooling-max-state = <3>;
+        #cooling-cells = <2>;
+        cooling-levels = <0 64 128 192 255>;
+    };
+
+    fan5: pwm-fan5 {
+        compatible = "pwm-fan";
+        pwms = <&pwm_tach 5 40000 0>;
+        cooling-min-state = <0>;
+        cooling-max-state = <3>;
+        #cooling-cells = <2>;
+        cooling-levels = <0 64 128 192 255>;
+    };
+
+    fan6: pwm-fan6 {
+        compatible = "pwm-fan";
+        pwms = <&pwm_tach 6 40000 0>;
+        cooling-min-state = <0>;
+        cooling-max-state = <3>;
+        #cooling-cells = <2>;
+        cooling-levels = <0 64 128 192 255>;
+    };
+
+    fan7: pwm-fan7 {
+        compatible = "pwm-fan";
+        pwms = <&pwm_tach 7 40000 0>;
+        cooling-min-state = <0>;
+        cooling-max-state = <3>;
+        #cooling-cells = <2>;
+        cooling-levels = <0 64 128 192 255>;
     };
 };
 
@@ -183,50 +177,34 @@
             &pinctrl_tach14_default &pinctrl_tach15_default>;
 
     fan-0 {
-        label = "FAN_1";
-        pwm-ch = /bits/ 8 <0x00>;
         tach-ch = /bits/ 8 <0x00 0x01>;
     };
 
     fan-1 {
-        label = "FAN_2";
-        pwm-ch = /bits/ 8 <0x01>;
         tach-ch = /bits/ 8 <0x02 0x03>;
     };
 
     fan-2 {
-        label = "FAN_3";
-        pwm-ch = /bits/ 8 <0x02>;
         tach-ch = /bits/ 8 <0x04 0x05>;
     };
 
     fan-3 {
-        label = "FAN_4";
-        pwm-ch = /bits/ 8 <0x03>;
         tach-ch = /bits/ 8 <0x06 0x07>;
     };
 
     fan-4 {
-        label = "FAN_5";
-        pwm-ch = /bits/ 8 <0x04>;
         tach-ch = /bits/ 8 <0x08 0x09>;
     };
 
     fan-5 {
-        label = "FAN_6";
-        pwm-ch = /bits/ 8 <0x05>;
         tach-ch = /bits/ 8 <0x0a 0x0b>;
     };
 
     fan-6 {
-        label = "FAN_7";
-        pwm-ch = /bits/ 8 <0x06>;
         tach-ch = /bits/ 8 <0x0c 0x0d>;
     };
 
     fan-7 {
-        label = "FAN_8";
-        pwm-ch = /bits/ 8 <0x07>;
         tach-ch = /bits/ 8 <0x0e 0x0f>;
     };
 };

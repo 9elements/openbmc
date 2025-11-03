@@ -33,4 +33,5 @@ RDEPENDS:${PN}-system = " \
         dbus-sensors \
         entity-manager \
         phosphor-hwmon \
+        phosphor-pid-control \
         "
