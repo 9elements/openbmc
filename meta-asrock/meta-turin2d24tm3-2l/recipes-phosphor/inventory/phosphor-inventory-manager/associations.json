@@ -1,0 +1,226 @@
+[
+    {
+        "path": "system/chassis/ASRock_TURIN2D24TM3_2L_Chassis/Fan1",
+        "endpoints":
+        [
+            {
+                "types":
+                {
+                    "rType": "inventory",
+                    "fType": "sensors"
+                },
+                "paths":
+                [
+                    "/xyz/openbmc_project/sensors/fan_tach/Fan_1"
+                ]
+            },
+            {
+                "types":
+                {
+                    "rType": "cooled_by",
+                    "fType": "cooling"
+                },
+                "paths":
+                [
+                    "/xyz/openbmc_project/inventory/system/chassis/ASRock_TURIN2D24TM3_2L_Chassis"
+                ]
+            }
+        ]
+    },
+    {
+        "path": "system/chassis/ASRock_TURIN2D24TM3_2L_Chassis/Fan2",
+        "endpoints":
+        [
+            {
+                "types":
+                {
+                    "rType": "inventory",
+                    "fType": "sensors"
+                },
+                "paths":
+                [
+                    "/xyz/openbmc_project/sensors/fan_tach/Fan_2"
+                ]
+            },
+            {
+                "types":
+                {
+                    "rType": "cooled_by",
+                    "fType": "cooling"
+                },
+                "paths":
+                [
+                    "/xyz/openbmc_project/inventory/system/chassis/ASRock_TURIN2D24TM3_2L_Chassis"
+                ]
+            }
+        ]
+    },
+    {
+        "path": "system/chassis/ASRock_TURIN2D24TM3_2L_Chassis/Fan3",
+        "endpoints":
+        [
+            {
+                "types":
+                {
+                    "rType": "inventory",
+                    "fType": "sensors"
+                },
+                "paths":
+                [
+                    "/xyz/openbmc_project/sensors/fan_tach/Fan_3"
+                ]
+            },
+            {
+                "types":
+                {
+                    "rType": "cooled_by",
+                    "fType": "cooling"
+                },
+                "paths":
+                [
+                    "/xyz/openbmc_project/inventory/system/chassis/ASRock_TURIN2D24TM3_2L_Chassis"
+                ]
+            }
+        ]
+    },
+    {
+        "path": "system/chassis/ASRock_TURIN2D24TM3_2L_Chassis/Fan4",
+        "endpoints":
+        [
+            {
+                "types":
+                {
+                    "rType": "inventory",
+                    "fType": "sensors"
+                },
+                "paths":
+                [
+                    "/xyz/openbmc_project/sensors/fan_tach/Fan_4"
+                ]
+            },
+            {
+                "types":
+                {
+                    "rType": "cooled_by",
+                    "fType": "cooling"
+                },
+                "paths":
+                [
+                    "/xyz/openbmc_project/inventory/system/chassis/ASRock_TURIN2D24TM3_2L_Chassis"
+                ]
+            }
+        ]
+    },
+    {
+        "path": "system/chassis/ASRock_TURIN2D24TM3_2L_Chassis/Fan5",
+        "endpoints":
+        [
+            {
+                "types":
+                {
+                    "rType": "inventory",
+                    "fType": "sensors"
+                },
+                "paths":
+                [
+                    "/xyz/openbmc_project/sensors/fan_tach/Fan_5"
+                ]
+            },
+            {
+                "types":
+                {
+                    "rType": "cooled_by",
+                    "fType": "cooling"
+                },
+                "paths":
+                [
+                    "/xyz/openbmc_project/inventory/system/chassis/ASRock_TURIN2D24TM3_2L_Chassis"
+                ]
+            }
+        ]
+    },
+    {
+        "path": "system/chassis/ASRock_TURIN2D24TM3_2L_Chassis/Fan6",
+        "endpoints":
+        [
+            {
+                "types":
+                {
+                    "rType": "inventory",
+                    "fType": "sensors"
+                },
+                "paths":
+                [
+                    "/xyz/openbmc_project/sensors/fan_tach/Fan_6"
+                ]
+            },
+            {
+                "types":
+                {
+                    "rType": "cooled_by",
+                    "fType": "cooling"
+                },
+                "paths":
+                [
+                    "/xyz/openbmc_project/inventory/system/chassis/ASRock_TURIN2D24TM3_2L_Chassis"
+                ]
+            }
+        ]
+    },
+    {
+        "path": "system/chassis/ASRock_TURIN2D24TM3_2L_Chassis/Fan7",
+        "endpoints":
+        [
+            {
+                "types":
+                {
+                    "rType": "inventory",
+                    "fType": "sensors"
+                },
+                "paths":
+                [
+                    "/xyz/openbmc_project/sensors/fan_tach/Fan_7"
+                ]
+            },
+            {
+                "types":
+                {
+                    "rType": "cooled_by",
+                    "fType": "cooling"
+                },
+                "paths":
+                [
+                    "/xyz/openbmc_project/inventory/system/chassis/ASRock_TURIN2D24TM3_2L_Chassis"
+                ]
+            }
+        ]
+    },
+    {
+        "path": "system/chassis/ASRock_TURIN2D24TM3_2L_Chassis/Fan8",
+        "endpoints":
+        [
+            {
+                "types":
+                {
+                    "rType": "inventory",
+                    "fType": "sensors"
+                },
+                "paths":
+                [
+                    "/xyz/openbmc_project/sensors/fan_tach/Fan_8"
+                ]
+            },
+            {
+                "types":
+                {
+                    "rType": "cooled_by",
+                    "fType": "cooling"
+                },
+                "paths":
+                [
+                    "/xyz/openbmc_project/inventory/system/chassis/ASRock_TURIN2D24TM3_2L_Chassis"
+                ]
+            }
+        ]
+    }
+]
