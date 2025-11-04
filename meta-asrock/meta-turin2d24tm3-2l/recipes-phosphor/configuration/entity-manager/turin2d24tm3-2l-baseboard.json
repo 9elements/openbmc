@@ -7,7 +7,10 @@
             "Connector": {
                 "Name": "Fan 1 Connector",
                 "Pwm": 0,
-                "Tachs": [0, 1]
+                "Tachs": [
+                    0,
+                    1
+                ]
             },
             "Thresholds": [
                 {
@@ -32,7 +35,10 @@
             "Connector": {
                 "Name": "Fan 2 Connector",
                 "Pwm": 1,
-                "Tachs": [2, 3]
+                "Tachs": [
+                    2,
+                    3
+                ]
             },
             "Thresholds": [
                 {
@@ -57,7 +63,10 @@
             "Connector": {
                 "Name": "Fan 3 Connector",
                 "Pwm": 2,
-                "Tachs": [4, 5]
+                "Tachs": [
+                    4,
+                    5
+                ]
             },
             "Thresholds": [
                 {
@@ -82,7 +91,10 @@
             "Connector": {
                 "Name": "Fan 4 Connector",
                 "Pwm": 3,
-                "Tachs": [6, 7]
+                "Tachs": [
+                    6,
+                    7
+                ]
             },
             "Thresholds": [
                 {
@@ -107,7 +119,10 @@
             "Connector": {
                 "Name": "Fan 5 Connector",
                 "Pwm": 4,
-                "Tachs": [8, 9]
+                "Tachs": [
+                    8,
+                    9
+                ]
             },
             "Thresholds": [
                 {
@@ -132,7 +147,10 @@
             "Connector": {
                 "Name": "Fan 6 Connector",
                 "Pwm": 5,
-                "Tachs": [10, 11]
+                "Tachs": [
+                    10,
+                    11
+                ]
             },
             "Thresholds": [
                 {
@@ -157,7 +175,10 @@
             "Connector": {
                 "Name": "Fan 7 Connector",
                 "Pwm": 6,
-                "Tachs": [12, 13]
+                "Tachs": [
+                    12,
+                    13
+                ]
             },
             "Thresholds": [
                 {
@@ -182,7 +203,10 @@
             "Connector": {
                 "Name": "Fan 8 Connector",
                 "Pwm": 7,
-                "Tachs": [14, 15]
+                "Tachs": [
+                    14,
+                    15
+                ]
             },
             "Thresholds": [
                 {
@@ -1139,6 +1163,62 @@
             "Bus": 7,
             "Name": "Baseboard_FRU",
             "Type": "EEPROM"
+        },
+        {
+            "Address": "0x58",
+            "Bus": 12,
+            "Labels": [
+                "vin",
+                "vout1",
+                "vout2",
+                "vout3",
+                "iin1",
+                "iin2",
+                "iin3",
+                "iout1",
+                "iout2",
+                "iout3",
+                "pin1",
+                "pin2",
+                "pin3",
+                "pout1",
+                "pout2",
+                "pout3",
+                "temp1",
+                "temp2",
+                "temp3",
+                "pwmfan1"
+            ],
+            "Name": "PSU1",
+            "Type": "pmbus"
+        },
+        {
+            "Address": "0x59",
+            "Bus": 12,
+            "Labels": [
+                "vin",
+                "vout1",
+                "vout2",
+                "vout3",
+                "iin1",
+                "iin2",
+                "iin3",
+                "iout1",
+                "iout2",
+                "iout3",
+                "pin1",
+                "pin2",
+                "pin3",
+                "pout1",
+                "pout2",
+                "pout3",
+                "temp1",
+                "temp2",
+                "temp3",
+                "pwmfan1"
+            ],
+            "Name": "PSU2",
+            "Type": "pmbus"
         }
     ],
     "Name": "ASRock TURIN2D24TM3-2L Baseboard",

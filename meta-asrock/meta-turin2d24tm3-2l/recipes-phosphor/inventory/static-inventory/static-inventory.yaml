@@ -1,5 +1,5 @@
 description: >
-    ASRock TURIN2D24TM3-2L Fan Inventory
+    ASRock TURIN2D24TM3-2L Fan and PSU Inventory
 
 events:
     - name: Add Fan 1

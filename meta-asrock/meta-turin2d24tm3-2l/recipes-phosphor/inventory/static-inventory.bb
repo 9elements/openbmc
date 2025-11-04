@@ -9,17 +9,10 @@ inherit phosphor-inventory-manager
 S = "${WORKDIR}/sources"
 UNPACKDIR = "${S}"
 
-SRC_URI = " \
-    file://static-inventory.yaml \
-    file://psu-static-inventory.yaml \
-    "
+SRC_URI = " file://static-inventory.yaml"
 
 do_install() {
     install -D static-inventory.yaml ${D}${base_datadir}/events.d/static-inventory.yaml
-    install -D psu-static-inventory.yaml ${D}${base_datadir}/events.d/psu-static-inventory.yaml
 }
 
-FILES:${PN} += " \
-    ${base_datadir}/events.d/static-inventory.yaml \
-    ${base_datadir}/events.d/psu-static-inventory.yaml \
-    "
+FILES:${PN} += "${base_datadir}/events.d/static-inventory.yaml"

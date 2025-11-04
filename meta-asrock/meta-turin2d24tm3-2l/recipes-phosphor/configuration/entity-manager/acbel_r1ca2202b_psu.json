@@ -1,0 +1,50 @@
+[
+  {
+    "Exposes": [
+      {
+        "Address": "0x50",
+        "Bus": 12,
+        "Name": "PSU1 FRU",
+        "Type": "EEPROM"
+      }
+    ],
+    "Name": "ACBEL PSU1",
+    "Probe": "xyz.openbmc_project.FruDevice({'BUS': 12, 'ADDRESS': 80, 'PRODUCT_PRODUCT_NAME': 'R1CA2202B*'})",
+    "Type": "PowerSupply",
+    "xyz.openbmc_project.Inventory.Decorator.Asset": {
+      "Manufacturer": "$PRODUCT_MANUFACTURER",
+      "Model": "$PRODUCT_PRODUCT_NAME",
+      "PartNumber": "$PRODUCT_PART_NUMBER",
+      "SerialNumber": "$PRODUCT_SERIAL_NUMBER"
+    },
+    "xyz.openbmc_project.Inventory.Decorator.AssetTag": {
+      "AssetTag": "$PRODUCT_ASSET_TAG"
+    },
+    "xyz.openbmc_project.Inventory.Decorator.Replaceable": {},
+    "xyz.openbmc_project.State.Decorator.OperationalStatus": {}
+  },
+  {
+    "Exposes": [
+      {
+        "Address": "0x51",
+        "Bus": 12,
+        "Name": "PSU2 FRU",
+        "Type": "EEPROM"
+      }
+    ],
+    "Name": "ACBEL PSU2",
+    "Probe": "xyz.openbmc_project.FruDevice({'BUS': 12, 'ADDRESS': 81, 'PRODUCT_PRODUCT_NAME': 'R1CA2202B*'})",
+    "Type": "PowerSupply",
+    "xyz.openbmc_project.Inventory.Decorator.Asset": {
+      "Manufacturer": "$PRODUCT_MANUFACTURER",
+      "Model": "$PRODUCT_PRODUCT_NAME",
+      "PartNumber": "$PRODUCT_PART_NUMBER",
+      "SerialNumber": "$PRODUCT_SERIAL_NUMBER"
+    },
+    "xyz.openbmc_project.Inventory.Decorator.AssetTag": {
+      "AssetTag": "$PRODUCT_ASSET_TAG"
+    },
+    "xyz.openbmc_project.Inventory.Decorator.Replaceable": {},
+    "xyz.openbmc_project.State.Decorator.OperationalStatus": {}
+  }
+]

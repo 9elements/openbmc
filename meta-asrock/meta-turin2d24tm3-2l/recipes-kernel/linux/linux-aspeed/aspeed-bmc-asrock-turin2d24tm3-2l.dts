@@ -584,6 +584,30 @@
 /* PSU Connection */
 &i2c12 {
     status = "okay";
+
+    /* PSU1 - ACBEL R1CA2202B */
+    psu1@58 {
+        compatible = "pmbus";
+        reg = <0x58>;
+    };
+
+    /* PSU2 - ACBEL R1CA2202B */
+    psu2@59 {
+        compatible = "pmbus";
+        reg = <0x59>;
+    };
+
+    /* PSU1 EEPROM */
+    eeprom@50 {
+        compatible = "atmel,24c02";
+        reg = <0x50>;
+    };
+
+    /* PSU2 EEPROM */
+    eeprom@51 {
+        compatible = "atmel,24c02";
+        reg = <0x51>;
+    };
 };
 
 /*

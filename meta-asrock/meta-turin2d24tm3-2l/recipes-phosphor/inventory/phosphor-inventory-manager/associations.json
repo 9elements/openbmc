@@ -224,14 +224,29 @@
         ]
     },
     {
-        "path": "system/chassis/ASRock_TURIN2D24TM3_2L_Chassis/PowerSupply1",
+        "path": "system/PowerSupply/ACBEL_PSU1",
         "endpoints":
         [
             {
                 "types":
                 {
-                    "rType": "powering",
-                    "fType": "powered_by"
+                    "rType": "inventory",
+                    "fType": "sensors"
+                },
+                "paths":
+                [
+                    "/xyz/openbmc_project/sensors/current/PSU1_Output_Current",
+                    "/xyz/openbmc_project/sensors/power/PSU1_Output_Power",
+                    "/xyz/openbmc_project/sensors/temperature/PSU1_Temperature",
+                    "/xyz/openbmc_project/sensors/voltage/PSU1_Input_Voltage",
+                    "/xyz/openbmc_project/sensors/voltage/PSU1_Output_Voltage"
+                ]
+            },
+            {
+                "types":
+                {
+                    "rType": "powered_by",
+                    "fType": "powering"
                 },
                 "paths":
                 [
@@ -241,14 +256,29 @@
         ]
     },
     {
-        "path": "system/chassis/ASRock_TURIN2D24TM3_2L_Chassis/PowerSupply2",
+        "path": "system/PowerSupply/ACBEL_PSU2",
         "endpoints":
         [
             {
                 "types":
                 {
-                    "rType": "powering",
-                    "fType": "powered_by"
+                    "rType": "inventory",
+                    "fType": "sensors"
+                },
+                "paths":
+                [
+                    "/xyz/openbmc_project/sensors/current/PSU2_Output_Current",
+                    "/xyz/openbmc_project/sensors/power/PSU2_Output_Power",
+                    "/xyz/openbmc_project/sensors/temperature/PSU2_Temperature",
+                    "/xyz/openbmc_project/sensors/voltage/PSU2_Input_Voltage",
+                    "/xyz/openbmc_project/sensors/voltage/PSU2_Output_Voltage"
+                ]
+            },
+            {
+                "types":
+                {
+                    "rType": "powered_by",
+                    "fType": "powering"
                 },
                 "paths":
                 [
