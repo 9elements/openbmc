@@ -1,0 +1,106 @@
+[
+    {
+        "Name": "Fan1",
+        "Probe": "TRUE",
+        "Type": "Fan",
+        "xyz.openbmc_project.Inventory.Item.Fan": {},
+        "xyz.openbmc_project.State.Decorator.OperationalStatus": {
+            "Functional": true
+        },
+        "xyz.openbmc_project.Inventory.Decorator.Asset": {
+            "PartNumber": "",
+            "SerialNumber": ""
+        }
+    },
+    {
+        "Name": "Fan2",
+        "Probe": "TRUE",
+        "Type": "Fan",
+        "xyz.openbmc_project.Inventory.Item.Fan": {},
+        "xyz.openbmc_project.State.Decorator.OperationalStatus": {
+            "Functional": true
+        },
+        "xyz.openbmc_project.Inventory.Decorator.Asset": {
+            "PartNumber": "",
+            "SerialNumber": ""
+        }
+    },
+    {
+        "Name": "Fan3",
+        "Probe": "TRUE",
+        "Type": "Fan",
+        "xyz.openbmc_project.Inventory.Item.Fan": {},
+        "xyz.openbmc_project.State.Decorator.OperationalStatus": {
+            "Functional": true
+        },
+        "xyz.openbmc_project.Inventory.Decorator.Asset": {
+            "PartNumber": "",
+            "SerialNumber": ""
+        }
+    },
+    {
+        "Name": "Fan4",
+        "Probe": "TRUE",
+        "Type": "Fan",
+        "xyz.openbmc_project.Inventory.Item.Fan": {},
+        "xyz.openbmc_project.State.Decorator.OperationalStatus": {
+            "Functional": true
+        },
+        "xyz.openbmc_project.Inventory.Decorator.Asset": {
+            "PartNumber": "",
+            "SerialNumber": ""
+        }
+    },
+    {
+        "Name": "Fan5",
+        "Probe": "TRUE",
+        "Type": "Fan",
+        "xyz.openbmc_project.Inventory.Item.Fan": {},
+        "xyz.openbmc_project.State.Decorator.OperationalStatus": {
+            "Functional": true
+        },
+        "xyz.openbmc_project.Inventory.Decorator.Asset": {
+            "PartNumber": "",
+            "SerialNumber": ""
+        }
+    },
+    {
+        "Name": "Fan6",
+        "Probe": "TRUE",
+        "Type": "Fan",
+        "xyz.openbmc_project.Inventory.Item.Fan": {},
+        "xyz.openbmc_project.State.Decorator.OperationalStatus": {
+            "Functional": true
+        },
+        "xyz.openbmc_project.Inventory.Decorator.Asset": {
+            "PartNumber": "",
+            "SerialNumber": ""
+        }
+    },
+    {
+        "Name": "Fan7",
+        "Probe": "TRUE",
+        "Type": "Fan",
+        "xyz.openbmc_project.Inventory.Item.Fan": {},
+        "xyz.openbmc_project.State.Decorator.OperationalStatus": {
+            "Functional": true
+        },
+        "xyz.openbmc_project.Inventory.Decorator.Asset": {
+            "PartNumber": "",
+            "SerialNumber": ""
+        }
+    },
+    {
+        "Name": "Fan8",
+        "Probe": "TRUE",
+        "Type": "Fan",
+        "xyz.openbmc_project.Inventory.Item.Fan": {},
+        "xyz.openbmc_project.State.Decorator.OperationalStatus": {
+            "Functional": true
+        },
+        "xyz.openbmc_project.Inventory.Decorator.Asset": {
+            "PartNumber": "",
+            "SerialNumber": ""
+        }
+    }
+]

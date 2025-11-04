@@ -1,6 +1,12 @@
 {
-    "Exposes": [
+    "Exposes": [ 
         {
+            "Address": "0x50",
+            "Bus": 7,
+            "Name": "Baseboard_FRU",
+            "Type": "EEPROM"
+        },
+	{
             "Index": 0,
             "Name": "Fan 1",
             "PowerState": "On",
@@ -337,7 +343,7 @@
         {
             "Index": 0,
             "Name": "VOLT_3VSB",
-            "ScaleFactor": 1.0,
+            "ScaleFactor": 0.405241935,
             "Thresholds": [
                 {
                     "Direction": "greater than",
@@ -349,13 +355,13 @@
                     "Direction": "greater than",
                     "Name": "upper non critical",
                     "Severity": 0,
-                    "Value": 3.72
+                    "Value": 3.531
                 },
                 {
                     "Direction": "less than",
                     "Name": "lower non critical",
                     "Severity": 0,
-                    "Value": 3.04
+                    "Value": 3.069
                 },
                 {
                     "Direction": "less than",
@@ -369,7 +375,7 @@
         {
             "Index": 1,
             "Name": "VOLT_5VSB",
-            "ScaleFactor": 1.0,
+            "ScaleFactor": 0.266666667,
             "Thresholds": [
                 {
                     "Direction": "greater than",
@@ -1159,35 +1165,16 @@
             ]
         },
         {
-            "Address": "0x50",
-            "Bus": 7,
-            "Name": "Baseboard_FRU",
-            "Type": "EEPROM"
-        },
-        {
             "Address": "0x58",
             "Bus": 12,
             "Labels": [
                 "vin",
                 "vout1",
-                "vout2",
-                "vout3",
                 "iin1",
-                "iin2",
-                "iin3",
                 "iout1",
-                "iout2",
-                "iout3",
                 "pin1",
-                "pin2",
-                "pin3",
                 "pout1",
-                "pout2",
-                "pout3",
-                "temp1",
-                "temp2",
-                "temp3",
-                "pwmfan1"
+                "temp1"
             ],
             "Name": "PSU1",
             "Type": "pmbus"
@@ -1198,38 +1185,28 @@
             "Labels": [
                 "vin",
                 "vout1",
-                "vout2",
-                "vout3",
                 "iin1",
-                "iin2",
-                "iin3",
                 "iout1",
-                "iout2",
-                "iout3",
                 "pin1",
-                "pin2",
-                "pin3",
                 "pout1",
-                "pout2",
-                "pout3",
-                "temp1",
-                "temp2",
-                "temp3",
-                "pwmfan1"
+                "temp1"
             ],
             "Name": "PSU2",
             "Type": "pmbus"
         }
     ],
     "Name": "ASRock TURIN2D24TM3-2L Baseboard",
-    "Probe": "TRUE",
+    "Probe": "xyz.openbmc_project.FruDevice({'BUS': 7, 'ADDRESS': 80})",
     "Type": "Board",
-    "ProductId": 1,
     "xyz.openbmc_project.Inventory.Decorator.Asset": {
-        "Manufacturer": "ASRock",
-        "Model": "TURIN2D24TM3-2L",
-        "PartNumber": "TURIN2D24TM3-2L",
-        "SerialNumber": "SN12345"
+        "Manufacturer": "$PRODUCT_MANUFACTURER",
+        "Model": "$PRODUCT_PRODUCT_NAME",
+        "PartNumber": "$PRODUCT_PART_NUMBER",
+        "SerialNumber": "$PRODUCT_SERIAL_NUMBER"
     },
-    "xyz.openbmc_project.Inventory.Item.System": {}
+    "xyz.openbmc_project.Inventory.Decorator.AssetTag": {
+        "AssetTag": "$PRODUCT_ASSET_TAG"
+    },
+    "xyz.openbmc_project.Inventory.Item.System": {},
+    "xyz.openbmc_project.Inventory.Item.Chassis": {}
 }

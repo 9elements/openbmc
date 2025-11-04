@@ -1,6 +1,6 @@
 [
     {
-        "path": "system/chassis/ASRock_TURIN2D24TM3_2L_Chassis/Fan1",
+        "path": "system/fan/Fan1",
         "endpoints":
         [
             {
@@ -22,13 +22,13 @@
                 },
                 "paths":
                 [
-                    "/xyz/openbmc_project/inventory/system/chassis/ASRock_TURIN2D24TM3_2L_Chassis"
+                    "/xyz/openbmc_project/inventory/system/board/ASRock_TURIN2D24TM3_2L_Baseboard"
                 ]
             }
         ]
     },
     {
-        "path": "system/chassis/ASRock_TURIN2D24TM3_2L_Chassis/Fan2",
+        "path": "system/fan/Fan2",
         "endpoints":
         [
             {
@@ -50,13 +50,13 @@
                 },
                 "paths":
                 [
-                    "/xyz/openbmc_project/inventory/system/chassis/ASRock_TURIN2D24TM3_2L_Chassis"
+                    "/xyz/openbmc_project/inventory/system/board/ASRock_TURIN2D24TM3_2L_Baseboard"
                 ]
             }
         ]
     },
     {
-        "path": "system/chassis/ASRock_TURIN2D24TM3_2L_Chassis/Fan3",
+        "path": "system/fan/Fan3",
         "endpoints":
         [
             {
@@ -78,13 +78,13 @@
                 },
                 "paths":
                 [
-                    "/xyz/openbmc_project/inventory/system/chassis/ASRock_TURIN2D24TM3_2L_Chassis"
+                    "/xyz/openbmc_project/inventory/system/board/ASRock_TURIN2D24TM3_2L_Baseboard"
                 ]
             }
         ]
     },
     {
-        "path": "system/chassis/ASRock_TURIN2D24TM3_2L_Chassis/Fan4",
+        "path": "system/fan/Fan4",
         "endpoints":
         [
             {
@@ -106,13 +106,13 @@
                 },
                 "paths":
                 [
-                    "/xyz/openbmc_project/inventory/system/chassis/ASRock_TURIN2D24TM3_2L_Chassis"
+                    "/xyz/openbmc_project/inventory/system/board/ASRock_TURIN2D24TM3_2L_Baseboard"
                 ]
             }
         ]
     },
     {
-        "path": "system/chassis/ASRock_TURIN2D24TM3_2L_Chassis/Fan5",
+        "path": "system/fan/Fan5",
         "endpoints":
         [
             {
@@ -134,13 +134,13 @@
                 },
                 "paths":
                 [
-                    "/xyz/openbmc_project/inventory/system/chassis/ASRock_TURIN2D24TM3_2L_Chassis"
+                    "/xyz/openbmc_project/inventory/system/board/ASRock_TURIN2D24TM3_2L_Baseboard"
                 ]
             }
         ]
     },
     {
-        "path": "system/chassis/ASRock_TURIN2D24TM3_2L_Chassis/Fan6",
+        "path": "system/fan/Fan6",
         "endpoints":
         [
             {
@@ -162,13 +162,13 @@
                 },
                 "paths":
                 [
-                    "/xyz/openbmc_project/inventory/system/chassis/ASRock_TURIN2D24TM3_2L_Chassis"
+                    "/xyz/openbmc_project/inventory/system/board/ASRock_TURIN2D24TM3_2L_Baseboard"
                 ]
             }
         ]
     },
     {
-        "path": "system/chassis/ASRock_TURIN2D24TM3_2L_Chassis/Fan7",
+        "path": "system/fan/Fan7",
         "endpoints":
         [
             {
@@ -190,13 +190,13 @@
                 },
                 "paths":
                 [
-                    "/xyz/openbmc_project/inventory/system/chassis/ASRock_TURIN2D24TM3_2L_Chassis"
+                    "/xyz/openbmc_project/inventory/system/board/ASRock_TURIN2D24TM3_2L_Baseboard"
                 ]
             }
         ]
     },
     {
-        "path": "system/chassis/ASRock_TURIN2D24TM3_2L_Chassis/Fan8",
+        "path": "system/fan/Fan8",
         "endpoints":
         [
             {
@@ -218,13 +218,13 @@
                 },
                 "paths":
                 [
-                    "/xyz/openbmc_project/inventory/system/chassis/ASRock_TURIN2D24TM3_2L_Chassis"
+                    "/xyz/openbmc_project/inventory/system/board/ASRock_TURIN2D24TM3_2L_Baseboard"
                 ]
             }
         ]
     },
     {
-        "path": "system/PowerSupply/ACBEL_PSU1",
+        "path": "system/powersupply/ACBEL_PSU1",
         "endpoints":
         [
             {
@@ -250,13 +250,13 @@
                 },
                 "paths":
                 [
-                    "/xyz/openbmc_project/inventory/system/chassis/ASRock_TURIN2D24TM3_2L_Chassis"
+                    "/xyz/openbmc_project/inventory/system/board/ASRock_TURIN2D24TM3_2L_Baseboard"
                 ]
             }
         ]
     },
     {
-        "path": "system/PowerSupply/ACBEL_PSU2",
+        "path": "system/powersupply/ACBEL_PSU2",
         "endpoints":
         [
             {
@@ -282,7 +282,7 @@
                 },
                 "paths":
                 [
-                    "/xyz/openbmc_project/inventory/system/chassis/ASRock_TURIN2D24TM3_2L_Chassis"
+                    "/xyz/openbmc_project/inventory/system/board/ASRock_TURIN2D24TM3_2L_Baseboard"
                 ]
             }
         ]

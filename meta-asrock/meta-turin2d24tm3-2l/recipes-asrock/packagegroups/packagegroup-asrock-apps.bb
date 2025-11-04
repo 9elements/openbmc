@@ -35,5 +35,4 @@ RDEPENDS:${PN}-system = " \
         phosphor-hwmon \
         phosphor-inventory-manager \
         phosphor-pid-control \
-        static-inventory \
         "

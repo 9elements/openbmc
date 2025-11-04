@@ -4,7 +4,7 @@
       {
         "Address": "0x50",
         "Bus": 12,
-        "Name": "PSU1 FRU",
+        "Name": "PSU1_FRU",
         "Type": "EEPROM"
       }
     ],
@@ -20,15 +20,17 @@
     "xyz.openbmc_project.Inventory.Decorator.AssetTag": {
       "AssetTag": "$PRODUCT_ASSET_TAG"
     },
-    "xyz.openbmc_project.Inventory.Decorator.Replaceable": {},
-    "xyz.openbmc_project.State.Decorator.OperationalStatus": {}
+    "xyz.openbmc_project.Inventory.Decorator.Replaceable": {
+      "FieldReplaceable": true,
+      "HotPluggable": true
+    }
   },
   {
     "Exposes": [
       {
         "Address": "0x51",
         "Bus": 12,
-        "Name": "PSU2 FRU",
+        "Name": "PSU2_FRU",
         "Type": "EEPROM"
       }
     ],
@@ -44,7 +46,9 @@
     "xyz.openbmc_project.Inventory.Decorator.AssetTag": {
       "AssetTag": "$PRODUCT_ASSET_TAG"
     },
-    "xyz.openbmc_project.Inventory.Decorator.Replaceable": {},
-    "xyz.openbmc_project.State.Decorator.OperationalStatus": {}
+    "xyz.openbmc_project.Inventory.Decorator.Replaceable": {
+      "FieldReplaceable": true,
+      "HotPluggable": true
+    }
   }
 ]
