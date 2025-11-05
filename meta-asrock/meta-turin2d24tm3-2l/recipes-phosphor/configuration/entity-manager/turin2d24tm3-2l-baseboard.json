@@ -1193,6 +1193,510 @@
             ],
             "Name": "PSU2",
             "Type": "pmbus"
+        },
+        {
+            "Address": "0x50",
+            "Bus": 36,
+            "Name": "DIMM_A0",
+            "PowerState": "On",
+            "Thresholds": [
+                {
+                    "Direction": "greater than",
+                    "Name": "upper critical",
+                    "Severity": 1,
+                    "Value": 85
+                },
+                {
+                    "Direction": "greater than",
+                    "Name": "upper non critical",
+                    "Severity": 0,
+                    "Value": 80
+                }
+            ],
+            "Type": "TMP112"
+        },
+        {
+            "Address": "0x51",
+            "Bus": 36,
+            "Name": "DIMM_A1",
+            "PowerState": "On",
+            "Thresholds": [
+                {
+                    "Direction": "greater than",
+                    "Name": "upper critical",
+                    "Severity": 1,
+                    "Value": 85
+                },
+                {
+                    "Direction": "greater than",
+                    "Name": "upper non critical",
+                    "Severity": 0,
+                    "Value": 80
+                }
+            ],
+            "Type": "TMP112"
+        },
+        {
+            "Address": "0x52",
+            "Bus": 36,
+            "Name": "DIMM_A2",
+            "PowerState": "On",
+            "Thresholds": [
+                {
+                    "Direction": "greater than",
+                    "Name": "upper critical",
+                    "Severity": 1,
+                    "Value": 85
+                },
+                {
+                    "Direction": "greater than",
+                    "Name": "upper non critical",
+                    "Severity": 0,
+                    "Value": 80
+                }
+            ],
+            "Type": "TMP112"
+        },
+        {
+            "Address": "0x53",
+            "Bus": 36,
+            "Name": "DIMM_A3",
+            "PowerState": "On",
+            "Thresholds": [
+                {
+                    "Direction": "greater than",
+                    "Name": "upper critical",
+                    "Severity": 1,
+                    "Value": 85
+                },
+                {
+                    "Direction": "greater than",
+                    "Name": "upper non critical",
+                    "Severity": 0,
+                    "Value": 80
+                }
+            ],
+            "Type": "TMP112"
+        },
+        {
+            "Address": "0x54",
+            "Bus": 36,
+            "Name": "DIMM_A4",
+            "PowerState": "On",
+            "Thresholds": [
+                {
+                    "Direction": "greater than",
+                    "Name": "upper critical",
+                    "Severity": 1,
+                    "Value": 85
+                },
+                {
+                    "Direction": "greater than",
+                    "Name": "upper non critical",
+                    "Severity": 0,
+                    "Value": 80
+                }
+            ],
+            "Type": "TMP112"
+        },
+        {
+            "Address": "0x55",
+            "Bus": 36,
+            "Name": "DIMM_A5",
+            "PowerState": "On",
+            "Thresholds": [
+                {
+                    "Direction": "greater than",
+                    "Name": "upper critical",
+                    "Severity": 1,
+                    "Value": 85
+                },
+                {
+                    "Direction": "greater than",
+                    "Name": "upper non critical",
+                    "Severity": 0,
+                    "Value": 80
+                }
+            ],
+            "Type": "TMP112"
+        },
+        {
+            "Address": "0x50",
+            "Bus": 37,
+            "Name": "DIMM_B0",
+            "PowerState": "On",
+            "Thresholds": [
+                {
+                    "Direction": "greater than",
+                    "Name": "upper critical",
+                    "Severity": 1,
+                    "Value": 85
+                },
+                {
+                    "Direction": "greater than",
+                    "Name": "upper non critical",
+                    "Severity": 0,
+                    "Value": 80
+                }
+            ],
+            "Type": "TMP112"
+        },
+        {
+            "Address": "0x51",
+            "Bus": 37,
+            "Name": "DIMM_B1",
+            "PowerState": "On",
+            "Thresholds": [
+                {
+                    "Direction": "greater than",
+                    "Name": "upper critical",
+                    "Severity": 1,
+                    "Value": 85
+                },
+                {
+                    "Direction": "greater than",
+                    "Name": "upper non critical",
+                    "Severity": 0,
+                    "Value": 80
+                }
+            ],
+            "Type": "TMP112"
+        },
+        {
+            "Address": "0x52",
+            "Bus": 37,
+            "Name": "DIMM_B2",
+            "PowerState": "On",
+            "Thresholds": [
+                {
+                    "Direction": "greater than",
+                    "Name": "upper critical",
+                    "Severity": 1,
+                    "Value": 85
+                },
+                {
+                    "Direction": "greater than",
+                    "Name": "upper non critical",
+                    "Severity": 0,
+                    "Value": 80
+                }
+            ],
+            "Type": "TMP112"
+        },
+        {
+            "Address": "0x53",
+            "Bus": 37,
+            "Name": "DIMM_B3",
+            "PowerState": "On",
+            "Thresholds": [
+                {
+                    "Direction": "greater than",
+                    "Name": "upper critical",
+                    "Severity": 1,
+                    "Value": 85
+                },
+                {
+                    "Direction": "greater than",
+                    "Name": "upper non critical",
+                    "Severity": 0,
+                    "Value": 80
+                }
+            ],
+            "Type": "TMP112"
+        },
+        {
+            "Address": "0x54",
+            "Bus": 37,
+            "Name": "DIMM_B4",
+            "PowerState": "On",
+            "Thresholds": [
+                {
+                    "Direction": "greater than",
+                    "Name": "upper critical",
+                    "Severity": 1,
+                    "Value": 85
+                },
+                {
+                    "Direction": "greater than",
+                    "Name": "upper non critical",
+                    "Severity": 0,
+                    "Value": 80
+                }
+            ],
+            "Type": "TMP112"
+        },
+        {
+            "Address": "0x55",
+            "Bus": 37,
+            "Name": "DIMM_B5",
+            "PowerState": "On",
+            "Thresholds": [
+                {
+                    "Direction": "greater than",
+                    "Name": "upper critical",
+                    "Severity": 1,
+                    "Value": 85
+                },
+                {
+                    "Direction": "greater than",
+                    "Name": "upper non critical",
+                    "Severity": 0,
+                    "Value": 80
+                }
+            ],
+            "Type": "TMP112"
+        },
+        {
+            "Address": "0x50",
+            "Bus": 38,
+            "Name": "DIMM_C0",
+            "PowerState": "On",
+            "Thresholds": [
+                {
+                    "Direction": "greater than",
+                    "Name": "upper critical",
+                    "Severity": 1,
+                    "Value": 85
+                },
+                {
+                    "Direction": "greater than",
+                    "Name": "upper non critical",
+                    "Severity": 0,
+                    "Value": 80
+                }
+            ],
+            "Type": "TMP112"
+        },
+        {
+            "Address": "0x51",
+            "Bus": 38,
+            "Name": "DIMM_C1",
+            "PowerState": "On",
+            "Thresholds": [
+                {
+                    "Direction": "greater than",
+                    "Name": "upper critical",
+                    "Severity": 1,
+                    "Value": 85
+                },
+                {
+                    "Direction": "greater than",
+                    "Name": "upper non critical",
+                    "Severity": 0,
+                    "Value": 80
+                }
+            ],
+            "Type": "TMP112"
+        },
+        {
+            "Address": "0x52",
+            "Bus": 38,
+            "Name": "DIMM_C2",
+            "PowerState": "On",
+            "Thresholds": [
+                {
+                    "Direction": "greater than",
+                    "Name": "upper critical",
+                    "Severity": 1,
+                    "Value": 85
+                },
+                {
+                    "Direction": "greater than",
+                    "Name": "upper non critical",
+                    "Severity": 0,
+                    "Value": 80
+                }
+            ],
+            "Type": "TMP112"
+        },
+        {
+            "Address": "0x53",
+            "Bus": 38,
+            "Name": "DIMM_C3",
+            "PowerState": "On",
+            "Thresholds": [
+                {
+                    "Direction": "greater than",
+                    "Name": "upper critical",
+                    "Severity": 1,
+                    "Value": 85
+                },
+                {
+                    "Direction": "greater than",
+                    "Name": "upper non critical",
+                    "Severity": 0,
+                    "Value": 80
+                }
+            ],
+            "Type": "TMP112"
+        },
+        {
+            "Address": "0x54",
+            "Bus": 38,
+            "Name": "DIMM_C4",
+            "PowerState": "On",
+            "Thresholds": [
+                {
+                    "Direction": "greater than",
+                    "Name": "upper critical",
+                    "Severity": 1,
+                    "Value": 85
+                },
+                {
+                    "Direction": "greater than",
+                    "Name": "upper non critical",
+                    "Severity": 0,
+                    "Value": 80
+                }
+            ],
+            "Type": "TMP112"
+        },
+        {
+            "Address": "0x55",
+            "Bus": 38,
+            "Name": "DIMM_C5",
+            "PowerState": "On",
+            "Thresholds": [
+                {
+                    "Direction": "greater than",
+                    "Name": "upper critical",
+                    "Severity": 1,
+                    "Value": 85
+                },
+                {
+                    "Direction": "greater than",
+                    "Name": "upper non critical",
+                    "Severity": 0,
+                    "Value": 80
+                }
+            ],
+            "Type": "TMP112"
+        },
+        {
+            "Address": "0x50",
+            "Bus": 39,
+            "Name": "DIMM_D0",
+            "PowerState": "On",
+            "Thresholds": [
+                {
+                    "Direction": "greater than",
+                    "Name": "upper critical",
+                    "Severity": 1,
+                    "Value": 85
+                },
+                {
+                    "Direction": "greater than",
+                    "Name": "upper non critical",
+                    "Severity": 0,
+                    "Value": 80
+                }
+            ],
+            "Type": "TMP112"
+        },
+        {
+            "Address": "0x51",
+            "Bus": 39,
+            "Name": "DIMM_D1",
+            "PowerState": "On",
+            "Thresholds": [
+                {
+                    "Direction": "greater than",
+                    "Name": "upper critical",
+                    "Severity": 1,
+                    "Value": 85
+                },
+                {
+                    "Direction": "greater than",
+                    "Name": "upper non critical",
+                    "Severity": 0,
+                    "Value": 80
+                }
+            ],
+            "Type": "TMP112"
+        },
+        {
+            "Address": "0x52",
+            "Bus": 39,
+            "Name": "DIMM_D2",
+            "PowerState": "On",
+            "Thresholds": [
+                {
+                    "Direction": "greater than",
+                    "Name": "upper critical",
+                    "Severity": 1,
+                    "Value": 85
+                },
+                {
+                    "Direction": "greater than",
+                    "Name": "upper non critical",
+                    "Severity": 0,
+                    "Value": 80
+                }
+            ],
+            "Type": "TMP112"
+        },
+        {
+            "Address": "0x53",
+            "Bus": 39,
+            "Name": "DIMM_D3",
+            "PowerState": "On",
+            "Thresholds": [
+                {
+                    "Direction": "greater than",
+                    "Name": "upper critical",
+                    "Severity": 1,
+                    "Value": 85
+                },
+                {
+                    "Direction": "greater than",
+                    "Name": "upper non critical",
+                    "Severity": 0,
+                    "Value": 80
+                }
+            ],
+            "Type": "TMP112"
+        },
+        {
+            "Address": "0x54",
+            "Bus": 39,
+            "Name": "DIMM_D4",
+            "PowerState": "On",
+            "Thresholds": [
+                {
+                    "Direction": "greater than",
+                    "Name": "upper critical",
+                    "Severity": 1,
+                    "Value": 85
+                },
+                {
+                    "Direction": "greater than",
+                    "Name": "upper non critical",
+                    "Severity": 0,
+                    "Value": 80
+                }
+            ],
+            "Type": "TMP112"
+        },
+        {
+            "Address": "0x55",
+            "Bus": 39,
+            "Name": "DIMM_D5",
+            "PowerState": "On",
+            "Thresholds": [
+                {
+                    "Direction": "greater than",
+                    "Name": "upper critical",
+                    "Severity": 1,
+                    "Value": 85
+                },
+                {
+                    "Direction": "greater than",
+                    "Name": "upper non critical",
+                    "Severity": 0,
+                    "Value": 80
+                }
+            ],
+            "Type": "TMP112"
         }
     ],
     "Name": "ASRock TURIN2D24TM3-2L Baseboard",

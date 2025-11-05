@@ -158,6 +158,63 @@
         #cooling-cells = <2>;
         cooling-levels = <0 64 128 192 255>;
     };
+
+    /* I3C Controllers for DDR5 DIMM SPD/Temperature Sensors */
+    i3c_global: i3c-global@1e7a0000 {
+        compatible = "aspeed,ast2600-i3c-global", "syscon";
+        reg = <0x1e7a0000 0x1000>;
+        resets = <&syscon ASPEED_RESET_I3C>;
+        #address-cells = <1>;
+        #size-cells = <0>;
+    };
+
+    i3c0: i3c@1e7a2000 {
+        compatible = "aspeed,ast2600-i3c";
+        reg = <0x1e7a2000 0x1000>;
+        #address-cells = <3>;
+        #size-cells = <0>;
+        #interrupt-cells = <1>;
+        clocks = <&syscon ASPEED_CLK_GATE_I3C0CLK>;
+        resets = <&syscon ASPEED_RESET_I3C0>;
+        interrupts = <GIC_SPI 102 IRQ_TYPE_LEVEL_HIGH>;
+        status = "disabled";
+    };
+
+    i3c1: i3c@1e7a3000 {
+        compatible = "aspeed,ast2600-i3c";
+        reg = <0x1e7a3000 0x1000>;
+        #address-cells = <3>;
+        #size-cells = <0>;
+        #interrupt-cells = <1>;
+        clocks = <&syscon ASPEED_CLK_GATE_I3C1CLK>;
+        resets = <&syscon ASPEED_RESET_I3C1>;
+        interrupts = <GIC_SPI 103 IRQ_TYPE_LEVEL_HIGH>;
+        status = "disabled";
+    };
+
+    i3c2: i3c@1e7a4000 {
+        compatible = "aspeed,ast2600-i3c";
+        reg = <0x1e7a4000 0x1000>;
+        #address-cells = <3>;
+        #size-cells = <0>;
+        #interrupt-cells = <1>;
+        clocks = <&syscon ASPEED_CLK_GATE_I3C2CLK>;
+        resets = <&syscon ASPEED_RESET_I3C2>;
+        interrupts = <GIC_SPI 104 IRQ_TYPE_LEVEL_HIGH>;
+        status = "disabled";
+    };
+
+    i3c3: i3c@1e7a5000 {
+        compatible = "aspeed,ast2600-i3c";
+        reg = <0x1e7a5000 0x1000>;
+        #address-cells = <3>;
+        #size-cells = <0>;
+        #interrupt-cells = <1>;
+        clocks = <&syscon ASPEED_CLK_GATE_I3C3CLK>;
+        resets = <&syscon ASPEED_RESET_I3C3>;
+        interrupts = <GIC_SPI 105 IRQ_TYPE_LEVEL_HIGH>;
+        status = "disabled";
+    };
 };
 
 &pwm_tach {
@@ -611,33 +668,176 @@
 };
 
 /*
- * I3C nodes not yet available in AST2600 base device tree
- * Will be enabled when upstream kernel adds I3C support
- *
-&i3c0 {
-    status = "okay";
+ * I3C Controllers for DDR5 DIMM SPD/Temperature Sensors
+ * - 24 DIMMs total across 4 I3C buses
+ * - Each DIMM has SPD5118 device (0x50) with integrated temperature sensor
+ * - I2C mode at 100 kHz for compatibility, I3C mode at 2 MHz
+ */
 
-    // DIMM0_ABCDEF
+&i3c0 {
+	status = "okay";
+	aspeed,global-regs = <&i3c_global 0>;
+	i2c-scl-hz = <100000>;
+	i3c-scl-hz = <2000000>;
+	sda-pullup-ohms = <2000>;
+	pinctrl-names = "default";
+	pinctrl-0 = <&pinctrl_i3c1_default>;
+
+	/* CPU0 DIMM channels A-F (6 DIMMs) */
+	/* Explicitly define SPD5118 devices as I2C devices on I3C bus */
+	spd5118@50 {
+		compatible = "jedec,spd5118";
+		reg = <0x50 0x0 0x0>;  /* I2C address 0x50 */
+	};
+
+	spd5118@51 {
+		compatible = "jedec,spd5118";
+		reg = <0x51 0x0 0x0>;  /* I2C address 0x51 */
+	};
+
+	spd5118@52 {
+		compatible = "jedec,spd5118";
+		reg = <0x52 0x0 0x0>;
+	};
+
+	spd5118@53 {
+		compatible = "jedec,spd5118";
+		reg = <0x53 0x0 0x0>;
+	};
+
+	spd5118@54 {
+		compatible = "jedec,spd5118";
+		reg = <0x54 0x0 0x0>;
+	};
+
+	spd5118@55 {
+		compatible = "jedec,spd5118";
+		reg = <0x55 0x0 0x0>;
+	};
 };
 
 &i3c1 {
-    status = "okay";
+	status = "okay";
+	aspeed,global-regs = <&i3c_global 1>;
+	i2c-scl-hz = <100000>;
+	i3c-scl-hz = <2000000>;
+	sda-pullup-ohms = <2000>;
+	pinctrl-names = "default";
+	pinctrl-0 = <&pinctrl_i3c2_default>;
 
-    // DIMM0_GHIJKL
+	/* CPU0 DIMM channels G-L (6 DIMMs) */
+	spd5118@50 {
+		compatible = "jedec,spd5118";
+		reg = <0x50 0x0 0x0>;
+	};
+
+	spd5118@51 {
+		compatible = "jedec,spd5118";
+		reg = <0x51 0x0 0x0>;
+	};
+
+	spd5118@52 {
+		compatible = "jedec,spd5118";
+		reg = <0x52 0x0 0x0>;
+	};
+
+	spd5118@53 {
+		compatible = "jedec,spd5118";
+		reg = <0x53 0x0 0x0>;
+	};
+
+	spd5118@54 {
+		compatible = "jedec,spd5118";
+		reg = <0x54 0x0 0x0>;
+	};
+
+	spd5118@55 {
+		compatible = "jedec,spd5118";
+		reg = <0x55 0x0 0x0>;
+	};
 };
 
 &i3c2 {
-    status = "okay";
+	status = "okay";
+	aspeed,global-regs = <&i3c_global 2>;
+	i2c-scl-hz = <100000>;
+	i3c-scl-hz = <2000000>;
+	sda-pullup-ohms = <2000>;
+	pinctrl-names = "default";
+	pinctrl-0 = <&pinctrl_i3c3_default>;
 
-    // DIMM1_ABCDEF
+	/* CPU1 DIMM channels A-F (6 DIMMs) */
+	spd5118@50 {
+		compatible = "jedec,spd5118";
+		reg = <0x50 0x0 0x0>;
+	};
+
+	spd5118@51 {
+		compatible = "jedec,spd5118";
+		reg = <0x51 0x0 0x0>;
+	};
+
+	spd5118@52 {
+		compatible = "jedec,spd5118";
+		reg = <0x52 0x0 0x0>;
+	};
+
+	spd5118@53 {
+		compatible = "jedec,spd5118";
+		reg = <0x53 0x0 0x0>;
+	};
+
+	spd5118@54 {
+		compatible = "jedec,spd5118";
+		reg = <0x54 0x0 0x0>;
+	};
+
+	spd5118@55 {
+		compatible = "jedec,spd5118";
+		reg = <0x55 0x0 0x0>;
+	};
 };
 
 &i3c3 {
-    status = "okay";
+	status = "okay";
+	aspeed,global-regs = <&i3c_global 3>;
+	i2c-scl-hz = <100000>;
+	i3c-scl-hz = <2000000>;
+	sda-pullup-ohms = <2000>;
+	pinctrl-names = "default";
+	pinctrl-0 = <&pinctrl_i3c4_default>;
 
-    // DIMM1_GHIJKL
+	/* CPU1 DIMM channels G-L (6 DIMMs) */
+	spd5118@50 {
+		compatible = "jedec,spd5118";
+		reg = <0x50 0x0 0x0>;
+	};
+
+	spd5118@51 {
+		compatible = "jedec,spd5118";
+		reg = <0x51 0x0 0x0>;
+	};
+
+	spd5118@52 {
+		compatible = "jedec,spd5118";
+		reg = <0x52 0x0 0x0>;
+	};
+
+	spd5118@53 {
+		compatible = "jedec,spd5118";
+		reg = <0x53 0x0 0x0>;
+	};
+
+	spd5118@54 {
+		compatible = "jedec,spd5118";
+		reg = <0x54 0x0 0x0>;
+	};
+
+	spd5118@55 {
+		compatible = "jedec,spd5118";
+		reg = <0x55 0x0 0x0>;
+	};
 };
-*/
 
 &gfx {
     status = "okay";
