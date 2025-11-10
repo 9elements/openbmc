@@ -1,5 +1,6 @@
 FILESEXTRAPATHS:prepend := "${THISDIR}/${PN}:"
 
+DEPENDS:append = " static-inventory"
 RDEPENDS:${PN} += "phosphor-gpio-monitor-presence"
 
 PACKAGECONFIG:append = " associations"

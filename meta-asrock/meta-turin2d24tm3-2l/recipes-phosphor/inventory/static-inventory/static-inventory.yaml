@@ -1,0 +1,562 @@
+---
+description: >
+    ASRock Turin2D24TM3-2L static inventory
+    Defines 24 DDR5 DIMM slots across 2 CPUs
+
+events:
+    - name: Add DIMMs
+      description: Add DIMM inventory objects
+      type: startup
+      actions:
+          - name: createObjects
+            objs:
+                /system/chassis/motherboard/dimm_a0:
+                  xyz.openbmc_project.Inventory.Item.Dimm:
+                  xyz.openbmc_project.Inventory.Item:
+                      PrettyName:
+                          value: "CPU0 Channel A DIMM 0"
+                          type: string
+                      Present:
+                          value: true
+                          type: boolean
+                  xyz.openbmc_project.Inventory.Decorator.Replaceable:
+                      FieldReplaceable:
+                          value: true
+                          type: boolean
+                  xyz.openbmc_project.State.Decorator.OperationalStatus:
+                      Functional:
+                          value: true
+                          type: boolean
+                  xyz.openbmc_project.Inventory.Decorator.LocationCode:
+                      LocationCode:
+                          value: "CPU0_DIMM_A0"
+                          type: string
+          - name: createObjects
+            objs:
+                /system/chassis/motherboard/dimm_a1:
+                  xyz.openbmc_project.Inventory.Item.Dimm:
+                  xyz.openbmc_project.Inventory.Item:
+                      PrettyName:
+                          value: "CPU0 Channel A DIMM 1"
+                          type: string
+                      Present:
+                          value: true
+                          type: boolean
+                  xyz.openbmc_project.Inventory.Decorator.Replaceable:
+                      FieldReplaceable:
+                          value: true
+                          type: boolean
+                  xyz.openbmc_project.State.Decorator.OperationalStatus:
+                      Functional:
+                          value: true
+                          type: boolean
+                  xyz.openbmc_project.Inventory.Decorator.LocationCode:
+                      LocationCode:
+                          value: "CPU0_DIMM_A1"
+                          type: string
+          - name: createObjects
+            objs:
+                /system/chassis/motherboard/dimm_a2:
+                  xyz.openbmc_project.Inventory.Item.Dimm:
+                  xyz.openbmc_project.Inventory.Item:
+                      PrettyName:
+                          value: "CPU0 Channel A DIMM 2"
+                          type: string
+                      Present:
+                          value: true
+                          type: boolean
+                  xyz.openbmc_project.Inventory.Decorator.Replaceable:
+                      FieldReplaceable:
+                          value: true
+                          type: boolean
+                  xyz.openbmc_project.State.Decorator.OperationalStatus:
+                      Functional:
+                          value: true
+                          type: boolean
+                  xyz.openbmc_project.Inventory.Decorator.LocationCode:
+                      LocationCode:
+                          value: "CPU0_DIMM_A2"
+                          type: string
+          - name: createObjects
+            objs:
+                /system/chassis/motherboard/dimm_a3:
+                  xyz.openbmc_project.Inventory.Item.Dimm:
+                  xyz.openbmc_project.Inventory.Item:
+                      PrettyName:
+                          value: "CPU0 Channel B DIMM 0"
+                          type: string
+                      Present:
+                          value: true
+                          type: boolean
+                  xyz.openbmc_project.Inventory.Decorator.Replaceable:
+                      FieldReplaceable:
+                          value: true
+                          type: boolean
+                  xyz.openbmc_project.State.Decorator.OperationalStatus:
+                      Functional:
+                          value: true
+                          type: boolean
+                  xyz.openbmc_project.Inventory.Decorator.LocationCode:
+                      LocationCode:
+                          value: "CPU0_DIMM_A3"
+                          type: string
+          - name: createObjects
+            objs:
+                /system/chassis/motherboard/dimm_a4:
+                  xyz.openbmc_project.Inventory.Item.Dimm:
+                  xyz.openbmc_project.Inventory.Item:
+                      PrettyName:
+                          value: "CPU0 Channel B DIMM 1"
+                          type: string
+                      Present:
+                          value: true
+                          type: boolean
+                  xyz.openbmc_project.Inventory.Decorator.Replaceable:
+                      FieldReplaceable:
+                          value: true
+                          type: boolean
+                  xyz.openbmc_project.State.Decorator.OperationalStatus:
+                      Functional:
+                          value: true
+                          type: boolean
+                  xyz.openbmc_project.Inventory.Decorator.LocationCode:
+                      LocationCode:
+                          value: "CPU0_DIMM_A4"
+                          type: string
+          - name: createObjects
+            objs:
+                /system/chassis/motherboard/dimm_a5:
+                  xyz.openbmc_project.Inventory.Item.Dimm:
+                  xyz.openbmc_project.Inventory.Item:
+                      PrettyName:
+                          value: "CPU0 Channel B DIMM 2"
+                          type: string
+                      Present:
+                          value: true
+                          type: boolean
+                  xyz.openbmc_project.Inventory.Decorator.Replaceable:
+                      FieldReplaceable:
+                          value: true
+                          type: boolean
+                  xyz.openbmc_project.State.Decorator.OperationalStatus:
+                      Functional:
+                          value: true
+                          type: boolean
+                  xyz.openbmc_project.Inventory.Decorator.LocationCode:
+                      LocationCode:
+                          value: "CPU0_DIMM_A5"
+                          type: string
+          - name: createObjects
+            objs:
+                /system/chassis/motherboard/dimm_b0:
+                  xyz.openbmc_project.Inventory.Item.Dimm:
+                  xyz.openbmc_project.Inventory.Item:
+                      PrettyName:
+                          value: "CPU0 Channel C DIMM 0"
+                          type: string
+                      Present:
+                          value: true
+                          type: boolean
+                  xyz.openbmc_project.Inventory.Decorator.Replaceable:
+                      FieldReplaceable:
+                          value: true
+                          type: boolean
+                  xyz.openbmc_project.State.Decorator.OperationalStatus:
+                      Functional:
+                          value: true
+                          type: boolean
+                  xyz.openbmc_project.Inventory.Decorator.LocationCode:
+                      LocationCode:
+                          value: "CPU0_DIMM_B0"
+                          type: string
+          - name: createObjects
+            objs:
+                /system/chassis/motherboard/dimm_b1:
+                  xyz.openbmc_project.Inventory.Item.Dimm:
+                  xyz.openbmc_project.Inventory.Item:
+                      PrettyName:
+                          value: "CPU0 Channel C DIMM 1"
+                          type: string
+                      Present:
+                          value: true
+                          type: boolean
+                  xyz.openbmc_project.Inventory.Decorator.Replaceable:
+                      FieldReplaceable:
+                          value: true
+                          type: boolean
+                  xyz.openbmc_project.State.Decorator.OperationalStatus:
+                      Functional:
+                          value: true
+                          type: boolean
+                  xyz.openbmc_project.Inventory.Decorator.LocationCode:
+                      LocationCode:
+                          value: "CPU0_DIMM_B1"
+                          type: string
+          - name: createObjects
+            objs:
+                /system/chassis/motherboard/dimm_b2:
+                  xyz.openbmc_project.Inventory.Item.Dimm:
+                  xyz.openbmc_project.Inventory.Item:
+                      PrettyName:
+                          value: "CPU0 Channel C DIMM 2"
+                          type: string
+                      Present:
+                          value: true
+                          type: boolean
+                  xyz.openbmc_project.Inventory.Decorator.Replaceable:
+                      FieldReplaceable:
+                          value: true
+                          type: boolean
+                  xyz.openbmc_project.State.Decorator.OperationalStatus:
+                      Functional:
+                          value: true
+                          type: boolean
+                  xyz.openbmc_project.Inventory.Decorator.LocationCode:
+                      LocationCode:
+                          value: "CPU0_DIMM_B2"
+                          type: string
+          - name: createObjects
+            objs:
+                /system/chassis/motherboard/dimm_b3:
+                  xyz.openbmc_project.Inventory.Item.Dimm:
+                  xyz.openbmc_project.Inventory.Item:
+                      PrettyName:
+                          value: "CPU0 Channel D DIMM 0"
+                          type: string
+                      Present:
+                          value: true
+                          type: boolean
+                  xyz.openbmc_project.Inventory.Decorator.Replaceable:
+                      FieldReplaceable:
+                          value: true
+                          type: boolean
+                  xyz.openbmc_project.State.Decorator.OperationalStatus:
+                      Functional:
+                          value: true
+                          type: boolean
+                  xyz.openbmc_project.Inventory.Decorator.LocationCode:
+                      LocationCode:
+                          value: "CPU0_DIMM_B3"
+                          type: string
+          - name: createObjects
+            objs:
+                /system/chassis/motherboard/dimm_b4:
+                  xyz.openbmc_project.Inventory.Item.Dimm:
+                  xyz.openbmc_project.Inventory.Item:
+                      PrettyName:
+                          value: "CPU0 Channel D DIMM 1"
+                          type: string
+                      Present:
+                          value: true
+                          type: boolean
+                  xyz.openbmc_project.Inventory.Decorator.Replaceable:
+                      FieldReplaceable:
+                          value: true
+                          type: boolean
+                  xyz.openbmc_project.State.Decorator.OperationalStatus:
+                      Functional:
+                          value: true
+                          type: boolean
+                  xyz.openbmc_project.Inventory.Decorator.LocationCode:
+                      LocationCode:
+                          value: "CPU0_DIMM_B4"
+                          type: string
+          - name: createObjects
+            objs:
+                /system/chassis/motherboard/dimm_b5:
+                  xyz.openbmc_project.Inventory.Item.Dimm:
+                  xyz.openbmc_project.Inventory.Item:
+                      PrettyName:
+                          value: "CPU0 Channel D DIMM 2"
+                          type: string
+                      Present:
+                          value: true
+                          type: boolean
+                  xyz.openbmc_project.Inventory.Decorator.Replaceable:
+                      FieldReplaceable:
+                          value: true
+                          type: boolean
+                  xyz.openbmc_project.State.Decorator.OperationalStatus:
+                      Functional:
+                          value: true
+                          type: boolean
+                  xyz.openbmc_project.Inventory.Decorator.LocationCode:
+                      LocationCode:
+                          value: "CPU0_DIMM_B5"
+                          type: string
+          - name: createObjects
+            objs:
+                /system/chassis/motherboard/dimm_c0:
+                  xyz.openbmc_project.Inventory.Item.Dimm:
+                  xyz.openbmc_project.Inventory.Item:
+                      PrettyName:
+                          value: "CPU1 Channel A DIMM 0"
+                          type: string
+                      Present:
+                          value: true
+                          type: boolean
+                  xyz.openbmc_project.Inventory.Decorator.Replaceable:
+                      FieldReplaceable:
+                          value: true
+                          type: boolean
+                  xyz.openbmc_project.State.Decorator.OperationalStatus:
+                      Functional:
+                          value: true
+                          type: boolean
+                  xyz.openbmc_project.Inventory.Decorator.LocationCode:
+                      LocationCode:
+                          value: "CPU1_DIMM_C0"
+                          type: string
+          - name: createObjects
+            objs:
+                /system/chassis/motherboard/dimm_c1:
+                  xyz.openbmc_project.Inventory.Item.Dimm:
+                  xyz.openbmc_project.Inventory.Item:
+                      PrettyName:
+                          value: "CPU1 Channel A DIMM 1"
+                          type: string
+                      Present:
+                          value: true
+                          type: boolean
+                  xyz.openbmc_project.Inventory.Decorator.Replaceable:
+                      FieldReplaceable:
+                          value: true
+                          type: boolean
+                  xyz.openbmc_project.State.Decorator.OperationalStatus:
+                      Functional:
+                          value: true
+                          type: boolean
+                  xyz.openbmc_project.Inventory.Decorator.LocationCode:
+                      LocationCode:
+                          value: "CPU1_DIMM_C1"
+                          type: string
+          - name: createObjects
+            objs:
+                /system/chassis/motherboard/dimm_c2:
+                  xyz.openbmc_project.Inventory.Item.Dimm:
+                  xyz.openbmc_project.Inventory.Item:
+                      PrettyName:
+                          value: "CPU1 Channel A DIMM 2"
+                          type: string
+                      Present:
+                          value: true
+                          type: boolean
+                  xyz.openbmc_project.Inventory.Decorator.Replaceable:
+                      FieldReplaceable:
+                          value: true
+                          type: boolean
+                  xyz.openbmc_project.State.Decorator.OperationalStatus:
+                      Functional:
+                          value: true
+                          type: boolean
+                  xyz.openbmc_project.Inventory.Decorator.LocationCode:
+                      LocationCode:
+                          value: "CPU1_DIMM_C2"
+                          type: string
+          - name: createObjects
+            objs:
+                /system/chassis/motherboard/dimm_c3:
+                  xyz.openbmc_project.Inventory.Item.Dimm:
+                  xyz.openbmc_project.Inventory.Item:
+                      PrettyName:
+                          value: "CPU1 Channel B DIMM 0"
+                          type: string
+                      Present:
+                          value: true
+                          type: boolean
+                  xyz.openbmc_project.Inventory.Decorator.Replaceable:
+                      FieldReplaceable:
+                          value: true
+                          type: boolean
+                  xyz.openbmc_project.State.Decorator.OperationalStatus:
+                      Functional:
+                          value: true
+                          type: boolean
+                  xyz.openbmc_project.Inventory.Decorator.LocationCode:
+                      LocationCode:
+                          value: "CPU1_DIMM_C3"
+                          type: string
+          - name: createObjects
+            objs:
+                /system/chassis/motherboard/dimm_c4:
+                  xyz.openbmc_project.Inventory.Item.Dimm:
+                  xyz.openbmc_project.Inventory.Item:
+                      PrettyName:
+                          value: "CPU1 Channel B DIMM 1"
+                          type: string
+                      Present:
+                          value: true
+                          type: boolean
+                  xyz.openbmc_project.Inventory.Decorator.Replaceable:
+                      FieldReplaceable:
+                          value: true
+                          type: boolean
+                  xyz.openbmc_project.State.Decorator.OperationalStatus:
+                      Functional:
+                          value: true
+                          type: boolean
+                  xyz.openbmc_project.Inventory.Decorator.LocationCode:
+                      LocationCode:
+                          value: "CPU1_DIMM_C4"
+                          type: string
+          - name: createObjects
+            objs:
+                /system/chassis/motherboard/dimm_c5:
+                  xyz.openbmc_project.Inventory.Item.Dimm:
+                  xyz.openbmc_project.Inventory.Item:
+                      PrettyName:
+                          value: "CPU1 Channel B DIMM 2"
+                          type: string
+                      Present:
+                          value: true
+                          type: boolean
+                  xyz.openbmc_project.Inventory.Decorator.Replaceable:
+                      FieldReplaceable:
+                          value: true
+                          type: boolean
+                  xyz.openbmc_project.State.Decorator.OperationalStatus:
+                      Functional:
+                          value: true
+                          type: boolean
+                  xyz.openbmc_project.Inventory.Decorator.LocationCode:
+                      LocationCode:
+                          value: "CPU1_DIMM_C5"
+                          type: string
+          - name: createObjects
+            objs:
+                /system/chassis/motherboard/dimm_d0:
+                  xyz.openbmc_project.Inventory.Item.Dimm:
+                  xyz.openbmc_project.Inventory.Item:
+                      PrettyName:
+                          value: "CPU1 Channel C DIMM 0"
+                          type: string
+                      Present:
+                          value: true
+                          type: boolean
+                  xyz.openbmc_project.Inventory.Decorator.Replaceable:
+                      FieldReplaceable:
+                          value: true
+                          type: boolean
+                  xyz.openbmc_project.State.Decorator.OperationalStatus:
+                      Functional:
+                          value: true
+                          type: boolean
+                  xyz.openbmc_project.Inventory.Decorator.LocationCode:
+                      LocationCode:
+                          value: "CPU1_DIMM_D0"
+                          type: string
+          - name: createObjects
+            objs:
+                /system/chassis/motherboard/dimm_d1:
+                  xyz.openbmc_project.Inventory.Item.Dimm:
+                  xyz.openbmc_project.Inventory.Item:
+                      PrettyName:
+                          value: "CPU1 Channel C DIMM 1"
+                          type: string
+                      Present:
+                          value: true
+                          type: boolean
+                  xyz.openbmc_project.Inventory.Decorator.Replaceable:
+                      FieldReplaceable:
+                          value: true
+                          type: boolean
+                  xyz.openbmc_project.State.Decorator.OperationalStatus:
+                      Functional:
+                          value: true
+                          type: boolean
+                  xyz.openbmc_project.Inventory.Decorator.LocationCode:
+                      LocationCode:
+                          value: "CPU1_DIMM_D1"
+                          type: string
+          - name: createObjects
+            objs:
+                /system/chassis/motherboard/dimm_d2:
+                  xyz.openbmc_project.Inventory.Item.Dimm:
+                  xyz.openbmc_project.Inventory.Item:
+                      PrettyName:
+                          value: "CPU1 Channel C DIMM 2"
+                          type: string
+                      Present:
+                          value: true
+                          type: boolean
+                  xyz.openbmc_project.Inventory.Decorator.Replaceable:
+                      FieldReplaceable:
+                          value: true
+                          type: boolean
+                  xyz.openbmc_project.State.Decorator.OperationalStatus:
+                      Functional:
+                          value: true
+                          type: boolean
+                  xyz.openbmc_project.Inventory.Decorator.LocationCode:
+                      LocationCode:
+                          value: "CPU1_DIMM_D2"
+                          type: string
+          - name: createObjects
+            objs:
+                /system/chassis/motherboard/dimm_d3:
+                  xyz.openbmc_project.Inventory.Item.Dimm:
+                  xyz.openbmc_project.Inventory.Item:
+                      PrettyName:
+                          value: "CPU1 Channel D DIMM 0"
+                          type: string
+                      Present:
+                          value: true
+                          type: boolean
+                  xyz.openbmc_project.Inventory.Decorator.Replaceable:
+                      FieldReplaceable:
+                          value: true
+                          type: boolean
+                  xyz.openbmc_project.State.Decorator.OperationalStatus:
+                      Functional:
+                          value: true
+                          type: boolean
+                  xyz.openbmc_project.Inventory.Decorator.LocationCode:
+                      LocationCode:
+                          value: "CPU1_DIMM_D3"
+                          type: string
+          - name: createObjects
+            objs:
+                /system/chassis/motherboard/dimm_d4:
+                  xyz.openbmc_project.Inventory.Item.Dimm:
+                  xyz.openbmc_project.Inventory.Item:
+                      PrettyName:
+                          value: "CPU1 Channel D DIMM 1"
+                          type: string
+                      Present:
+                          value: true
+                          type: boolean
+                  xyz.openbmc_project.Inventory.Decorator.Replaceable:
+                      FieldReplaceable:
+                          value: true
+                          type: boolean
+                  xyz.openbmc_project.State.Decorator.OperationalStatus:
+                      Functional:
+                          value: true
+                          type: boolean
+                  xyz.openbmc_project.Inventory.Decorator.LocationCode:
+                      LocationCode:
+                          value: "CPU1_DIMM_D4"
+                          type: string
+          - name: createObjects
+            objs:
+                /system/chassis/motherboard/dimm_d5:
+                  xyz.openbmc_project.Inventory.Item.Dimm:
+                  xyz.openbmc_project.Inventory.Item:
+                      PrettyName:
+                          value: "CPU1 Channel D DIMM 2"
+                          type: string
+                      Present:
+                          value: true
+                          type: boolean
+                  xyz.openbmc_project.Inventory.Decorator.Replaceable:
+                      FieldReplaceable:
+                          value: true
+                          type: boolean
+                  xyz.openbmc_project.State.Decorator.OperationalStatus:
+                      Functional:
+                          value: true
+                          type: boolean
+                  xyz.openbmc_project.Inventory.Decorator.LocationCode:
+                      LocationCode:
+                          value: "CPU1_DIMM_D5"
+                          type: string
