@@ -2,6 +2,7 @@
 description: >
     ASRock Turin2D24TM3-2L static inventory
     Defines 24 DDR5 DIMM slots across 2 CPUs
+    Present property starts as false and is updated by dimm-presence-monitor daemon
 
 events:
     - name: Add DIMMs
@@ -17,7 +18,7 @@ events:
                           value: "CPU0 Channel A DIMM 0"
                           type: string
                       Present:
-                          value: true
+                          value: false
                           type: boolean
                   xyz.openbmc_project.Inventory.Decorator.Replaceable:
                       FieldReplaceable:
@@ -40,7 +41,7 @@ events:
                           value: "CPU0 Channel A DIMM 1"
                           type: string
                       Present:
-                          value: true
+                          value: false
                           type: boolean
                   xyz.openbmc_project.Inventory.Decorator.Replaceable:
                       FieldReplaceable:
@@ -63,7 +64,7 @@ events:
                           value: "CPU0 Channel A DIMM 2"
                           type: string
                       Present:
-                          value: true
+                          value: false
                           type: boolean
                   xyz.openbmc_project.Inventory.Decorator.Replaceable:
                       FieldReplaceable:
@@ -83,10 +84,10 @@ events:
                   xyz.openbmc_project.Inventory.Item.Dimm:
                   xyz.openbmc_project.Inventory.Item:
                       PrettyName:
-                          value: "CPU0 Channel B DIMM 0"
+                          value: "CPU0 Channel A DIMM 3"
                           type: string
                       Present:
-                          value: true
+                          value: false
                           type: boolean
                   xyz.openbmc_project.Inventory.Decorator.Replaceable:
                       FieldReplaceable:
@@ -106,10 +107,10 @@ events:
                   xyz.openbmc_project.Inventory.Item.Dimm:
                   xyz.openbmc_project.Inventory.Item:
                       PrettyName:
-                          value: "CPU0 Channel B DIMM 1"
+                          value: "CPU0 Channel A DIMM 4"
                           type: string
                       Present:
-                          value: true
+                          value: false
                           type: boolean
                   xyz.openbmc_project.Inventory.Decorator.Replaceable:
                       FieldReplaceable:
@@ -129,10 +130,10 @@ events:
                   xyz.openbmc_project.Inventory.Item.Dimm:
                   xyz.openbmc_project.Inventory.Item:
                       PrettyName:
-                          value: "CPU0 Channel B DIMM 2"
+                          value: "CPU0 Channel A DIMM 5"
                           type: string
                       Present:
-                          value: true
+                          value: false
                           type: boolean
                   xyz.openbmc_project.Inventory.Decorator.Replaceable:
                       FieldReplaceable:
@@ -152,10 +153,10 @@ events:
                   xyz.openbmc_project.Inventory.Item.Dimm:
                   xyz.openbmc_project.Inventory.Item:
                       PrettyName:
-                          value: "CPU0 Channel C DIMM 0"
+                          value: "CPU0 Channel B DIMM 0"
                           type: string
                       Present:
-                          value: true
+                          value: false
                           type: boolean
                   xyz.openbmc_project.Inventory.Decorator.Replaceable:
                       FieldReplaceable:
@@ -175,10 +176,10 @@ events:
                   xyz.openbmc_project.Inventory.Item.Dimm:
                   xyz.openbmc_project.Inventory.Item:
                       PrettyName:
-                          value: "CPU0 Channel C DIMM 1"
+                          value: "CPU0 Channel B DIMM 1"
                           type: string
                       Present:
-                          value: true
+                          value: false
                           type: boolean
                   xyz.openbmc_project.Inventory.Decorator.Replaceable:
                       FieldReplaceable:
@@ -198,10 +199,10 @@ events:
                   xyz.openbmc_project.Inventory.Item.Dimm:
                   xyz.openbmc_project.Inventory.Item:
                       PrettyName:
-                          value: "CPU0 Channel C DIMM 2"
+                          value: "CPU0 Channel B DIMM 2"
                           type: string
                       Present:
-                          value: true
+                          value: false
                           type: boolean
                   xyz.openbmc_project.Inventory.Decorator.Replaceable:
                       FieldReplaceable:
@@ -221,10 +222,10 @@ events:
                   xyz.openbmc_project.Inventory.Item.Dimm:
                   xyz.openbmc_project.Inventory.Item:
                       PrettyName:
-                          value: "CPU0 Channel D DIMM 0"
+                          value: "CPU0 Channel B DIMM 3"
                           type: string
                       Present:
-                          value: true
+                          value: false
                           type: boolean
                   xyz.openbmc_project.Inventory.Decorator.Replaceable:
                       FieldReplaceable:
@@ -244,10 +245,10 @@ events:
                   xyz.openbmc_project.Inventory.Item.Dimm:
                   xyz.openbmc_project.Inventory.Item:
                       PrettyName:
-                          value: "CPU0 Channel D DIMM 1"
+                          value: "CPU0 Channel B DIMM 4"
                           type: string
                       Present:
-                          value: true
+                          value: false
                           type: boolean
                   xyz.openbmc_project.Inventory.Decorator.Replaceable:
                       FieldReplaceable:
@@ -267,10 +268,10 @@ events:
                   xyz.openbmc_project.Inventory.Item.Dimm:
                   xyz.openbmc_project.Inventory.Item:
                       PrettyName:
-                          value: "CPU0 Channel D DIMM 2"
+                          value: "CPU0 Channel B DIMM 5"
                           type: string
                       Present:
-                          value: true
+                          value: false
                           type: boolean
                   xyz.openbmc_project.Inventory.Decorator.Replaceable:
                       FieldReplaceable:
@@ -290,10 +291,10 @@ events:
                   xyz.openbmc_project.Inventory.Item.Dimm:
                   xyz.openbmc_project.Inventory.Item:
                       PrettyName:
-                          value: "CPU1 Channel A DIMM 0"
+                          value: "CPU1 Channel C DIMM 0"
                           type: string
                       Present:
-                          value: true
+                          value: false
                           type: boolean
                   xyz.openbmc_project.Inventory.Decorator.Replaceable:
                       FieldReplaceable:
@@ -313,10 +314,10 @@ events:
                   xyz.openbmc_project.Inventory.Item.Dimm:
                   xyz.openbmc_project.Inventory.Item:
                       PrettyName:
-                          value: "CPU1 Channel A DIMM 1"
+                          value: "CPU1 Channel C DIMM 1"
                           type: string
                       Present:
-                          value: true
+                          value: false
                           type: boolean
                   xyz.openbmc_project.Inventory.Decorator.Replaceable:
                       FieldReplaceable:
@@ -336,10 +337,10 @@ events:
                   xyz.openbmc_project.Inventory.Item.Dimm:
                   xyz.openbmc_project.Inventory.Item:
                       PrettyName:
-                          value: "CPU1 Channel A DIMM 2"
+                          value: "CPU1 Channel C DIMM 2"
                           type: string
                       Present:
-                          value: true
+                          value: false
                           type: boolean
                   xyz.openbmc_project.Inventory.Decorator.Replaceable:
                       FieldReplaceable:
@@ -359,10 +360,10 @@ events:
                   xyz.openbmc_project.Inventory.Item.Dimm:
                   xyz.openbmc_project.Inventory.Item:
                       PrettyName:
-                          value: "CPU1 Channel B DIMM 0"
+                          value: "CPU1 Channel C DIMM 3"
                           type: string
                       Present:
-                          value: true
+                          value: false
                           type: boolean
                   xyz.openbmc_project.Inventory.Decorator.Replaceable:
                       FieldReplaceable:
@@ -382,10 +383,10 @@ events:
                   xyz.openbmc_project.Inventory.Item.Dimm:
                   xyz.openbmc_project.Inventory.Item:
                       PrettyName:
-                          value: "CPU1 Channel B DIMM 1"
+                          value: "CPU1 Channel C DIMM 4"
                           type: string
                       Present:
-                          value: true
+                          value: false
                           type: boolean
                   xyz.openbmc_project.Inventory.Decorator.Replaceable:
                       FieldReplaceable:
@@ -405,10 +406,10 @@ events:
                   xyz.openbmc_project.Inventory.Item.Dimm:
                   xyz.openbmc_project.Inventory.Item:
                       PrettyName:
-                          value: "CPU1 Channel B DIMM 2"
+                          value: "CPU1 Channel C DIMM 5"
                           type: string
                       Present:
-                          value: true
+                          value: false
                           type: boolean
                   xyz.openbmc_project.Inventory.Decorator.Replaceable:
                       FieldReplaceable:
@@ -428,10 +429,10 @@ events:
                   xyz.openbmc_project.Inventory.Item.Dimm:
                   xyz.openbmc_project.Inventory.Item:
                       PrettyName:
-                          value: "CPU1 Channel C DIMM 0"
+                          value: "CPU1 Channel D DIMM 0"
                           type: string
                       Present:
-                          value: true
+                          value: false
                           type: boolean
                   xyz.openbmc_project.Inventory.Decorator.Replaceable:
                       FieldReplaceable:
@@ -451,10 +452,10 @@ events:
                   xyz.openbmc_project.Inventory.Item.Dimm:
                   xyz.openbmc_project.Inventory.Item:
                       PrettyName:
-                          value: "CPU1 Channel C DIMM 1"
+                          value: "CPU1 Channel D DIMM 1"
                           type: string
                       Present:
-                          value: true
+                          value: false
                           type: boolean
                   xyz.openbmc_project.Inventory.Decorator.Replaceable:
                       FieldReplaceable:
@@ -474,10 +475,10 @@ events:
                   xyz.openbmc_project.Inventory.Item.Dimm:
                   xyz.openbmc_project.Inventory.Item:
                       PrettyName:
-                          value: "CPU1 Channel C DIMM 2"
+                          value: "CPU1 Channel D DIMM 2"
                           type: string
                       Present:
-                          value: true
+                          value: false
                           type: boolean
                   xyz.openbmc_project.Inventory.Decorator.Replaceable:
                       FieldReplaceable:
@@ -497,10 +498,10 @@ events:
                   xyz.openbmc_project.Inventory.Item.Dimm:
                   xyz.openbmc_project.Inventory.Item:
                       PrettyName:
-                          value: "CPU1 Channel D DIMM 0"
+                          value: "CPU1 Channel D DIMM 3"
                           type: string
                       Present:
-                          value: true
+                          value: false
                           type: boolean
                   xyz.openbmc_project.Inventory.Decorator.Replaceable:
                       FieldReplaceable:
@@ -520,10 +521,10 @@ events:
                   xyz.openbmc_project.Inventory.Item.Dimm:
                   xyz.openbmc_project.Inventory.Item:
                       PrettyName:
-                          value: "CPU1 Channel D DIMM 1"
+                          value: "CPU1 Channel D DIMM 4"
                           type: string
                       Present:
-                          value: true
+                          value: false
                           type: boolean
                   xyz.openbmc_project.Inventory.Decorator.Replaceable:
                       FieldReplaceable:
@@ -543,10 +544,10 @@ events:
                   xyz.openbmc_project.Inventory.Item.Dimm:
                   xyz.openbmc_project.Inventory.Item:
                       PrettyName:
-                          value: "CPU1 Channel D DIMM 2"
+                          value: "CPU1 Channel D DIMM 5"
                           type: string
                       Present:
-                          value: true
+                          value: false
                           type: boolean
                   xyz.openbmc_project.Inventory.Decorator.Replaceable:
                       FieldReplaceable:

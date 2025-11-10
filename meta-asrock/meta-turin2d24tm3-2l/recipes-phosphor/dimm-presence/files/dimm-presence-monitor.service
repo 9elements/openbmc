@@ -1,0 +1,15 @@
+[Unit]
+Description=DIMM Presence Monitor Daemon
+After=xyz.openbmc_project.Inventory.Manager.service
+After=xyz.openbmc_project.HwmonTempSensor.service
+Wants=xyz.openbmc_project.Inventory.Manager.service
+Wants=xyz.openbmc_project.HwmonTempSensor.service
+
+[Service]
+Type=simple
+ExecStart=/usr/bin/dimm-presence-monitor.py
+Restart=on-failure
+RestartSec=5
+
+[Install]
+WantedBy=multi-user.target

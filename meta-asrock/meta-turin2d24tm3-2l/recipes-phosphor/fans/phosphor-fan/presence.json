@@ -1,0 +1,314 @@
+[
+    {
+        "name": "DIMM A0",
+        "path": "/system/chassis/motherboard/dimm_a0",
+        "methods": [
+            {
+                "type": "tach",
+                "sensors": ["/xyz/openbmc_project/sensors/temperature/DIMM_A0"]
+            }
+        ],
+        "rpolicy": {
+            "type": "anyof"
+        }
+    },
+    {
+        "name": "DIMM A1",
+        "path": "/system/chassis/motherboard/dimm_a1",
+        "methods": [
+            {
+                "type": "tach",
+                "sensors": ["/xyz/openbmc_project/sensors/temperature/DIMM_A1"]
+            }
+        ],
+        "rpolicy": {
+            "type": "anyof"
+        }
+    },
+    {
+        "name": "DIMM A2",
+        "path": "/system/chassis/motherboard/dimm_a2",
+        "methods": [
+            {
+                "type": "tach",
+                "sensors": ["/xyz/openbmc_project/sensors/temperature/DIMM_A2"]
+            }
+        ],
+        "rpolicy": {
+            "type": "anyof"
+        }
+    },
+    {
+        "name": "DIMM A3",
+        "path": "/system/chassis/motherboard/dimm_a3",
+        "methods": [
+            {
+                "type": "tach",
+                "sensors": ["/xyz/openbmc_project/sensors/temperature/DIMM_A3"]
+            }
+        ],
+        "rpolicy": {
+            "type": "anyof"
+        }
+    },
+    {
+        "name": "DIMM A4",
+        "path": "/system/chassis/motherboard/dimm_a4",
+        "methods": [
+            {
+                "type": "tach",
+                "sensors": ["/xyz/openbmc_project/sensors/temperature/DIMM_A4"]
+            }
+        ],
+        "rpolicy": {
+            "type": "anyof"
+        }
+    },
+    {
+        "name": "DIMM A5",
+        "path": "/system/chassis/motherboard/dimm_a5",
+        "methods": [
+            {
+                "type": "tach",
+                "sensors": ["/xyz/openbmc_project/sensors/temperature/DIMM_A5"]
+            }
+        ],
+        "rpolicy": {
+            "type": "anyof"
+        }
+    },
+    {
+        "name": "DIMM B0",
+        "path": "/system/chassis/motherboard/dimm_b0",
+        "methods": [
+            {
+                "type": "tach",
+                "sensors": ["/xyz/openbmc_project/sensors/temperature/DIMM_B0"]
+            }
+        ],
+        "rpolicy": {
+            "type": "anyof"
+        }
+    },
+    {
+        "name": "DIMM B1",
+        "path": "/system/chassis/motherboard/dimm_b1",
+        "methods": [
+            {
+                "type": "tach",
+                "sensors": ["/xyz/openbmc_project/sensors/temperature/DIMM_B1"]
+            }
+        ],
+        "rpolicy": {
+            "type": "anyof"
+        }
+    },
+    {
+        "name": "DIMM B2",
+        "path": "/system/chassis/motherboard/dimm_b2",
+        "methods": [
+            {
+                "type": "tach",
+                "sensors": ["/xyz/openbmc_project/sensors/temperature/DIMM_B2"]
+            }
+        ],
+        "rpolicy": {
+            "type": "anyof"
+        }
+    },
+    {
+        "name": "DIMM B3",
+        "path": "/system/chassis/motherboard/dimm_b3",
+        "methods": [
+            {
+                "type": "tach",
+                "sensors": ["/xyz/openbmc_project/sensors/temperature/DIMM_B3"]
+            }
+        ],
+        "rpolicy": {
+            "type": "anyof"
+        }
+    },
+    {
+        "name": "DIMM B4",
+        "path": "/system/chassis/motherboard/dimm_b4",
+        "methods": [
+            {
+                "type": "tach",
+                "sensors": ["/xyz/openbmc_project/sensors/temperature/DIMM_B4"]
+            }
+        ],
+        "rpolicy": {
+            "type": "anyof"
+        }
+    },
+    {
+        "name": "DIMM B5",
+        "path": "/system/chassis/motherboard/dimm_b5",
+        "methods": [
+            {
+                "type": "tach",
+                "sensors": ["/xyz/openbmc_project/sensors/temperature/DIMM_B5"]
+            }
+        ],
+        "rpolicy": {
+            "type": "anyof"
+        }
+    },
+    {
+        "name": "DIMM C0",
+        "path": "/system/chassis/motherboard/dimm_c0",
+        "methods": [
+            {
+                "type": "tach",
+                "sensors": ["/xyz/openbmc_project/sensors/temperature/DIMM_C0"]
+            }
+        ],
+        "rpolicy": {
+            "type": "anyof"
+        }
+    },
+    {
+        "name": "DIMM C1",
+        "path": "/system/chassis/motherboard/dimm_c1",
+        "methods": [
+            {
+                "type": "tach",
+                "sensors": ["/xyz/openbmc_project/sensors/temperature/DIMM_C1"]
+            }
+        ],
+        "rpolicy": {
+            "type": "anyof"
+        }
+    },
+    {
+        "name": "DIMM C2",
+        "path": "/system/chassis/motherboard/dimm_c2",
+        "methods": [
+            {
+                "type": "tach",
+                "sensors": ["/xyz/openbmc_project/sensors/temperature/DIMM_C2"]
+            }
+        ],
+        "rpolicy": {
+            "type": "anyof"
+        }
+    },
+    {
+        "name": "DIMM C3",
+        "path": "/system/chassis/motherboard/dimm_c3",
+        "methods": [
+            {
+                "type": "tach",
+                "sensors": ["/xyz/openbmc_project/sensors/temperature/DIMM_C3"]
+            }
+        ],
+        "rpolicy": {
+            "type": "anyof"
+        }
+    },
+    {
+        "name": "DIMM C4",
+        "path": "/system/chassis/motherboard/dimm_c4",
+        "methods": [
+            {
+                "type": "tach",
+                "sensors": ["/xyz/openbmc_project/sensors/temperature/DIMM_C4"]
+            }
+        ],
+        "rpolicy": {
+            "type": "anyof"
+        }
+    },
+    {
+        "name": "DIMM C5",
+        "path": "/system/chassis/motherboard/dimm_c5",
+        "methods": [
+            {
+                "type": "tach",
+                "sensors": ["/xyz/openbmc_project/sensors/temperature/DIMM_C5"]
+            }
+        ],
+        "rpolicy": {
+            "type": "anyof"
+        }
+    },
+    {
+        "name": "DIMM D0",
+        "path": "/system/chassis/motherboard/dimm_d0",
+        "methods": [
+            {
+                "type": "tach",
+                "sensors": ["/xyz/openbmc_project/sensors/temperature/DIMM_D0"]
+            }
+        ],
+        "rpolicy": {
+            "type": "anyof"
+        }
+    },
+    {
+        "name": "DIMM D1",
+        "path": "/system/chassis/motherboard/dimm_d1",
+        "methods": [
+            {
+                "type": "tach",
+                "sensors": ["/xyz/openbmc_project/sensors/temperature/DIMM_D1"]
+            }
+        ],
+        "rpolicy": {
+            "type": "anyof"
+        }
+    },
+    {
+        "name": "DIMM D2",
+        "path": "/system/chassis/motherboard/dimm_d2",
+        "methods": [
+            {
+                "type": "tach",
+                "sensors": ["/xyz/openbmc_project/sensors/temperature/DIMM_D2"]
+            }
+        ],
+        "rpolicy": {
+            "type": "anyof"
+        }
+    },
+    {
+        "name": "DIMM D3",
+        "path": "/system/chassis/motherboard/dimm_d3",
+        "methods": [
+            {
+                "type": "tach",
+                "sensors": ["/xyz/openbmc_project/sensors/temperature/DIMM_D3"]
+            }
+        ],
+        "rpolicy": {
+            "type": "anyof"
+        }
+    },
+    {
+        "name": "DIMM D4",
+        "path": "/system/chassis/motherboard/dimm_d4",
+        "methods": [
+            {
+                "type": "tach",
+                "sensors": ["/xyz/openbmc_project/sensors/temperature/DIMM_D4"]
+            }
+        ],
+        "rpolicy": {
+            "type": "anyof"
+        }
+    },
+    {
+        "name": "DIMM D5",
+        "path": "/system/chassis/motherboard/dimm_d5",
+        "methods": [
+            {
+                "type": "tach",
+                "sensors": ["/xyz/openbmc_project/sensors/temperature/DIMM_D5"]
+            }
+        ],
+        "rpolicy": {
+            "type": "anyof"
+        }
+    }
+]

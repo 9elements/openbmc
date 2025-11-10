@@ -31,7 +31,9 @@ RDEPENDS:${PN}-flash = " \
 SUMMARY:${PN}-system = "ASRock System"
 RDEPENDS:${PN}-system = " \
         dbus-sensors \
+        dimm-presence-monitor \
         entity-manager \
+        phosphor-fan \
         phosphor-hwmon \
         phosphor-inventory-manager \
         phosphor-pid-control \
