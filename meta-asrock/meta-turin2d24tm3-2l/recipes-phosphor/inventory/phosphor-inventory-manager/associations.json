@@ -1,27 +1,22 @@
 [
     {
         "path": "system/fan/Fan1",
-        "endpoints":
-        [
+        "endpoints": [
             {
-                "types":
-                {
+                "types": {
                     "rType": "inventory",
                     "fType": "sensors"
                 },
-                "paths":
-                [
+                "paths": [
                     "/xyz/openbmc_project/sensors/fan_tach/Fan_1"
                 ]
             },
             {
-                "types":
-                {
+                "types": {
                     "rType": "cooled_by",
                     "fType": "cooling"
                 },
-                "paths":
-                [
+                "paths": [
                     "/xyz/openbmc_project/inventory/system/board/ASRock_TURIN2D24TM3_2L_Baseboard"
                 ]
             }
@@ -29,27 +24,22 @@
     },
     {
         "path": "system/fan/Fan2",
-        "endpoints":
-        [
+        "endpoints": [
             {
-                "types":
-                {
+                "types": {
                     "rType": "inventory",
                     "fType": "sensors"
                 },
-                "paths":
-                [
+                "paths": [
                     "/xyz/openbmc_project/sensors/fan_tach/Fan_2"
                 ]
             },
             {
-                "types":
-                {
+                "types": {
                     "rType": "cooled_by",
                     "fType": "cooling"
                 },
-                "paths":
-                [
+                "paths": [
                     "/xyz/openbmc_project/inventory/system/board/ASRock_TURIN2D24TM3_2L_Baseboard"
                 ]
             }
@@ -57,27 +47,22 @@
     },
     {
         "path": "system/fan/Fan3",
-        "endpoints":
-        [
+        "endpoints": [
             {
-                "types":
-                {
+                "types": {
                     "rType": "inventory",
                     "fType": "sensors"
                 },
-                "paths":
-                [
+                "paths": [
                     "/xyz/openbmc_project/sensors/fan_tach/Fan_3"
                 ]
             },
             {
-                "types":
-                {
+                "types": {
                     "rType": "cooled_by",
                     "fType": "cooling"
                 },
-                "paths":
-                [
+                "paths": [
                     "/xyz/openbmc_project/inventory/system/board/ASRock_TURIN2D24TM3_2L_Baseboard"
                 ]
             }
@@ -85,27 +70,22 @@
     },
     {
         "path": "system/fan/Fan4",
-        "endpoints":
-        [
+        "endpoints": [
             {
-                "types":
-                {
+                "types": {
                     "rType": "inventory",
                     "fType": "sensors"
                 },
-                "paths":
-                [
+                "paths": [
                     "/xyz/openbmc_project/sensors/fan_tach/Fan_4"
                 ]
             },
             {
-                "types":
-                {
+                "types": {
                     "rType": "cooled_by",
                     "fType": "cooling"
                 },
-                "paths":
-                [
+                "paths": [
                     "/xyz/openbmc_project/inventory/system/board/ASRock_TURIN2D24TM3_2L_Baseboard"
                 ]
             }
@@ -113,27 +93,22 @@
     },
     {
         "path": "system/fan/Fan5",
-        "endpoints":
-        [
+        "endpoints": [
             {
-                "types":
-                {
+                "types": {
                     "rType": "inventory",
                     "fType": "sensors"
                 },
-                "paths":
-                [
+                "paths": [
                     "/xyz/openbmc_project/sensors/fan_tach/Fan_5"
                 ]
             },
             {
-                "types":
-                {
+                "types": {
                     "rType": "cooled_by",
                     "fType": "cooling"
                 },
-                "paths":
-                [
+                "paths": [
                     "/xyz/openbmc_project/inventory/system/board/ASRock_TURIN2D24TM3_2L_Baseboard"
                 ]
             }
@@ -141,27 +116,22 @@
     },
     {
         "path": "system/fan/Fan6",
-        "endpoints":
-        [
+        "endpoints": [
             {
-                "types":
-                {
+                "types": {
                     "rType": "inventory",
                     "fType": "sensors"
                 },
-                "paths":
-                [
+                "paths": [
                     "/xyz/openbmc_project/sensors/fan_tach/Fan_6"
                 ]
             },
             {
-                "types":
-                {
+                "types": {
                     "rType": "cooled_by",
                     "fType": "cooling"
                 },
-                "paths":
-                [
+                "paths": [
                     "/xyz/openbmc_project/inventory/system/board/ASRock_TURIN2D24TM3_2L_Baseboard"
                 ]
             }
@@ -169,27 +139,22 @@
     },
     {
         "path": "system/fan/Fan7",
-        "endpoints":
-        [
+        "endpoints": [
             {
-                "types":
-                {
+                "types": {
                     "rType": "inventory",
                     "fType": "sensors"
                 },
-                "paths":
-                [
+                "paths": [
                     "/xyz/openbmc_project/sensors/fan_tach/Fan_7"
                 ]
             },
             {
-                "types":
-                {
+                "types": {
                     "rType": "cooled_by",
                     "fType": "cooling"
                 },
-                "paths":
-                [
+                "paths": [
                     "/xyz/openbmc_project/inventory/system/board/ASRock_TURIN2D24TM3_2L_Baseboard"
                 ]
             }
@@ -197,27 +162,22 @@
     },
     {
         "path": "system/fan/Fan8",
-        "endpoints":
-        [
+        "endpoints": [
             {
-                "types":
-                {
+                "types": {
                     "rType": "inventory",
                     "fType": "sensors"
                 },
-                "paths":
-                [
+                "paths": [
                     "/xyz/openbmc_project/sensors/fan_tach/Fan_8"
                 ]
             },
             {
-                "types":
-                {
+                "types": {
                     "rType": "cooled_by",
                     "fType": "cooling"
                 },
-                "paths":
-                [
+                "paths": [
                     "/xyz/openbmc_project/inventory/system/board/ASRock_TURIN2D24TM3_2L_Baseboard"
                 ]
             }
@@ -225,16 +185,13 @@
     },
     {
         "path": "system/powersupply/ACBEL_PSU1",
-        "endpoints":
-        [
+        "endpoints": [
             {
-                "types":
-                {
+                "types": {
                     "rType": "inventory",
                     "fType": "sensors"
                 },
-                "paths":
-                [
+                "paths": [
                     "/xyz/openbmc_project/sensors/current/PSU1_Output_Current",
                     "/xyz/openbmc_project/sensors/power/PSU1_Output_Power",
                     "/xyz/openbmc_project/sensors/temperature/PSU1_Temperature",
@@ -243,13 +200,11 @@
                 ]
             },
             {
-                "types":
-                {
+                "types": {
                     "rType": "powered_by",
                     "fType": "powering"
                 },
-                "paths":
-                [
+                "paths": [
                     "/xyz/openbmc_project/inventory/system/board/ASRock_TURIN2D24TM3_2L_Baseboard"
                 ]
             }
@@ -257,16 +212,13 @@
     },
     {
         "path": "system/powersupply/ACBEL_PSU2",
-        "endpoints":
-        [
+        "endpoints": [
             {
-                "types":
-                {
+                "types": {
                     "rType": "inventory",
                     "fType": "sensors"
                 },
-                "paths":
-                [
+                "paths": [
                     "/xyz/openbmc_project/sensors/current/PSU2_Output_Current",
                     "/xyz/openbmc_project/sensors/power/PSU2_Output_Power",
                     "/xyz/openbmc_project/sensors/temperature/PSU2_Temperature",
@@ -275,14 +227,348 @@
                 ]
             },
             {
-                "types":
-                {
+                "types": {
                     "rType": "powered_by",
                     "fType": "powering"
                 },
-                "paths":
-                [
+                "paths": [
                     "/xyz/openbmc_project/inventory/system/board/ASRock_TURIN2D24TM3_2L_Baseboard"
+                ]
+            }
+        ]
+    },
+    {
+        "path": "system/chassis/motherboard/dimm_a0",
+        "endpoints": [
+            {
+                "types": {
+                    "rType": "inventory",
+                    "fType": "sensors"
+                },
+                "paths": [
+                    "/xyz/openbmc_project/sensors/temperature/DIMM_A0"
+                ]
+            }
+        ]
+    },
+    {
+        "path": "system/chassis/motherboard/dimm_a1",
+        "endpoints": [
+            {
+                "types": {
+                    "rType": "inventory",
+                    "fType": "sensors"
+                },
+                "paths": [
+                    "/xyz/openbmc_project/sensors/temperature/DIMM_A1"
+                ]
+            }
+        ]
+    },
+    {
+        "path": "system/chassis/motherboard/dimm_a2",
+        "endpoints": [
+            {
+                "types": {
+                    "rType": "inventory",
+                    "fType": "sensors"
+                },
+                "paths": [
+                    "/xyz/openbmc_project/sensors/temperature/DIMM_A2"
+                ]
+            }
+        ]
+    },
+    {
+        "path": "system/chassis/motherboard/dimm_a3",
+        "endpoints": [
+            {
+                "types": {
+                    "rType": "inventory",
+                    "fType": "sensors"
+                },
+                "paths": [
+                    "/xyz/openbmc_project/sensors/temperature/DIMM_A3"
+                ]
+            }
+        ]
+    },
+    {
+        "path": "system/chassis/motherboard/dimm_a4",
+        "endpoints": [
+            {
+                "types": {
+                    "rType": "inventory",
+                    "fType": "sensors"
+                },
+                "paths": [
+                    "/xyz/openbmc_project/sensors/temperature/DIMM_A4"
+                ]
+            }
+        ]
+    },
+    {
+        "path": "system/chassis/motherboard/dimm_a5",
+        "endpoints": [
+            {
+                "types": {
+                    "rType": "inventory",
+                    "fType": "sensors"
+                },
+                "paths": [
+                    "/xyz/openbmc_project/sensors/temperature/DIMM_A5"
+                ]
+            }
+        ]
+    },
+    {
+        "path": "system/chassis/motherboard/dimm_b0",
+        "endpoints": [
+            {
+                "types": {
+                    "rType": "inventory",
+                    "fType": "sensors"
+                },
+                "paths": [
+                    "/xyz/openbmc_project/sensors/temperature/DIMM_B0"
+                ]
+            }
+        ]
+    },
+    {
+        "path": "system/chassis/motherboard/dimm_b1",
+        "endpoints": [
+            {
+                "types": {
+                    "rType": "inventory",
+                    "fType": "sensors"
+                },
+                "paths": [
+                    "/xyz/openbmc_project/sensors/temperature/DIMM_B1"
+                ]
+            }
+        ]
+    },
+    {
+        "path": "system/chassis/motherboard/dimm_b2",
+        "endpoints": [
+            {
+                "types": {
+                    "rType": "inventory",
+                    "fType": "sensors"
+                },
+                "paths": [
+                    "/xyz/openbmc_project/sensors/temperature/DIMM_B2"
+                ]
+            }
+        ]
+    },
+    {
+        "path": "system/chassis/motherboard/dimm_b3",
+        "endpoints": [
+            {
+                "types": {
+                    "rType": "inventory",
+                    "fType": "sensors"
+                },
+                "paths": [
+                    "/xyz/openbmc_project/sensors/temperature/DIMM_B3"
+                ]
+            }
+        ]
+    },
+    {
+        "path": "system/chassis/motherboard/dimm_b4",
+        "endpoints": [
+            {
+                "types": {
+                    "rType": "inventory",
+                    "fType": "sensors"
+                },
+                "paths": [
+                    "/xyz/openbmc_project/sensors/temperature/DIMM_B4"
+                ]
+            }
+        ]
+    },
+    {
+        "path": "system/chassis/motherboard/dimm_b5",
+        "endpoints": [
+            {
+                "types": {
+                    "rType": "inventory",
+                    "fType": "sensors"
+                },
+                "paths": [
+                    "/xyz/openbmc_project/sensors/temperature/DIMM_B5"
+                ]
+            }
+        ]
+    },
+    {
+        "path": "system/chassis/motherboard/dimm_c0",
+        "endpoints": [
+            {
+                "types": {
+                    "rType": "inventory",
+                    "fType": "sensors"
+                },
+                "paths": [
+                    "/xyz/openbmc_project/sensors/temperature/DIMM_C0"
+                ]
+            }
+        ]
+    },
+    {
+        "path": "system/chassis/motherboard/dimm_c1",
+        "endpoints": [
+            {
+                "types": {
+                    "rType": "inventory",
+                    "fType": "sensors"
+                },
+                "paths": [
+                    "/xyz/openbmc_project/sensors/temperature/DIMM_C1"
+                ]
+            }
+        ]
+    },
+    {
+        "path": "system/chassis/motherboard/dimm_c2",
+        "endpoints": [
+            {
+                "types": {
+                    "rType": "inventory",
+                    "fType": "sensors"
+                },
+                "paths": [
+                    "/xyz/openbmc_project/sensors/temperature/DIMM_C2"
+                ]
+            }
+        ]
+    },
+    {
+        "path": "system/chassis/motherboard/dimm_c3",
+        "endpoints": [
+            {
+                "types": {
+                    "rType": "inventory",
+                    "fType": "sensors"
+                },
+                "paths": [
+                    "/xyz/openbmc_project/sensors/temperature/DIMM_C3"
+                ]
+            }
+        ]
+    },
+    {
+        "path": "system/chassis/motherboard/dimm_c4",
+        "endpoints": [
+            {
+                "types": {
+                    "rType": "inventory",
+                    "fType": "sensors"
+                },
+                "paths": [
+                    "/xyz/openbmc_project/sensors/temperature/DIMM_C4"
+                ]
+            }
+        ]
+    },
+    {
+        "path": "system/chassis/motherboard/dimm_c5",
+        "endpoints": [
+            {
+                "types": {
+                    "rType": "inventory",
+                    "fType": "sensors"
+                },
+                "paths": [
+                    "/xyz/openbmc_project/sensors/temperature/DIMM_C5"
+                ]
+            }
+        ]
+    },
+    {
+        "path": "system/chassis/motherboard/dimm_d0",
+        "endpoints": [
+            {
+                "types": {
+                    "rType": "inventory",
+                    "fType": "sensors"
+                },
+                "paths": [
+                    "/xyz/openbmc_project/sensors/temperature/DIMM_D0"
+                ]
+            }
+        ]
+    },
+    {
+        "path": "system/chassis/motherboard/dimm_d1",
+        "endpoints": [
+            {
+                "types": {
+                    "rType": "inventory",
+                    "fType": "sensors"
+                },
+                "paths": [
+                    "/xyz/openbmc_project/sensors/temperature/DIMM_D1"
+                ]
+            }
+        ]
+    },
+    {
+        "path": "system/chassis/motherboard/dimm_d2",
+        "endpoints": [
+            {
+                "types": {
+                    "rType": "inventory",
+                    "fType": "sensors"
+                },
+                "paths": [
+                    "/xyz/openbmc_project/sensors/temperature/DIMM_D2"
+                ]
+            }
+        ]
+    },
+    {
+        "path": "system/chassis/motherboard/dimm_d3",
+        "endpoints": [
+            {
+                "types": {
+                    "rType": "inventory",
+                    "fType": "sensors"
+                },
+                "paths": [
+                    "/xyz/openbmc_project/sensors/temperature/DIMM_D3"
+                ]
+            }
+        ]
+    },
+    {
+        "path": "system/chassis/motherboard/dimm_d4",
+        "endpoints": [
+            {
+                "types": {
+                    "rType": "inventory",
+                    "fType": "sensors"
+                },
+                "paths": [
+                    "/xyz/openbmc_project/sensors/temperature/DIMM_D4"
+                ]
+            }
+        ]
+    },
+    {
+        "path": "system/chassis/motherboard/dimm_d5",
+        "endpoints": [
+            {
+                "types": {
+                    "rType": "inventory",
+                    "fType": "sensors"
+                },
+                "paths": [
+                    "/xyz/openbmc_project/sensors/temperature/DIMM_D5"
                 ]
             }
         ]
