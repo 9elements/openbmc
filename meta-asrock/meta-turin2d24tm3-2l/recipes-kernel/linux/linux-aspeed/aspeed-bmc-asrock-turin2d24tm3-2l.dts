@@ -86,7 +86,9 @@
             default-state = "off";
         };
     };
+};
 
+/ {
     fan0: pwm-fan0 {
         compatible = "pwm-fan";
         pwms = <&pwm_tach 0 40000 0>;
@@ -336,9 +338,9 @@
 };
 */
 
-/* RJ45 Serial Port on the back */
+/* RJ45 Serial Port on the back - disabled per MegaRAC */
 &uart1 {
-    status = "okay";
+    status = "disabled";
     pinctrl-names = "default";
     pinctrl-0 = <&pinctrl_txd1_default
             &pinctrl_rxd1_default
@@ -350,17 +352,42 @@
             &pinctrl_nrts1_default>;
 };
 
-/* Unclear at the moment */
+/* UART3 - disabled per MegaRAC */
 &uart3 {
-    status = "okay";
+    status = "disabled";
 };
 
-/* BMC 'DEBUG' UART */
+/* UART2 - disabled */
+&uart2 {
+    status = "disabled";
+};
+
+/* UART4 - disabled per MegaRAC */
+&uart4 {
+    status = "disabled";
+};
+
+/* BMC 'DEBUG' UART - ONLY ENABLED UART per MegaRAC */
 &uart5 {
     status = "okay";
 };
 
-/* UART between BMC and CPU0 UART1 */
+/* UART6 - disabled per MegaRAC */
+&uart6 {
+    status = "disabled";
+};
+
+/* UART7 - disabled per MegaRAC */
+&uart7 {
+    status = "disabled";
+};
+
+/* UART8 - disabled per MegaRAC */
+&uart8 {
+    status = "disabled";
+};
+
+/* UART9 - enabled for testing host COM port routing */
 &uart9 {
     status = "okay";
 };
@@ -904,6 +931,13 @@
     snoop-ports = <0x80>;
 };
 
+/* VUART1 - Virtual UART for host serial console over LPC */
+&vuart1 {
+    status = "okay";
+    aspeed,lpc-io-reg = <0x3f8>;
+    aspeed,lpc-interrupts = <4 IRQ_TYPE_LEVEL_LOW>;
+};
+
 &hace {
     status = "okay";
 };
@@ -1176,6 +1210,13 @@
                   "CPU1_PROCHOT",
                   "MFG_MODE",
                   "KCS_HOST_BMC";
+
+    mfg-mode-hog {
+        gpio-hog;
+        gpios = <ASPEED_GPIO(Y, 2) GPIO_ACTIVE_LOW>;
+        output-low;
+        line-name = "MFG_MODE";
+    };
 };
 
 /*
