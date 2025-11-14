@@ -1213,7 +1213,7 @@
                     "Value": 80
                 }
             ],
-            "Type": "TMP112"
+            "Type": "SPD5118"
         },
         {
             "Address": "0x51",
@@ -1234,7 +1234,7 @@
                     "Value": 80
                 }
             ],
-            "Type": "TMP112"
+            "Type": "SPD5118"
         },
         {
             "Address": "0x52",
@@ -1255,7 +1255,7 @@
                     "Value": 80
                 }
             ],
-            "Type": "TMP112"
+            "Type": "SPD5118"
         },
         {
             "Address": "0x53",
@@ -1276,7 +1276,7 @@
                     "Value": 80
                 }
             ],
-            "Type": "TMP112"
+            "Type": "SPD5118"
         },
         {
             "Address": "0x54",
@@ -1297,7 +1297,7 @@
                     "Value": 80
                 }
             ],
-            "Type": "TMP112"
+            "Type": "SPD5118"
         },
         {
             "Address": "0x55",
@@ -1318,7 +1318,7 @@
                     "Value": 80
                 }
             ],
-            "Type": "TMP112"
+            "Type": "SPD5118"
         },
         {
             "Address": "0x50",
@@ -1339,7 +1339,7 @@
                     "Value": 80
                 }
             ],
-            "Type": "TMP112"
+            "Type": "SPD5118"
         },
         {
             "Address": "0x51",
@@ -1360,7 +1360,7 @@
                     "Value": 80
                 }
             ],
-            "Type": "TMP112"
+            "Type": "SPD5118"
         },
         {
             "Address": "0x52",
@@ -1381,7 +1381,7 @@
                     "Value": 80
                 }
             ],
-            "Type": "TMP112"
+            "Type": "SPD5118"
         },
         {
             "Address": "0x53",
@@ -1402,7 +1402,7 @@
                     "Value": 80
                 }
             ],
-            "Type": "TMP112"
+            "Type": "SPD5118"
         },
         {
             "Address": "0x54",
@@ -1423,7 +1423,7 @@
                     "Value": 80
                 }
             ],
-            "Type": "TMP112"
+            "Type": "SPD5118"
         },
         {
             "Address": "0x55",
@@ -1444,7 +1444,7 @@
                     "Value": 80
                 }
             ],
-            "Type": "TMP112"
+            "Type": "SPD5118"
         },
         {
             "Address": "0x50",
@@ -1465,7 +1465,7 @@
                     "Value": 80
                 }
             ],
-            "Type": "TMP112"
+            "Type": "SPD5118"
         },
         {
             "Address": "0x51",
@@ -1486,7 +1486,7 @@
                     "Value": 80
                 }
             ],
-            "Type": "TMP112"
+            "Type": "SPD5118"
         },
         {
             "Address": "0x52",
@@ -1507,7 +1507,7 @@
                     "Value": 80
                 }
             ],
-            "Type": "TMP112"
+            "Type": "SPD5118"
         },
         {
             "Address": "0x53",
@@ -1528,7 +1528,7 @@
                     "Value": 80
                 }
             ],
-            "Type": "TMP112"
+            "Type": "SPD5118"
         },
         {
             "Address": "0x54",
@@ -1549,7 +1549,7 @@
                     "Value": 80
                 }
             ],
-            "Type": "TMP112"
+            "Type": "SPD5118"
         },
         {
             "Address": "0x55",
@@ -1570,7 +1570,7 @@
                     "Value": 80
                 }
             ],
-            "Type": "TMP112"
+            "Type": "SPD5118"
         },
         {
             "Address": "0x50",
@@ -1591,7 +1591,7 @@
                     "Value": 80
                 }
             ],
-            "Type": "TMP112"
+            "Type": "SPD5118"
         },
         {
             "Address": "0x51",
@@ -1612,7 +1612,7 @@
                     "Value": 80
                 }
             ],
-            "Type": "TMP112"
+            "Type": "SPD5118"
         },
         {
             "Address": "0x52",
@@ -1633,7 +1633,7 @@
                     "Value": 80
                 }
             ],
-            "Type": "TMP112"
+            "Type": "SPD5118"
         },
         {
             "Address": "0x53",
@@ -1654,7 +1654,7 @@
                     "Value": 80
                 }
             ],
-            "Type": "TMP112"
+            "Type": "SPD5118"
         },
         {
             "Address": "0x54",
@@ -1675,7 +1675,7 @@
                     "Value": 80
                 }
             ],
-            "Type": "TMP112"
+            "Type": "SPD5118"
         },
         {
             "Address": "0x55",
@@ -1696,7 +1696,7 @@
                     "Value": 80
                 }
             ],
-            "Type": "TMP112"
+            "Type": "SPD5118"
         }
     ],
     "Name": "ASRock TURIN2D24TM3-2L Baseboard",

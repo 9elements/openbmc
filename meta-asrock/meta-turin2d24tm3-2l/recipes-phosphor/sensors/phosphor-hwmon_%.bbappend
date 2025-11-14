@@ -13,6 +13,30 @@ CHIPS:turin2d24tm3-2l = " \
                bus/i2c-6/6-0075 \
                bus/i2c-7/7-004c \
                bus/i2c-11/11-004c \
+               bus/i2c-36/36-0050 \
+               bus/i2c-36/36-0051 \
+               bus/i2c-36/36-0052 \
+               bus/i2c-36/36-0053 \
+               bus/i2c-36/36-0054 \
+               bus/i2c-36/36-0055 \
+               bus/i2c-37/37-0050 \
+               bus/i2c-37/37-0051 \
+               bus/i2c-37/37-0052 \
+               bus/i2c-37/37-0053 \
+               bus/i2c-37/37-0054 \
+               bus/i2c-37/37-0055 \
+               bus/i2c-38/38-0050 \
+               bus/i2c-38/38-0051 \
+               bus/i2c-38/38-0052 \
+               bus/i2c-38/38-0053 \
+               bus/i2c-38/38-0054 \
+               bus/i2c-38/38-0055 \
+               bus/i2c-39/39-0050 \
+               bus/i2c-39/39-0051 \
+               bus/i2c-39/39-0052 \
+               bus/i2c-39/39-0053 \
+               bus/i2c-39/39-0054 \
+               bus/i2c-39/39-0055 \
                "
 
 # Format paths to configuration files
