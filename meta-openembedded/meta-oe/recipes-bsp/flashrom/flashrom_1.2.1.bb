@@ -19,3 +19,7 @@ PACKAGECONFIG ??= "pci usb ftdi"
 PACKAGECONFIG[pci] = "-Dpciutils=true,-Dpciutils=false,pciutils"
 PACKAGECONFIG[usb] = "-Dusb=true,-Dusb=false,libusb"
 PACKAGECONFIG[ftdi] = "-Dftdi=true,-Dftdi=false,libftdi"
+
+EXTRA_OEMESON = "-Dbash_completion=disabled -Dtests=disabled"
+# Currently the static libraries contain buildpaths
+INSANE_SKIP:${PN}-staticdev += "buildpaths"
