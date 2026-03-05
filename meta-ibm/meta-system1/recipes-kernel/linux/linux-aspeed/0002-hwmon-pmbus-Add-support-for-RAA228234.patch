@@ -1,0 +1,33 @@
+From 4fc10ac2f81f801b9704859a175f58ccff727c14 Mon Sep 17 00:00:00 2001
+From: Patrick Rudolph <patrick.rudolph@9elements.com>
+Date: Thu, 5 Mar 2026 09:32:21 +0100
+Subject: [PATCH 2/5] hwmon: pmbus: Add support for RAA228234
+
+Add support for RAA228234 which is similar to the existing RAA228228.
+
+While the RAA228228 is a dual output 20phase PWM controller, the
+RAA228234 only supports 8phase PWM. From the PMBUS interface there's no
+difference between those two chips.
+
+Confirmed using RAA228234 that all sensor readings are correct.
+Upstream-Status: Pending
+Signed-off-by: Patrick Rudolph <patrick.rudolph@9elements.com>
+---
+ drivers/hwmon/pmbus/isl68137.c | 1 +
+ 1 file changed, 1 insertion(+)
+
+diff --git a/drivers/hwmon/pmbus/isl68137.c b/drivers/hwmon/pmbus/isl68137.c
+index 7e53fb1d5ea3..9968ebb38531 100644
+--- a/drivers/hwmon/pmbus/isl68137.c
++++ b/drivers/hwmon/pmbus/isl68137.c
+@@ -311,6 +311,7 @@ static const struct i2c_device_id raa_dmpvr_id[] = {
+ 	{"raa228004", raa_dmpvr2_hv},
+ 	{"raa228006", raa_dmpvr2_hv},
+ 	{"raa228228", raa_dmpvr2_2rail_nontc},
++	{"raa228234", raa_dmpvr2_2rail_nontc},
+ 	{"raa229001", raa_dmpvr2_2rail},
+ 	{"raa229004", raa_dmpvr2_2rail},
+ 	{}
+-- 
+2.47.1
+
