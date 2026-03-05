@@ -1,0 +1,577 @@
+From dc39134dcc52d3ba0ed4c192170c351c655134d8 Mon Sep 17 00:00:00 2001
+From: Chau Ly <chaul@amperecomputing.com>
+Date: Tue, 8 Apr 2025 07:27:59 +0000
+Subject: [PATCH 1/7] schemas: legacy: Add MuxChannel object
+
+Mux devices are allowed to be bound to driver when configured in
+Entity-Manager. It now creates i2c buses for the mux channels, and
+links the bus path with /dev/i2c-mux/<MuxName>/<ChannelName> for other
+applications to use without having to know which logical bus maps to
+which channel. However, there's currently no way for sensors configured
+in EM to use the mux channel buses created in their "Bus" config if
+they don't have an IPMI-formatted FRU to be scanned.
+
+This patch proposes an object `MuxChannel` with 2 properties `MuxName`
+and `ChannelName` that an i2c sensor in `Exposes` can use to configure
+which channel name of which mux they are present at.
+
+Other applications can then form the device file path from these
+properties, and read the symbolic link to know the needed i2c bus.
+
+This currently modifies to any subschema that has "Bus" in "properties".
+For types that previously did not require `Bus`, now `Bus` and
+`MuxChannel` must not exist together (1). For types that previously
+required `Bus`, now they must require only `Bus` or `MuxChannel`, and
+the two must not exist together (2).
+
+To achieve (1): `"not": {"required": ["Bus", "MuxChannel"]}` is used to
+validate all cases that negate the requirement for the existence of
+both `Bus` and `MuxChannel`, which are: either one exists, or neither
+exists.
+
+To achieve (2):
+
+"oneOf": [
+ {
+   "required": ["Bus"]
+ },
+ {
+   "required": ["MuxChannel"]
+ }
+]
+
+Example:
+{
+  "Address": "0x71",
+  "Bus": "80",
+  "ChannelNames": [
+      "nvmemux_slot_0",
+      "nvmemux_slot_1",
+      "",
+      ""
+  ],
+  "Name": "NVME Mux",
+  "Type": "PCA9544Mux"
+},
+{
+  "Address": "0x6a",
+  "MuxChannel":
+  {
+    "MuxName": "NVME Mux",
+    "ChannelName": "nvmemux_slot_0"
+  },
+  "Name": "nvme0",
+  "Type": "NVME1000"
+}
+
+Other applications can read symlink of
+/dev/i2c-mux/NVME_Mux/nvmemux_slot_0 to know which bus this channel
+links to.
+
+Upstream-URL: https://gerrit.openbmc.org/c/openbmc/entity-manager/+/69030
+Upstream-Status: Submitted
+Signed-off-by: Chau Ly <chaul@amperecomputing.com>
+Change-Id: I3cf0eead9f8d8246b182f8681de5fcd4427a5325
+---
+ schemas/cpld.json     |  13 +++-
+ schemas/firmware.json |  25 +++++++-
+ schemas/legacy.json   | 145 +++++++++++++++++++++++++++++++++++++++---
+ schemas/mctp.json     |  26 +++++++-
+ 4 files changed, 194 insertions(+), 15 deletions(-)
+
+diff --git a/schemas/cpld.json b/schemas/cpld.json
+index 198a7b1..af44985 100644
+--- a/schemas/cpld.json
++++ b/schemas/cpld.json
+@@ -12,6 +12,9 @@
+                 "Bus": {
+                     "$ref": "legacy.json#/$defs/Types/Bus"
+                 },
++                "MuxChannel": {
++                    "$ref": "#/$defs/Types/MuxChannel"
++                },
+                 "FirmwareInfo": {
+                     "$ref": "firmware.json#/$defs/FirmwareInfoDef"
+                 },
+@@ -34,7 +37,15 @@
+                     "$ref": "firmware.json#/$defs/MuxOutputs"
+                 }
+             },
+-            "required": ["Address", "Bus", "FirmwareInfo", "Name", "Type"]
++            "required": ["Address", "FirmwareInfo", "Name", "Type"],
++            "oneOf": [
++                {
++                    "required": ["Bus"]
++                },
++                {
++                    "required": ["MuxChannel"]
++                }
++            ]
+         }
+     }
+ }
+diff --git a/schemas/firmware.json b/schemas/firmware.json
+index a67b5f8..c7bdd83 100644
+--- a/schemas/firmware.json
++++ b/schemas/firmware.json
+@@ -61,6 +61,9 @@
+                 "Bus": {
+                     "$ref": "legacy.json#/$defs/Types/Bus"
+                 },
++                "MuxChannel": {
++                    "$ref": "#/$defs/Types/MuxChannel"
++                },
+                 "Address": {
+                     "$ref": "legacy.json#/$defs/Types/Address"
+                 },
+@@ -68,7 +71,15 @@
+                     "$ref": "#/$defs/FirmwareInfoDef"
+                 }
+             },
+-            "required": ["Name", "Type", "Bus", "Address", "FirmwareInfo"]
++            "required": ["Name", "Type", "Address", "FirmwareInfo"],
++            "oneOf": [
++                {
++                    "required": ["Bus"]
++                },
++                {
++                    "required": ["MuxChannel"]
++                }
++            ]
+         },
+         "BIOS": {
+             "description": "Required information to complete the host fw update process.",
+@@ -123,6 +134,9 @@
+                 "Bus": {
+                     "$ref": "legacy.json#/$defs/Types/Bus"
+                 },
++                "MuxChannel": {
++                    "$ref": "#/$defs/Types/MuxChannel"
++                },
+                 "Address": {
+                     "$ref": "legacy.json#/$defs/Types/Address"
+                 },
+@@ -140,10 +154,17 @@
+             "required": [
+                 "Name",
+                 "Type",
+-                "Bus",
+                 "Address",
+                 "FirmwareDevice",
+                 "FirmwareInfo"
++            ],
++            "oneOf": [
++                {
++                    "required": ["Bus"]
++                },
++                {
++                    "required": ["MuxChannel"]
++                }
+             ]
+         },
+         "TPMFirmware": {
+diff --git a/schemas/legacy.json b/schemas/legacy.json
+index 5e4bd15..af14cec 100644
+--- a/schemas/legacy.json
++++ b/schemas/legacy.json
+@@ -122,6 +122,9 @@
+                 "Bus": {
+                     "$ref": "#/$defs/Types/Bus"
+                 },
++                "MuxChannel": {
++                    "$ref": "#/$defs/Types/MuxChannel"
++                },
+                 "Class": {
+                     "$ref": "#/$defs/Types/Class"
+                 },
+@@ -140,6 +143,7 @@
+                 }
+             },
+             "required": ["Name", "Type", "Class"],
++            "not": { "required": ["Bus", "MuxChannel"] },
+             "type": "object"
+         },
+         "AspeedFan": {
+@@ -195,6 +199,9 @@
+                 "Bus": {
+                     "$ref": "#/$defs/Types/Bus"
+                 },
++                "MuxChannel": {
++                    "$ref": "#/$defs/Types/MuxChannel"
++                },
+                 "EntityId": {
+                     "$ref": "#/$defs/Types/EntityId"
+                 },
+@@ -228,6 +235,7 @@
+                 }
+             },
+             "required": ["Name", "Type"],
++            "not": { "required": ["Bus", "MuxChannel"] },
+             "type": "object"
+         },
+         "NuvotonFan": {
+@@ -304,6 +312,9 @@
+                 "Bus": {
+                     "$ref": "#/$defs/Types/Bus"
+                 },
++                "MuxChannel": {
++                    "$ref": "#/$defs/Types/MuxChannel"
++                },
+                 "PowerState": {
+                     "$ref": "#/$defs/Types/PowerState"
+                 },
+@@ -325,6 +336,7 @@
+                 }
+             },
+             "required": ["Name", "Type", "CpuID", "Address"],
++            "not": { "required": ["Bus", "MuxChannel"] },
+             "type": "object"
+         },
+         "IpmbSensor": {
+@@ -374,6 +386,9 @@
+                 "Bus": {
+                     "$ref": "#/$defs/Types/Bus"
+                 },
++                "MuxChannel": {
++                    "$ref": "#/$defs/Types/MuxChannel"
++                },
+                 "Address": {
+                     "$ref": "#/$defs/Types/Address"
+                 },
+@@ -390,7 +405,15 @@
+                     ]
+                 }
+             },
+-            "required": ["Name", "Type", "Address", "Bus", "ChannelNames"],
++            "required": ["Name", "Type", "Address", "ChannelNames"],
++            "oneOf": [
++                {
++                    "required": ["Bus"]
++                },
++                {
++                    "required": ["MuxChannel"]
++                }
++            ],
+             "type": "object"
+         },
+         "Gpio": {
+@@ -442,6 +465,9 @@
+                 "Bus": {
+                     "$ref": "#/$defs/Types/Bus"
+                 },
++                "MuxChannel": {
++                    "$ref": "#/$defs/Types/MuxChannel"
++                },
+                 "Address": {
+                     "$ref": "#/$defs/Types/Address"
+                 },
+@@ -450,7 +476,15 @@
+                     "const": "MultiNodePresence"
+                 }
+             },
+-            "required": ["Name", "Type", "Bus", "Address"],
++            "required": ["Name", "Type", "Address"],
++            "oneOf": [
++                {
++                    "required": ["Bus"]
++                },
++                {
++                    "required": ["MuxChannel"]
++                }
++            ],
+             "type": "object"
+         },
+         "HostCpuUtilization": {
+@@ -512,6 +546,9 @@
+                 "Bus": {
+                     "$ref": "#/$defs/Types/Bus"
+                 },
++                "MuxChannel": {
++                    "$ref": "#/$defs/Types/MuxChannel"
++                },
+                 "Address": {
+                     "oneOf": [
+                         {
+@@ -526,7 +563,15 @@
+                     "const": "PSUPresence"
+                 }
+             },
+-            "required": ["Name", "Type", "Bus", "Address"],
++            "required": ["Name", "Type", "Address"],
++            "oneOf": [
++                {
++                    "required": ["Bus"]
++                },
++                {
++                    "required": ["MuxChannel"]
++                }
++            ],
+             "type": "object"
+         },
+         "EmmcDevice": {
+@@ -551,6 +596,9 @@
+                 "Bus": {
+                     "$ref": "#/$defs/Types/Bus"
+                 },
++                "MuxChannel": {
++                    "$ref": "#/$defs/Types/MuxChannel"
++                },
+                 "Address": {
+                     "$ref": "#/$defs/Types/Address"
+                 },
+@@ -564,7 +612,15 @@
+                     "const": "IpmbDevice"
+                 }
+             },
+-            "required": ["Name", "Type", "Bus", "Address", "Class"],
++            "required": ["Name", "Type", "Address", "Class"],
++            "oneOf": [
++                {
++                    "required": ["Bus"]
++                },
++                {
++                    "required": ["MuxChannel"]
++                }
++            ],
+             "type": "object"
+         },
+         "IpmbPowerMonitor": {
+@@ -576,6 +632,9 @@
+                 "Bus": {
+                     "$ref": "#/$defs/Types/Bus"
+                 },
++                "MuxChannel": {
++                    "$ref": "#/$defs/Types/MuxChannel"
++                },
+                 "Address": {
+                     "$ref": "#/$defs/Types/Address"
+                 },
+@@ -586,7 +645,15 @@
+                     "const": "IpmbPowerMonitor"
+                 }
+             },
+-            "required": ["Name", "Type", "Bus", "Address", "Class"],
++            "required": ["Name", "Type", "Address", "Class"],
++            "oneOf": [
++                {
++                    "required": ["Bus"]
++                },
++                {
++                    "required": ["MuxChannel"]
++                }
++            ],
+             "type": "object"
+         },
+         "ADC": {
+@@ -657,6 +724,9 @@
+                 "Bus": {
+                     "$ref": "#/$defs/Types/Bus"
+                 },
++                "MuxChannel": {
++                    "$ref": "#/$defs/Types/MuxChannel"
++                },
+                 "EntityId": {
+                     "$ref": "#/$defs/Types/EntityId"
+                 },
+@@ -724,7 +794,15 @@
+                     ]
+                 }
+             },
+-            "required": ["Name", "Type", "Bus", "Address"],
++            "required": ["Name", "Type", "Address"],
++            "oneOf": [
++                {
++                    "required": ["Bus"]
++                },
++                {
++                    "required": ["MuxChannel"]
++                }
++            ],
+             "type": "object"
+         },
+         "NVME1000": {
+@@ -737,6 +815,9 @@
+                 "Bus": {
+                     "$ref": "#/$defs/Types/Bus"
+                 },
++                "MuxChannel": {
++                    "$ref": "#/$defs/Types/MuxChannel"
++                },
+                 "Address": {
+                     "$ref": "#/$defs/Types/Address"
+                 },
+@@ -754,7 +835,15 @@
+                     "const": "NVME1000"
+                 }
+             },
+-            "required": ["Name", "Type", "Bus", "Address"],
++            "required": ["Name", "Type", "Address"],
++            "oneOf": [
++                {
++                    "required": ["Bus"]
++                },
++                {
++                    "required": ["MuxChannel"]
++                }
++            ],
+             "type": "object"
+         },
+         "EEPROM": {
+@@ -766,6 +855,9 @@
+                 "Bus": {
+                     "$ref": "#/$defs/Types/Bus"
+                 },
++                "MuxChannel": {
++                    "$ref": "#/$defs/Types/MuxChannel"
++                },
+                 "Address": {
+                     "$ref": "#/$defs/Types/Address"
+                 },
+@@ -784,7 +876,15 @@
+                     ]
+                 }
+             },
+-            "required": ["Name", "Type", "Bus", "Address"],
++            "required": ["Name", "Type", "Address"],
++            "oneOf": [
++                {
++                    "required": ["Bus"]
++                },
++                {
++                    "required": ["MuxChannel"]
++                }
++            ],
+             "type": "object"
+         },
+         "PSUSensor": {
+@@ -853,6 +953,9 @@
+                 "Bus": {
+                     "$ref": "#/$defs/Types/Bus"
+                 },
++                "MuxChannel": {
++                    "$ref": "#/$defs/Types/MuxChannel"
++                },
+                 "Address": {
+                     "$ref": "#/$defs/Types/Address"
+                 },
+@@ -982,6 +1085,7 @@
+                 }
+             },
+             "required": ["Name", "Type"],
++            "not": { "required": ["Bus", "MuxChannel"] },
+             "type": "object"
+         },
+         "NMSensor": {
+@@ -1033,10 +1137,14 @@
+                 "Bus": {
+                     "$ref": "#/$defs/Types/Bus"
+                 },
++                "MuxChannel": {
++                    "$ref": "#/$defs/Types/MuxChannel"
++                },
+                 "Type": {
+                     "const": "Intel HSBP CPLD"
+                 }
+-            }
++            },
++            "not": { "required": ["Bus", "MuxChannel"] }
+         },
+         "GenericSMBusMux": {
+             "description": "unknown purpose",
+@@ -1077,10 +1185,14 @@
+                 "Bus": {
+                     "$ref": "#/$defs/Types/Bus"
+                 },
++                "MuxChannel": {
++                    "$ref": "#/$defs/Types/MuxChannel"
++                },
+                 "Type": {
+                     "enum": ["UCD90160", "UCD90320"]
+                 }
+-            }
++            },
++            "not": { "required": ["Bus", "MuxChannel"] }
+         },
+         "Types": {
+             "Address": {
+@@ -1242,6 +1354,19 @@
+             "MinValue": {
+                 "type": "number"
+             },
++            "MuxChannel": {
++                "additionalProperties": false,
++                "properties": {
++                    "MuxName": {
++                        "type": "string"
++                    },
++                    "ChannelName": {
++                        "type": "string"
++                    }
++                },
++                "required": ["MuxName", "ChannelName"],
++                "type": "object"
++            },
+             "Name": {
+                 "type": "string"
+             },
+diff --git a/schemas/mctp.json b/schemas/mctp.json
+index 7dc1629..44a7903 100644
+--- a/schemas/mctp.json
++++ b/schemas/mctp.json
+@@ -11,6 +11,9 @@
+                     "description": "The bus index to which the device is attached",
+                     "type": "string"
+                 },
++                "MuxChannel": {
++                    "$ref": "#/$defs/Types/MuxChannel"
++                },
+                 "Name": {
+                     "description": "A recognisable name for the device",
+                     "type": "string"
+@@ -20,7 +23,15 @@
+                     "enum": ["MCTPI2CTarget"]
+                 }
+             },
+-            "required": ["Address", "Bus", "Name", "Type"],
++            "required": ["Address", "Name", "Type"],
++            "oneOf": [
++                {
++                    "required": ["Bus"]
++                },
++                {
++                    "required": ["MuxChannel"]
++                }
++            ],
+             "type": "object"
+         },
+         "MCTPI3CTarget": {
+@@ -33,6 +44,9 @@
+                     "description": "The bus index to which the device is attached",
+                     "type": "string"
+                 },
++                "MuxChannel": {
++                    "$ref": "#/$defs/Types/MuxChannel"
++                },
+                 "Name": {
+                     "description": "A recognisable name for the device",
+                     "type": "string"
+@@ -42,7 +56,15 @@
+                     "enum": ["MCTPI3CTarget"]
+                 }
+             },
+-            "required": ["Address", "Bus", "Name", "Type"],
++            "required": ["Address", "Name", "Type"],
++            "oneOf": [
++                {
++                    "required": ["Bus"]
++                },
++                {
++                    "required": ["MuxChannel"]
++                }
++            ],
+             "type": "object"
+         }
+     }
+-- 
+2.47.1
+
