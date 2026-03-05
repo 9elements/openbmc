@@ -31,4 +31,9 @@ RDEPENDS:${PN}-flash = " \
         phosphor-software-manager \
         "
 
+RDEPENDS:${PN}-devtools:append = " \
+    net-tools \
+    lmsensors-sensors \
+    "
+
 RDEPENDS:${PN}-inventory:append = " entity-manager"
