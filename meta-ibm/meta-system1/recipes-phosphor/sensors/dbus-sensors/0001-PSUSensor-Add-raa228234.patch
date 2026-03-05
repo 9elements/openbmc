@@ -1,0 +1,30 @@
+From b88daabdae94aadcad9747da1b6c9bcd804f35b3 Mon Sep 17 00:00:00 2001
+From: Patrick Rudolph <patrick.rudolph@9elements.com>
+Date: Thu, 5 Mar 2026 10:34:56 +0100
+Subject: [PATCH] PSUSensor: Add raa228234
+
+Add support for RAA228234 that is a dual output 8 phase PWM controller
+with PMBUS compatible interface.
+
+Upstream-Status: Pending
+Change-Id: I762f1629d004a279b68b8c7c29e54eec274f9c6c
+Signed-off-by: Patrick Rudolph <patrick.rudolph@9elements.com>
+---
+ src/PSUSensorMain.cpp | 1 +
+ 1 file changed, 1 insertion(+)
+
+diff --git a/src/PSUSensorMain.cpp b/src/PSUSensorMain.cpp
+index 35fb191..47aa529 100644
+--- a/src/PSUSensorMain.cpp
++++ b/src/PSUSensorMain.cpp
+@@ -123,6 +123,7 @@ static const I2CDeviceTypeMap sensorTypes{
+     {"RAA228000", I2CDeviceType{"raa228000", true}},
+     {"RAA228004", I2CDeviceType{"raa228004", true}},
+     {"RAA228228", I2CDeviceType{"raa228228", true}},
++    {"RAA228234", I2CDeviceType{"raa228234", true}},
+     {"RAA228620", I2CDeviceType{"raa228620", true}},
+     {"RAA229001", I2CDeviceType{"raa229001", true}},
+     {"RAA229004", I2CDeviceType{"raa229004", true}},
+-- 
+2.43.0
+
