@@ -1,7 +1,7 @@
-From b88daabdae94aadcad9747da1b6c9bcd804f35b3 Mon Sep 17 00:00:00 2001
+From efa6970ef31541c0ff9f422183e76d6ed3f6aa56 Mon Sep 17 00:00:00 2001
 From: Patrick Rudolph <patrick.rudolph@9elements.com>
 Date: Thu, 5 Mar 2026 10:34:56 +0100
-Subject: [PATCH] PSUSensor: Add raa228234
+Subject: [PATCH 1/4] PSUSensor: Add raa228234
 
 Add support for RAA228234 that is a dual output 8 phase PWM controller
 with PMBUS compatible interface.

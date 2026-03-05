@@ -1,0 +1,548 @@
+From 585fb468024f600b17c7efce6b1082cc334ccdac Mon Sep 17 00:00:00 2001
+From: Jonico Eustaquio <jonico.eustaquio@fii-na.com>
+Date: Fri, 25 Oct 2024 09:44:56 -0500
+Subject: [PATCH 2/4] Add I2CMux and I2CBus objects
+
+Adds the I2CMux and I2CBus objects to dbus-sensors. These objects allow
+for the retrieval of the logical bus number given the MuxChannel
+interface. The MuxChannel interface is introduced into entity-manager
+in the following CL:
+https://gerrit.openbmc.org/c/openbmc/entity-manager/+/69030
+
+The I2Mux object has a getLogicalBus method to get the bus associated
+with the channel name provided by leveraging the link created by
+entity-manager.
+
+These objects can be used as an alternative to any sensors that use the
+"Bus" field. Instead of defining the I2C bus in the dts, these sensors
+may be connected to a mux that was configured in entity-manager so the
+bus was dynamically numerated. Since the bus is indeterminant, the "Bus"
+cannot be statically defined, so the MuxChannel object is used. The
+sensors that can use the MuxChannel object include the: fansensors,
+hwmontempsensors, intelcpusensors, intrusionsensors, ipmbsensors,
+mcutempsensors, nvmesensors, and psusensors.
+
+Upstream-Status: Pending
+Change-Id: I6f0af0440ed78d9a586ac551d1b64349fe68403b
+Signed-off-by: Jonico Eustaquio <jonico.eustaquio@fii-na.com>
+---
+ src/DeviceMgmt.cpp     |  39 +++++++++--
+ src/DeviceMgmt.hpp     | 135 +++++++++++++++++++++++++++++++++++--
+ src/tests/meson.build  | 102 ++++++++++++++++++++++++++++
+ src/tests/test_I2C.cpp | 150 +++++++++++++++++++++++++++++++++++++++++
+ 4 files changed, 417 insertions(+), 9 deletions(-)
+ create mode 100644 src/tests/meson.build
+ create mode 100644 src/tests/test_I2C.cpp
+
+diff --git a/src/DeviceMgmt.cpp b/src/DeviceMgmt.cpp
+index 6d6c296..41d6c9f 100644
+--- a/src/DeviceMgmt.cpp
++++ b/src/DeviceMgmt.cpp
+@@ -18,22 +18,22 @@
+ namespace fs = std::filesystem;
+ 
+ std::optional<I2CDeviceParams> getI2CDeviceParams(
+-    const I2CDeviceTypeMap& dtmap, const SensorBaseConfigMap& cfg)
++    const I2CDeviceTypeMap& dtmap, const SensorBaseConfigMap& cfg,
++    const SensorData& sensor)
+ {
+     auto findType = cfg.find("Type");
+     auto findBus = cfg.find("Bus");
+     auto findAddr = cfg.find("Address");
+ 
+-    if (findType == cfg.end() || findBus == cfg.end() || findAddr == cfg.end())
++    if (findType == cfg.end() || findAddr == cfg.end())
+     {
+         return std::nullopt;
+     }
+ 
+     const std::string* type = std::get_if<std::string>(&findType->second);
+-    const uint64_t* bus = std::get_if<uint64_t>(&findBus->second);
+     const uint64_t* addr = std::get_if<uint64_t>(&findAddr->second);
+ 
+-    if (type == nullptr || bus == nullptr || addr == nullptr)
++    if (type == nullptr || addr == nullptr)
+     {
+         return std::nullopt;
+     }
+@@ -44,7 +44,36 @@ std::optional<I2CDeviceParams> getI2CDeviceParams(
+         return std::nullopt;
+     }
+ 
+-    return I2CDeviceParams(findDevType->second, *bus, *addr);
++    if (findBus == cfg.end())
++    {
++        for (const auto& [name, intf] : sensor)
++        {
++            if (intf == cfg)
++            {
++                std::string channel;
++                auto mux = I2CMux::findMux(
++                    name, sensor, std::get<std::string>(findType->second),
++                    channel);
++                if (!mux)
++                {
++                    return std::nullopt;
++                }
++                auto busCfg = mux.value().getBusFromChannel(channel);
++                if (!busCfg)
++                {
++                    return std::nullopt;
++                }
++                uint64_t bus = busCfg.value().getBus();
++                return I2CDeviceParams(findDevType->second, bus, *addr);
++            }
++        }
++    }
++    else if (std::get_if<std::uint64_t>(&findBus->second) != nullptr)
++    {
++        uint64_t bus = std::get<uint64_t>(findBus->second);
++        return I2CDeviceParams(findDevType->second, bus, *addr);
++    }
++    return std::nullopt;
+ }
+ 
+ static fs::path i2cBusPath(uint64_t bus)
+diff --git a/src/DeviceMgmt.hpp b/src/DeviceMgmt.hpp
+index 4b4dea8..413f3b1 100644
+--- a/src/DeviceMgmt.hpp
++++ b/src/DeviceMgmt.hpp
+@@ -4,9 +4,24 @@
+ 
+ #include <boost/container/flat_map.hpp>
+ 
++#include <cstddef>
++#include <cstdint>
++#include <filesystem>
+ #include <functional>
+ #include <optional>
+-#include <string_view>
++#include <regex>
++#include <stdexcept>
++#include <string>
++#include <utility>
++#include <variant>
++#include <vector>
++#include <phosphor-logging/lg2.hpp>
++
++// the /dev/i2c-mux/ directory should contain the symbolic links between the
++// ChannelNames of the mux and the logical bus number as created in
++// entity-manager linkMux function
++// https://github.com/openbmc/entity-manager/blob/master/src/overlay.cpp#L71
++static constexpr const char* defaultMuxDir = "/dev/i2c-mux/";
+ 
+ struct I2CDeviceType
+ {
+@@ -27,7 +42,8 @@ using I2CDeviceTypeMap =
+ 
+ struct I2CDeviceParams
+ {
+-    I2CDeviceParams(const I2CDeviceType& type, uint64_t bus, uint64_t address) :
++    I2CDeviceParams(const I2CDeviceType& type, uint64_t& bus,
++                    uint64_t address) :
+         type(&type), bus(bus), address(address) {};
+ 
+     const I2CDeviceType* type;
+@@ -39,7 +55,8 @@ struct I2CDeviceParams
+ };
+ 
+ std::optional<I2CDeviceParams> getI2CDeviceParams(
+-    const I2CDeviceTypeMap& dtmap, const SensorBaseConfigMap& cfg);
++    const I2CDeviceTypeMap& dtmap, const SensorBaseConfigMap& cfg,
++    const SensorData& sensor);
+ 
+ class I2CDevice
+ {
+@@ -54,6 +71,116 @@ class I2CDevice
+     int destroy() const;
+ };
+ 
++class I2CBus
++{
++  public:
++    explicit I2CBus() = default;
++    explicit I2CBus(int logicalBus) : logicalBus(logicalBus) {}
++
++    int getBus() const
++    {
++        return logicalBus;
++    }
++
++    ~I2CBus() = default;
++
++    static std::optional<int> getBusFromPath(
++        const std::filesystem::path& busPath)
++    {
++        std::string busFile = busPath.filename();
++        // remove "i2c-"
++        std::string i2cPrefix = "i2c-";
++        auto findPrefix = busFile.find(i2cPrefix);
++        if (findPrefix == std::string::npos)
++        {
++            return std::nullopt;
++        }
++        busFile.erase(findPrefix, i2cPrefix.size());
++        return std::stoi(busFile);
++    }
++
++  private:
++    int logicalBus;
++};
++
++class I2CMux
++{
++  public:
++    I2CMux() = delete;
++
++    std::optional<I2CBus> getBusFromChannel(const std::string& chName) const
++    {
++        std::filesystem::path busLink(muxPath / chName);
++        if (busLink.empty() || !std::filesystem::is_symlink(busLink))
++        {
++            lg2::error("ChannelName symlink is missing");
++            return std::nullopt;
++        }
++        // retrieve the i2c-#
++        std::filesystem::path busPath(std::filesystem::read_symlink(busLink));
++
++        if (auto busNumber = I2CBus::getBusFromPath(busPath))
++        {
++            return I2CBus(busNumber.value());
++        }
++        return std::nullopt;
++    }
++    ~I2CMux() = default;
++
++    static std::optional<I2CMux> findMux(
++        const std::string& baseIntf, const SensorData& cfgData,
++        const std::string& path, std::string& channelName,
++        const std::string& muxDir = defaultMuxDir)
++    {
++        const auto& muxChannelBase = cfgData.find(baseIntf + ".MuxChannel");
++        std::string muxName;
++
++        if (muxChannelBase == cfgData.end())
++        {
++            lg2::error("No Bus or MuxChannel config for '{PATH}'", "PATH",
++                       path);
++            return std::nullopt;
++        }
++        const SensorBaseConfigMap& muxChannelIntf = muxChannelBase->second;
++        auto findMuxName = muxChannelIntf.find("MuxName");
++        auto findChName = muxChannelIntf.find("ChannelName");
++        if (findMuxName == muxChannelIntf.end() ||
++            findChName == muxChannelIntf.end())
++        {
++            lg2::error("Can't find Mux or Channel name for '{PATH}'", "PATH",
++                       path);
++            return std::nullopt;
++        }
++        if (std::get_if<std::string>(&findMuxName->second) == nullptr ||
++            std::get_if<std::string>(&findChName->second) == nullptr)
++        {
++            lg2::error("Mux or Channel name invalid for '{PATH}'", "PATH",
++                       path);
++            return std::nullopt;
++        }
++        channelName = std::get<std::string>(findChName->second);
++        muxName = std::get<std::string>(findMuxName->second);
++        muxName = std::regex_replace(muxName, illegalDbusRegex, "_");
++        std::filesystem::path muxPath = std::filesystem::path(muxDir) / muxName;
++        if (!std::filesystem::exists(muxPath))
++        {
++            lg2::error("'{PATH}' does not exist", "PATH", muxPath.string());
++            return std::nullopt;
++        }
++        I2CMux mux(muxName, muxDir);
++        return mux;
++    }
++
++  private:
++    explicit I2CMux(const std::string& muxName,
++                    const std::string& muxDir = defaultMuxDir)
++    {
++        muxPath = std::filesystem::path(muxDir) / muxName;
++    }
++
++    std::filesystem::path muxPath;
++};
++
+ // HACK: this declaration "should" live in Utils.hpp, but that leads to a
+ // tangle of header-dependency hell because each header needs types declared
+ // in the other.
+@@ -130,7 +257,7 @@ boost::container::flat_map<std::string,
+             }
+ 
+             std::optional<I2CDeviceParams> params =
+-                getI2CDeviceParams(sensorTypes, cfg);
++                getI2CDeviceParams(sensorTypes, cfg, sensor);
+             if (params.has_value() && !params->deviceStatic())
+             {
+                 // There exist error cases in which a sensor device that we
+diff --git a/src/tests/meson.build b/src/tests/meson.build
+new file mode 100644
+index 0000000..723a097
+--- /dev/null
++++ b/src/tests/meson.build
+@@ -0,0 +1,102 @@
++gtest_dep = dependency('gtest', main: true, disabler: true, required: false)
++gmock_dep = dependency('gmock', disabler: true, required: false)
++if not gtest_dep.found() or not gmock_dep.found()
++    gtest_proj = import('cmake').subproject('googletest', required: false)
++    if gtest_proj.found()
++        gtest_dep = declare_dependency(
++            dependencies: [
++                dependency('threads'),
++                gtest_proj.dependency('gtest'),
++                gtest_proj.dependency('gtest_main'),
++            ],
++        )
++        gmock_dep = gtest_proj.dependency('gmock')
++    else
++        assert(
++            not get_option('tests').allowed(),
++            'Googletest is required if tests are enabled',
++        )
++    endif
++endif
++
++ut_deps_list = [gtest_dep]
++
++ut_deps_list += default_deps
++
++test(
++    'test_utils',
++    executable(
++        'test_utils',
++        'test_Utils.cpp',
++        '../Utils.cpp',
++        dependencies: ut_deps_list,
++        implicit_include_directories: false,
++        include_directories: src_inc,
++    ),
++)
++
++test(
++    'test_ipmb',
++    executable(
++        'test_ipmb',
++        '../ipmb/IpmbSensor.cpp',
++        '../Utils.cpp',
++        '../ipmb/IpmbSDRSensor.cpp',
++        'test_IpmbSensor.cpp',
++        dependencies: ut_deps_list,
++        link_with: [utils_a, thresholds_a, devicemgmt_a],
++        implicit_include_directories: false,
++        include_directories: src_inc,
++    ),
++)
++
++test(
++    'test_i2c',
++    executable(
++        'test_i2c',
++        'test_I2C.cpp',
++        '../DeviceMgmt.hpp',
++        dependencies: ut_deps_list,
++        implicit_include_directories: false,
++        include_directories: src_inc,
++    ),
++)
++
++test(
++    'MCTPReactor',
++    executable(
++        'test_MCTPReactor',
++        'test_MCTPReactor.cpp',
++        '../mctp/MCTPReactor.cpp',
++        '../mctp/MCTPEndpoint.cpp',
++        dependencies: [gmock_dep, ut_deps_list, utils_dep],
++        implicit_include_directories: false,
++        include_directories: '../mctp',
++    ),
++)
++
++test(
++    'MCTPEndpoint',
++    executable(
++        'test_MCTPEndpoint',
++        'test_MCTPEndpoint.cpp',
++        '../mctp/MCTPEndpoint.cpp',
++        dependencies: [gmock_dep, ut_deps_list, utils_dep],
++        implicit_include_directories: false,
++        include_directories: '../mctp',
++    ),
++)
++
++test(
++    'NvidiaGPU',
++    executable(
++        'test_NvidiaGPU',
++        'test_NvidiaGpuSensorTest.cpp',
++        'test_NvidiaDeviceInventoryMctpVdm.cpp',
++        gpusensor_sources,
++        dependencies: [gmock_dep, ut_deps_list, utils_dep],
++        link_with: [thresholds_a],
++        implicit_include_directories: false,
++        include_directories: '../nvidia-gpu',
++    ),
++)
+diff --git a/src/tests/test_I2C.cpp b/src/tests/test_I2C.cpp
+new file mode 100644
+index 0000000..e76ba9e
+--- /dev/null
++++ b/src/tests/test_I2C.cpp
+@@ -0,0 +1,150 @@
++#include "DeviceMgmt.hpp"
++#include "Utils.hpp"
++
++#include <array>
++#include <filesystem>
++#include <fstream>
++#include <string>
++
++#include <gtest/gtest.h>
++
++namespace fs = std::filesystem;
++
++class TestI2C : public testing::Test
++{
++  public:
++    fs::path testDir;
++    fs::path muxDevDir;
++    fs::path muxChDir;
++    SensorData sensorCfg;
++    std::string sensorIntf = std::string(configInterfacePrefix) + ".Sensor";
++
++    TestI2C()
++    {
++        // Create test environment
++        auto dir = std::to_array("./testDirXXXXXX");
++        testDir = mkdtemp(dir.data());
++
++        if (testDir.empty())
++        {
++            throw std::bad_alloc();
++        }
++        muxDevDir = std::string(testDir) + defaultMuxDir;
++        if (!fs::exists(muxDevDir))
++        {
++            fs::create_directories(muxDevDir);
++        }
++        muxChDir = muxDevDir / "MUX";
++        fs::create_directory(muxChDir);
++
++        std::ofstream bus1{muxDevDir / "i2c-1"};
++        std::ofstream bus2{muxDevDir / "i2c-2"};
++        std::ofstream bus3{muxDevDir / "i2c-3"};
++        std::ofstream bus4{muxDevDir / "i2c-4"};
++
++        fs::create_symlink(muxDevDir / "i2c-1", muxChDir / "ch0");
++        fs::create_symlink(muxDevDir / "i2c-2", muxChDir / "ch1");
++        fs::create_symlink(muxDevDir / "i2c-3", muxChDir / "ch2");
++        fs::create_symlink(muxDevDir / "i2c-4", muxChDir / "ch3");
++
++        SensorBaseConfigMap muxChIntf;
++        muxChIntf["MuxName"] = "MUX";
++        muxChIntf["ChannelName"] = "ch0";
++        sensorCfg[sensorIntf + ".MuxChannel"] = muxChIntf;
++    }
++
++    ~TestI2C() override
++    {
++        fs::remove_all(testDir);
++    }
++
++    TestI2C(const TestI2C&) = delete;
++    TestI2C(TestI2C&&) = delete;
++    TestI2C& operator=(const TestI2C&) = delete;
++    TestI2C& operator=(TestI2C&&) = delete;
++};
++
++TEST_F(TestI2C, findMux_non_exist)
++{
++    std::string channelName;
++    auto ret = I2CMux::findMux(std::string(configInterfacePrefix) + ".Empty",
++                               sensorCfg, "testSensor", channelName, muxDevDir);
++
++    EXPECT_FALSE(ret);
++    EXPECT_TRUE(channelName.empty());
++}
++
++TEST_F(TestI2C, findMux_missing_MuxName)
++{
++    std::string channelName;
++    SensorBaseConfigMap missChIntf{{"ChannelName", "ch0"}};
++    sensorCfg[sensorIntf + ".MuxChannel"] = missChIntf;
++    auto ret = I2CMux::findMux(sensorIntf, sensorCfg, "testSensor", channelName,
++                               muxDevDir);
++
++    EXPECT_FALSE(ret);
++    EXPECT_TRUE(channelName.empty());
++}
++
++TEST_F(TestI2C, findMux_missing_ChannelName)
++{
++    std::string channelName;
++    SensorBaseConfigMap missChIntf{{"MuxName", "MUX"}};
++    sensorCfg[sensorIntf + ".MuxChannel"] = missChIntf;
++    auto ret = I2CMux::findMux(sensorIntf, sensorCfg, "testSensor", channelName,
++                               muxDevDir);
++
++    EXPECT_FALSE(ret);
++    EXPECT_TRUE(channelName.empty());
++}
++
++TEST_F(TestI2C, findMux_exists)
++{
++    std::string channelName;
++    auto ret = I2CMux::findMux(sensorIntf, sensorCfg, "testSensor", channelName,
++                               muxDevDir);
++
++    EXPECT_TRUE(ret);
++    EXPECT_EQ(channelName, "ch0");
++}
++
++TEST_F(TestI2C, getBusFromChannel_noSymlink)
++{
++    std::string channelName;
++    if (auto mux = I2CMux::findMux(sensorIntf, sensorCfg, "testSensor",
++                                   channelName, muxDevDir);
++        mux.has_value())
++    {
++        fs::remove(muxChDir / "ch0");
++        auto bus = mux->getBusFromChannel(channelName);
++
++        EXPECT_FALSE(bus);
++    }
++}
++
++TEST_F(TestI2C, getBusFromChannel_exists)
++{
++    std::string channelName;
++    if (auto mux = I2CMux::findMux(sensorIntf, sensorCfg, "testSensor",
++                                   channelName, muxDevDir);
++        mux.has_value())
++    {
++        auto bus = mux->getBusFromChannel(channelName);
++
++        EXPECT_TRUE(bus);
++    }
++}
++
++TEST_F(TestI2C, getBus_valid)
++{
++    std::string channelName;
++    if (auto mux = I2CMux::findMux(sensorIntf, sensorCfg, "testSensor",
++                                   channelName, muxDevDir);
++        mux.has_value())
++    {
++        if (auto bus = mux->getBusFromChannel(channelName); bus.has_value())
++        {
++            EXPECT_EQ(bus->getBus(), 1);
++        }
++    }
++}
+-- 
+2.43.0
+
