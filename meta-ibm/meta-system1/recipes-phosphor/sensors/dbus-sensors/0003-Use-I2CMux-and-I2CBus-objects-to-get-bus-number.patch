@@ -1,0 +1,1083 @@
+From 43f6cd9b8039600971079d0923f3dac5e6315e53 Mon Sep 17 00:00:00 2001
+From: Jonico Eustaquio <jonico.eustaquio@fii-na.com>
+Date: Fri, 25 Oct 2024 15:03:42 -0500
+Subject: [PATCH 2/2] Use I2CMux and I2CBus objects to get bus number
+
+Added support for using either "Bus" or the MuxChannel object for all
+sensors that use "Bus." When using the MuxChannel object, the "MuxName"
+and "ChannelName" properties within the object will be used and
+attempted to match with a mux that has the same "Name" and
+"ChannelName." The sensors that now support using the MuxChannel object
+include fansensors, hwmontempsensors, intelcpusensors, intrusionsensors,
+ipmbsensors, mcutempsensors, nvmesensors, and psusensors.
+
+Upstream-Status: Pending
+Change-Id: I96189b0f87571057e60fbf76ff359f0bc441c1ac
+Signed-off-by: Jonico Eustaquio <jonico.eustaquio@fii-na.com>
+---
+ src/Utils.hpp                            |   4 +
+ src/fan/FanMain.cpp                      |  38 +++++--
+ src/fan/meson.build                      |   2 +-
+ src/hwmon-temp/HwmonTempMain.cpp         |  54 +++++++--
+ src/intel-cpu/IntelCPUSensorMain.cpp     | 139 +++++++++++++----------
+ src/intel-cpu/meson.build                |   2 +-
+ src/intrusion/ChassisIntrusionSensor.cpp |  10 +-
+ src/intrusion/ChassisIntrusionSensor.hpp |   4 +-
+ src/intrusion/IntrusionSensorMain.cpp    |  43 ++++++-
+ src/intrusion/meson.build                |   2 +-
+ src/ipmb/IpmbSensor.cpp                  |  31 ++++-
+ src/ipmb/meson.build                     |   2 +-
+ src/mcu/MCUTempSensor.cpp                |  35 +++++-
+ src/mcu/MCUTempSensor.hpp                |   5 +-
+ src/mcu/meson.build                      |   2 +-
+ src/nvme/NVMeBasicContext.cpp            |   2 +-
+ src/nvme/NVMeSensor.cpp                  |   5 +-
+ src/nvme/NVMeSensor.hpp                  |   5 +-
+ src/nvme/NVMeSensorMain.cpp              |  50 +++++---
+ src/nvme/meson.build                     |   2 +-
+ src/psu/PSUSensorMain.cpp                |  50 ++++++--
+ 21 files changed, 347 insertions(+), 140 deletions(-)
+
+diff --git a/src/Utils.hpp b/src/Utils.hpp
+index 9f799f5..9cbe397 100644
+--- a/src/Utils.hpp
++++ b/src/Utils.hpp
+@@ -174,6 +174,10 @@ inline T loadVariant(const SensorBaseConfigMap& data, const std::string& key)
+     {
+         return std::visit(VariantToUnsignedIntVisitor(), it->second);
+     }
++    else if constexpr (std::is_same_v<T, int>)
++    {
++        return std::visit(VariantToIntVisitor(), it->second);
++    }
+     else if constexpr (std::is_same_v<T, std::string>)
+     {
+         return std::visit(VariantToStringVisitor(), it->second);
+diff --git a/src/fan/FanMain.cpp b/src/fan/FanMain.cpp
+index 98e41a0..20e7190 100644
+--- a/src/fan/FanMain.cpp
++++ b/src/fan/FanMain.cpp
+@@ -14,6 +14,7 @@
+ // limitations under the License.
+ */
+ 
++#include "DeviceMgmt.hpp"
+ #include "PresenceGpio.hpp"
+ #include "PwmSensor.hpp"
+ #include "TachSensor.hpp"
+@@ -365,6 +366,7 @@ void createSensors(
+ 
+                     size_t bus = 0;
+                     size_t addr = 0;
++                    I2CBus configBus{};
+                     if (!getDeviceBusAddr(deviceName, bus, addr))
+                     {
+                         continue;
+@@ -373,19 +375,41 @@ void createSensors(
+                     auto findBus = baseConfiguration->second.find("Bus");
+                     auto findAddress =
+                         baseConfiguration->second.find("Address");
+-                    if (findBus == baseConfiguration->second.end() ||
+-                        findAddress == baseConfiguration->second.end())
++                    if (findAddress == baseConfiguration->second.end())
+                     {
+-                        lg2::error("'{INTERFACE}' missing bus or address",
+-                                   "INTERFACE", baseConfiguration->first);
++                        lg2::error("'{INTERFACE}' missing address", "INTERFACE",
++                                   baseConfiguration->first);
+                         continue;
+                     }
+-                    unsigned int configBus = std::visit(
+-                        VariantToUnsignedIntVisitor(), findBus->second);
++                    if (findBus == baseConfiguration->second.end())
++                    {
++                        std::string channelName;
++                        if (auto mux = I2CMux::findMux(
++                                cfgIntf, cfgData, path.filename(), channelName))
++                        {
++                            std::optional<I2CBus> busNumber =
++                                mux.value().getBusFromChannel(channelName);
++                            if (!busNumber)
++                            {
++                                continue;
++                            }
++                            configBus = busNumber.value();
++                        }
++                        else
++                        {
++                            continue;
++                        }
++                    }
++                    else
++                    {
++                        configBus = I2CBus(
++                            std::visit(VariantToIntVisitor(), findBus->second));
++                    }
+                     unsigned int configAddress = std::visit(
+                         VariantToUnsignedIntVisitor(), findAddress->second);
+ 
+-                    if (configBus == bus && configAddress == addr)
++                    if ((static_cast<size_t>(configBus.getBus()) == bus) &&
++                        (configAddress == addr))
+                     {
+                         sensorData = &cfgData;
+                         break;
+diff --git a/src/fan/meson.build b/src/fan/meson.build
+index 050b97f..c5f6da6 100644
+--- a/src/fan/meson.build
++++ b/src/fan/meson.build
+@@ -5,7 +5,7 @@ executable(
+     'PresenceGpio.cpp',
+     'TachSensor.cpp',
+     '../PwmSensor.cpp',
+-    dependencies: [default_deps, gpiodcxx, thresholds_dep, utils_dep],
++    dependencies: [default_deps, devicemgmt_dep, gpiodcxx, thresholds_dep, utils_dep],
+     include_directories: src_inc,
+     install: true,
+     install_dir: '/usr/libexec/dbus-sensors',
+diff --git a/src/hwmon-temp/HwmonTempMain.cpp b/src/hwmon-temp/HwmonTempMain.cpp
+index 874fbf0..ffc135d 100644
+--- a/src/hwmon-temp/HwmonTempMain.cpp
++++ b/src/hwmon-temp/HwmonTempMain.cpp
+@@ -186,13 +186,13 @@ static struct SensorParams getSensorParameters(
+ 
+ struct SensorConfigKey
+ {
+-    uint64_t bus;
++    I2CBus bus;
+     uint64_t addr;
+     bool operator<(const SensorConfigKey& other) const
+     {
+-        if (bus != other.bus)
++        if (bus.getBus() != other.bus.getBus())
+         {
+-            return bus < other.bus;
++            return bus.getBus() < other.bus.getBus();
+         }
+         return addr < other.addr;
+     }
+@@ -218,19 +218,51 @@ static SensorConfigMap buildSensorConfigMap(
+     {
+         for (const auto& [intf, cfg] : cfgData)
+         {
++            I2CBus busKey{};
+             auto busCfg = cfg.find("Bus");
++            if (busCfg == cfg.end())
++            {
++                std::string channelName;
++                if (auto mux = I2CMux::findMux(intf, cfgData, path.filename(),
++                                               channelName))
++                {
++                    std::optional<I2CBus> bus =
++                        mux.value().getBusFromChannel(channelName);
++                    if (!bus)
++                    {
++                        continue;
++                    }
++                    busKey = bus.value();
++                }
++                else
++                {
++                    continue;
++                }
++            }
++            else
++            {
++                if (std::get_if<uint64_t>(&busCfg->second) == nullptr)
++                {
++                    lg2::error("'{PATH}' Bus invalid", "PATH", path.str);
++                    continue;
++                }
++                busKey = I2CBus(
++                    static_cast<int>(std::get<uint64_t>(busCfg->second)));
++            }
++
+             auto addrCfg = cfg.find("Address");
+-            if ((busCfg == cfg.end()) || (addrCfg == cfg.end()))
++            if (addrCfg == cfg.end())
+             {
+                 continue;
+             }
+ 
+-            if ((std::get_if<uint64_t>(&busCfg->second) == nullptr) ||
+-                (std::get_if<uint64_t>(&addrCfg->second) == nullptr))
++            if (std::get_if<uint64_t>(&addrCfg->second) == nullptr)
+             {
+-                lg2::error("'{PATH}' Bus or Address invalid", "PATH", path.str);
++                lg2::error("'{PATH}' Address invalid", "PATH", path.str);
+                 continue;
+             }
++            uint64_t addr = std::get<uint64_t>(addrCfg->second);
++            SensorConfigKey key{busKey, addr};
+ 
+             std::vector<std::string> hwmonNames;
+             auto nameCfg = cfg.find("Name");
+@@ -250,9 +282,6 @@ static SensorConfigMap buildSensorConfigMap(
+                     i++;
+                 }
+             }
+-
+-            SensorConfigKey key = {std::get<uint64_t>(busCfg->second),
+-                                   std::get<uint64_t>(addrCfg->second)};
+             SensorConfig val = {path.str, cfgData, intf, cfg, hwmonNames};
+ 
+             auto [it, inserted] = configMap.emplace(key, std::move(val));
+@@ -260,7 +289,7 @@ static SensorConfigMap buildSensorConfigMap(
+             {
+                 lg2::error(
+                     "'{PATH}': ignoring duplicate entry for '{BUS}', '{ADDR}'",
+-                    "PATH", path.str, "BUS", key.bus, "ADDR", lg2::hex,
++                    "PATH", path.str, "BUS", key.bus.getBus(), "ADDR", lg2::hex,
+                     key.addr);
+             }
+         }
+@@ -347,8 +376,9 @@ void createSensors(
+                     continue;
+                 }
+ 
++                I2CBus deviceBus(bus);
+                 auto thisSensorParameters = getSensorParameters(path);
+-                auto findSensorCfg = configMap.find({bus, addr});
++                auto findSensorCfg = configMap.find({deviceBus, addr});
+                 if (findSensorCfg == configMap.end())
+                 {
+                     continue;
+diff --git a/src/intel-cpu/IntelCPUSensorMain.cpp b/src/intel-cpu/IntelCPUSensorMain.cpp
+index 19b81e8..897a68a 100644
+--- a/src/intel-cpu/IntelCPUSensorMain.cpp
++++ b/src/intel-cpu/IntelCPUSensorMain.cpp
+@@ -14,6 +14,7 @@
+ // limitations under the License.
+ */
+ 
++#include "DeviceMgmt.hpp"
+ #include "IntelCPUSensor.hpp"
+ #include "Thresholds.hpp"
+ #include "Utils.hpp"
+@@ -78,11 +79,11 @@ enum State
+ 
+ struct CPUConfig
+ {
+-    CPUConfig(const uint64_t& bus, const uint64_t& addr,
+-              const std::string& name, const State& state) :
++    CPUConfig(const I2CBus& bus, const uint64_t& addr, const std::string& name,
++              const State& state) :
+         bus(bus), addr(addr), name(name), state(state)
+     {}
+-    int bus;
++    I2CBus bus;
+     int addr;
+     std::string name;
+     State state;
+@@ -416,7 +417,7 @@ bool exportDevice(const CPUConfig& config)
+     std::ostringstream hex;
+     hex << std::hex << config.addr;
+     const std::string& addrHexStr = hex.str();
+-    std::string busStr = std::to_string(config.bus);
++    std::string busStr = std::to_string(config.bus.getBus());
+ 
+     std::string parameters = "peci-client 0x" + addrHexStr;
+     std::string devPath = peciDevPath;
+@@ -498,8 +499,8 @@ void detectCpu(boost::asio::steady_timer& pingTimer,
+         {
+             std::vector<std::filesystem::path> peciPaths;
+             std::ostringstream searchPath;
+-            searchPath << std::hex << "peci-" << config.bus << "/" << config.bus
+-                       << "-" << config.addr;
++            searchPath << std::hex << "peci-" << config.bus.getBus() << "/"
++                       << config.bus.getBus() << "-" << config.addr;
+             findFiles(std::filesystem::path(peciDevPath + searchPath.str()),
+                       R"(peci_cpu.dimmtemp.+/hwmon/hwmon\d+/name$)", peciPaths,
+                       3);
+@@ -532,7 +533,7 @@ void detectCpu(boost::asio::steady_timer& pingTimer,
+             continue;
+         }
+ 
+-        std::string peciDevPath = peciDev + std::to_string(config.bus);
++        std::string peciDevPath = peciDev + std::to_string(config.bus.getBus());
+ 
+         peci_SetDevName(peciDevPath.data());
+ 
+@@ -708,68 +709,84 @@ bool getCpuConfig(const std::shared_ptr<sdbusplus::asio::connection>& systemBus,
+         {
+             for (const auto& [intf, cfg] : cfgData)
+             {
+-                if (intf != configInterfaceName(type))
++                if (intf == configInterfaceName(type))
+                 {
+-                    continue;
+-                }
++                    I2CBus bus{};
++                    auto findName = cfg.find("Name");
++                    if (findName == cfg.end())
++                    {
++                        continue;
++                    }
++                    std::string nameRaw =
++                        std::visit(VariantToStringVisitor(), findName->second);
++                    std::string name =
++                        std::regex_replace(nameRaw, illegalDbusRegex, "_");
++
++                    auto present = std::optional<bool>();
++                    // if we can't detect it via gpio, we set presence later
++                    for (const auto& [suppIntf, suppCfg] : cfgData)
++                    {
++                        if (suppIntf.find("PresenceGpio") != std::string::npos)
++                        {
++                            present = cpuIsPresent(suppCfg);
++                            break;
++                        }
++                    }
+ 
+-                auto findName = cfg.find("Name");
+-                if (findName == cfg.end())
+-                {
+-                    continue;
+-                }
+-                std::string nameRaw =
+-                    std::visit(VariantToStringVisitor(), findName->second);
+-                std::string name =
+-                    std::regex_replace(nameRaw, illegalDbusRegex, "_");
+-
+-                auto present = std::optional<bool>();
+-                // if we can't detect it via gpio, we set presence later
+-                for (const auto& [suppIntf, suppCfg] : cfgData)
+-                {
+-                    if (suppIntf.find("PresenceGpio") != std::string::npos)
++                    if (inventoryIfaces.find(name) == inventoryIfaces.end() &&
++                        present)
+                     {
+-                        present = cpuIsPresent(suppCfg);
+-                        break;
++                        auto iface = objectServer.add_interface(
++                            cpuInventoryPath + std::string("/") + name,
++                            "xyz.openbmc_project.Inventory.Item");
++                        iface->register_property("PrettyName", name);
++                        iface->register_property("Present", *present);
++                        iface->initialize();
++                        inventoryIfaces[name] = std::move(iface);
+                     }
+-                }
+ 
+-                if (!inventoryIfaces.contains(name) && present)
+-                {
+-                    auto iface = objectServer.add_interface(
+-                        cpuInventoryPath + std::string("/") + name,
+-                        "xyz.openbmc_project.Inventory.Item");
+-                    iface->register_property("PrettyName", name);
+-                    iface->register_property("Present", *present);
+-                    iface->initialize();
+-                    inventoryIfaces[name] = std::move(iface);
+-                }
++                    auto findAddress = cfg.find("Address");
++                    if (findAddress == cfg.end())
++                    {
++                        lg2::error("Can't find 'Address' setting in '{NAME}'",
++                                   "NAME", name);
++                        continue;
++                    }
++                    uint64_t addr = std::visit(VariantToUnsignedIntVisitor(),
++                                               findAddress->second);
+ 
+-                auto findBus = cfg.find("Bus");
+-                if (findBus == cfg.end())
+-                {
+-                    lg2::error("Can't find 'Bus' setting in '{NAME}'", "NAME",
+-                               name);
+-                    continue;
+-                }
+-                uint64_t bus =
+-                    std::visit(VariantToUnsignedIntVisitor(), findBus->second);
++                    auto findBus = cfg.find("Bus");
++                    if (findBus == cfg.end())
++                    {
++                        std::string channelName;
++                        if (auto mux = I2CMux::findMux(
++                                configInterfaceName(type), cfgData,
++                                path.filename(), channelName))
++                        {
++                            std::optional<I2CBus> busNumber =
++                                mux.value().getBusFromChannel(channelName);
++                            if (!busNumber)
++                            {
++                                continue;
++                            }
++                            bus = busNumber.value();
++                        }
++                        else
++                        {
++                            continue;
++                        }
++                    }
++                    else
++                    {
++                        bus = I2CBus(
++                            std::visit(VariantToIntVisitor(), findBus->second));
++                    }
++                    lg2::debug(
++                        "bus: {BUS}, addr: {ADDR}, name: {NAME}, type: {TYPE}",
++                        "BUS", bus.getBus(), "ADDR", addr, "NAME", name, "TYPE", type);
+ 
+-                auto findAddress = cfg.find("Address");
+-                if (findAddress == cfg.end())
+-                {
+-                    lg2::error("Can't find 'Address' setting in '{NAME}'",
+-                               "NAME", name);
+-                    continue;
++                    cpuConfigs.emplace(bus, addr, name, State::OFF);
+                 }
+-                uint64_t addr = std::visit(VariantToUnsignedIntVisitor(),
+-                                           findAddress->second);
+-
+-                lg2::debug(
+-                    "bus: {BUS}, addr: {ADDR}, name: {NAME}, type: {TYPE}",
+-                    "BUS", bus, "ADDR", addr, "NAME", name, "TYPE", type);
+-
+-                cpuConfigs.emplace(bus, addr, name, State::OFF);
+             }
+         }
+     }
+diff --git a/src/intel-cpu/meson.build b/src/intel-cpu/meson.build
+index bc05e4e..a223396 100644
+--- a/src/intel-cpu/meson.build
++++ b/src/intel-cpu/meson.build
+@@ -8,7 +8,7 @@ executable(
+     'intelcpusensor',
+     'IntelCPUSensorMain.cpp',
+     'IntelCPUSensor.cpp',
+-    dependencies: [default_deps, gpiodcxx, thresholds_dep, utils_dep, peci_dep],
++    dependencies: [default_deps, devicemgmt_dep, gpiodcxx, thresholds_dep, utils_dep, peci_dep],
+     include_directories: intel_cpu_inc,
+     install: true,
+     install_dir: '/usr/libexec/dbus-sensors',
+diff --git a/src/intrusion/ChassisIntrusionSensor.cpp b/src/intrusion/ChassisIntrusionSensor.cpp
+index 3103ff5..203d510 100644
+--- a/src/intrusion/ChassisIntrusionSensor.cpp
++++ b/src/intrusion/ChassisIntrusionSensor.cpp
+@@ -16,6 +16,8 @@
+ 
+ #include "ChassisIntrusionSensor.hpp"
+ 
++#include "DeviceMgmt.hpp"
++
+ #include <fcntl.h>
+ #include <linux/i2c.h>
+ #include <sys/ioctl.h>
+@@ -352,19 +354,19 @@ ChassisIntrusionSensor::ChassisIntrusionSensor(
+ 
+ ChassisIntrusionPchSensor::ChassisIntrusionPchSensor(
+     bool autoRearm, boost::asio::io_context& io,
+-    sdbusplus::asio::object_server& objServer, int busId, int slaveAddr) :
++    sdbusplus::asio::object_server& objServer, I2CBus busId, int slaveAddr) :
+     ChassisIntrusionSensor(autoRearm, objServer), mPollTimer(io)
+ {
+-    if (busId < 0 || slaveAddr <= 0)
++    if (busId.getBus() < 0 || slaveAddr <= 0)
+     {
+         throw std::invalid_argument(
+-            "Invalid i2c bus " + std::to_string(busId) + " address " +
++            "Invalid i2c bus " + std::to_string(busId.getBus()) + " address " +
+             std::to_string(slaveAddr) + "\n");
+     }
+ 
+     mSlaveAddr = slaveAddr;
+ 
+-    std::string devPath = "/dev/i2c-" + std::to_string(busId);
++    std::string devPath = "/dev/i2c-" + std::to_string(busId.getBus());
+     // NOLINTNEXTLINE(cppcoreguidelines-pro-type-vararg)
+     mBusFd = open(devPath.c_str(), O_RDWR | O_CLOEXEC);
+     if (mBusFd < 0)
+diff --git a/src/intrusion/ChassisIntrusionSensor.hpp b/src/intrusion/ChassisIntrusionSensor.hpp
+index b02b903..531323b 100644
+--- a/src/intrusion/ChassisIntrusionSensor.hpp
++++ b/src/intrusion/ChassisIntrusionSensor.hpp
+@@ -1,5 +1,7 @@
+ #pragma once
+ 
++#include "DeviceMgmt.hpp"
++
+ #include <boost/asio/io_context.hpp>
+ #include <boost/asio/posix/stream_descriptor.hpp>
+ #include <boost/asio/steady_timer.hpp>
+@@ -45,7 +47,7 @@ class ChassisIntrusionPchSensor :
+   public:
+     ChassisIntrusionPchSensor(bool autoRearm, boost::asio::io_context& io,
+                               sdbusplus::asio::object_server& objServer,
+-                              int busId, int slaveAddr);
++                              I2CBus busId, int slaveAddr);
+ 
+     ~ChassisIntrusionPchSensor() override;
+ 
+diff --git a/src/intrusion/IntrusionSensorMain.cpp b/src/intrusion/IntrusionSensorMain.cpp
+index bc25fe3..2b5e33c 100644
+--- a/src/intrusion/IntrusionSensorMain.cpp
++++ b/src/intrusion/IntrusionSensorMain.cpp
+@@ -15,6 +15,7 @@
+ */
+ 
+ #include "ChassisIntrusionSensor.hpp"
++#include "DeviceMgmt.hpp"
+ #include "Utils.hpp"
+ 
+ #include <boost/asio/error.hpp>
+@@ -39,6 +40,7 @@
+ #include <functional>
+ #include <map>
+ #include <memory>
++#include <optional>
+ #include <string>
+ #include <system_error>
+ #include <utility>
+@@ -179,29 +181,58 @@ static void createSensorsFromConfig(
+             }
+             else
+             {
++                I2CBus busId{};
+                 auto findBus = baseConfiguration->second.find("Bus");
+                 auto findAddress = baseConfiguration->second.find("Address");
+-                if (findBus == baseConfiguration->second.end() ||
+-                    findAddress == baseConfiguration->second.end())
++                if (findAddress == baseConfiguration->second.end())
+                 {
+-                    lg2::error("error finding bus or address in configuration");
++                    lg2::error("error finding address in configuration");
+                     continue;
+                 }
++                if (findBus == baseConfiguration->second.end())
++                {
++                    std::string channelName;
++                    if (auto mux = I2CMux::findMux(
++                            configInterfaceName(sensorType), cfgData,
++                            path.filename(), channelName))
++                    {
++                        std::optional<I2CBus> bus =
++                            mux.value().getBusFromChannel(channelName);
++                        if (!bus)
++                        {
++                            continue;
++                        }
++                        busId = bus.value();
++                    }
++                    else
++                    {
++                        continue;
++                    }
++                }
++                else
++                {
++                    if (std::get_if<uint64_t>(&findBus->second) == nullptr)
++                    {
++                        lg2::error("invalid value for bus in config");
++                        continue;
++                    }
++                    busId = I2CBus(
++                        static_cast<int>(std::get<uint64_t>(findBus->second)));
++                }
+                 try
+                 {
+-                    int busId = std::get<uint64_t>(findBus->second);
+                     int slaveAddr = std::get<uint64_t>(findAddress->second);
+                     pSensor = std::make_shared<ChassisIntrusionPchSensor>(
+                         autoRearm, io, objServer, busId, slaveAddr);
+                     pSensor->start();
+                     lg2::debug(
+                         "find matched bus '{BUS}', matched slave addr '{ADDR}'",
+-                        "BUS", busId, "ADDR", slaveAddr);
++                        "BUS", busId.getBus(), "ADDR", slaveAddr);
+                     return;
+                 }
+                 catch (const std::bad_variant_access& e)
+                 {
+-                    lg2::error("invalid value for bus or address in config.");
++                    lg2::error("invalid value for address in config.");
+                     continue;
+                 }
+                 catch (const std::exception& e)
+diff --git a/src/intrusion/meson.build b/src/intrusion/meson.build
+index 25effe9..82369f6 100644
+--- a/src/intrusion/meson.build
++++ b/src/intrusion/meson.build
+@@ -3,7 +3,7 @@ executable(
+     'intrusionsensor',
+     'ChassisIntrusionSensor.cpp',
+     'IntrusionSensorMain.cpp',
+-    dependencies: [default_deps, gpiodcxx, i2c, utils_dep],
++    dependencies: [default_deps, devicemgmt_dep, gpiodcxx, i2c, utils_dep],
+     include_directories: src_inc,
+     install: true,
+     install_dir: '/usr/libexec/dbus-sensors',
+diff --git a/src/ipmb/IpmbSensor.cpp b/src/ipmb/IpmbSensor.cpp
+index a6c4ac1..211f80f 100644
+--- a/src/ipmb/IpmbSensor.cpp
++++ b/src/ipmb/IpmbSensor.cpp
+@@ -16,6 +16,7 @@
+ 
+ #include "IpmbSensor.hpp"
+ 
++#include "DeviceMgmt.hpp"
+ #include "IpmbSDRSensor.hpp"
+ #include "SensorPaths.hpp"
+ #include "Thresholds.hpp"
+@@ -42,6 +43,7 @@
+ #include <iostream>
+ #include <limits>
+ #include <memory>
++#include <optional>
+ #include <sstream>
+ #include <stdexcept>
+ #include <string>
+@@ -637,14 +639,35 @@ void createSensors(
+ 
+                     float pollRate = getPollRate(cfg, pollRateDefault);
+ 
+-                    uint8_t ipmbBusIndex = ipmbBusIndexDefault;
++                    I2CBus ipmbBusIndex(ipmbBusIndexDefault);
+                     auto findBusType = cfg.find("Bus");
+                     if (findBusType != cfg.end())
+                     {
+-                        ipmbBusIndex = std::visit(VariantToUnsignedIntVisitor(),
+-                                                  findBusType->second);
++                        ipmbBusIndex = I2CBus(std::visit(VariantToIntVisitor(),
++                                                         findBusType->second));
+                         lg2::error("Ipmb Bus Index for '{NAME}' is '{INDEX}'",
+-                                   "NAME", name, "INDEX", ipmbBusIndex);
++                                   "NAME", name, "INDEX",
++                                   ipmbBusIndex.getBus());
++                    }
++                    else
++                    {
++                        std::string channelName;
++                        if (auto mux = I2CMux::findMux(
++                                configInterfaceName(sensorType), interfaces,
++                                path.filename(), channelName))
++                        {
++                            std::optional<I2CBus> bus =
++                                mux.value().getBusFromChannel(channelName);
++                            if (!bus)
++                            {
++                                continue;
++                            }
++                            ipmbBusIndex = bus.value();
++                        }
++                        else
++                        {
++                            continue;
++                        }
+                     }
+ 
+                     /* Default sensor type is "temperature" */
+diff --git a/src/ipmb/meson.build b/src/ipmb/meson.build
+index 5f657f8..0acff4a 100644
+--- a/src/ipmb/meson.build
++++ b/src/ipmb/meson.build
+@@ -4,7 +4,7 @@ executable(
+     'IpmbSensorMain.cpp',
+     'IpmbSensor.cpp',
+     'IpmbSDRSensor.cpp',
+-    dependencies: [default_deps, thresholds_dep, utils_dep],
++    dependencies: [default_deps, devicemgmt_dep, thresholds_dep, utils_dep],
+     include_directories: src_inc,
+     install: true,
+     install_dir: '/usr/libexec/dbus-sensors',
+diff --git a/src/mcu/MCUTempSensor.cpp b/src/mcu/MCUTempSensor.cpp
+index adefffc..3f87a58 100644
+--- a/src/mcu/MCUTempSensor.cpp
++++ b/src/mcu/MCUTempSensor.cpp
+@@ -16,6 +16,7 @@
+ 
+ #include "MCUTempSensor.hpp"
+ 
++#include "DeviceMgmt.hpp"
+ #include "SensorPaths.hpp"
+ #include "Thresholds.hpp"
+ #include "Utils.hpp"
+@@ -43,6 +44,7 @@
+ #include <cstdint>
+ #include <functional>
+ #include <memory>
++#include <optional>
+ #include <string>
+ #include <utility>
+ #include <vector>
+@@ -64,7 +66,7 @@ MCUTempSensor::MCUTempSensor(
+     boost::asio::io_context& io, const std::string& sensorName,
+     const std::string& sensorConfiguration,
+     sdbusplus::asio::object_server& objectServer,
+-    std::vector<thresholds::Threshold>&& thresholdData, uint8_t busId,
++    std::vector<thresholds::Threshold>&& thresholdData, I2CBus busId,
+     uint8_t mcuAddress, uint8_t tempReg) :
+     Sensor(escapeName(sensorName), std::move(thresholdData),
+            sensorConfiguration, "MCUTempSensor", false, false,
+@@ -112,7 +114,7 @@ void MCUTempSensor::checkThresholds()
+ 
+ int MCUTempSensor::getMCURegsInfoWord(uint8_t regs, int32_t* pu32data) const
+ {
+-    std::string i2cBus = "/dev/i2c-" + std::to_string(busId);
++    std::string i2cBus = "/dev/i2c-" + std::to_string(busId.getBus());
+ 
+     // NOLINTNEXTLINE(cppcoreguidelines-pro-type-vararg)
+     int fd = open(i2cBus.c_str(), O_RDWR);
+@@ -230,8 +232,31 @@ void createSensors(
+                         lg2::error("error populating thresholds for '{NAME}'",
+                                    "NAME", name);
+                     }
+-
+-                    uint8_t busId = loadVariant<uint8_t>(cfg, "Bus");
++                    I2CBus busId{};
++                    if (cfg.find("Bus") == cfg.end())
++                    {
++                        std::string channelName;
++                        if (auto mux = I2CMux::findMux(
++                                configInterfaceName(sensorType), interfaces,
++                                path.filename(), channelName))
++                        {
++                            std::optional<I2CBus> bus =
++                                mux.value().getBusFromChannel(channelName);
++                            if (!bus)
++                            {
++                                continue;
++                            }
++                            busId = bus.value();
++                        }
++                        else
++                        {
++                            continue;
++                        }
++                    }
++                    else
++                    {
++                        busId = I2CBus(loadVariant<int>(cfg, "Bus"));
++                    }
+                     uint8_t mcuAddress = loadVariant<uint8_t>(cfg, "Address");
+                     uint8_t tempReg = loadVariant<uint8_t>(cfg, "Reg");
+ 
+@@ -241,7 +266,7 @@ void createSensors(
+                     lg2::debug(
+                         "Configuration parsed for '{INTERFACE}' with Name: {NAME}, Bus: {BUS}, "
+                         "Address: {ADDRESS}, Reg: {REG}, Class: {CLASS}",
+-                        "INTERFACE", intf, "NAME", name, "BUS", busId,
++                        "INTERFACE", intf, "NAME", name, "BUS", busId.getBus(),
+                         "ADDRESS", mcuAddress, "REG", tempReg, "CLASS",
+                         sensorClass);
+ 
+diff --git a/src/mcu/MCUTempSensor.hpp b/src/mcu/MCUTempSensor.hpp
+index 9f441df..8548424 100644
+--- a/src/mcu/MCUTempSensor.hpp
++++ b/src/mcu/MCUTempSensor.hpp
+@@ -1,4 +1,5 @@
+ #pragma once
++#include "DeviceMgmt.hpp"
+ #include "Thresholds.hpp"
+ 
+ #include <boost/asio/io_context.hpp>
+@@ -19,14 +20,14 @@ struct MCUTempSensor : public Sensor
+                   const std::string& sensorConfiguration,
+                   sdbusplus::asio::object_server& objectServer,
+                   std::vector<thresholds::Threshold>&& thresholdData,
+-                  uint8_t busId, uint8_t mcuAddress, uint8_t tempReg);
++                  I2CBus busId, uint8_t mcuAddress, uint8_t tempReg);
+     ~MCUTempSensor() override;
+ 
+     void checkThresholds() override;
+     void read();
+     void init();
+ 
+-    uint8_t busId;
++    I2CBus busId;
+     uint8_t mcuAddress;
+     uint8_t tempReg;
+ 
+diff --git a/src/mcu/meson.build b/src/mcu/meson.build
+index 45d41a3..67f3a7d 100644
+--- a/src/mcu/meson.build
++++ b/src/mcu/meson.build
+@@ -2,7 +2,7 @@
+ executable(
+     'mcutempsensor',
+     'MCUTempSensor.cpp',
+-    dependencies: [default_deps, i2c, thresholds_dep, utils_dep],
++    dependencies: [default_deps, devicemgmt_dep, i2c, thresholds_dep, utils_dep],
+     include_directories: src_inc,
+     install: true,
+     install_dir: '/usr/libexec/dbus-sensors',
+diff --git a/src/nvme/NVMeBasicContext.cpp b/src/nvme/NVMeBasicContext.cpp
+index 509407a..a0d8aab 100644
+--- a/src/nvme/NVMeBasicContext.cpp
++++ b/src/nvme/NVMeBasicContext.cpp
+@@ -285,7 +285,7 @@ void NVMeBasicContext::readAndProcessNVMeSensor()
+         return;
+     }
+ 
+-    auto command = encodeBasicQuery(sensor->bus, sensor->address, 0x00);
++    auto command = encodeBasicQuery(sensor->bus.getBus(), sensor->address, 0x00);
+ 
+     /* Issue the request */
+     boost::asio::async_write(
+diff --git a/src/nvme/NVMeSensor.cpp b/src/nvme/NVMeSensor.cpp
+index be12f90..b313247 100644
+--- a/src/nvme/NVMeSensor.cpp
++++ b/src/nvme/NVMeSensor.cpp
+@@ -16,6 +16,7 @@
+ 
+ #include "NVMeSensor.hpp"
+ 
++#include "DeviceMgmt.hpp"
+ #include "SensorPaths.hpp"
+ #include "Thresholds.hpp"
+ #include "Utils.hpp"
+@@ -42,13 +43,13 @@ NVMeSensor::NVMeSensor(sdbusplus::asio::object_server& objectServer,
+                        const std::string& sensorName,
+                        std::vector<thresholds::Threshold>&& thresholdsIn,
+                        const std::string& sensorConfiguration,
+-                       const int busNumber, const uint8_t slaveAddr) :
++                       const I2CBus busNumber, const uint8_t slaveAddr) :
+     Sensor(escapeName(sensorName), std::move(thresholdsIn), sensorConfiguration,
+            NVMeSensor::sensorType, false, false, maxReading, minReading, conn,
+            PowerState::on),
+     bus(busNumber), address(slaveAddr), objServer(objectServer)
+ {
+-    if (bus < 0)
++    if (bus.getBus() < 0)
+     {
+         throw std::invalid_argument("Invalid bus: Bus ID must not be negative");
+     }
+diff --git a/src/nvme/NVMeSensor.hpp b/src/nvme/NVMeSensor.hpp
+index 31afbf3..cec9175 100644
+--- a/src/nvme/NVMeSensor.hpp
++++ b/src/nvme/NVMeSensor.hpp
+@@ -1,5 +1,6 @@
+ #pragma once
+ 
++#include "DeviceMgmt.hpp"
+ #include "Thresholds.hpp"
+ 
+ #include <boost/asio/io_context.hpp>
+@@ -22,7 +23,7 @@ class NVMeSensor : public Sensor
+                std::shared_ptr<sdbusplus::asio::connection>& conn,
+                const std::string& sensorName,
+                std::vector<thresholds::Threshold>&& thresholds,
+-               const std::string& sensorConfiguration, int busNumber,
++               const std::string& sensorConfiguration, I2CBus busNumber,
+                uint8_t slaveAddr);
+     ~NVMeSensor() override;
+ 
+@@ -30,7 +31,7 @@ class NVMeSensor : public Sensor
+ 
+     bool sample();
+ 
+-    const int bus;
++    const I2CBus bus;
+     const uint8_t address;
+ 
+   private:
+diff --git a/src/nvme/NVMeSensorMain.cpp b/src/nvme/NVMeSensorMain.cpp
+index 0f1d9d5..aeb0e05 100644
+--- a/src/nvme/NVMeSensorMain.cpp
++++ b/src/nvme/NVMeSensorMain.cpp
+@@ -14,6 +14,7 @@
+ // limitations under the License.
+ */
+ 
++#include "DeviceMgmt.hpp"
+ #include "NVMeBasicContext.hpp"
+ #include "NVMeContext.hpp"
+ #include "NVMeSensor.hpp"
+@@ -57,17 +58,18 @@ NVMEMap& getNVMEMap()
+     return nvmeDeviceMap;
+ }
+ 
+-static std::optional<int> extractBusNumber(
+-    const std::string& path, const SensorBaseConfigMap& properties)
++bool extractBusNumber(const std::string& path,
++                      const SensorBaseConfigMap& properties, I2CBus& busNumber)
+ {
+     auto findBus = properties.find("Bus");
+     if (findBus == properties.end())
+     {
+-        lg2::error("could not determine bus number for '{PATH}'", "PATH", path);
+-        return std::nullopt;
++        lg2::error("could not find \"Bus\" config for '{PATH}'", "PATH", path);
++        return false;
+     }
+ 
+-    return std::visit(VariantToIntVisitor(), findBus->second);
++    busNumber = I2CBus(std::visit(VariantToIntVisitor(), findBus->second));
++    return true;
+ }
+ 
+ static uint8_t extractSlaveAddr(const std::string& path,
+@@ -106,18 +108,13 @@ static std::filesystem::path deriveRootBusPath(int busNumber)
+            "/mux_device";
+ }
+ 
+-static std::optional<int> deriveRootBus(std::optional<int> busNumber)
++static std::optional<int> deriveRootBus(I2CBus busNumber)
+ {
+-    if (!busNumber)
+-    {
+-        return std::nullopt;
+-    }
+-
+-    std::filesystem::path muxPath = deriveRootBusPath(*busNumber);
++    std::filesystem::path muxPath = deriveRootBusPath(busNumber.getBus());
+ 
+     if (!std::filesystem::is_symlink(muxPath))
+     {
+-        return busNumber;
++        return busNumber.getBus();
+     }
+ 
+     std::string rootName = std::filesystem::read_symlink(muxPath).filename();
+@@ -174,14 +171,33 @@ static void handleSensorConfigurations(
+         }
+ 
+         const SensorBaseConfigMap& sensorConfig = sensorBase->second;
+-        std::optional<int> busNumber =
+-            extractBusNumber(interfacePath, sensorConfig);
++        I2CBus busNumber{};
++        if (!(extractBusNumber(interfacePath, sensorConfig, busNumber)))
++        {
++            std::string channelName;
++            if (auto mux = I2CMux::findMux(
++                    configInterfaceName(NVMeSensor::sensorType), sensorData,
++                    interfacePath.filename(), channelName))
++            {
++                std::optional<I2CBus> bus =
++                    mux.value().getBusFromChannel(channelName);
++                if (!bus)
++                {
++                    continue;
++                }
++                busNumber = bus.value();
++            }
++            else
++            {
++                continue;
++            }
++        }
+         std::optional<std::string> sensorName =
+             extractSensorName(interfacePath, sensorConfig);
+         uint8_t slaveAddr = extractSlaveAddr(interfacePath, sensorConfig);
+         std::optional<int> rootBus = deriveRootBus(busNumber);
+ 
+-        if (!(busNumber && sensorName && rootBus))
++        if (!(sensorName && rootBus))
+         {
+             continue;
+         }
+@@ -204,7 +220,7 @@ static void handleSensorConfigurations(
+             std::shared_ptr<NVMeSensor> sensorPtr =
+                 std::make_shared<NVMeSensor>(
+                     objectServer, io, dbusConnection, *sensorName,
+-                    std::move(sensorThresholds), interfacePath, *busNumber,
++                    std::move(sensorThresholds), interfacePath, busNumber,
+                     slaveAddr);
+ 
+             context->addSensor(sensorPtr);
+diff --git a/src/nvme/meson.build b/src/nvme/meson.build
+index 84c37c6..3ecbf41 100644
+--- a/src/nvme/meson.build
++++ b/src/nvme/meson.build
+@@ -1,7 +1,7 @@
+ nvme_srcs = files('NVMeSensor.cpp', 'NVMeSensorMain.cpp')
+ nvme_srcs += files('NVMeBasicContext.cpp')
+ 
+-nvme_deps = [default_deps, i2c, thresholds_dep, utils_dep, threads]
++nvme_deps = [default_deps, devicemgmt_dep, i2c, thresholds_dep, utils_dep, threads]
+ 
+ executable(
+     'nvmesensor',
+diff --git a/src/psu/PSUSensorMain.cpp b/src/psu/PSUSensorMain.cpp
+index d31c57b..9587e23 100644
+--- a/src/psu/PSUSensorMain.cpp
++++ b/src/psu/PSUSensorMain.cpp
+@@ -53,6 +53,7 @@
+ #include <functional>
+ #include <iterator>
+ #include <memory>
++#include <optional>
+ #include <regex>
+ #include <stdexcept>
+ #include <string>
+@@ -406,6 +407,7 @@ static void createSensorsCallback(
+ 
+         for (const auto& [path, cfgData] : sensorConfigs)
+         {
++            I2CBus confBus{};
+             sensorData = &cfgData;
+             for (const auto& [type, dt] : sensorTypes)
+             {
+@@ -423,32 +425,60 @@ static void createSensorsCallback(
+                            "NAME", deviceName);
+                 continue;
+             }
+-
+-            auto configBus = baseConfig->find("Bus");
+             auto configAddress = baseConfig->find("Address");
+ 
+-            if (configBus == baseConfig->end() ||
+-                configAddress == baseConfig->end())
++            if (configAddress == baseConfig->end())
+             {
+                 lg2::error("error finding necessary entry in configuration");
+                 continue;
+             }
+ 
+-            const uint64_t* confBus =
+-                std::get_if<uint64_t>(&(configBus->second));
+             const uint64_t* confAddr =
+                 std::get_if<uint64_t>(&(configAddress->second));
+-            if (confBus == nullptr || confAddr == nullptr)
++            if (confAddr == nullptr)
+             {
+-                lg2::error("Cannot get bus or address, invalid configuration");
++                lg2::error("Cannot get address, invalid configuration");
+                 continue;
+             }
+ 
+-            if ((*confBus != bus) || (*confAddr != addr))
++            auto configBus = baseConfig->find("Bus");
++            if (configBus == baseConfig->end())
++            {
++                std::string channelName;
++                if (auto mux =
++                        I2CMux::findMux(configInterfaceName(sensorType),
++                                        cfgData, path.filename(), channelName))
++                {
++                    std::optional<I2CBus> bus =
++                        mux.value().getBusFromChannel(channelName);
++                    if (!bus)
++                    {
++                        continue;
++                    }
++                    confBus = bus.value();
++                }
++                else
++                {
++                    continue;
++                }
++            }
++            else
++            {
++                if (std::get_if<uint64_t>(&(configBus->second)) == nullptr)
++                {
++                    lg2::error("Cannot get bus, invalid configuration");
++                    continue;
++                }
++                confBus = I2CBus(
++                    static_cast<int>(std::get<uint64_t>(configBus->second)));
++            }
++
++            if ((static_cast<size_t>(confBus.getBus()) != bus) ||
++                (*confAddr != addr))
+             {
+                 lg2::debug(
+                     "Configuration skipping '{CONFBUS}'-'{CONFADDR}' because not {BUS}-{ADDR}",
+-                    "CONFBUS", *confBus, "CONFADDR", *confAddr, "BUS", bus,
++                    "CONFBUS", confBus.getBus(), "CONFADDR", *confAddr, "BUS", bus,
+                     "ADDR", addr);
+                 continue;
+             }
+-- 
+2.53.0
+
