@@ -34,3 +34,22 @@ pkg_prerm:${PN}:p10bmc() {
     LINK="$D$systemd_system_unitdir/obmc-chassis-poweroff@0.target.wants/wait-vpd-parsers.service"
     rm $LINK
 }
+
+SRC_URI:append:system1 = " file://vpd_inventory.json \
+    file://vpd-manager-perform-vpd-recollection.service"
+
+SYSTEMD_SERVICE:${PN}:append:system1 = " vpd-manager-perform-vpd-recollection.service"
+FILES:${PN}:append:system1 = " ${datadir}/vpd/*.json"
+
+do_install:append:system1() {
+        # Install vpd_inventory
+        install -d ${D}${datadir}/vpd/
+        install -m 0644 ${UNPACKDIR}/vpd_inventory.json ${D}${datadir}/vpd/
+        # Remove files that are used by openpower-read-vpd
+        DEST=${D}${inventory_envdir}
+        rm ${DEST}/inventory
+        rm ${D}/${nonarch_base_libdir}/udev/rules.d/70-op-vpd.rules
+        # Install service files
+        install -d ${D}${systemd_system_unitdir}
+        install -m 0644 ${UNPACKDIR}/vpd-manager-perform-vpd-recollection.service ${D}${systemd_system_unitdir}/
+}
