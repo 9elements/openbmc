@@ -1,0 +1,83 @@
+From 0477f35af2fe2180141124689a436ff3f65a506f Mon Sep 17 00:00:00 2001
+From: Naresh Solanki <naresh.solanki@9elements.com>
+Date: Fri, 6 Mar 2026 18:16:20 +0000
+Subject: [PATCH 1/5] ARM: dts: aspeed: ibm-system1: Switch Ethernet to RGMII
+ via MDIO
+
+Update the Ethernet configuration for the IBM System1 BMC to use
+direct RGMII PHY connections instead of NCSI/RMII.
+
+Summary of changes:
+- Enable mdio0 and mdio2 with ethernet-phy nodes at reg 0.
+- Reconfigure mac0 to use rgmii-rxid with ethphy0.
+- Reconfigure mac2 to use rgmii with ethphy2.
+- Remove old mac2/mac3 NCSI and RMII clock/pinctrl configurations.
+
+Upstream-Status: Pending
+Signed-off-by: Naresh Solanki <naresh.solanki@9elements.com>
+---
+ .../dts/aspeed/aspeed-bmc-ibm-system1.dts     | 42 +++++++++++++------
+ 1 file changed, 30 insertions(+), 12 deletions(-)
+
+diff --git a/arch/arm/boot/dts/aspeed/aspeed-bmc-ibm-system1.dts b/arch/arm/boot/dts/aspeed/aspeed-bmc-ibm-system1.dts
+index 75e03834e8dd..28662a66de17 100644
+--- a/arch/arm/boot/dts/aspeed/aspeed-bmc-ibm-system1.dts
++++ b/arch/arm/boot/dts/aspeed/aspeed-bmc-ibm-system1.dts
+@@ -481,24 +481,42 @@ &lpc_ctrl {
+ 	memory-region = <&flash_memory>;
+ };
+ 
+-&mac2 {
++&mdio0 {
++	status = "okay";
++
++	ethphy0: ethernet-phy@0 {
++		compatible = "ethernet-phy-ieee802.3-c22";
++		reg = <0>;
++	};
++};
++
++&mac0 {
+ 	status = "okay";
++
++	phy-mode = "rgmii-rxid";
++	phy-handle = <&ethphy0>;
++
+ 	pinctrl-names = "default";
+-	pinctrl-0 = <&pinctrl_rmii3_default>;
+-	clocks = <&syscon ASPEED_CLK_GATE_MAC3CLK>,
+-		 <&syscon ASPEED_CLK_MAC3RCLK>;
+-	clock-names = "MACCLK", "RCLK";
+-	use-ncsi;
++	pinctrl-0 = <&pinctrl_rgmii1_default>;
+ };
+ 
+-&mac3 {
++&mdio2 {
+ 	status = "okay";
++
++	ethphy2: ethernet-phy@0 {
++		compatible = "ethernet-phy-ieee802.3-c22";
++		reg = <0>;
++	};
++};
++
++&mac2 {
++	status = "okay";
++
++	phy-mode = "rgmii";
++	phy-handle = <&ethphy2>;
++
+ 	pinctrl-names = "default";
+-	pinctrl-0 = <&pinctrl_rmii4_default>;
+-	clocks = <&syscon ASPEED_CLK_GATE_MAC4CLK>,
+-		 <&syscon ASPEED_CLK_MAC4RCLK>;
+-	clock-names = "MACCLK", "RCLK";
+-	use-ncsi;
++	pinctrl-0 = <&pinctrl_rgmii3_default>;
+ };
+ 
+ &wdt1 {
+-- 
+2.47.1
+
