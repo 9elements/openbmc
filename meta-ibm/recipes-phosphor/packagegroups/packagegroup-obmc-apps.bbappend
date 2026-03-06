@@ -29,6 +29,7 @@ RDEPENDS:${PN}-inventory:append:ibm-ac-server = " openpower-fru-vpd openpower-oc
 RDEPENDS:${PN}-inventory:append:p10bmc = " openpower-fru-vpd openpower-occ-control phosphor-gpio-monitor-presence entity-manager"
 RDEPENDS:${PN}-inventory:append:witherspoon-tacoma = " entity-manager"
 RDEPENDS:${PN}-inventory:remove:huygens = " openpower-occ-control"
+RDEPENDS:${PN}-inventory:append:system1 = " openpower-fru-vpd"
 
 RDEPENDS:${PN}-fan-control:append:ibm-ac-server = " fan-watchdog"
 RDEPENDS:${PN}-fan-control:append:p10bmc = " fan-watchdog phosphor-fan-sensor-monitor"

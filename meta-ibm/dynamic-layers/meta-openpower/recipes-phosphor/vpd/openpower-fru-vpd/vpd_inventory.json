@@ -1,0 +1,325 @@
+{
+        "commonInterfaces": {
+            "xyz.openbmc_project.Inventory.Decorator.Asset": {
+                "Manufacturer": "IBM",
+                "PartNumber": {
+                    "recordName": "VINI",
+                    "keywordName": "PN"
+                },
+                "SerialNumber": {
+                    "recordName": "VINI",
+                    "keywordName": "SN"
+                },
+                "SparePartNumber": {
+                    "recordName": "VINI",
+                    "keywordName": "FN"
+                },
+                "Model": {
+                    "recordName": "VINI",
+                    "keywordName": "CC"
+                },
+                "BuildDate": {
+                    "recordName": "VR10",
+                    "keywordName": "DC",
+                    "encoding": "DATE"
+                },
+                "xyz.openbmc_project.Inventory.Item": {
+                    "PrettyName": {
+                        "recordName": "VINI",
+                        "keywordName": "DR"
+                    }
+                }
+            }
+        },
+        "frus": {
+            "/sys/bus/i2c/devices/72-0051/eeprom": [
+                {
+                    "inventoryPath": "/xyz/openbmc_project/inventory/system/chassis/motherboard/pcieslot0/pciecard",
+                    "serviceName": "xyz.openbmc_project.Inventory.Manager",
+                    "replaceableAtStandby": true,
+                    "extraInterfaces": {
+                        "xyz.openbmc_project.Inventory.Item.PCIeDevice": null,
+                        "xyz.openbmc_project.Inventory.Item.FabricAdapter": null,
+                        "xyz.openbmc_project.Inventory.Decorator.I2CDevice": {
+                            "Bus": 72,
+                            "Address": 51
+                        },
+                        "xyz.openbmc_project.Inventory.Decorator.Slot": {
+                            "SlotNumber": 1
+                        }
+                    }
+                }
+            ],
+            "/sys/bus/i2c/devices/73-0051/eeprom": [
+                {
+                    "inventoryPath": "/xyz/openbmc_project/inventory/system/chassis/motherboard/pcieslot1/pciecard",
+                    "serviceName": "xyz.openbmc_project.Inventory.Manager",
+                    "replaceableAtStandby": true,
+                    "extraInterfaces": {
+                        "xyz.openbmc_project.Inventory.Item.PCIeDevice": null,
+                        "xyz.openbmc_project.Inventory.Item.FabricAdapter": null,
+                        "xyz.openbmc_project.Inventory.Decorator.I2CDevice": {
+                            "Bus": 73,
+                            "Address": 51
+                        },
+                        "xyz.openbmc_project.Inventory.Decorator.Slot": {
+                            "SlotNumber": 2
+                        }
+                    }
+                }
+            ],
+            "/sys/bus/i2c/devices/74-0051/eeprom": [
+                {
+                    "inventoryPath": "/xyz/openbmc_project/inventory/system/chassis/motherboard/pcieslot2/pciecard",
+                    "serviceName": "xyz.openbmc_project.Inventory.Manager",
+                    "replaceableAtStandby": true,
+                    "extraInterfaces": {
+                        "xyz.openbmc_project.Inventory.Item.PCIeDevice": null,
+                        "xyz.openbmc_project.Inventory.Item.FabricAdapter": null,
+                        "xyz.openbmc_project.Inventory.Decorator.I2CDevice": {
+                            "Bus": 74,
+                            "Address": 51
+                        },
+                        "xyz.openbmc_project.Inventory.Decorator.Slot": {
+                            "SlotNumber": 3
+                        }
+                    }
+                }
+            ],
+            "/sys/bus/i2c/devices/75-0051/eeprom": [
+                {
+                    "inventoryPath": "/xyz/openbmc_project/inventory/system/chassis/motherboard/pcieslot3/pciecard",
+                    "serviceName": "xyz.openbmc_project.Inventory.Manager",
+                    "replaceableAtStandby": true,
+                    "extraInterfaces": {
+                        "xyz.openbmc_project.Inventory.Item.PCIeDevice": null,
+                        "xyz.openbmc_project.Inventory.Item.FabricAdapter": null,
+                        "xyz.openbmc_project.Inventory.Decorator.I2CDevice": {
+                            "Bus": 75,
+                            "Address": 51
+                        },
+                        "xyz.openbmc_project.Inventory.Decorator.Slot": {
+                            "SlotNumber": 4
+                        }
+                    }
+                }
+            ],
+            "/sys/bus/i2c/devices/76-0051/eeprom": [
+                {
+                    "inventoryPath": "/xyz/openbmc_project/inventory/system/chassis/motherboard/pcieslot4/pciecard",
+                    "serviceName": "xyz.openbmc_project.Inventory.Manager",
+                    "replaceableAtStandby": true,
+                    "extraInterfaces": {
+                        "xyz.openbmc_project.Inventory.Item.PCIeDevice": null,
+                        "xyz.openbmc_project.Inventory.Item.FabricAdapter": null,
+                        "xyz.openbmc_project.Inventory.Decorator.I2CDevice": {
+                            "Bus": 76,
+                            "Address": 51
+                        },
+                        "xyz.openbmc_project.Inventory.Decorator.Slot": {
+                            "SlotNumber": 5
+                        }
+                    }
+                }
+            ],
+            "/sys/bus/i2c/devices/77-0051/eeprom": [
+                {
+                    "inventoryPath": "/xyz/openbmc_project/inventory/system/chassis/motherboard/pcieslot5/pciecard",
+                    "serviceName": "xyz.openbmc_project.Inventory.Manager",
+                    "replaceableAtStandby": true,
+                    "extraInterfaces": {
+                        "xyz.openbmc_project.Inventory.Item.PCIeDevice": null,
+                        "xyz.openbmc_project.Inventory.Item.FabricAdapter": null,
+                        "xyz.openbmc_project.Inventory.Decorator.I2CDevice": {
+                            "Bus": 77,
+                            "Address": 51
+                        },
+                        "xyz.openbmc_project.Inventory.Decorator.Slot": {
+                            "SlotNumber": 6
+                        }
+                    }
+                }
+            ],
+            "/sys/bus/i2c/devices/78-0051/eeprom": [
+                {
+                    "inventoryPath": "/xyz/openbmc_project/inventory/system/chassis/motherboard/pcieslot6/pciecard",
+                    "serviceName": "xyz.openbmc_project.Inventory.Manager",
+                    "replaceableAtStandby": true,
+                    "extraInterfaces": {
+                        "xyz.openbmc_project.Inventory.Item.PCIeDevice": null,
+                        "xyz.openbmc_project.Inventory.Item.FabricAdapter": null,
+                        "xyz.openbmc_project.Inventory.Decorator.I2CDevice": {
+                            "Bus": 78,
+                            "Address": 51
+                        },
+                        "xyz.openbmc_project.Inventory.Decorator.Slot": {
+                            "SlotNumber": 7
+                        }
+                    }
+                }
+            ],
+            "/sys/bus/i2c/devices/79-0051/eeprom": [
+                {
+                    "inventoryPath": "/xyz/openbmc_project/inventory/system/chassis/motherboard/pcieslot7/pciecard",
+                    "serviceName": "xyz.openbmc_project.Inventory.Manager",
+                    "replaceableAtStandby": true,
+                    "extraInterfaces": {
+                        "xyz.openbmc_project.Inventory.Item.PCIeDevice": null,
+                        "xyz.openbmc_project.Inventory.Item.FabricAdapter": null,
+                        "xyz.openbmc_project.Inventory.Decorator.I2CDevice": {
+                            "Bus": 79,
+                            "Address": 51
+                        },
+                        "xyz.openbmc_project.Inventory.Decorator.Slot": {
+                            "SlotNumber": 8
+                        }
+                    }
+                }
+            ],
+            "/sys/bus/i2c/devices/80-0051/eeprom": [
+                {
+                    "inventoryPath": "/xyz/openbmc_project/inventory/system/chassis/motherboard/pcieslot8/pciecard",
+                    "serviceName": "xyz.openbmc_project.Inventory.Manager",
+                    "replaceableAtStandby": true,
+                    "extraInterfaces": {
+                        "xyz.openbmc_project.Inventory.Item.PCIeDevice": null,
+                        "xyz.openbmc_project.Inventory.Item.FabricAdapter": null,
+                        "xyz.openbmc_project.Inventory.Decorator.I2CDevice": {
+                            "Bus": 80,
+                            "Address": 51
+                        },
+                        "xyz.openbmc_project.Inventory.Decorator.Slot": {
+                            "SlotNumber": 9
+                        }
+                    }
+                }
+            ],
+            "/sys/bus/i2c/devices/81-0051/eeprom": [
+                {
+                    "inventoryPath": "/xyz/openbmc_project/inventory/system/chassis/motherboard/pcieslot9/pciecard",
+                    "serviceName": "xyz.openbmc_project.Inventory.Manager",
+                    "replaceableAtStandby": true,
+                    "extraInterfaces": {
+                        "xyz.openbmc_project.Inventory.Item.PCIeDevice": null,
+                        "xyz.openbmc_project.Inventory.Item.FabricAdapter": null,
+                        "xyz.openbmc_project.Inventory.Decorator.I2CDevice": {
+                            "Bus": 81,
+                            "Address": 51
+                        },
+                        "xyz.openbmc_project.Inventory.Decorator.Slot": {
+                            "SlotNumber": 10
+                        }
+                    }
+                }
+            ],
+            "/sys/bus/i2c/devices/82-0051/eeprom": [
+                {
+                    "inventoryPath": "/xyz/openbmc_project/inventory/system/chassis/motherboard/pcieslot10/pciecard",
+                    "serviceName": "xyz.openbmc_project.Inventory.Manager",
+                    "replaceableAtStandby": true,
+                    "extraInterfaces": {
+                        "xyz.openbmc_project.Inventory.Item.PCIeDevice": null,
+                        "xyz.openbmc_project.Inventory.Item.FabricAdapter": null,
+                        "xyz.openbmc_project.Inventory.Decorator.I2CDevice": {
+                            "Bus": 82,
+                            "Address": 51
+                        },
+                        "xyz.openbmc_project.Inventory.Decorator.Slot": {
+                            "SlotNumber": 11
+                        }
+                    }
+                }
+            ],
+            "/sys/bus/i2c/devices/83-0051/eeprom": [
+                {
+                    "inventoryPath": "/xyz/openbmc_project/inventory/system/chassis/motherboard/pcieslot11/pciecard",
+                    "serviceName": "xyz.openbmc_project.Inventory.Manager",
+                    "replaceableAtStandby": true,
+                    "extraInterfaces": {
+                        "xyz.openbmc_project.Inventory.Item.PCIeDevice": null,
+                        "xyz.openbmc_project.Inventory.Item.FabricAdapter": null,
+                        "xyz.openbmc_project.Inventory.Decorator.I2CDevice": {
+                            "Bus": 83,
+                            "Address": 51
+                        },
+                        "xyz.openbmc_project.Inventory.Decorator.Slot": {
+                            "SlotNumber": 12
+                        }
+                    }
+                }
+            ],
+            "/sys/bus/i2c/devices/84-0051/eeprom": [
+                {
+                    "inventoryPath": "/xyz/openbmc_project/inventory/system/chassis/motherboard/pcieslot12/pciecard",
+                    "serviceName": "xyz.openbmc_project.Inventory.Manager",
+                    "replaceableAtStandby": true,
+                    "extraInterfaces": {
+                        "xyz.openbmc_project.Inventory.Item.PCIeDevice": null,
+                        "xyz.openbmc_project.Inventory.Item.FabricAdapter": null,
+                        "xyz.openbmc_project.Inventory.Decorator.I2CDevice": {
+                            "Bus": 84,
+                            "Address": 51
+                        },
+                        "xyz.openbmc_project.Inventory.Decorator.Slot": {
+                            "SlotNumber": 13
+                        }
+                    }
+                }
+            ],
+            "/sys/bus/i2c/devices/85-0051/eeprom": [
+                {
+                    "inventoryPath": "/xyz/openbmc_project/inventory/system/chassis/motherboard/pcieslot13/pciecard",
+                    "serviceName": "xyz.openbmc_project.Inventory.Manager",
+                    "replaceableAtStandby": true,
+                    "extraInterfaces": {
+                        "xyz.openbmc_project.Inventory.Item.PCIeDevice": null,
+                        "xyz.openbmc_project.Inventory.Item.FabricAdapter": null,
+                        "xyz.openbmc_project.Inventory.Decorator.I2CDevice": {
+                            "Bus": 85,
+                            "Address": 51
+                        },
+                        "xyz.openbmc_project.Inventory.Decorator.Slot": {
+                            "SlotNumber": 14
+                        }
+                    }
+                }
+            ],
+            "/sys/bus/i2c/devices/86-0051/eeprom": [
+                {
+                    "inventoryPath": "/xyz/openbmc_project/inventory/system/chassis/motherboard/pcieslot14/pciecard",
+                    "serviceName": "xyz.openbmc_project.Inventory.Manager",
+                    "replaceableAtStandby": true,
+                    "extraInterfaces": {
+                        "xyz.openbmc_project.Inventory.Item.PCIeDevice": null,
+                        "xyz.openbmc_project.Inventory.Item.FabricAdapter": null,
+                        "xyz.openbmc_project.Inventory.Decorator.I2CDevice": {
+                            "Bus": 86,
+                            "Address": 51
+                        },
+                        "xyz.openbmc_project.Inventory.Decorator.Slot": {
+                            "SlotNumber": 15
+                        }
+                    }
+                }
+            ],
+            "/sys/bus/i2c/devices/87-0051/eeprom": [
+                {
+                    "inventoryPath": "/xyz/openbmc_project/inventory/system/chassis/motherboard/pcieslot15/pciecard",
+                    "serviceName": "xyz.openbmc_project.Inventory.Manager",
+                    "replaceableAtStandby": true,
+                    "extraInterfaces": {
+                        "xyz.openbmc_project.Inventory.Item.PCIeDevice": null,
+                        "xyz.openbmc_project.Inventory.Item.FabricAdapter": null,
+                        "xyz.openbmc_project.Inventory.Decorator.I2CDevice": {
+                            "Bus": 87,
+                            "Address": 51
+                        },
+                        "xyz.openbmc_project.Inventory.Decorator.Slot": {
+                            "SlotNumber": 16
+                        }
+                    }
+                }
+            ]
+        }
+    }
+    

@@ -13,6 +13,7 @@ BBLAYERS ?= " \
   ##OEROOT##/meta-security/meta-tpm \
   ##OEROOT##/meta-phosphor \
   ##OEROOT##/meta-aspeed \
+  ##OEROOT##/meta-openpower \
   ##OEROOT##/meta-ibm \
   ##OEROOT##/meta-ibm/meta-system1 \
   "
