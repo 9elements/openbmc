@@ -1,0 +1,11 @@
+[Unit]
+Description=Trigger VPD rescan
+Wants=vpd-manager.service
+After=vpd-manager.service
+
+[Service]
+Type=oneshot
+ExecStart=/bin/sh -c "busctl call com.ibm.VPD.Manager /com/ibm/VPD/Manager com.ibm.VPD.Manager PerformVPDRecollection"
+
+[Install]
+WantedBy=multi-user.target
