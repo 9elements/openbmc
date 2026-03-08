@@ -1,0 +1,65 @@
+From f4bcbc6ea04f5200a8d91992fac8e4570622dbd4 Mon Sep 17 00:00:00 2001
+From: Naresh Solanki <naresh.solanki@9elements.com>
+Date: Thu, 19 Mar 2026 13:45:21 +0000
+Subject: [PATCH 3/9] overlay: Print error instead crashing
+
+entity-manager complains about substitution failures.
+The Bus and Address property can be empty for some reason, which causes
+the JSON parser to fail. Instead of crashing print a warning and do
+not crash.
+
+FIXME: Figure out where the string comes from.
+       On DBUS it's an int: ".Bus   property  u    72   emits-change writable"
+
+Upstream-Status: Pending
+Change-Id: I3a9cfb31f6152f39e51247c53bcc851449dcac92
+Signed-off-by: Patrick Rudolph <patrick.rudolph@9elements.com>
+
+
+---
+ src/entity_manager/overlay.hpp | 19 +++++++++++++++++--
+ 1 file changed, 17 insertions(+), 2 deletions(-)
+
+diff --git a/src/entity_manager/overlay.hpp b/src/entity_manager/overlay.hpp
+index 7d7f702f8..cfb1c36c3 100644
+--- a/src/entity_manager/overlay.hpp
++++ b/src/entity_manager/overlay.hpp
+@@ -24,6 +24,7 @@
+ #include <boost/asio/io_context.hpp>
+ #include <boost/asio/steady_timer.hpp>
+ #include <nlohmann/json.hpp>
++#include <phosphor-logging/lg2.hpp>
+ 
+ #include <optional>
+ #include <regex>
+@@ -68,11 +69,25 @@ class DeviceConfig
+ 
+             if (keyPair.key() == "Bus")
+             {
+-                bus = keyPair.value().get<uint64_t>();
++                if (keyPair.value().type() == nlohmann::json::value_t::string) {
++                    lg2::error("Key {KEY} has value {VALUE} of type string, but expected Uint64",
++                        "KEY", keyPair.key(), "VALUE", keyPair.value());
++                    if (keyPair.value().get<std::string>().length() > 0)
++                        bus = std::stoi(keyPair.value().get<std::string>());
++                } else {
++                    bus = keyPair.value().get<uint64_t>();
++                }
+             }
+             else if (keyPair.key() == "Address")
+             {
+-                address = keyPair.value().get<uint64_t>();
++                if (keyPair.value().type() == nlohmann::json::value_t::string) {
++                    lg2::error("Key {KEY} has value {VALUE} of type string, but expected Uint64",
++                        "KEY", keyPair.key(), "VALUE", keyPair.value());
++                    if (keyPair.value().get<std::string>().length() > 0)
++                        address = std::stoi(keyPair.value().get<std::string>());
++                } else {
++                    address = keyPair.value().get<uint64_t>();
++                }
+             }
+             else if (keyPair.key() == "ChannelNames" && type.ends_with("Mux"))
+             {
+-- 
+2.43.0
+
