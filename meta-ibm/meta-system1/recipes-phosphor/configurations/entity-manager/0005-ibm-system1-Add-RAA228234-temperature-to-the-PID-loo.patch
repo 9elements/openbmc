@@ -1,0 +1,77 @@
+From 6405a22e3a3a3e0ec6567ca595a13decaaa36754 Mon Sep 17 00:00:00 2001
+From: Patrick Rudolph <patrick.rudolph@9elements.com>
+Date: Mon, 9 Mar 2026 14:05:38 +0100
+Subject: [PATCH 5/7] ibm: system1: Add RAA228234 temperature to the PID loop
+
+Add SPYRE VR temperatures to the PID loop.
+
+Upstream-Status: Pending
+Change-Id: I16f7877a290b857f6c472d9470ffd897dd59f70b
+Signed-off-by: Patrick Rudolph <patrick.rudolph@9elements.com>
+---
+ configurations/ibm/system1_baseboard.json | 42 ++++++++++++++++++++++-
+ 1 file changed, 41 insertions(+), 1 deletion(-)
+
+diff --git a/configurations/ibm/system1_baseboard.json b/configurations/ibm/system1_baseboard.json
+index 40088a9..4a91bf2 100644
+--- a/configurations/ibm/system1_baseboard.json
++++ b/configurations/ibm/system1_baseboard.json
+@@ -537,7 +537,7 @@
+                 "SPYRE16_TEMP1",
+                 "SPYRE16_TEMP2"
+             ],
+-            "Name": "Spyre Temperature",
++            "Name": "Spyre Up/Down Temperature",
+             "NegativeHysteresis": 0,
+             "OutLimitMax": 100,
+             "OutLimitMin": 20,
+@@ -552,6 +552,46 @@
+                 "CECIO"
+             ]
+         },
++        {
++            "Class": "temp",
++            "FFGainCoefficient": 0,
++            "FFOffCoefficient": 0,
++            "ICoefficient": -5,
++            "ILimitMax": 100,
++            "ILimitMin": 20,
++            "Inputs": [
++                "RAA228234_SPYRE0_Combined_Max_Temp",
++                "RAA228234_SPYRE1_Combined_Max_Temp",
++                "RAA228234_SPYRE2_Combined_Max_Temp",
++                "RAA228234_SPYRE3_Combined_Max_Temp",
++                "RAA228234_SPYRE4_Combined_Max_Temp",
++                "RAA228234_SPYRE5_Combined_Max_Temp",
++                "RAA228234_SPYRE6_Combined_Max_Temp",
++                "RAA228234_SPYRE7_Combined_Max_Temp",
++                "RAA228234_SPYRE8_Combined_Max_Temp",
++                "RAA228234_SPYRE9_Combined_Max_Temp",
++                "RAA228234_SPYRE10_Combined_Max_Temp",
++                "RAA228234_SPYRE11_Combined_Max_Temp",
++                "RAA228234_SPYRE12_Combined_Max_Temp",
++                "RAA228234_SPYRE13_Combined_Max_Temp",
++                "RAA228234_SPYRE14_Combined_Max_Temp",
++                "RAA228234_SPYRE15_Combined_Max_Temp"
++            ],
++            "Name": "Spyre RAA228234 Temperature",
++            "NegativeHysteresis": 0,
++            "OutLimitMax": 100,
++            "OutLimitMin": 20,
++            "Outputs": [],
++            "PCoefficient": -500,
++            "PositiveHysteresis": 0,
++            "SetPoint": 75,
++            "SlewNeg": 0,
++            "SlewPos": 0,
++            "Type": "Pid",
++            "Zones": [
++                "CECIO"
++            ]
++        },
+         {
+             "Address": "0x4c",
+             "Bus": 70,
+-- 
+2.47.1
+
