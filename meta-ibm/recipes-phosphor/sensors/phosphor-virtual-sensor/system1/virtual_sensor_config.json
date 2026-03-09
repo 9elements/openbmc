@@ -1,0 +1,610 @@
+[
+    {
+        "Desc": {
+            "Name": "RAA228234_SPYRE0_Combined_Max_Temp",
+            "SensorType": "temperature",
+            "MaxValue": 127.0,
+            "MinValue": -128.0
+        },
+        "Threshold": {
+            "CriticalHigh": 99,
+            "WarningHigh": 91
+        },
+        "Associations": [
+            [
+                "chassis",
+                "all_sensors",
+                "/xyz/openbmc_project/inventory/system/board/IBM_System1_Baseboard"
+            ]
+        ],
+        "Params": {
+            "DbusParam": [
+                {
+                    "ParamName": "T0",
+                    "Desc": {
+                        "Name": "SPYRE0_PVCS_Temperature",
+                        "SensorType": "temperature"
+                    }
+                },
+                {
+                    "ParamName": "T1",
+                    "Desc": {
+                        "Name": "SPYRE0_PVDD_Temperature",
+                        "SensorType": "temperature"
+                    }
+                }
+            ]
+        },
+        "Expression": "max(0,(T0 == T0) ? T0 : NULL,(T1 == T1) ? T1 : NULL)"
+    },
+    {
+        "Desc": {
+            "Name": "RAA228234_SPYRE1_Combined_Max_Temp",
+            "SensorType": "temperature",
+            "MaxValue": 127.0,
+            "MinValue": -128.0
+        },
+        "Threshold": {
+            "CriticalHigh": 99,
+            "WarningHigh": 91
+        },
+        "Associations": [
+            [
+                "chassis",
+                "all_sensors",
+                "/xyz/openbmc_project/inventory/system/board/IBM_System1_Baseboard"
+            ]
+        ],
+        "Params": {
+            "DbusParam": [
+                {
+                    "ParamName": "T0",
+                    "Desc": {
+                        "Name": "SPYRE1_PVCS_Temperature",
+                        "SensorType": "temperature"
+                    }
+                },
+                {
+                    "ParamName": "T1",
+                    "Desc": {
+                        "Name": "SPYRE1_PVDD_Temperature",
+                        "SensorType": "temperature"
+                    }
+                }
+            ]
+        },
+        "Expression": "max(0,(T0 == T0) ? T0 : NULL,(T1 == T1) ? T1 : NULL)"
+    },
+    {
+        "Desc": {
+            "Name": "RAA228234_SPYRE2_Combined_Max_Temp",
+            "SensorType": "temperature",
+            "MaxValue": 127.0,
+            "MinValue": -128.0
+        },
+        "Threshold": {
+            "CriticalHigh": 99,
+            "WarningHigh": 91
+        },
+        "Associations": [
+            [
+                "chassis",
+                "all_sensors",
+                "/xyz/openbmc_project/inventory/system/board/IBM_System1_Baseboard"
+            ]
+        ],
+        "Params": {
+            "DbusParam": [
+                {
+                    "ParamName": "T0",
+                    "Desc": {
+                        "Name": "SPYRE2_PVCS_Temperature",
+                        "SensorType": "temperature"
+                    }
+                },
+                {
+                    "ParamName": "T1",
+                    "Desc": {
+                        "Name": "SPYRE2_PVDD_Temperature",
+                        "SensorType": "temperature"
+                    }
+                }
+            ]
+        },
+        "Expression": "max(0,(T0 == T0) ? T0 : NULL,(T1 == T1) ? T1 : NULL)"
+    },
+    {
+        "Desc": {
+            "Name": "RAA228234_SPYRE3_Combined_Max_Temp",
+            "SensorType": "temperature",
+            "MaxValue": 127.0,
+            "MinValue": -128.0
+        },
+        "Threshold": {
+            "CriticalHigh": 99,
+            "WarningHigh": 91
+        },
+        "Associations": [
+            [
+                "chassis",
+                "all_sensors",
+                "/xyz/openbmc_project/inventory/system/board/IBM_System1_Baseboard"
+            ]
+        ],
+        "Params": {
+            "DbusParam": [
+                {
+                    "ParamName": "T0",
+                    "Desc": {
+                        "Name": "SPYRE3_PVCS_Temperature",
+                        "SensorType": "temperature"
+                    }
+                },
+                {
+                    "ParamName": "T1",
+                    "Desc": {
+                        "Name": "SPYRE3_PVDD_Temperature",
+                        "SensorType": "temperature"
+                    }
+                }
+            ]
+        },
+        "Expression": "max(0,(T0 == T0) ? T0 : NULL,(T1 == T1) ? T1 : NULL)"
+    },
+    {
+        "Desc": {
+            "Name": "RAA228234_SPYRE4_Combined_Max_Temp",
+            "SensorType": "temperature",
+            "MaxValue": 127.0,
+            "MinValue": -128.0
+        },
+        "Threshold": {
+            "CriticalHigh": 99,
+            "WarningHigh": 91
+        },
+        "Associations": [
+            [
+                "chassis",
+                "all_sensors",
+                "/xyz/openbmc_project/inventory/system/board/IBM_System1_Baseboard"
+            ]
+        ],
+        "Params": {
+            "DbusParam": [
+                {
+                    "ParamName": "T0",
+                    "Desc": {
+                        "Name": "SPYRE4_PVCS_Temperature",
+                        "SensorType": "temperature"
+                    }
+                },
+                {
+                    "ParamName": "T1",
+                    "Desc": {
+                        "Name": "SPYRE4_PVDD_Temperature",
+                        "SensorType": "temperature"
+                    }
+                }
+            ]
+        },
+        "Expression": "max(0,(T0 == T0) ? T0 : NULL,(T1 == T1) ? T1 : NULL)"
+    },
+    {
+        "Desc": {
+            "Name": "RAA228234_SPYRE5_Combined_Max_Temp",
+            "SensorType": "temperature",
+            "MaxValue": 127.0,
+            "MinValue": -128.0
+        },
+        "Threshold": {
+            "CriticalHigh": 99,
+            "WarningHigh": 91
+        },
+        "Associations": [
+            [
+                "chassis",
+                "all_sensors",
+                "/xyz/openbmc_project/inventory/system/board/IBM_System1_Baseboard"
+            ]
+        ],
+        "Params": {
+            "DbusParam": [
+                {
+                    "ParamName": "T0",
+                    "Desc": {
+                        "Name": "SPYRE5_PVCS_Temperature",
+                        "SensorType": "temperature"
+                    }
+                },
+                {
+                    "ParamName": "T1",
+                    "Desc": {
+                        "Name": "SPYRE5_PVDD_Temperature",
+                        "SensorType": "temperature"
+                    }
+                }
+            ]
+        },
+        "Expression": "max(0,(T0 == T0) ? T0 : NULL,(T1 == T1) ? T1 : NULL)"
+    },
+    {
+        "Desc": {
+            "Name": "RAA228234_SPYRE6_Combined_Max_Temp",
+            "SensorType": "temperature",
+            "MaxValue": 127.0,
+            "MinValue": -128.0
+        },
+        "Threshold": {
+            "CriticalHigh": 99,
+            "WarningHigh": 91
+        },
+        "Associations": [
+            [
+                "chassis",
+                "all_sensors",
+                "/xyz/openbmc_project/inventory/system/board/IBM_System1_Baseboard"
+            ]
+        ],
+        "Params": {
+            "DbusParam": [
+                {
+                    "ParamName": "T0",
+                    "Desc": {
+                        "Name": "SPYRE6_PVCS_Temperature",
+                        "SensorType": "temperature"
+                    }
+                },
+                {
+                    "ParamName": "T1",
+                    "Desc": {
+                        "Name": "SPYRE6_PVDD_Temperature",
+                        "SensorType": "temperature"
+                    }
+                }
+            ]
+        },
+        "Expression": "max(0,(T0 == T0) ? T0 : NULL,(T1 == T1) ? T1 : NULL)"
+    },
+    {
+        "Desc": {
+            "Name": "RAA228234_SPYRE7_Combined_Max_Temp",
+            "SensorType": "temperature",
+            "MaxValue": 127.0,
+            "MinValue": -128.0
+        },
+        "Threshold": {
+            "CriticalHigh": 99,
+            "WarningHigh": 91
+        },
+        "Associations": [
+            [
+                "chassis",
+                "all_sensors",
+                "/xyz/openbmc_project/inventory/system/board/IBM_System1_Baseboard"
+            ]
+        ],
+        "Params": {
+            "DbusParam": [
+                {
+                    "ParamName": "T0",
+                    "Desc": {
+                        "Name": "SPYRE7_PVCS_Temperature",
+                        "SensorType": "temperature"
+                    }
+                },
+                {
+                    "ParamName": "T1",
+                    "Desc": {
+                        "Name": "SPYRE7_PVDD_Temperature",
+                        "SensorType": "temperature"
+                    }
+                }
+            ]
+        },
+        "Expression": "max(0,(T0 == T0) ? T0 : NULL,(T1 == T1) ? T1 : NULL)"
+    },
+    {
+        "Desc": {
+            "Name": "RAA228234_SPYRE8_Combined_Max_Temp",
+            "SensorType": "temperature",
+            "MaxValue": 127.0,
+            "MinValue": -128.0
+        },
+        "Threshold": {
+            "CriticalHigh": 99,
+            "WarningHigh": 91
+        },
+        "Associations": [
+            [
+                "chassis",
+                "all_sensors",
+                "/xyz/openbmc_project/inventory/system/board/IBM_System1_Baseboard"
+            ]
+        ],
+        "Params": {
+            "DbusParam": [
+                {
+                    "ParamName": "T0",
+                    "Desc": {
+                        "Name": "SPYRE8_PVCS_Temperature",
+                        "SensorType": "temperature"
+                    }
+                },
+                {
+                    "ParamName": "T1",
+                    "Desc": {
+                        "Name": "SPYRE8_PVDD_Temperature",
+                        "SensorType": "temperature"
+                    }
+                }
+            ]
+        },
+        "Expression": "max(0,(T0 == T0) ? T0 : NULL,(T1 == T1) ? T1 : NULL)"
+    },
+    {
+        "Desc": {
+            "Name": "RAA228234_SPYRE9_Combined_Max_Temp",
+            "SensorType": "temperature",
+            "MaxValue": 127.0,
+            "MinValue": -128.0
+        },
+        "Threshold": {
+            "CriticalHigh": 99,
+            "WarningHigh": 91
+        },
+        "Associations": [
+            [
+                "chassis",
+                "all_sensors",
+                "/xyz/openbmc_project/inventory/system/board/IBM_System1_Baseboard"
+            ]
+        ],
+        "Params": {
+            "DbusParam": [
+                {
+                    "ParamName": "T0",
+                    "Desc": {
+                        "Name": "SPYRE9_PVCS_Temperature",
+                        "SensorType": "temperature"
+                    }
+                },
+                {
+                    "ParamName": "T1",
+                    "Desc": {
+                        "Name": "SPYRE9_PVDD_Temperature",
+                        "SensorType": "temperature"
+                    }
+                }
+            ]
+        },
+        "Expression": "max(0,(T0 == T0) ? T0 : NULL,(T1 == T1) ? T1 : NULL)"
+    },
+    {
+        "Desc": {
+            "Name": "RAA228234_SPYRE10_Combined_Max_Temp",
+            "SensorType": "temperature",
+            "MaxValue": 127.0,
+            "MinValue": -128.0
+        },
+        "Threshold": {
+            "CriticalHigh": 99,
+            "WarningHigh": 91
+        },
+        "Associations": [
+            [
+                "chassis",
+                "all_sensors",
+                "/xyz/openbmc_project/inventory/system/board/IBM_System1_Baseboard"
+            ]
+        ],
+        "Params": {
+            "DbusParam": [
+                {
+                    "ParamName": "T0",
+                    "Desc": {
+                        "Name": "SPYRE10_PVCS_Temperature",
+                        "SensorType": "temperature"
+                    }
+                },
+                {
+                    "ParamName": "T1",
+                    "Desc": {
+                        "Name": "SPYRE10_PVDD_Temperature",
+                        "SensorType": "temperature"
+                    }
+                }
+            ]
+        },
+        "Expression": "max(0,(T0 == T0) ? T0 : NULL,(T1 == T1) ? T1 : NULL)"
+    },
+    {
+        "Desc": {
+            "Name": "RAA228234_SPYRE11_Combined_Max_Temp",
+            "SensorType": "temperature",
+            "MaxValue": 127.0,
+            "MinValue": -128.0
+        },
+        "Threshold": {
+            "CriticalHigh": 99,
+            "WarningHigh": 91
+        },
+        "Associations": [
+            [
+                "chassis",
+                "all_sensors",
+                "/xyz/openbmc_project/inventory/system/board/IBM_System1_Baseboard"
+            ]
+        ],
+        "Params": {
+            "DbusParam": [
+                {
+                    "ParamName": "T0",
+                    "Desc": {
+                        "Name": "SPYRE11_PVCS_Temperature",
+                        "SensorType": "temperature"
+                    }
+                },
+                {
+                    "ParamName": "T1",
+                    "Desc": {
+                        "Name": "SPYRE11_PVDD_Temperature",
+                        "SensorType": "temperature"
+                    }
+                }
+            ]
+        },
+        "Expression": "max(0,(T0 == T0) ? T0 : NULL,(T1 == T1) ? T1 : NULL)"
+    },
+    {
+        "Desc": {
+            "Name": "RAA228234_SPYRE12_Combined_Max_Temp",
+            "SensorType": "temperature",
+            "MaxValue": 127.0,
+            "MinValue": -128.0
+        },
+        "Threshold": {
+            "CriticalHigh": 99,
+            "WarningHigh": 91
+        },
+        "Associations": [
+            [
+                "chassis",
+                "all_sensors",
+                "/xyz/openbmc_project/inventory/system/board/IBM_System1_Baseboard"
+            ]
+        ],
+        "Params": {
+            "DbusParam": [
+                {
+                    "ParamName": "T0",
+                    "Desc": {
+                        "Name": "SPYRE12_PVCS_Temperature",
+                        "SensorType": "temperature"
+                    }
+                },
+                {
+                    "ParamName": "T1",
+                    "Desc": {
+                        "Name": "SPYRE12_PVDD_Temperature",
+                        "SensorType": "temperature"
+                    }
+                }
+            ]
+        },
+        "Expression": "max(0,(T0 == T0) ? T0 : NULL,(T1 == T1) ? T1 : NULL)"
+    },
+    {
+        "Desc": {
+            "Name": "RAA228234_SPYRE13_Combined_Max_Temp",
+            "SensorType": "temperature",
+            "MaxValue": 127.0,
+            "MinValue": -128.0
+        },
+        "Threshold": {
+            "CriticalHigh": 99,
+            "WarningHigh": 91
+        },
+        "Associations": [
+            [
+                "chassis",
+                "all_sensors",
+                "/xyz/openbmc_project/inventory/system/board/IBM_System1_Baseboard"
+            ]
+        ],
+        "Params": {
+            "DbusParam": [
+                {
+                    "ParamName": "T0",
+                    "Desc": {
+                        "Name": "SPYRE13_PVCS_Temperature",
+                        "SensorType": "temperature"
+                    }
+                },
+                {
+                    "ParamName": "T1",
+                    "Desc": {
+                        "Name": "SPYRE13_PVDD_Temperature",
+                        "SensorType": "temperature"
+                    }
+                }
+            ]
+        },
+        "Expression": "max(0,(T0 == T0) ? T0 : NULL,(T1 == T1) ? T1 : NULL)"
+    },
+    {
+        "Desc": {
+            "Name": "RAA228234_SPYRE14_Combined_Max_Temp",
+            "SensorType": "temperature",
+            "MaxValue": 127.0,
+            "MinValue": -128.0
+        },
+        "Threshold": {
+            "CriticalHigh": 99,
+            "WarningHigh": 91
+        },
+        "Associations": [
+            [
+                "chassis",
+                "all_sensors",
+                "/xyz/openbmc_project/inventory/system/board/IBM_System1_Baseboard"
+            ]
+        ],
+        "Params": {
+            "DbusParam": [
+                {
+                    "ParamName": "T0",
+                    "Desc": {
+                        "Name": "SPYRE14_PVCS_Temperature",
+                        "SensorType": "temperature"
+                    }
+                },
+                {
+                    "ParamName": "T1",
+                    "Desc": {
+                        "Name": "SPYRE14_PVDD_Temperature",
+                        "SensorType": "temperature"
+                    }
+                }
+            ]
+        },
+        "Expression": "max(0,(T0 == T0) ? T0 : NULL,(T1 == T1) ? T1 : NULL)"
+    },
+    {
+        "Desc": {
+            "Name": "RAA228234_SPYRE15_Combined_Max_Temp",
+            "SensorType": "temperature",
+            "MaxValue": 127.0,
+            "MinValue": -128.0
+        },
+        "Threshold": {
+            "CriticalHigh": 99,
+            "WarningHigh": 91
+        },
+        "Associations": [
+            [
+                "chassis",
+                "all_sensors",
+                "/xyz/openbmc_project/inventory/system/board/IBM_System1_Baseboard"
+            ]
+        ],
+        "Params": {
+            "DbusParam": [
+                {
+                    "ParamName": "T0",
+                    "Desc": {
+                        "Name": "SPYRE15_PVCS_Temperature",
+                        "SensorType": "temperature"
+                    }
+                },
+                {
+                    "ParamName": "T1",
+                    "Desc": {
+                        "Name": "SPYRE15_PVDD_Temperature",
+                        "SensorType": "temperature"
+                    }
+                }
+            ]
+        },
+        "Expression": "max(0,(T0 == T0) ? T0 : NULL,(T1 == T1) ? T1 : NULL)"
+    }
+]
