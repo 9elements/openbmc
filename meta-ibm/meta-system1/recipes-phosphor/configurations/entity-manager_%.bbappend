@@ -7,6 +7,8 @@ FILESEXTRAPATHS:prepend := "${THISDIR}/${PN}:"
 #    file://0003-overlay-Print-error-instead-crashing.patch \
 #    file://0004-ibm-Move-SPYRE-to-separate-JSON.patch \
 #    file://0005-ibm-system1-Add-RAA228234-temperature-to-the-PID-loo.patch \
+#    file://0006-ibm-system1-Add-CPU-temperature-sensors-to-PID-loop.patch \
+#    file://0007-ibm-system1-Add-Spyre-chip-temperature-to-the-PID-lo.patch \
 #    "
 SRC_URI:append = " \
     file://blacklist.json \
