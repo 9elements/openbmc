@@ -6,6 +6,7 @@ SRC_URI:append = " \
     file://0002-Support-MuxChannel-object-for-dynamic-buses.patch \
     file://0003-overlay-Print-error-instead-crashing.patch \
     file://0004-ibm-Move-SPYRE-to-separate-JSON.patch \
+    file://0005-ibm-system1-Add-RAA228234-temperature-to-the-PID-loo.patch \
     "
 
 do_install:append () {
