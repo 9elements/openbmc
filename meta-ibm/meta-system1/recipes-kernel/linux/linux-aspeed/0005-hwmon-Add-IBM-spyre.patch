@@ -1,0 +1,371 @@
+From 59aca8ffe2590741f85b214a1ac5bc078c673601 Mon Sep 17 00:00:00 2001
+From: Patrick Rudolph <patrick.rudolph@9elements.com>
+Date: Tue, 10 Mar 2026 11:21:10 +0100
+Subject: [PATCH 5/5] hwmon: Add IBM spyre
+
+IBM Spyre AI accelerator has an I2C interface to allow managment
+controllers to read the temperature data. Implement the temperature
+reading support for all 9 channels.
+
+TEST=Can read temperature data over I2C from the Spyre card.
+
+Upstream-Status: Pending
+Signed-off-by: Patrick Rudolph <patrick.rudolph@9elements.com>
+---
+ drivers/hwmon/Kconfig  |   7 +
+ drivers/hwmon/Makefile |   1 +
+ drivers/hwmon/spyre.c  | 312 +++++++++++++++++++++++++++++++++++++++++
+ 3 files changed, 320 insertions(+)
+ create mode 100644 drivers/hwmon/spyre.c
+
+diff --git a/drivers/hwmon/Kconfig b/drivers/hwmon/Kconfig
+index 58480a3f4683..04da8e3d8d8a 100644
+--- a/drivers/hwmon/Kconfig
++++ b/drivers/hwmon/Kconfig
+@@ -75,6 +75,13 @@ config SENSORS_SMPRO
+ 	  current and power sensors of Ampere's Altra processor family SoC
+ 	  with SMpro co-processor.
+ 
++config SENSORS_SPYRE
++	tristate "IBM Spyre hardware monitoring driver"
++	depends on I2C
++	help
++	  If you say yes here you get support for the thermal sensors of
++	  IBM's spyre co-processor.
++
+ config SENSORS_AD7314
+ 	tristate "Analog Devices AD7314 and compatibles"
+ 	depends on SPI
+diff --git a/drivers/hwmon/Makefile b/drivers/hwmon/Makefile
+index 9554d2fdcf7b..afeb8c12cf7f 100644
+--- a/drivers/hwmon/Makefile
++++ b/drivers/hwmon/Makefile
+@@ -211,6 +211,7 @@ obj-$(CONFIG_SENSORS_SPD5118)	+= spd5118.o
+ obj-$(CONFIG_SENSORS_STTS751)	+= stts751.o
+ obj-$(CONFIG_SENSORS_SURFACE_FAN)+= surface_fan.o
+ obj-$(CONFIG_SENSORS_SURFACE_TEMP)+= surface_temp.o
++obj-$(CONFIG_SENSORS_SPYRE)	+= spyre.o
+ obj-$(CONFIG_SENSORS_SY7636A)	+= sy7636a-hwmon.o
+ obj-$(CONFIG_SENSORS_AMC6821)	+= amc6821.o
+ obj-$(CONFIG_SENSORS_TC74)	+= tc74.o
+diff --git a/drivers/hwmon/spyre.c b/drivers/hwmon/spyre.c
+new file mode 100644
+index 000000000000..64fad93b7dea
+--- /dev/null
++++ b/drivers/hwmon/spyre.c
+@@ -0,0 +1,312 @@
++// SPDX-License-Identifier: GPL-2.0-or-later
++/* Texas Instruments spyre SMBus temperature sensor driver
++ *
++ * Copyright (C) 2026 Patrick Rudolph 9Elements GmbH
++ */
++
++#include <linux/delay.h>
++#include <linux/module.h>
++#include <linux/init.h>
++#include <linux/slab.h>
++#include <linux/i2c.h>
++#include <linux/mutex.h>
++#include <linux/hwmon.h>
++#include <linux/hwmon-sysfs.h>
++#include <linux/err.h>
++#include <linux/device.h>
++#include <linux/of.h>
++
++#define	DRIVER_NAME "spyre"
++
++/* Control register */
++#define	SPYRE_THERM_INPUT		0x080090
++#define  SPYRE_THERM_INPUT_RUN			BIT(0)
++#define  SPYRE_THERM_INPUT_CHAN_SHIFT		4
++#define  SPYRE_THERM_INPUT_CHAN_MASK		GENMASK(7, 4)
++#define  SPYRE_THERM_INPUT_PROBE_ID_SHIFT(x)	(8 + 4 * (x))
++#define  SPYRE_THERM_INPUT_PROBE_ID_MASK(x)	GENMASK(11 + 4 * (x), 8 + 4 * (x))
++/* Sensor registers */
++#define	SPYRE_THERM_OUTPUT0		0x080091
++/* Also valid for SPYRE_THERM_OUTPUT1 */
++#define	 SPYRE_THERM_OUTPUT_TEMP_MASK		GENMASK(8, 0)
++#define	 SPYRE_THERM_OUTPUT_GET_CHAN(x, c)	((x >> c) & GENMASK(9, 0))
++#define	 SPYRE_THERM_OUTPUT_VALID		BIT(9)
++#define	SPYRE_THERM_OUTPUT1		0x080092
++/* Calibration registers */
++#define	SPYRE_TEM25_0			0x0800B3
++#define	SPYRE_TEM25_1			0x0800B4
++#define	SPYRE_TEM85_0			0x0800B5
++#define	SPYRE_TEM85_1			0x0800B6
++#define  SPYRE_CALIB_EXTRACT_CHAN(x, c)		(((c < 2) ? ((x) >> (9 * i)) : ((x) >> (9 * (i - 2)))) & GENMASK(8, 0))
++
++#define SPYRE_MAX_CHANNELS	9
++
++#define SPYRE_BOTTOM_TEMP	10
++#define SPYRE_TOP_TEMP		85
++#define SPYRE_TEMP_RANGE	(SPYRE_TOP_TEMP - SPYRE_BOTTOM_TEMP)
++
++struct spyre {
++	struct i2c_client *client;
++	u64 config_orig;
++	struct mutex update_lock;
++	/* Calibration data */
++	u16 temp10[SPYRE_MAX_CHANNELS];
++	u16 temp85[SPYRE_MAX_CHANNELS];
++};
++
++/* convert left adjusted 13-bit spyre register value to milliCelsius */
++static inline int spyre_reg_to_mC(struct spyre *spyre, int channel, u16 val)
++{
++	const int dividend = (spyre->temp85[channel] - spyre->temp10[channel]);
++
++	if (!spyre->temp85[channel] || !dividend) {
++		/* 1 point calibration */
++		return ((int)val - spyre->temp10[channel]) * 500 + SPYRE_BOTTOM_TEMP * 1000;
++	} else {
++		/* 2 point calibration */
++		return ((int)val - spyre->temp10[channel]) * (1000 * SPYRE_TEMP_RANGE / dividend) +
++			SPYRE_BOTTOM_TEMP * 1000;
++	}
++}
++
++static int spyre_i2c_readl(struct spyre *spyre, u32 reg, u64 *regval)
++{
++	struct i2c_client *client = spyre->client;
++	u8 tx[3];
++	u8 rx[8];
++	int ret;
++
++	struct i2c_msg msgs[2] = {
++		{
++			.addr = client->addr,
++			.flags = 0,
++			.len = sizeof(tx),
++			.buf = tx,
++		},
++		{
++			.addr = client->addr,
++			.flags = I2C_M_RD,
++			.len = sizeof(rx),
++			.buf = rx,
++		},
++	};
++
++	put_unaligned_be24(reg, tx);
++
++	mutex_lock(&spyre->update_lock);
++	ret = i2c_transfer(client->adapter, msgs, 2);
++	mutex_unlock(&spyre->update_lock);
++
++	if (ret < 0)
++		return ret;
++
++	*regval = get_unaligned_be64(rx);
++
++	return 0;
++}
++
++static int spyre_i2c_writel(struct spyre *spyre, u32 reg, u64 regval)
++{
++	struct i2c_client *client = spyre->client;
++
++	u8 tx[11];
++	int ret;
++
++	struct i2c_msg msgs[1] = {
++		{
++			.addr = client->addr,
++			.flags = 0,
++			.len = sizeof(tx),
++			.buf = tx,
++		}
++	};
++
++	put_unaligned_be24(reg, tx);
++	put_unaligned_be64(regval, &tx[3]);
++
++	mutex_lock(&spyre->update_lock);
++	ret = i2c_transfer(client->adapter, msgs, 1);
++	mutex_unlock(&spyre->update_lock);
++
++	return ret;
++}
++
++static int spyre_read(struct device *dev, enum hwmon_sensor_types type,
++		       u32 attr, int channel, long *temp)
++{
++	struct spyre *spyre = dev_get_drvdata(dev);
++	u64 regval;
++	u16 raw;
++	int err, reg;
++
++	if (channel >= SPYRE_MAX_CHANNELS)
++		return -EINVAL;
++
++	if ((spyre->temp10[channel] == spyre->temp85[channel]) &&
++	    !spyre->temp10[channel])
++		return -EOPNOTSUPP;
++
++	switch (attr) {
++	case hwmon_temp_input:
++		reg = (channel < 6) ? SPYRE_THERM_OUTPUT0 : SPYRE_THERM_OUTPUT1;
++		break;
++	default:
++		return -EOPNOTSUPP;
++	}
++
++	err = spyre_i2c_readl(spyre, reg, &regval);
++	if (err < 0)
++		return err;
++
++	raw = SPYRE_THERM_OUTPUT_GET_CHAN(regval, channel % 6);
++	if (!(raw & SPYRE_THERM_OUTPUT_VALID))
++		return -EAGAIN;
++
++	raw &= SPYRE_THERM_OUTPUT_TEMP_MASK;
++
++	*temp = spyre_reg_to_mC(spyre, channel, raw);
++
++	return 0;
++}
++
++static umode_t spyre_is_visible(const void *data, enum hwmon_sensor_types type,
++				 u32 attr, int channel)
++{
++	if (type != hwmon_temp)
++		return 0;
++
++	return 0444;
++}
++
++static const struct hwmon_channel_info * const spyre_info[] = {
++	HWMON_CHANNEL_INFO(chip, HWMON_C_REGISTER_TZ),
++	HWMON_CHANNEL_INFO(temp, HWMON_T_INPUT, HWMON_T_INPUT, HWMON_T_INPUT,
++				 HWMON_T_INPUT, HWMON_T_INPUT, HWMON_T_INPUT,
++				 HWMON_T_INPUT, HWMON_T_INPUT, HWMON_T_INPUT),
++	NULL
++};
++
++static const struct hwmon_ops spyre_hwmon_ops = {
++	.is_visible = spyre_is_visible,
++	.read = spyre_read,
++};
++
++static const struct hwmon_chip_info spyre_chip_info = {
++	.ops = &spyre_hwmon_ops,
++	.info = spyre_info,
++};
++
++static void spyre_restore_config(void *data)
++{
++	struct spyre *spyre = data;
++
++	spyre_i2c_writel(spyre, SPYRE_THERM_INPUT, spyre->config_orig);
++}
++
++static int spyre_probe(struct i2c_client *client)
++{
++	struct device *dev = &client->dev;
++	struct device *hwmon_dev;
++	struct spyre *spyre;
++	u64 regval;
++	u32 offset;
++	int err;
++
++	if (!i2c_check_functionality(client->adapter, I2C_FUNC_I2C))
++		return -ENODEV;
++
++	spyre = devm_kzalloc(dev, sizeof(*spyre), GFP_KERNEL);
++	if (!spyre)
++		return -ENOMEM;
++
++	spyre->client = client;
++	i2c_set_clientdata(client, spyre);
++	mutex_init(&spyre->update_lock);
++
++	err = spyre_i2c_readl(spyre, SPYRE_THERM_INPUT, &regval);
++	if (err < 0) {
++		dev_err(dev, "error reading config register\n");
++		return err;
++	}
++
++	spyre->config_orig = regval;
++
++	/* Read calibration data */
++	for (int i = 0; i < SPYRE_MAX_CHANNELS; i++) {
++		offset = (i < 2) ? SPYRE_TEM25_0 : SPYRE_TEM25_1;
++		err = spyre_i2c_readl(spyre, offset, &regval);
++		if (err < 0) {
++			dev_err(dev, "error reading register %#x\n", offset);
++			return err;
++		}
++		spyre->temp10[i] = SPYRE_CALIB_EXTRACT_CHAN(regval, i);
++
++		offset = (i < 2) ? SPYRE_TEM85_0 : SPYRE_TEM85_1;
++		err = spyre_i2c_readl(spyre, offset, &regval);
++		if (err < 0) {
++			dev_err(dev, "error reading register %#x\n", offset);
++			return err;
++		}
++		spyre->temp85[i] = SPYRE_CALIB_EXTRACT_CHAN(regval, i);
++	}
++
++	err = devm_add_action_or_reset(dev, spyre_restore_config, spyre);
++	if (err)
++		return err;
++
++	/* Set number of channels */
++	regval &= ~SPYRE_THERM_INPUT_CHAN_MASK;
++	regval |= (SPYRE_MAX_CHANNELS - 1) << SPYRE_THERM_INPUT_CHAN_SHIFT;
++
++	/* Set probe ID for each channel */
++	for (int i = 0; i < SPYRE_MAX_CHANNELS; i++) {
++		regval &= ~SPYRE_THERM_INPUT_PROBE_ID_MASK(i);
++		regval |= i << SPYRE_THERM_INPUT_PROBE_ID_SHIFT(i);
++	}
++
++	/* Start probing */
++	regval |= SPYRE_THERM_INPUT_RUN;
++
++	err = spyre_i2c_writel(spyre, SPYRE_THERM_INPUT, regval);
++	if (err < 0) {
++		dev_err(dev, "error writing config register\n");
++		return err;
++	}
++
++	hwmon_dev = devm_hwmon_device_register_with_info(dev, client->name,
++							 spyre,
++							 &spyre_chip_info,
++							 NULL);
++	if (IS_ERR(hwmon_dev)) {
++		dev_dbg(dev, "unable to register hwmon device\n");
++		return PTR_ERR(hwmon_dev);
++	}
++	dev_info(dev, "initialized\n");
++
++	return 0;
++}
++
++static const struct i2c_device_id spyre_id[] = {
++	{ "spyre" },
++	{ }
++};
++MODULE_DEVICE_TABLE(i2c, spyre_id);
++
++static const struct of_device_id __maybe_unused spyre_of_match[] = {
++	{ .compatible = "ibm,spyre-i2c" },
++	{ },
++};
++MODULE_DEVICE_TABLE(of, spyre_of_match);
++
++static struct i2c_driver spyre_driver = {
++	.driver.name	= DRIVER_NAME,
++	.driver.of_match_table = of_match_ptr(spyre_of_match),
++	.probe		= spyre_probe,
++	.id_table	= spyre_id,
++};
++
++module_i2c_driver(spyre_driver);
++
++MODULE_AUTHOR("Patrick Rudolph <patrick.rudolph@9elements.com>");
++MODULE_DESCRIPTION("IBM spyre temperature sensor driver");
++MODULE_LICENSE("GPL");
+-- 
+2.47.1
+
