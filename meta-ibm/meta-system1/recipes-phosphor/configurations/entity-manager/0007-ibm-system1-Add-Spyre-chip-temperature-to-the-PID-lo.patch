@@ -1,0 +1,116 @@
+From 84ff2561e2838a10331ae34910185919263362c1 Mon Sep 17 00:00:00 2001
+From: Naresh Solanki <naresh.solanki@9elements.com>
+Date: Tue, 10 Mar 2026 17:23:08 +0000
+Subject: [PATCH 7/7] ibm: system1: Add Spyre chip temperature to the PID loop
+
+Add Spyre ambient and die temperatures to the PID loop.
+
+Upstream-Status: Pending
+Change-Id: Ic4e517e4e8f4808a711ff87d41c520be5e053407
+Signed-off-by: Patrick Rudolph <patrick.rudolph@9elements.com>
+---
+ configurations/ibm/system1_baseboard.json | 81 +++++++++++++++++++++++
+ 1 file changed, 81 insertions(+)
+
+diff --git a/configurations/ibm/system1_baseboard.json b/configurations/ibm/system1_baseboard.json
+index 43aebe8..c6210da 100644
+--- a/configurations/ibm/system1_baseboard.json
++++ b/configurations/ibm/system1_baseboard.json
+@@ -592,6 +592,46 @@
+                 "CECIO"
+             ]
+         },
++        {
++            "Class": "temp",
++            "FFGainCoefficient": 0,
++            "FFOffCoefficient": 0,
++            "ICoefficient": -5,
++            "ILimitMax": 100,
++            "ILimitMin": 20,
++            "Inputs": [
++                "SPYRE0_Ambient",
++                "SPYRE1_Ambient",
++                "SPYRE2_Ambient",
++                "SPYRE3_Ambient",
++                "SPYRE4_Ambient",
++                "SPYRE5_Ambient",
++                "SPYRE6_Ambient",
++                "SPYRE7_Ambient",
++                "SPYRE8_Ambient",
++                "SPYRE9_Ambient",
++                "SPYRE10_Ambient",
++                "SPYRE11_Ambient",
++                "SPYRE12_Ambient",
++                "SPYRE13_Ambient",
++                "SPYRE14_Ambient",
++                "SPYRE15_Ambient"
++            ],
++            "Name": "Spyre Ambient Temperature",
++            "NegativeHysteresis": 0,
++            "OutLimitMax": 100,
++            "OutLimitMin": 20,
++            "Outputs": [],
++            "PCoefficient": -500,
++            "PositiveHysteresis": 0,
++            "SetPoint": 75,
++            "SlewNeg": 0,
++            "SlewPos": 0,
++            "Type": "Pid",
++            "Zones": [
++                "CECIO"
++            ]
++        },
+         {
+             "Class": "temp",
+             "FFGainCoefficient": 0,
+@@ -619,6 +659,47 @@
+                 "CECIO"
+             ]
+         },
++        {
++            "Class": "temp",
++            "FFGainCoefficient": 0,
++            "FFOffCoefficient": 0,
++            "ICoefficient": -5,
++            "ILimitMax": 18000,
++            "ILimitMin": 2500,
++            "InputUnavailableAsFailed": false,
++            "Inputs": [
++                "SPYRE0_Die",
++                "SPYRE1_Die",
++                "SPYRE2_Die",
++                "SPYRE3_Die",
++                "SPYRE4_Die",
++                "SPYRE5_Die",
++                "SPYRE6_Die",
++                "SPYRE7_Die",
++                "SPYRE8_Die",
++                "SPYRE9_Die",
++                "SPYRE10_Die",
++                "SPYRE11_Die",
++                "SPYRE12_Die",
++                "SPYRE13_Die",
++                "SPYRE14_Die",
++                "SPYRE15_Die"
++            ],
++            "Name": "Spyre Die Temperature",
++            "NegativeHysteresis": 0,
++            "OutLimitMax": 18000,
++            "OutLimitMin": 2500,
++            "Outputs": [],
++            "PCoefficient": -500,
++            "PositiveHysteresis": 0,
++            "SetPoint": 100,
++            "SlewNeg": 0,
++            "SlewPos": 0,
++            "Type": "Pid",
++            "Zones": [
++                "CECIO"
++            ]
++        },
+         {
+             "Address": "0x4c",
+             "Bus": 70,
+-- 
+2.47.1
+
