@@ -1,0 +1,27 @@
+From f1e47a89abee50a864a8cf5829b90afdbeb38fee Mon Sep 17 00:00:00 2001
+From: Naresh Solanki <naresh.solanki@9elements.com>
+Date: Wed, 18 Mar 2026 15:44:13 +0000
+Subject: [PATCH 4/4] hwmontempsensor: Add SPYRE chip
+
+Upstream-Status: Pending
+
+Signed-off-by: Naresh Solanki <naresh.solanki@9elements.com>
+---
+ src/HwmonTempMain.cpp | 1 +
+ 1 file changed, 1 insertion(+)
+
+diff --git a/src/HwmonTempMain.cpp b/src/HwmonTempMain.cpp
+index d555ff2..501cf3c 100644
+--- a/src/HwmonTempMain.cpp
++++ b/src/HwmonTempMain.cpp
+@@ -86,6 +86,7 @@ static const I2CDeviceTypeMap sensorTypes{
+     {"PT5161L", I2CDeviceType{"pt5161l", true}},
+     {"SBTSI", I2CDeviceType{"sbtsi", true}},
+     {"SI7020", I2CDeviceType{"si7020", false}},
++    {"SPYRE", I2CDeviceType{"spyre", true}},
+     {"TMP100", I2CDeviceType{"tmp100", true}},
+     {"TMP112", I2CDeviceType{"tmp112", true}},
+     {"TMP175", I2CDeviceType{"tmp175", true}},
+-- 
+2.43.0
+
