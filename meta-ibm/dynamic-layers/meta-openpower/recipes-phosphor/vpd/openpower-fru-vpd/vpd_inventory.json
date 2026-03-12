@@ -42,7 +42,7 @@
                         "xyz.openbmc_project.Inventory.Item.FabricAdapter": null,
                         "xyz.openbmc_project.Inventory.Decorator.I2CDevice": {
                             "Bus": 72,
-                            "Address": 51
+                            "Address": 81
                         },
                         "xyz.openbmc_project.Inventory.Decorator.Slot": {
                             "SlotNumber": 1
@@ -60,7 +60,7 @@
                         "xyz.openbmc_project.Inventory.Item.FabricAdapter": null,
                         "xyz.openbmc_project.Inventory.Decorator.I2CDevice": {
                             "Bus": 73,
-                            "Address": 51
+                            "Address": 81
                         },
                         "xyz.openbmc_project.Inventory.Decorator.Slot": {
                             "SlotNumber": 2
@@ -78,7 +78,7 @@
                         "xyz.openbmc_project.Inventory.Item.FabricAdapter": null,
                         "xyz.openbmc_project.Inventory.Decorator.I2CDevice": {
                             "Bus": 74,
-                            "Address": 51
+                            "Address": 81
                         },
                         "xyz.openbmc_project.Inventory.Decorator.Slot": {
                             "SlotNumber": 3
@@ -96,7 +96,7 @@
                         "xyz.openbmc_project.Inventory.Item.FabricAdapter": null,
                         "xyz.openbmc_project.Inventory.Decorator.I2CDevice": {
                             "Bus": 75,
-                            "Address": 51
+                            "Address": 81
                         },
                         "xyz.openbmc_project.Inventory.Decorator.Slot": {
                             "SlotNumber": 4
@@ -114,7 +114,7 @@
                         "xyz.openbmc_project.Inventory.Item.FabricAdapter": null,
                         "xyz.openbmc_project.Inventory.Decorator.I2CDevice": {
                             "Bus": 76,
-                            "Address": 51
+                            "Address": 81
                         },
                         "xyz.openbmc_project.Inventory.Decorator.Slot": {
                             "SlotNumber": 5
@@ -132,7 +132,7 @@
                         "xyz.openbmc_project.Inventory.Item.FabricAdapter": null,
                         "xyz.openbmc_project.Inventory.Decorator.I2CDevice": {
                             "Bus": 77,
-                            "Address": 51
+                            "Address": 81
                         },
                         "xyz.openbmc_project.Inventory.Decorator.Slot": {
                             "SlotNumber": 6
@@ -150,7 +150,7 @@
                         "xyz.openbmc_project.Inventory.Item.FabricAdapter": null,
                         "xyz.openbmc_project.Inventory.Decorator.I2CDevice": {
                             "Bus": 78,
-                            "Address": 51
+                            "Address": 81
                         },
                         "xyz.openbmc_project.Inventory.Decorator.Slot": {
                             "SlotNumber": 7
@@ -168,7 +168,7 @@
                         "xyz.openbmc_project.Inventory.Item.FabricAdapter": null,
                         "xyz.openbmc_project.Inventory.Decorator.I2CDevice": {
                             "Bus": 79,
-                            "Address": 51
+                            "Address": 81
                         },
                         "xyz.openbmc_project.Inventory.Decorator.Slot": {
                             "SlotNumber": 8
@@ -186,7 +186,7 @@
                         "xyz.openbmc_project.Inventory.Item.FabricAdapter": null,
                         "xyz.openbmc_project.Inventory.Decorator.I2CDevice": {
                             "Bus": 80,
-                            "Address": 51
+                            "Address": 81
                         },
                         "xyz.openbmc_project.Inventory.Decorator.Slot": {
                             "SlotNumber": 9
@@ -204,7 +204,7 @@
                         "xyz.openbmc_project.Inventory.Item.FabricAdapter": null,
                         "xyz.openbmc_project.Inventory.Decorator.I2CDevice": {
                             "Bus": 81,
-                            "Address": 51
+                            "Address": 81
                         },
                         "xyz.openbmc_project.Inventory.Decorator.Slot": {
                             "SlotNumber": 10
@@ -222,7 +222,7 @@
                         "xyz.openbmc_project.Inventory.Item.FabricAdapter": null,
                         "xyz.openbmc_project.Inventory.Decorator.I2CDevice": {
                             "Bus": 82,
-                            "Address": 51
+                            "Address": 81
                         },
                         "xyz.openbmc_project.Inventory.Decorator.Slot": {
                             "SlotNumber": 11
@@ -240,7 +240,7 @@
                         "xyz.openbmc_project.Inventory.Item.FabricAdapter": null,
                         "xyz.openbmc_project.Inventory.Decorator.I2CDevice": {
                             "Bus": 83,
-                            "Address": 51
+                            "Address": 81
                         },
                         "xyz.openbmc_project.Inventory.Decorator.Slot": {
                             "SlotNumber": 12
@@ -258,7 +258,7 @@
                         "xyz.openbmc_project.Inventory.Item.FabricAdapter": null,
                         "xyz.openbmc_project.Inventory.Decorator.I2CDevice": {
                             "Bus": 84,
-                            "Address": 51
+                            "Address": 81
                         },
                         "xyz.openbmc_project.Inventory.Decorator.Slot": {
                             "SlotNumber": 13
@@ -276,7 +276,7 @@
                         "xyz.openbmc_project.Inventory.Item.FabricAdapter": null,
                         "xyz.openbmc_project.Inventory.Decorator.I2CDevice": {
                             "Bus": 85,
-                            "Address": 51
+                            "Address": 81
                         },
                         "xyz.openbmc_project.Inventory.Decorator.Slot": {
                             "SlotNumber": 14
@@ -294,7 +294,7 @@
                         "xyz.openbmc_project.Inventory.Item.FabricAdapter": null,
                         "xyz.openbmc_project.Inventory.Decorator.I2CDevice": {
                             "Bus": 86,
-                            "Address": 51
+                            "Address": 81
                         },
                         "xyz.openbmc_project.Inventory.Decorator.Slot": {
                             "SlotNumber": 15
@@ -312,7 +312,7 @@
                         "xyz.openbmc_project.Inventory.Item.FabricAdapter": null,
                         "xyz.openbmc_project.Inventory.Decorator.I2CDevice": {
                             "Bus": 87,
-                            "Address": 51
+                            "Address": 81
                         },
                         "xyz.openbmc_project.Inventory.Decorator.Slot": {
                             "SlotNumber": 16
