@@ -1,0 +1,72 @@
+From 95160409f23d6fff4f4b1c9f57378e556ce7e046 Mon Sep 17 00:00:00 2001
+From: Naresh Solanki <naresh.solanki@9elements.com>
+Date: Thu, 19 Mar 2026 14:13:41 +0000
+Subject: [PATCH 8/9] overlay: Fix "Support MuxChannel object for dynamic
+ buses"
+
+entity-manger crashes in various places and shows strange behaviours.
+
+DeviceConfig::buildDevice used a pointer instead of a reference to
+self, causing random crashed when the object was destroyed before
+the timer expired. Use a weak_ptr to prevent the crash and random
+behaviour.
+
+Upstream-Status: Pending
+Signed-off-by: Patrick Rudolph <patrick.rudolph@9elements.com>
+
+
+---
+ src/entity_manager/overlay.cpp | 11 +++++++++--
+ src/entity_manager/overlay.hpp |  3 ++-
+ 2 files changed, 11 insertions(+), 3 deletions(-)
+
+diff --git a/src/entity_manager/overlay.cpp b/src/entity_manager/overlay.cpp
+index 3232cba6c..795614ae2 100644
+--- a/src/entity_manager/overlay.cpp
++++ b/src/entity_manager/overlay.cpp
+@@ -185,19 +185,26 @@ bool DeviceConfig::buildDevice(boost::asio::io_context& io,
+         if (!createDevice())
+         {
+             deleteDevice();
++            std::weak_ptr<DeviceConfig> weakRef = weak_from_this();
+ 
+             std::shared_ptr<boost::asio::steady_timer> createTimer =
+                 std::make_shared<boost::asio::steady_timer>(io);
+             createTimer->expires_after(std::chrono::milliseconds(500));
+             createTimer->async_wait(
+-                [createTimer, this, retries,
++                [createTimer, weakRef, retries,
+                  &io](const boost::system::error_code& ec) mutable {
+                     if (ec)
+                     {
+                         lg2::error("Timer error {ERR}", "ERR", ec.message());
+                         return false;
+                     }
+-                    return buildDevice(io, retries - 1);
++                    std::shared_ptr<DeviceConfig> self = weakRef.lock();
++
++                    if (self) {
++                        return self->buildDevice(io, retries - 1);
++                    } else {
++                        return false;
++                    }
+                 });
+             return false;
+         }
+diff --git a/src/entity_manager/overlay.hpp b/src/entity_manager/overlay.hpp
+index cfb1c36c3..fea52e5b9 100644
+--- a/src/entity_manager/overlay.hpp
++++ b/src/entity_manager/overlay.hpp
+@@ -37,7 +37,8 @@ constexpr const char* i2CDevsDir = "/sys/bus/i2c/devices";
+ constexpr const char* muxSymlinkDir = "/dev/i2c-mux";
+ const std::regex illegalNameRegex("[^A-Za-z0-9_]");
+ 
+-class DeviceConfig
++class DeviceConfig :
++    public std::enable_shared_from_this<DeviceConfig>
+ {
+   public:
+     DeviceConfig() = delete;
+-- 
+2.43.0
+

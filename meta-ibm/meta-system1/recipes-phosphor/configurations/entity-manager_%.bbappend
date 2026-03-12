@@ -9,6 +9,7 @@ SRC_URI:append = " \
     file://0005-ibm-system1-Add-RAA228234-temperature-to-the-PID-loo.patch \
     file://0006-ibm-system1-Add-CPU-temperature-sensors-to-PID-loop.patch \
     file://0007-ibm-system1-Add-Spyre-chip-temperature-to-the-PID-lo.patch \
+    file://0008-overlay-Fix-Support-MuxChannel-object-for-dynamic-bu.patch \
     "
 
 do_install:append () {
