@@ -10,6 +10,7 @@ FILESEXTRAPATHS:prepend := "${THISDIR}/${PN}:"
 #    file://0006-ibm-system1-Add-CPU-temperature-sensors-to-PID-loop.patch \
 #    file://0007-ibm-system1-Add-Spyre-chip-temperature-to-the-PID-lo.patch \
 #    file://0008-overlay-Fix-Support-MuxChannel-object-for-dynamic-bu.patch \
+#    file://0009-ibm-spyre1-Fix-recursion.patch \
 #    "
 SRC_URI:append = " \
     file://blacklist.json \

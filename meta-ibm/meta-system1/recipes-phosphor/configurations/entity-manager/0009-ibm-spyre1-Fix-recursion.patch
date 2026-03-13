@@ -1,0 +1,69 @@
+From 1ea8a5a38a34d7ae589ed6a5771c13abb163a54d Mon Sep 17 00:00:00 2001
+From: Patrick Rudolph <patrick.rudolph@9elements.com>
+Date: Fri, 13 Mar 2026 05:42:28 +0100
+Subject: [PATCH] ibm: spyre1: Fix recursion
+
+Don't use xyz.openbmc_project.Inventory.Decorator.Asset as Probe
+condition since it will be added to the entity-manager created Dbus
+object as well, causing the Probe condition to evaluate to true again,
+but this time for itself. Binding to itself causes a recursion in
+entity-manager that's not well supported and caused problems as
+'Bus' and 'Address' where empty.
+
+Probe for the FRU EEPROM instead which is exposed by
+xyz.openbmc_project.Inventory.Decorator.I2CDevice and a fixed Address
+and Bus. The regex can't be used as the properties are integers, not
+strings.
+
+Upstream-Status: Pending
+Signed-off-by: Patrick Rudolph <patrick.rudolph@9elements.com>
+---
+ configurations/ibm/system1_spyre.json | 32 ++++++++++++++++++++++++++-
+ 1 file changed, 31 insertions(+), 1 deletion(-)
+
+diff --git a/configurations/ibm/system1_spyre.json b/configurations/ibm/system1_spyre.json
+index 1d86be6..259c7c5 100644
+--- a/configurations/ibm/system1_spyre.json
++++ b/configurations/ibm/system1_spyre.json
+@@ -53,7 +53,37 @@
+         }
+     ],
+     "Name": "IBM System1 SPYRE $Bus - 72",
+-    "Probe": "xyz.openbmc_project.Inventory.Decorator.Asset({'Model': '2F1E', 'Manufacturer': 'IBM'})",
++    "Probe": ["xyz.openbmc_project.Inventory.Decorator.I2CDevice({'Address': 81, 'Bus': 72})",
++              "OR",
++              "xyz.openbmc_project.Inventory.Decorator.I2CDevice({'Address': 81, 'Bus': 73})",
++              "OR",
++              "xyz.openbmc_project.Inventory.Decorator.I2CDevice({'Address': 81, 'Bus': 74})",
++              "OR",
++              "xyz.openbmc_project.Inventory.Decorator.I2CDevice({'Address': 81, 'Bus': 75})",
++              "OR",
++              "xyz.openbmc_project.Inventory.Decorator.I2CDevice({'Address': 81, 'Bus': 76})",
++              "OR",
++              "xyz.openbmc_project.Inventory.Decorator.I2CDevice({'Address': 81, 'Bus': 77})",
++              "OR",
++              "xyz.openbmc_project.Inventory.Decorator.I2CDevice({'Address': 81, 'Bus': 78})",
++              "OR",
++              "xyz.openbmc_project.Inventory.Decorator.I2CDevice({'Address': 81, 'Bus': 79})",
++              "OR",
++              "xyz.openbmc_project.Inventory.Decorator.I2CDevice({'Address': 81, 'Bus': 80})",
++              "OR",
++              "xyz.openbmc_project.Inventory.Decorator.I2CDevice({'Address': 81, 'Bus': 81})",
++              "OR",
++              "xyz.openbmc_project.Inventory.Decorator.I2CDevice({'Address': 81, 'Bus': 82})",
++              "OR",
++              "xyz.openbmc_project.Inventory.Decorator.I2CDevice({'Address': 81, 'Bus': 83})",
++              "OR",
++              "xyz.openbmc_project.Inventory.Decorator.I2CDevice({'Address': 81, 'Bus': 84})",
++              "OR",
++              "xyz.openbmc_project.Inventory.Decorator.I2CDevice({'Address': 81, 'Bus': 85})",
++              "OR",
++              "xyz.openbmc_project.Inventory.Decorator.I2CDevice({'Address': 81, 'Bus': 86})",
++              "OR",
++              "xyz.openbmc_project.Inventory.Decorator.I2CDevice({'Address': 81, 'Bus': 87})"],
+     "Type": "Board",
+     "xyz.openbmc_project.Inventory.Decorator.Asset": {
+         "Manufacturer": "$Manufacturer",
+-- 
+2.47.1
+
