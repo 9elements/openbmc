@@ -1,7 +1,7 @@
-From dc39134dcc52d3ba0ed4c192170c351c655134d8 Mon Sep 17 00:00:00 2001
-From: Chau Ly <chaul@amperecomputing.com>
-Date: Tue, 8 Apr 2025 07:27:59 +0000
-Subject: [PATCH 1/7] schemas: legacy: Add MuxChannel object
+From 69cc6ab11a8958670014369d4afa8923530cf3a4 Mon Sep 17 00:00:00 2001
+From: Naresh Solanki <naresh.solanki@9elements.com>
+Date: Thu, 19 Mar 2026 13:26:30 +0000
+Subject: [PATCH 1/9] schemas: legacy: Add MuxChannel object
 
 Mux devices are allowed to be bound to driver when configured in
 Entity-Manager. It now creates i2c buses for the mux channels, and
@@ -15,63 +15,12 @@ This patch proposes an object `MuxChannel` with 2 properties `MuxName`
 and `ChannelName` that an i2c sensor in `Exposes` can use to configure
 which channel name of which mux they are present at.
 
-Other applications can then form the device file path from these
-properties, and read the symbolic link to know the needed i2c bus.
-
-This currently modifies to any subschema that has "Bus" in "properties".
-For types that previously did not require `Bus`, now `Bus` and
-`MuxChannel` must not exist together (1). For types that previously
-required `Bus`, now they must require only `Bus` or `MuxChannel`, and
-the two must not exist together (2).
-
-To achieve (1): `"not": {"required": ["Bus", "MuxChannel"]}` is used to
-validate all cases that negate the requirement for the existence of
-both `Bus` and `MuxChannel`, which are: either one exists, or neither
-exists.
-
-To achieve (2):
-
-"oneOf": [
- {
-   "required": ["Bus"]
- },
- {
-   "required": ["MuxChannel"]
- }
-]
-
-Example:
-{
-  "Address": "0x71",
-  "Bus": "80",
-  "ChannelNames": [
-      "nvmemux_slot_0",
-      "nvmemux_slot_1",
-      "",
-      ""
-  ],
-  "Name": "NVME Mux",
-  "Type": "PCA9544Mux"
-},
-{
-  "Address": "0x6a",
-  "MuxChannel":
-  {
-    "MuxName": "NVME Mux",
-    "ChannelName": "nvmemux_slot_0"
-  },
-  "Name": "nvme0",
-  "Type": "NVME1000"
-}
-
-Other applications can read symlink of
-/dev/i2c-mux/NVME_Mux/nvmemux_slot_0 to know which bus this channel
-links to.
-
 Upstream-URL: https://gerrit.openbmc.org/c/openbmc/entity-manager/+/69030
 Upstream-Status: Submitted
 Signed-off-by: Chau Ly <chaul@amperecomputing.com>
 Change-Id: I3cf0eead9f8d8246b182f8681de5fcd4427a5325
+
+
 ---
  schemas/cpld.json     |  13 +++-
  schemas/firmware.json |  25 +++++++-
@@ -80,7 +29,7 @@ Change-Id: I3cf0eead9f8d8246b182f8681de5fcd4427a5325
  4 files changed, 194 insertions(+), 15 deletions(-)
 
 diff --git a/schemas/cpld.json b/schemas/cpld.json
-index 198a7b1..af44985 100644
+index f33c22b07..e649f87fd 100644
 --- a/schemas/cpld.json
 +++ b/schemas/cpld.json
 @@ -12,6 +12,9 @@
@@ -88,13 +37,13 @@ index 198a7b1..af44985 100644
                      "$ref": "legacy.json#/$defs/Types/Bus"
                  },
 +                "MuxChannel": {
-+                    "$ref": "#/$defs/Types/MuxChannel"
++                    "$ref": "legacy.json#/$defs/Types/MuxChannel"
 +                },
                  "FirmwareInfo": {
                      "$ref": "firmware.json#/$defs/FirmwareInfoDef"
                  },
-@@ -34,7 +37,15 @@
-                     "$ref": "firmware.json#/$defs/MuxOutputs"
+@@ -28,7 +31,15 @@
+                     ]
                  }
              },
 -            "required": ["Address", "Bus", "FirmwareInfo", "Name", "Type"]
@@ -111,20 +60,20 @@ index 198a7b1..af44985 100644
      }
  }
 diff --git a/schemas/firmware.json b/schemas/firmware.json
-index a67b5f8..c7bdd83 100644
+index 9b559e9d9..a1d7a9c5c 100644
 --- a/schemas/firmware.json
 +++ b/schemas/firmware.json
-@@ -61,6 +61,9 @@
-                 "Bus": {
-                     "$ref": "legacy.json#/$defs/Types/Bus"
+@@ -32,6 +32,9 @@
+                     "description": "I2C bus, the device is connected to",
+                     "type": "integer"
                  },
 +                "MuxChannel": {
-+                    "$ref": "#/$defs/Types/MuxChannel"
++                    "$ref": "legacy.json#/$defs/Types/MuxChannel"
 +                },
                  "Address": {
-                     "$ref": "legacy.json#/$defs/Types/Address"
-                 },
-@@ -68,7 +71,15 @@
+                     "description": "I2C address of the device",
+                     "type": "integer"
+@@ -40,7 +43,15 @@
                      "$ref": "#/$defs/FirmwareInfoDef"
                  }
              },
@@ -141,17 +90,17 @@ index a67b5f8..c7bdd83 100644
          },
          "BIOS": {
              "description": "Required information to complete the host fw update process.",
-@@ -123,6 +134,9 @@
+@@ -107,6 +118,9 @@
                  "Bus": {
                      "$ref": "legacy.json#/$defs/Types/Bus"
                  },
 +                "MuxChannel": {
-+                    "$ref": "#/$defs/Types/MuxChannel"
++                    "$ref": "legacy.json#/$defs/Types/MuxChannel"
 +                },
                  "Address": {
                      "$ref": "legacy.json#/$defs/Types/Address"
                  },
-@@ -140,10 +154,17 @@
+@@ -137,10 +151,17 @@
              "required": [
                  "Name",
                  "Type",
@@ -168,10 +117,10 @@ index a67b5f8..c7bdd83 100644
 +                    "required": ["MuxChannel"]
 +                }
              ]
-         },
-         "TPMFirmware": {
+         }
+     }
 diff --git a/schemas/legacy.json b/schemas/legacy.json
-index 5e4bd15..af14cec 100644
+index e54822839..d255869c8 100644
 --- a/schemas/legacy.json
 +++ b/schemas/legacy.json
 @@ -122,6 +122,9 @@
@@ -210,7 +159,7 @@ index 5e4bd15..af14cec 100644
              "type": "object"
          },
          "NuvotonFan": {
-@@ -304,6 +312,9 @@
+@@ -278,6 +286,9 @@
                  "Bus": {
                      "$ref": "#/$defs/Types/Bus"
                  },
@@ -220,7 +169,7 @@ index 5e4bd15..af14cec 100644
                  "PowerState": {
                      "$ref": "#/$defs/Types/PowerState"
                  },
-@@ -325,6 +336,7 @@
+@@ -299,6 +310,7 @@
                  }
              },
              "required": ["Name", "Type", "CpuID", "Address"],
@@ -228,7 +177,7 @@ index 5e4bd15..af14cec 100644
              "type": "object"
          },
          "IpmbSensor": {
-@@ -374,6 +386,9 @@
+@@ -348,6 +360,9 @@
                  "Bus": {
                      "$ref": "#/$defs/Types/Bus"
                  },
@@ -238,7 +187,7 @@ index 5e4bd15..af14cec 100644
                  "Address": {
                      "$ref": "#/$defs/Types/Address"
                  },
-@@ -390,7 +405,15 @@
+@@ -364,7 +379,15 @@
                      ]
                  }
              },
@@ -255,7 +204,7 @@ index 5e4bd15..af14cec 100644
              "type": "object"
          },
          "Gpio": {
-@@ -442,6 +465,9 @@
+@@ -416,6 +439,9 @@
                  "Bus": {
                      "$ref": "#/$defs/Types/Bus"
                  },
@@ -265,7 +214,7 @@ index 5e4bd15..af14cec 100644
                  "Address": {
                      "$ref": "#/$defs/Types/Address"
                  },
-@@ -450,7 +476,15 @@
+@@ -424,7 +450,15 @@
                      "const": "MultiNodePresence"
                  }
              },
@@ -282,7 +231,7 @@ index 5e4bd15..af14cec 100644
              "type": "object"
          },
          "HostCpuUtilization": {
-@@ -512,6 +546,9 @@
+@@ -524,6 +558,9 @@
                  "Bus": {
                      "$ref": "#/$defs/Types/Bus"
                  },
@@ -292,7 +241,7 @@ index 5e4bd15..af14cec 100644
                  "Address": {
                      "oneOf": [
                          {
-@@ -526,7 +563,15 @@
+@@ -538,7 +575,15 @@
                      "const": "PSUPresence"
                  }
              },
@@ -309,7 +258,7 @@ index 5e4bd15..af14cec 100644
              "type": "object"
          },
          "EmmcDevice": {
-@@ -551,6 +596,9 @@
+@@ -563,6 +608,9 @@
                  "Bus": {
                      "$ref": "#/$defs/Types/Bus"
                  },
@@ -319,7 +268,7 @@ index 5e4bd15..af14cec 100644
                  "Address": {
                      "$ref": "#/$defs/Types/Address"
                  },
-@@ -564,7 +612,15 @@
+@@ -576,7 +624,15 @@
                      "const": "IpmbDevice"
                  }
              },
@@ -336,7 +285,7 @@ index 5e4bd15..af14cec 100644
              "type": "object"
          },
          "IpmbPowerMonitor": {
-@@ -576,6 +632,9 @@
+@@ -588,6 +644,9 @@
                  "Bus": {
                      "$ref": "#/$defs/Types/Bus"
                  },
@@ -346,7 +295,7 @@ index 5e4bd15..af14cec 100644
                  "Address": {
                      "$ref": "#/$defs/Types/Address"
                  },
-@@ -586,7 +645,15 @@
+@@ -598,7 +657,15 @@
                      "const": "IpmbPowerMonitor"
                  }
              },
@@ -363,7 +312,7 @@ index 5e4bd15..af14cec 100644
              "type": "object"
          },
          "ADC": {
-@@ -657,6 +724,9 @@
+@@ -669,6 +736,9 @@
                  "Bus": {
                      "$ref": "#/$defs/Types/Bus"
                  },
@@ -373,7 +322,7 @@ index 5e4bd15..af14cec 100644
                  "EntityId": {
                      "$ref": "#/$defs/Types/EntityId"
                  },
-@@ -724,7 +794,15 @@
+@@ -735,7 +805,15 @@
                      ]
                  }
              },
@@ -390,7 +339,7 @@ index 5e4bd15..af14cec 100644
              "type": "object"
          },
          "NVME1000": {
-@@ -737,6 +815,9 @@
+@@ -748,6 +826,9 @@
                  "Bus": {
                      "$ref": "#/$defs/Types/Bus"
                  },
@@ -400,7 +349,7 @@ index 5e4bd15..af14cec 100644
                  "Address": {
                      "$ref": "#/$defs/Types/Address"
                  },
-@@ -754,7 +835,15 @@
+@@ -761,7 +842,15 @@
                      "const": "NVME1000"
                  }
              },
@@ -417,7 +366,7 @@ index 5e4bd15..af14cec 100644
              "type": "object"
          },
          "EEPROM": {
-@@ -766,6 +855,9 @@
+@@ -773,6 +862,9 @@
                  "Bus": {
                      "$ref": "#/$defs/Types/Bus"
                  },
@@ -427,7 +376,7 @@ index 5e4bd15..af14cec 100644
                  "Address": {
                      "$ref": "#/$defs/Types/Address"
                  },
-@@ -784,7 +876,15 @@
+@@ -791,7 +883,15 @@
                      ]
                  }
              },
@@ -444,7 +393,7 @@ index 5e4bd15..af14cec 100644
              "type": "object"
          },
          "PSUSensor": {
-@@ -853,6 +953,9 @@
+@@ -860,6 +960,9 @@
                  "Bus": {
                      "$ref": "#/$defs/Types/Bus"
                  },
@@ -454,7 +403,7 @@ index 5e4bd15..af14cec 100644
                  "Address": {
                      "$ref": "#/$defs/Types/Address"
                  },
-@@ -982,6 +1085,7 @@
+@@ -980,6 +1083,7 @@
                  }
              },
              "required": ["Name", "Type"],
@@ -462,7 +411,7 @@ index 5e4bd15..af14cec 100644
              "type": "object"
          },
          "NMSensor": {
-@@ -1033,10 +1137,14 @@
+@@ -1031,10 +1135,14 @@
                  "Bus": {
                      "$ref": "#/$defs/Types/Bus"
                  },
@@ -478,7 +427,7 @@ index 5e4bd15..af14cec 100644
          },
          "GenericSMBusMux": {
              "description": "unknown purpose",
-@@ -1077,10 +1185,14 @@
+@@ -1075,10 +1183,14 @@
                  "Bus": {
                      "$ref": "#/$defs/Types/Bus"
                  },
@@ -494,7 +443,7 @@ index 5e4bd15..af14cec 100644
          },
          "Types": {
              "Address": {
-@@ -1242,6 +1354,19 @@
+@@ -1244,6 +1356,19 @@
              "MinValue": {
                  "type": "number"
              },
@@ -515,7 +464,7 @@ index 5e4bd15..af14cec 100644
                  "type": "string"
              },
 diff --git a/schemas/mctp.json b/schemas/mctp.json
-index 7dc1629..44a7903 100644
+index 7dc16292b..6d8b9ccce 100644
 --- a/schemas/mctp.json
 +++ b/schemas/mctp.json
 @@ -11,6 +11,9 @@
@@ -523,7 +472,7 @@ index 7dc1629..44a7903 100644
                      "type": "string"
                  },
 +                "MuxChannel": {
-+                    "$ref": "#/$defs/Types/MuxChannel"
++                    "$ref": "legacy.json#/$defs/Types/MuxChannel"
 +                },
                  "Name": {
                      "description": "A recognisable name for the device",
@@ -550,7 +499,7 @@ index 7dc1629..44a7903 100644
                      "type": "string"
                  },
 +                "MuxChannel": {
-+                    "$ref": "#/$defs/Types/MuxChannel"
++                    "$ref": "legacy.json#/$defs/Types/MuxChannel"
 +                },
                  "Name": {
                      "description": "A recognisable name for the device",
@@ -573,5 +522,5 @@ index 7dc1629..44a7903 100644
          }
      }
 -- 
-2.47.1
+2.43.0
 

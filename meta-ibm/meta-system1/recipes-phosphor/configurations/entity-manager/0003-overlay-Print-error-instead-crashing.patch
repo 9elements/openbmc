@@ -1,7 +1,7 @@
-From 77283a1750c5a098408bf0deebe33e1aef8739cd Mon Sep 17 00:00:00 2001
-From: Patrick Rudolph <patrick.rudolph@9elements.com>
-Date: Sun, 8 Mar 2026 09:45:58 +0100
-Subject: [PATCH 3/7] overlay: Print error instead crashing
+From f4bcbc6ea04f5200a8d91992fac8e4570622dbd4 Mon Sep 17 00:00:00 2001
+From: Naresh Solanki <naresh.solanki@9elements.com>
+Date: Thu, 19 Mar 2026 13:45:21 +0000
+Subject: [PATCH 3/9] overlay: Print error instead crashing
 
 entity-manager complains about substitution failures.
 The Bus and Address property can be empty for some reason, which causes
@@ -14,23 +14,25 @@ FIXME: Figure out where the string comes from.
 Upstream-Status: Pending
 Change-Id: I3a9cfb31f6152f39e51247c53bcc851449dcac92
 Signed-off-by: Patrick Rudolph <patrick.rudolph@9elements.com>
+
+
 ---
  src/entity_manager/overlay.hpp | 19 +++++++++++++++++--
  1 file changed, 17 insertions(+), 2 deletions(-)
 
 diff --git a/src/entity_manager/overlay.hpp b/src/entity_manager/overlay.hpp
-index 908ebc4..27e5341 100644
+index 7d7f702f8..cfb1c36c3 100644
 --- a/src/entity_manager/overlay.hpp
 +++ b/src/entity_manager/overlay.hpp
-@@ -8,6 +8,7 @@
- 
+@@ -24,6 +24,7 @@
+ #include <boost/asio/io_context.hpp>
  #include <boost/asio/steady_timer.hpp>
  #include <nlohmann/json.hpp>
 +#include <phosphor-logging/lg2.hpp>
  
- #include <iostream>
+ #include <optional>
  #include <regex>
-@@ -50,11 +51,25 @@ class DeviceConfig
+@@ -68,11 +69,25 @@ class DeviceConfig
  
              if (keyPair.key() == "Bus")
              {
@@ -59,5 +61,5 @@ index 908ebc4..27e5341 100644
              else if (keyPair.key() == "ChannelNames" && type.ends_with("Mux"))
              {
 -- 
-2.47.1
+2.43.0
 

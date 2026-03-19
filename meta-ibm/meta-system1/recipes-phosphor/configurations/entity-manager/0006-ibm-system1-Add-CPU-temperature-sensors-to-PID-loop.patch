@@ -1,21 +1,23 @@
-From 55ac9f7a9db3857ff163362855472b24fa2ba077 Mon Sep 17 00:00:00 2001
-From: Patrick Rudolph <patrick.rudolph@9elements.com>
-Date: Mon, 9 Mar 2026 15:31:48 +0100
-Subject: [PATCH] ibm: system1: Add CPU temperature sensors to PID loop
+From aa98ce0f66e033ae5443649c2ec434966c2558de Mon Sep 17 00:00:00 2001
+From: Naresh Solanki <naresh.solanki@9elements.com>
+Date: Thu, 19 Mar 2026 14:09:10 +0000
+Subject: [PATCH 6/9] ibm: system1: Add CPU temperature sensors to PID loop
 
 Ensure that the CPUs don't overheat by adding them to the PID loop.
 
 Upstream-Status: Pending
 Change-Id: Ic4c4c10ab3fea5cd53c2f58805a1134b0d72a42f
 Signed-off-by: Patrick Rudolph <patrick.rudolph@9elements.com>
+
+
 ---
- configurations/ibm/system1_baseboard.json | 27 +++++++++++++++++++++++
+ configurations/system1_baseboard.json | 27 +++++++++++++++++++++++++++
  1 file changed, 27 insertions(+)
 
-diff --git a/configurations/ibm/system1_baseboard.json b/configurations/ibm/system1_baseboard.json
-index 4a91bf2..ed51ba4 100644
---- a/configurations/ibm/system1_baseboard.json
-+++ b/configurations/ibm/system1_baseboard.json
+diff --git a/configurations/system1_baseboard.json b/configurations/system1_baseboard.json
+index 4a91bf220..43aebe8a4 100644
+--- a/configurations/system1_baseboard.json
++++ b/configurations/system1_baseboard.json
 @@ -592,6 +592,33 @@
                  "CECIO"
              ]
@@ -51,5 +53,5 @@ index 4a91bf2..ed51ba4 100644
              "Address": "0x4c",
              "Bus": 70,
 -- 
-2.53.0
+2.43.0
 

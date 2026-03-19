@@ -1,7 +1,7 @@
-From cbdeb4b227fe9326b5834bdf67f213aa807288f6 Mon Sep 17 00:00:00 2001
-From: Patrick Rudolph <patrick.rudolph@9elements.com>
-Date: Thu, 5 Mar 2026 16:03:29 +0100
-Subject: [PATCH 4/7] ibm: Move SPYRE to separate JSON
+From 3007f114c77e3991dfcaa6ad50c8d6b6cae2dd5c Mon Sep 17 00:00:00 2001
+From: Naresh Solanki <naresh.solanki@9elements.com>
+Date: Thu, 19 Mar 2026 14:03:56 +0000
+Subject: [PATCH 4/9] ibm: Move SPYRE to separate JSON
 
 In order to load once instance of the Spyre card for every VPD EEPROM
 move it to a separate file. Thus Bus numbers are now read from Dbus.
@@ -15,17 +15,31 @@ TEST=Works on IBM system1 for SPYRE1.
 Upstream-Status: Pending
 Change-Id: I86e3aafa9c2de25e0ad80557829a75ebc9f80eb0
 Signed-off-by: Patrick Rudolph <patrick.rudolph@9elements.com>
----
- configurations/ibm/system1_baseboard.json | 224 ----------------------
- configurations/ibm/system1_spyre.json     |  66 +++++++
- configurations/meson.build                |   1 +
- 3 files changed, 67 insertions(+), 224 deletions(-)
- create mode 100644 configurations/ibm/system1_spyre.json
 
-diff --git a/configurations/ibm/system1_baseboard.json b/configurations/ibm/system1_baseboard.json
-index 7fb2b23..40088a9 100644
---- a/configurations/ibm/system1_baseboard.json
-+++ b/configurations/ibm/system1_baseboard.json
+
+---
+ configurations/meson.build            |   1 +
+ configurations/system1_baseboard.json | 224 --------------------------
+ configurations/system1_spyre.json     |  66 ++++++++
+ 3 files changed, 67 insertions(+), 224 deletions(-)
+ create mode 100644 configurations/system1_spyre.json
+
+diff --git a/configurations/meson.build b/configurations/meson.build
+index 4e769c0ca..bc045dabe 100644
+--- a/configurations/meson.build
++++ b/configurations/meson.build
+@@ -191,6 +191,7 @@ configs = [
+     'system1_baseboard.json',
+     'system1_chassis.json',
+     'system1_psu.json',
++    'system1_spyre.json',
+     'tola.json',
+     'tyan/tyan_s5549_baseboard.json',
+     'tyan/tyan_s7106_baseboard.json',
+diff --git a/configurations/system1_baseboard.json b/configurations/system1_baseboard.json
+index 7fb2b23ad..40088a9fe 100644
+--- a/configurations/system1_baseboard.json
++++ b/configurations/system1_baseboard.json
 @@ -552,230 +552,6 @@
                  "CECIO"
              ]
@@ -257,11 +271,11 @@ index 7fb2b23..40088a9 100644
          {
              "Address": "0x4c",
              "Bus": 70,
-diff --git a/configurations/ibm/system1_spyre.json b/configurations/ibm/system1_spyre.json
+diff --git a/configurations/system1_spyre.json b/configurations/system1_spyre.json
 new file mode 100644
-index 0000000..1d86be6
+index 000000000..1d86be6db
 --- /dev/null
-+++ b/configurations/ibm/system1_spyre.json
++++ b/configurations/system1_spyre.json
 @@ -0,0 +1,66 @@
 +{
 +    "Exposes": [
@@ -329,18 +343,6 @@ index 0000000..1d86be6
 +    },
 +    "xyz.openbmc_project.Inventory.Item.System": {}
 +}
-diff --git a/configurations/meson.build b/configurations/meson.build
-index f7848b7..45f1d86 100644
---- a/configurations/meson.build
-+++ b/configurations/meson.build
-@@ -78,6 +78,7 @@ configs = [
-     'ibm/system1_baseboard.json',
-     'ibm/system1_chassis.json',
-     'ibm/system1_psu.json',
-+    'ibm/system1_spyre.json',
-     'ibm/tola.json',
-     'ibm/waterloo.json',
-     'intel/1ux16_riser.json',
 -- 
-2.47.1
+2.43.0
 

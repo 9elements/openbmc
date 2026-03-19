@@ -1,143 +1,71 @@
-From 9c6a48825cba4caf663b05214d8f55324d72af6a Mon Sep 17 00:00:00 2001
-From: Jonico Eustaquio <jonico.eustaquio@fii-na.com>
-Date: Thu, 24 Oct 2024 14:13:26 -0500
-Subject: [PATCH 2/7] Support MuxChannel object for dynamic buses
+From e0587e63ffc699ab769f4cea251fb939d382c6e4 Mon Sep 17 00:00:00 2001
+From: Naresh Solanki <naresh.solanki@9elements.com>
+Date: Thu, 19 Mar 2026 13:37:45 +0000
+Subject: [PATCH 2/9] Support MuxChannel object for dynamic buses
 
 Since mux devices can be configured in entity-manager, the logical
 buses are dynamically numerated. The MuxChannel object seeks to allow
 devices/sensors behind that mux to be configured in entity-manager with
-its "MuxName" and "ChannelName" properties. The "MuxName" property shall
-match the "Name" property of a mux configured in entity-manager and the
-"ChannelName" property will match a string within the ChannelName array
-of that same mux.
+its "MuxName" and "ChannelName" properties. The DeviceConfig class is
+created in overlay.cpp/hpp to manage devices that can be bound.
 
-The DeviceConfig class is created in overlay.cpp/hpp to keep keep track
-of the entity-manager configurations and more easily manage devices that
-can be bound. Each DeviceConfig object will be attempted to be bound if
-the device is in the exportTemplates map in devices.hpp.
-
-When a mux is configured in entity-manager with defined ChannelNames, it
-will be bound and a symbolic link is created between
-/dev/<MuxName>/<ChannelName> and /dev/i2c-<bus> based on the logical
-buses assigned to the channels of that mux. Once the link between
-MuxName, CHannelName, and logical bus is established, the system JSON is
-scanned to detect if there are any devices that have a "MuxChannel"
-object configuration that matches the MuxName and ChannelName and insert
-the corresponding logical bus to the system JSON so that it may be
-exposed in the device's entity-manager dbus object so it may be used by
-other daemons to create the sensors on the device. If the device whose
-logical bus was linked also happens to be a mux, a DeviceConfig object
-is created so this mux who now has a "Bus" field may be bound and link
-its channels and devices behind it in the same manner.
-
-Example:
-If the entity-manager configuration contains:
-{
-  "Address": "0x71",
-  "Bus": "5",
-  "ChannelNames": [
-      "ch0",
-      "ch1",
-      "ch2",
-      "ch3"
-  ],
-  "Name": "MUX_1",
-  "Type": "PCA9544Mux"
-},
-{
-  "Address": "0x40",
-  "MuxChannel":
-  {
-      "ChannelName": "ch0",
-      "MuxName": "MUX_1"
-  },
-  "Name": "ADM1266_1",
-  "Type": "ADM1266"
-}
-
-If MUX_1 happens to bind and create logical buses linking its channels
-to the following configuration:
-- ch0 <-> i2c-40
-- ch1 <-> i2c-41
-- ch2 <-> i2c-42
-- ch3 <-> i2c-43
-
-Then the system's configuration JSON seen in
-/var/configuration/system.json will update and reflect in the
-entity-manager objects to the following:
-
-{
-  "Address": 113,
-  "Bus": 5,
-  "ChannelNames": [
-      "ch0",
-      "ch1",
-      "ch2",
-      "ch3"
-  ],
-  "Name": "MUX_1",
-  "Type": "PCA9544Mux"
-},
-{
-  "Address": 64,
-  "Bus": 40,
-  "MuxChannel":
-  {
-      "ChannelName": "ch0",
-      "MuxName": "MUX_1"
-  },
-  "Name": "ADM1266_1",
-  "Type": "ADM1266"
-}
+When a mux is configured with defined ChannelNames, it will be bound
+and a symbolic link is created between /dev/<MuxName>/<ChannelName> and
+/dev/i2c-<bus>. Once the link is established, the system JSON is scanned
+for devices with a "MuxChannel" object matching the MuxName/ChannelName
+and the corresponding logical bus is inserted into the system JSON.
 
 Upstream-URL: https://gerrit.openbmc.org/c/openbmc/entity-manager/+/75484
 Upstream-Status: Submitted
 Change-Id: I8a93735ac2f36930d2b9a7ff9342b50e760a85c5
 Signed-off-by: Jonico Eustaquio <jonico.eustaquio@fii-na.com>
+
 ---
  src/entity_manager/entity_manager.cpp |   2 +-
  src/entity_manager/overlay.cpp        | 428 +++++++++++++-------------
- src/entity_manager/overlay.hpp        | 103 ++++++-
- src/fru_device/fru_device.cpp         |  14 -
+ src/entity_manager/overlay.hpp        | 110 ++++++-
+ src/fru_device/fru_device.cpp         |  13 -
  src/utils.cpp                         |  14 +
  src/utils.hpp                         |   2 +
- 6 files changed, 340 insertions(+), 223 deletions(-)
+ 6 files changed, 347 insertions(+), 222 deletions(-)
 
 diff --git a/src/entity_manager/entity_manager.cpp b/src/entity_manager/entity_manager.cpp
-index 198c003..0a2093c 100644
+index 2b6560457..ac087236f 100644
 --- a/src/entity_manager/entity_manager.cpp
 +++ b/src/entity_manager/entity_manager.cpp
-@@ -487,7 +487,7 @@ void EntityManager::publishNewConfiguration(
-     // NOLINTNEXTLINE(performance-unnecessary-value-param)
-     const nlohmann::json newConfiguration)
+@@ -443,7 +443,7 @@ static void publishNewConfiguration(
+     const nlohmann::json newConfiguration,
+     sdbusplus::asio::object_server& objServer)
  {
--    loadOverlays(newConfiguration, io);
+-    loadOverlays(newConfiguration);
 +    loadOverlays(newConfiguration, systemConfiguration, io);
  
-     boost::asio::post(io, [this]() {
-         if (!writeJsonFiles(systemConfiguration))
+     boost::asio::post(io, [systemConfiguration]() {
+         if (!configuration::writeJsonFiles(systemConfiguration))
 diff --git a/src/entity_manager/overlay.cpp b/src/entity_manager/overlay.cpp
-index 60e9af6..519a84b 100644
+index 1a389fbed..3232cba6c 100644
 --- a/src/entity_manager/overlay.cpp
 +++ b/src/entity_manager/overlay.cpp
-@@ -3,47 +3,12 @@
+@@ -17,49 +17,12 @@
  
  #include "overlay.hpp"
  
--#include "../utils.hpp"
 -#include "devices.hpp"
 -#include "utils.hpp"
 -
+-#include <boost/algorithm/string/predicate.hpp>
 -#include <boost/asio/io_context.hpp>
 -#include <boost/asio/steady_timer.hpp>
+-#include <boost/container/flat_map.hpp>
 -#include <boost/container/flat_set.hpp>
+-#include <boost/process/child.hpp>
  #include <nlohmann/json.hpp>
  #include <phosphor-logging/lg2.hpp>
  
  #include <filesystem>
- #include <flat_map>
  #include <fstream>
--#include <iomanip>
+ #include <iomanip>
+-#include <iostream>
 -#include <regex>
 -#include <string>
 -
@@ -160,7 +88,7 @@ index 60e9af6..519a84b 100644
 -        // remove brackets and comma from array
 -        std::string array = in.dump();
 -        array = array.substr(1, array.size() - 2);
--        std::ranges::replace(array, ',', ' ');
+-        boost::replace_all(array, ",", " ");
 -        return array;
 -    }
 -    return in.dump();
@@ -168,11 +96,11 @@ index 60e9af6..519a84b 100644
  
  static std::string deviceDirName(uint64_t bus, uint64_t address)
  {
-@@ -53,259 +18,308 @@ static std::string deviceDirName(uint64_t bus, uint64_t address)
+@@ -69,256 +32,307 @@ static std::string deviceDirName(uint64_t bus, uint64_t address)
      return name.str();
  }
  
--void linkMux(std::string_view muxName, uint64_t busIndex, uint64_t address,
+-void linkMux(const std::string& muxName, uint64_t busIndex, uint64_t address,
 -             const std::vector<std::string>& channelNames)
 +bool loadOverlays(const nlohmann::json& systemConfiguration,
 +                  nlohmann::json& currConfiguration,
@@ -210,8 +138,8 @@ index 60e9af6..519a84b 100644
 -        if (!is_symlink(channelPath))
 +        for (const auto& configuration : *findExposes)
          {
--            lg2::error("{PATH} for mux channel {CHANNEL} doesn't exist!",
--                       "PATH", channelPath.string(), "CHANNEL", channelName);
+-            std::cerr << channelPath << " for mux channel " << channelName
+-                      << " doesn't exist!\n";
 -            continue;
 -        }
 -        std::filesystem::path bus = std::filesystem::read_symlink(channelPath);
@@ -228,12 +156,10 @@ index 60e9af6..519a84b 100644
 +                continue;
 +            }
 +            const std::string& type = findType.value().get<std::string>();
-+            const auto* device = std::ranges::find_if(
-+                devices::exportTemplates,
-+                [&type](const auto& tmp) { return tmp.type == type; });
++            const auto device = devices::exportTemplates.find(type.c_str());
 +            if (device != devices::exportTemplates.end())
 +            {
-+                deviceConfigurations.emplace_back(type, *device,
++                deviceConfigurations.emplace_back(type, device->second,
 +                                                  configuration);
 +                continue;
 +            }
@@ -245,7 +171,7 @@ index 60e9af6..519a84b 100644
 +            // If wondering why your device not appearing, add your type to
 +            // the exportTemplates array in the devices.hpp file.
 +            lg2::debug("Device type {TYPE} not found in export map allowlist",
-+                "TYPE", type);
++                       "TYPE", type);
 +        }
 +    }
  
@@ -255,7 +181,9 @@ index 60e9af6..519a84b 100644
 +    for (auto& config : deviceConfigurations)
 +    {
 +        if (config.buildDevice(io))
-+        {
+         {
+-            std::cerr << "Failure creating symlink for " << fp << " to " << link
+-                      << "\n";
 +            if (config.isMux())
 +            {
 +                std::vector<DeviceConfig> linkedConfigs =
@@ -265,16 +193,14 @@ index 60e9af6..519a84b 100644
 +                    newMuxConfigs.emplace_back(linkedConfig);
 +                }
 +            }
-+        }
-+    }
+         }
+     }
 +    while (!newMuxConfigs.empty())
 +    {
 +        std::vector<DeviceConfig> muxConfigs(newMuxConfigs);
 +        newMuxConfigs.clear();
 +        for (auto& newMux : muxConfigs)
-         {
--            lg2::error("Failure creating symlink for {PATH} to {LINK}", "PATH",
--                       fp.string(), "LINK", link.string());
++        {
 +            if (newMux.buildDevice(io))
 +            {
 +                std::vector<DeviceConfig> linkedConfigs =
@@ -284,13 +210,13 @@ index 60e9af6..519a84b 100644
 +                    newMuxConfigs.emplace_back(linkedConfig);
 +                }
 +            }
-         }
-     }
++        }
++    }
 +    return true;
  }
  
--static int deleteDevice(std::string_view busPath, uint64_t address,
--                        std::string_view destructor)
+-static int deleteDevice(const std::string& busPath, uint64_t address,
+-                        const std::string& destructor)
 +bool DeviceConfig::deviceIsCreated()
  {
 -    std::filesystem::path deviceDestructor(busPath);
@@ -300,7 +226,7 @@ index 60e9af6..519a84b 100644
 +    std::filesystem::path dirPath = busPath;
 +    if (!bus.has_value() || !address.has_value())
      {
--        lg2::error("Error writing {PATH}", "PATH", deviceDestructor.string());
+-        std::cerr << "Error writing " << deviceDestructor << "\n";
 -        return -1;
 +        return false;
      }
@@ -318,8 +244,9 @@ index 60e9af6..519a84b 100644
 +    return std::filesystem::exists(dirPath, ec);
  }
  
--static int createDevice(std::string_view busPath, std::string_view parameters,
--                        std::string_view constructor)
+-static int createDevice(const std::string& busPath,
+-                        const std::string& parameters,
+-                        const std::string& constructor)
 +bool DeviceConfig::createDevice()
  {
      std::filesystem::path deviceConstructor(busPath);
@@ -327,7 +254,7 @@ index 60e9af6..519a84b 100644
      std::ofstream deviceFile(deviceConstructor);
      if (!deviceFile.good())
      {
--        lg2::error("Error writing {PATH}", "PATH", deviceConstructor.string());
+-        std::cerr << "Error writing " << deviceConstructor << "\n";
 -        return -1;
 +        lg2::error("Error writing {PATH}",
 +            "PATH", deviceConstructor);
@@ -340,7 +267,7 @@ index 60e9af6..519a84b 100644
 +    return true;
  }
  
--static bool deviceIsCreated(std::string_view busPath, uint64_t bus,
+-static bool deviceIsCreated(const std::string& busPath, uint64_t bus,
 -                            uint64_t address,
 -                            const devices::createsHWMon hasHWMonDir)
 +bool DeviceConfig::deleteDevice()
@@ -368,12 +295,11 @@ index 60e9af6..519a84b 100644
  }
  
 -static int buildDevice(
--    std::string_view name, std::string_view busPath,
--    std::string_view parameters, uint64_t bus, uint64_t address,
--    std::string_view constructor, std::string_view destructor,
+-    const std::string& name, const std::string& busPath,
+-    const std::string& parameters, uint64_t bus, uint64_t address,
+-    const std::string& constructor, const std::string& destructor,
 -    const devices::createsHWMon hasHWMonDir,
--    std::vector<std::string> channelNames, boost::asio::io_context& io,
--    const size_t retries = 5)
+-    std::vector<std::string> channelNames, const size_t retries = 5)
 +bool DeviceConfig::buildDevice(boost::asio::io_context& io,
 +                               const size_t retries)
  {
@@ -407,20 +333,20 @@ index 60e9af6..519a84b 100644
              createTimer->async_wait(
 -                [createTimer, name, busPath, parameters, bus, address,
 -                 constructor, destructor, hasHWMonDir,
--                 channelNames(std::move(channelNames)), retries,
+-                 channelNames(std::move(channelNames)),
+-                 retries](const boost::system::error_code& ec) mutable {
 +                [createTimer, this, retries,
-                  &io](const boost::system::error_code& ec) mutable {
++                 &io](const boost::system::error_code& ec) mutable {
                      if (ec)
                      {
--                        lg2::error("Timer error: {ERR}", "ERR", ec.message());
+-                        std::cerr << "Timer error: " << ec << "\n";
 -                        return -2;
 +                        lg2::error("Timer error {ERR}", "ERR", ec.message());
 +                        return false;
                      }
 -                    return buildDevice(name, busPath, parameters, bus, address,
 -                                       constructor, destructor, hasHWMonDir,
--                                       std::move(channelNames), io,
--                                       retries - 1);
+-                                       std::move(channelNames), retries - 1);
 +                    return buildDevice(io, retries - 1);
                  });
 -            return -1;
@@ -442,17 +368,16 @@ index 60e9af6..519a84b 100644
 +    return (type.ends_with("Mux") && !channels.empty());
  }
  
--void exportDevice(const devices::ExportTemplate& exportTemplate,
--                  const nlohmann::json& configuration,
--                  boost::asio::io_context& io)
+-void exportDevice(const std::string& type,
+-                  const devices::ExportTemplate& exportTemplate,
+-                  const nlohmann::json& configuration)
 +std::vector<DeviceConfig> DeviceConfig::linkMux(
 +    nlohmann::json& systemConfiguration)
  {
--    std::string_view type = exportTemplate.type;
--    std::string parameters(exportTemplate.parameters);
--    std::string busPath(exportTemplate.busPath);
--    std::string_view constructor = exportTemplate.add;
--    std::string_view destructor = exportTemplate.remove;
+-    std::string parameters = exportTemplate.parameters;
+-    std::string busPath = exportTemplate.busPath;
+-    std::string constructor = exportTemplate.add;
+-    std::string destructor = exportTemplate.remove;
 -    devices::createsHWMon hasHWMonDir = exportTemplate.hasHWMonDir;
 -    std::string name = "unknown";
 -    std::optional<uint64_t> bus;
@@ -497,8 +422,10 @@ index 60e9af6..519a84b 100644
 -        {
 -            channels = keyPair.value().get<std::vector<std::string>>();
 -        }
--        replaceAll(parameters, templateChar + keyPair.key(), subsituteString);
--        replaceAll(busPath, templateChar + keyPair.key(), subsituteString);
+-        boost::replace_all(parameters, templateChar + keyPair.key(),
+-                           subsituteString);
+-        boost::replace_all(busPath, templateChar + keyPair.key(),
+-                           subsituteString);
 +        return {};
      }
 +    devDir /= deviceDirName(*bus, *address);
@@ -513,7 +440,7 @@ index 60e9af6..519a84b 100644
 -    }
 -
 -    buildDevice(name, busPath, parameters, *bus, *address, constructor,
--                destructor, hasHWMonDir, std::move(channels), io);
+-                destructor, hasHWMonDir, std::move(channels));
 -}
 +        const std::string& channelName = channels[channelIndex];
 +        if (channelName.empty())
@@ -521,8 +448,7 @@ index 60e9af6..519a84b 100644
 +            continue;
 +        }
  
--bool loadOverlays(const nlohmann::json& systemConfiguration,
--                  boost::asio::io_context& io)
+-bool loadOverlays(const nlohmann::json& systemConfiguration)
 -{
 -    std::filesystem::create_directory(outputDir);
 -    for (auto entity = systemConfiguration.begin();
@@ -555,7 +481,8 @@ index 60e9af6..519a84b 100644
 -            if (findStatus != configuration.end() && *findStatus == "disabled")
 +            if (ec != std::make_error_code(std::errc::file_exists))
              {
-+                lg2::error("Failure creating symlink for {PATH} to {LINK}: {ERR}",
++                lg2::error(
++                    "Failure creating symlink for {PATH} to {LINK}: {ERR}",
 +                    "PATH", fp, "LINK", link, "ERR", ec.message());
                  continue;
              }
@@ -574,15 +501,14 @@ index 60e9af6..519a84b 100644
 +                std::filesystem::create_symlink(fp, link, ec);
 +                if (ec)
 +                {
-+                    lg2::error("Failure creating symlink for {PATH} to {LINK}: {ERR}",
++                    lg2::error(
++                        "Failure creating symlink for {PATH} to {LINK}: {ERR}",
 +                        "PATH", fp, "LINK", link, "ERR", ec.message());
 +                    continue;
 +                }
              }
--            const std::string& type = findType.value().get<std::string>();
--            const auto* device = std::ranges::find_if(
--                devices::exportTemplates,
--                [&type](const auto& tmp) { return tmp.type == type; });
+-            std::string type = findType.value().get<std::string>();
+-            auto device = devices::exportTemplates.find(type.c_str());
 -            if (device != devices::exportTemplates.end())
 +        }
 +        for (auto entity = systemConfiguration.begin();
@@ -592,7 +518,7 @@ index 60e9af6..519a84b 100644
 +            if (findExposes == entity.value().end() ||
 +                findExposes->type() != nlohmann::json::value_t::array)
              {
--                exportDevice(*device, configuration, io);
+-                exportDevice(type, device->second, configuration);
                  continue;
              }
  
@@ -633,12 +559,11 @@ index 60e9af6..519a84b 100644
 +                std::string cfgType = findType.value().get<std::string>();
 +                if (cfgType.ends_with("Mux"))
 +                {
-+                    const auto* device = std::ranges::find_if(
-+                        devices::exportTemplates,
-+                        [&cfgType](const auto& tmp) { return tmp.type == cfgType; });
++                    const auto device =
++                        devices::exportTemplates.find(cfgType.c_str());
 +                    if (device != devices::exportTemplates.end())
 +                    {
-+                        newMuxConfigs.emplace_back(cfgType, *device,
++                        newMuxConfigs.emplace_back(cfgType, device->second,
 +                                                   configuration);
 +                    }
 +                }
@@ -650,23 +575,26 @@ index 60e9af6..519a84b 100644
 +    return newMuxConfigs;
  }
 diff --git a/src/entity_manager/overlay.hpp b/src/entity_manager/overlay.hpp
-index cab7521..908ebc4 100644
+index 3bc6eb7fc..7d7f702f8 100644
 --- a/src/entity_manager/overlay.hpp
 +++ b/src/entity_manager/overlay.hpp
-@@ -2,9 +2,110 @@
- // SPDX-FileCopyrightText: Copyright 2018 Intel Corporation
+@@ -16,7 +16,115 @@
+ /// \file overlay.hpp
  
  #pragma once
--#include <boost/asio/io_context.hpp>
 +
 +#include "../utils.hpp"
 +#include "devices.hpp"
 +
++#include <boost/algorithm/string/replace.hpp>
++#include <boost/asio/io_context.hpp>
 +#include <boost/asio/steady_timer.hpp>
  #include <nlohmann/json.hpp>
  
-+#include <iostream>
++#include <optional>
 +#include <regex>
++#include <string>
++#include <vector>
 +
 +constexpr const char* outputDir = "/tmp/overlays";
 +constexpr const char* templateChar = "$";
@@ -716,9 +644,10 @@ index cab7521..908ebc4 100644
 +            {
 +                channels = keyPair.value().get<std::vector<std::string>>();
 +            }
-+            replaceAll(parameters, templateChar + keyPair.key(),
-+                       subsituteString);
-+            replaceAll(busPath, templateChar + keyPair.key(), subsituteString);
++            boost::replace_all(parameters, templateChar + keyPair.key(),
++                               subsituteString);
++            boost::replace_all(busPath, templateChar + keyPair.key(),
++                               subsituteString);
 +        }
 +    };
 +
@@ -762,14 +691,15 @@ index cab7521..908ebc4 100644
 +};
 +
  void unloadAllOverlays();
- bool loadOverlays(const nlohmann::json& systemConfiguration,
+-bool loadOverlays(const nlohmann::json& systemConfiguration);
++bool loadOverlays(const nlohmann::json& systemConfiguration,
 +                  nlohmann::json& currConfiguration,
-                   boost::asio::io_context& io);
++                  boost::asio::io_context& io);
 diff --git a/src/fru_device/fru_device.cpp b/src/fru_device/fru_device.cpp
-index 304cb0b..27bcf14 100644
+index c24d2010e..e9626d7f8 100644
 --- a/src/fru_device/fru_device.cpp
 +++ b/src/fru_device/fru_device.cpp
-@@ -119,20 +119,6 @@ static int64_t readFromEeprom(int fd, off_t offset, size_t len, uint8_t* buf)
+@@ -135,19 +135,6 @@ static int64_t readFromEeprom(int fd, off_t offset, size_t len, uint8_t* buf)
      return read(fd, buf, len);
  }
  
@@ -782,8 +712,7 @@ index 304cb0b..27bcf14 100644
 -    }
 -    std::string_view num = busName.substr(findBus + 1);
 -    int val = 0;
--    bool fullMatch = false;
--    fromCharsWrapper(num, val, fullMatch);
+-    std::from_chars(num.data(), num.data() + num.size(), val);
 -    return val;
 -}
 -
@@ -791,12 +720,20 @@ index 304cb0b..27bcf14 100644
  {
      auto ec = std::error_code();
 diff --git a/src/utils.cpp b/src/utils.cpp
-index db476f3..63b1cb4 100644
+index 116c48487..2f029cbba 100644
 --- a/src/utils.cpp
 +++ b/src/utils.cpp
-@@ -243,3 +243,17 @@ std::string toLowerCopy(std::string_view str)
-                    [](unsigned char c) { return asciiToLower(c); });
-     return result;
+@@ -26,6 +26,7 @@
+ #include <boost/lexical_cast.hpp>
+ #include <sdbusplus/bus/match.hpp>
+ 
++#include <charconv>
+ #include <filesystem>
+ #include <iostream>
+ #include <map>
+@@ -184,3 +185,16 @@ bool matchProbe(const nlohmann::json& probe, const DBusValueVariant& dbusValue)
+ {
+     return std::visit(MatchProbeForwarder(probe), dbusValue);
  }
 +
 +int busStrToInt(const std::string_view busName)
@@ -808,20 +745,19 @@ index db476f3..63b1cb4 100644
 +    }
 +    std::string_view num = busName.substr(findBus + 1);
 +    int val = 0;
-+    bool fullMatch = false;
-+    fromCharsWrapper(num, val, fullMatch);
++    std::from_chars(num.data(), num.data() + num.size(), val);
 +    return val;
 +}
 diff --git a/src/utils.hpp b/src/utils.hpp
-index b14a620..e32c3d9 100644
+index 105330c36..42b575e4e 100644
 --- a/src/utils.hpp
 +++ b/src/utils.hpp
-@@ -115,3 +115,5 @@ std::from_chars_result fromCharsWrapper(const std::string_view& str, T& out,
- 
-     return result;
- }
+@@ -87,3 +87,5 @@ inline bool deviceHasLogging(const nlohmann::json& json)
+ /// \param dbusValue the property value being matched to a probe.
+ /// \return true if the dbusValue matched the probe otherwise false.
+ bool matchProbe(const nlohmann::json& probe, const DBusValueVariant& dbusValue);
 +
 +int busStrToInt(std::string_view busName);
 -- 
-2.47.1
+2.43.0
 

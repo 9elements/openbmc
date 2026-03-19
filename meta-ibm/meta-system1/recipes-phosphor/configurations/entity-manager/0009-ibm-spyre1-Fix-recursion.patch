@@ -1,7 +1,7 @@
-From 1ea8a5a38a34d7ae589ed6a5771c13abb163a54d Mon Sep 17 00:00:00 2001
-From: Patrick Rudolph <patrick.rudolph@9elements.com>
-Date: Fri, 13 Mar 2026 05:42:28 +0100
-Subject: [PATCH] ibm: spyre1: Fix recursion
+From f4d97a1ea494a4f2c272c4efd50d6ff9fc1bd4a8 Mon Sep 17 00:00:00 2001
+From: Naresh Solanki <naresh.solanki@9elements.com>
+Date: Thu, 19 Mar 2026 14:15:48 +0000
+Subject: [PATCH 9/9] ibm: spyre1: Fix recursion
 
 Don't use xyz.openbmc_project.Inventory.Decorator.Asset as Probe
 condition since it will be added to the entity-manager created Dbus
@@ -17,14 +17,16 @@ strings.
 
 Upstream-Status: Pending
 Signed-off-by: Patrick Rudolph <patrick.rudolph@9elements.com>
+
+
 ---
- configurations/ibm/system1_spyre.json | 32 ++++++++++++++++++++++++++-
+ configurations/system1_spyre.json | 32 ++++++++++++++++++++++++++++++-
  1 file changed, 31 insertions(+), 1 deletion(-)
 
-diff --git a/configurations/ibm/system1_spyre.json b/configurations/ibm/system1_spyre.json
-index 1d86be6..259c7c5 100644
---- a/configurations/ibm/system1_spyre.json
-+++ b/configurations/ibm/system1_spyre.json
+diff --git a/configurations/system1_spyre.json b/configurations/system1_spyre.json
+index 1d86be6db..259c7c526 100644
+--- a/configurations/system1_spyre.json
++++ b/configurations/system1_spyre.json
 @@ -53,7 +53,37 @@
          }
      ],
@@ -65,5 +67,5 @@ index 1d86be6..259c7c5 100644
      "xyz.openbmc_project.Inventory.Decorator.Asset": {
          "Manufacturer": "$Manufacturer",
 -- 
-2.47.1
+2.43.0
 

@@ -1,7 +1,8 @@
-From bd8c325b9cd2d46a5a0f81e1a537ba95be52e442 Mon Sep 17 00:00:00 2001
-From: Patrick Rudolph <patrick.rudolph@9elements.com>
-Date: Thu, 12 Mar 2026 16:04:25 +0100
-Subject: [PATCH] overlay: Fix "Support MuxChannel object for dynamic buses"
+From 95160409f23d6fff4f4b1c9f57378e556ce7e046 Mon Sep 17 00:00:00 2001
+From: Naresh Solanki <naresh.solanki@9elements.com>
+Date: Thu, 19 Mar 2026 14:13:41 +0000
+Subject: [PATCH 8/9] overlay: Fix "Support MuxChannel object for dynamic
+ buses"
 
 entity-manger crashes in various places and shows strange behaviours.
 
@@ -12,16 +13,18 @@ behaviour.
 
 Upstream-Status: Pending
 Signed-off-by: Patrick Rudolph <patrick.rudolph@9elements.com>
+
+
 ---
  src/entity_manager/overlay.cpp | 11 +++++++++--
  src/entity_manager/overlay.hpp |  3 ++-
  2 files changed, 11 insertions(+), 3 deletions(-)
 
 diff --git a/src/entity_manager/overlay.cpp b/src/entity_manager/overlay.cpp
-index 519a84b..3b69e65 100644
+index 3232cba6c..795614ae2 100644
 --- a/src/entity_manager/overlay.cpp
 +++ b/src/entity_manager/overlay.cpp
-@@ -173,19 +173,26 @@ bool DeviceConfig::buildDevice(boost::asio::io_context& io,
+@@ -185,19 +185,26 @@ bool DeviceConfig::buildDevice(boost::asio::io_context& io,
          if (!createDevice())
          {
              deleteDevice();
@@ -51,10 +54,10 @@ index 519a84b..3b69e65 100644
              return false;
          }
 diff --git a/src/entity_manager/overlay.hpp b/src/entity_manager/overlay.hpp
-index 27e5341..5d79d0f 100644
+index cfb1c36c3..fea52e5b9 100644
 --- a/src/entity_manager/overlay.hpp
 +++ b/src/entity_manager/overlay.hpp
-@@ -19,7 +19,8 @@ constexpr const char* i2CDevsDir = "/sys/bus/i2c/devices";
+@@ -37,7 +37,8 @@ constexpr const char* i2CDevsDir = "/sys/bus/i2c/devices";
  constexpr const char* muxSymlinkDir = "/dev/i2c-mux";
  const std::regex illegalNameRegex("[^A-Za-z0-9_]");
  
@@ -65,5 +68,5 @@ index 27e5341..5d79d0f 100644
    public:
      DeviceConfig() = delete;
 -- 
-2.47.1
+2.43.0
 

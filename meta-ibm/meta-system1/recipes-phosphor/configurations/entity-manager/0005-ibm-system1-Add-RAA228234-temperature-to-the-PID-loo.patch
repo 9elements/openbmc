@@ -1,21 +1,23 @@
-From 6405a22e3a3a3e0ec6567ca595a13decaaa36754 Mon Sep 17 00:00:00 2001
-From: Patrick Rudolph <patrick.rudolph@9elements.com>
-Date: Mon, 9 Mar 2026 14:05:38 +0100
-Subject: [PATCH 5/7] ibm: system1: Add RAA228234 temperature to the PID loop
+From 47db945afbc4dc562a4b3d30efa283139ff4f335 Mon Sep 17 00:00:00 2001
+From: Naresh Solanki <naresh.solanki@9elements.com>
+Date: Thu, 19 Mar 2026 14:07:17 +0000
+Subject: [PATCH 5/9] ibm: system1: Add RAA228234 temperature to the PID loop
 
 Add SPYRE VR temperatures to the PID loop.
 
 Upstream-Status: Pending
 Change-Id: I16f7877a290b857f6c472d9470ffd897dd59f70b
 Signed-off-by: Patrick Rudolph <patrick.rudolph@9elements.com>
+
+
 ---
- configurations/ibm/system1_baseboard.json | 42 ++++++++++++++++++++++-
+ configurations/system1_baseboard.json | 42 ++++++++++++++++++++++++++-
  1 file changed, 41 insertions(+), 1 deletion(-)
 
-diff --git a/configurations/ibm/system1_baseboard.json b/configurations/ibm/system1_baseboard.json
-index 40088a9..4a91bf2 100644
---- a/configurations/ibm/system1_baseboard.json
-+++ b/configurations/ibm/system1_baseboard.json
+diff --git a/configurations/system1_baseboard.json b/configurations/system1_baseboard.json
+index 40088a9fe..4a91bf220 100644
+--- a/configurations/system1_baseboard.json
++++ b/configurations/system1_baseboard.json
 @@ -537,7 +537,7 @@
                  "SPYRE16_TEMP1",
                  "SPYRE16_TEMP2"
@@ -73,5 +75,5 @@ index 40088a9..4a91bf2 100644
              "Address": "0x4c",
              "Bus": 70,
 -- 
-2.47.1
+2.43.0
 

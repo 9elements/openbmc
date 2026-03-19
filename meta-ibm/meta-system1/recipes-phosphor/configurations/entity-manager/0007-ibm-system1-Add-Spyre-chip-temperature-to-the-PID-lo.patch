@@ -1,21 +1,23 @@
-From 84ff2561e2838a10331ae34910185919263362c1 Mon Sep 17 00:00:00 2001
+From 72224013a31e080cca98db9f404f09da85e8e68b Mon Sep 17 00:00:00 2001
 From: Naresh Solanki <naresh.solanki@9elements.com>
-Date: Tue, 10 Mar 2026 17:23:08 +0000
-Subject: [PATCH 7/7] ibm: system1: Add Spyre chip temperature to the PID loop
+Date: Thu, 19 Mar 2026 14:10:45 +0000
+Subject: [PATCH 7/9] ibm: system1: Add Spyre chip temperature to the PID loop
 
 Add Spyre ambient and die temperatures to the PID loop.
 
 Upstream-Status: Pending
 Change-Id: Ic4e517e4e8f4808a711ff87d41c520be5e053407
 Signed-off-by: Patrick Rudolph <patrick.rudolph@9elements.com>
+
+
 ---
- configurations/ibm/system1_baseboard.json | 81 +++++++++++++++++++++++
+ configurations/system1_baseboard.json | 81 +++++++++++++++++++++++++++
  1 file changed, 81 insertions(+)
 
-diff --git a/configurations/ibm/system1_baseboard.json b/configurations/ibm/system1_baseboard.json
-index 43aebe8..c6210da 100644
---- a/configurations/ibm/system1_baseboard.json
-+++ b/configurations/ibm/system1_baseboard.json
+diff --git a/configurations/system1_baseboard.json b/configurations/system1_baseboard.json
+index 43aebe8a4..c6210dace 100644
+--- a/configurations/system1_baseboard.json
++++ b/configurations/system1_baseboard.json
 @@ -592,6 +592,46 @@
                  "CECIO"
              ]
@@ -112,5 +114,5 @@ index 43aebe8..c6210da 100644
              "Address": "0x4c",
              "Bus": 70,
 -- 
-2.47.1
+2.43.0
 
