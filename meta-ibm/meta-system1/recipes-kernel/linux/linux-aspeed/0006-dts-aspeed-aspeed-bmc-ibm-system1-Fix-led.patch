@@ -1,0 +1,43 @@
+From 37ea62c5ceaf6a39d2aec5eab5e3257aa5f7ad8f Mon Sep 17 00:00:00 2001
+From: Naresh Solanki <naresh.solanki@9elements.com>
+Date: Wed, 1 Apr 2026 08:56:49 +0000
+Subject: [PATCH 6/6] dts/aspeed: aspeed-bmc-ibm-system1: Fix led
+
+Upstream-Status: Pending
+
+Signed-off-by: Naresh Solanki <naresh.solanki@9elements.com>
+---
+ arch/arm/boot/dts/aspeed/aspeed-bmc-ibm-system1.dts | 8 ++++----
+ 1 file changed, 4 insertions(+), 4 deletions(-)
+
+diff --git a/arch/arm/boot/dts/aspeed/aspeed-bmc-ibm-system1.dts b/arch/arm/boot/dts/aspeed/aspeed-bmc-ibm-system1.dts
+index ce65ee612db6..0eb5c34b9ac2 100644
+--- a/arch/arm/boot/dts/aspeed/aspeed-bmc-ibm-system1.dts
++++ b/arch/arm/boot/dts/aspeed/aspeed-bmc-ibm-system1.dts
+@@ -126,19 +126,19 @@ vga_memory: region@bf000000 {
+ 	leds {
+ 		compatible = "gpio-leds";
+ 
+-		led-0 {
++		led-bmc-ready {
+ 			gpios = <&gpio0 ASPEED_GPIO(L, 7) GPIO_ACTIVE_HIGH>;
+ 		};
+ 
+-		led-1 {
++		led-bmc-hb {
+ 			gpios = <&gpio0 ASPEED_GPIO(P, 7) GPIO_ACTIVE_HIGH>;
+ 		};
+ 
+-		led-2 {
++		led-rear-enc-fault0 {
+ 			gpios = <&gpio0 ASPEED_GPIO(S, 6) GPIO_ACTIVE_HIGH>;
+ 		};
+ 
+-		led-3 {
++		led-rear-enc-id0 {
+ 			gpios = <&gpio0 ASPEED_GPIO(S, 7) GPIO_ACTIVE_HIGH>;
+ 		};
+ 
+-- 
+2.43.0
+

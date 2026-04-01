@@ -6,4 +6,5 @@ SRC_URI:append = " file://0001-ARM-dts-aspeed-ibm-system1-Switch-Ethernet-to-RGM
         file://0003-dts-aspeed-aspeed-bmc-ibm-system1-Fix-PCIe-slots.patch \
         file://0004-bindings-Add-ibm-spyre-binding.patch \
         file://0005-hwmon-Add-IBM-spyre.patch \
+        file://0006-dts-aspeed-aspeed-bmc-ibm-system1-Fix-led.patch \
         "
