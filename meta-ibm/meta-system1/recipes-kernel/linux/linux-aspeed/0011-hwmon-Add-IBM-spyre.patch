@@ -1,7 +1,7 @@
-From 59aca8ffe2590741f85b214a1ac5bc078c673601 Mon Sep 17 00:00:00 2001
-From: Patrick Rudolph <patrick.rudolph@9elements.com>
-Date: Tue, 10 Mar 2026 11:21:10 +0100
-Subject: [PATCH 5/5] hwmon: Add IBM spyre
+From 9f9c6860015b913e15cfa579d18a33efe18b0624 Mon Sep 17 00:00:00 2001
+From: Naresh Solanki <naresh.solanki@9elements.com>
+Date: Wed, 18 Mar 2026 15:33:12 +0000
+Subject: [PATCH 11/12] hwmon: Add IBM spyre
 
 IBM Spyre AI accelerator has an I2C interface to allow managment
 controllers to read the temperature data. Implement the temperature
@@ -19,7 +19,7 @@ Signed-off-by: Patrick Rudolph <patrick.rudolph@9elements.com>
  create mode 100644 drivers/hwmon/spyre.c
 
 diff --git a/drivers/hwmon/Kconfig b/drivers/hwmon/Kconfig
-index 58480a3f4683..04da8e3d8d8a 100644
+index 2760feb9f83b..72f77e1b4977 100644
 --- a/drivers/hwmon/Kconfig
 +++ b/drivers/hwmon/Kconfig
 @@ -75,6 +75,13 @@ config SENSORS_SMPRO
@@ -37,17 +37,17 @@ index 58480a3f4683..04da8e3d8d8a 100644
  	tristate "Analog Devices AD7314 and compatibles"
  	depends on SPI
 diff --git a/drivers/hwmon/Makefile b/drivers/hwmon/Makefile
-index 9554d2fdcf7b..afeb8c12cf7f 100644
+index 73b2abdcc6dd..01259280632e 100644
 --- a/drivers/hwmon/Makefile
 +++ b/drivers/hwmon/Makefile
-@@ -211,6 +211,7 @@ obj-$(CONFIG_SENSORS_SPD5118)	+= spd5118.o
+@@ -219,6 +219,7 @@ obj-$(CONFIG_SENSORS_SMSC47M1)	+= smsc47m1.o
+ obj-$(CONFIG_SENSORS_SMSC47M192)+= smsc47m192.o
+ obj-$(CONFIG_SENSORS_SPARX5)	+= sparx5-temp.o
+ obj-$(CONFIG_SENSORS_SPD5118)	+= spd5118.o
++obj-$(CONFIG_SENSORS_SPYRE)     += spyre.o
  obj-$(CONFIG_SENSORS_STTS751)	+= stts751.o
  obj-$(CONFIG_SENSORS_SURFACE_FAN)+= surface_fan.o
  obj-$(CONFIG_SENSORS_SURFACE_TEMP)+= surface_temp.o
-+obj-$(CONFIG_SENSORS_SPYRE)	+= spyre.o
- obj-$(CONFIG_SENSORS_SY7636A)	+= sy7636a-hwmon.o
- obj-$(CONFIG_SENSORS_AMC6821)	+= amc6821.o
- obj-$(CONFIG_SENSORS_TC74)	+= tc74.o
 diff --git a/drivers/hwmon/spyre.c b/drivers/hwmon/spyre.c
 new file mode 100644
 index 000000000000..64fad93b7dea
@@ -367,5 +367,5 @@ index 000000000000..64fad93b7dea
 +MODULE_DESCRIPTION("IBM spyre temperature sensor driver");
 +MODULE_LICENSE("GPL");
 -- 
-2.47.1
+2.43.0
 

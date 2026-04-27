@@ -1,0 +1,77 @@
+From 16180fc218de4a3eb0e6cfacfd3449c8b54ecd60 Mon Sep 17 00:00:00 2001
+From: Manojkiran Eda <manojkiran.eda@gmail.com>
+Date: Tue, 19 Mar 2024 15:04:04 +0530
+Subject: [PATCH 04/12] ARM: dts: aspeed: Add eSPI node
+
+This commit adds eSPI to the device tree for aspeed 5/6th
+generation SoCs.
+
+Signed-off-by: Manojkiran Eda <manojkiran.eda@gmail.com>
+Upstream-Status: Pending
+---
+ arch/arm/boot/dts/aspeed/aspeed-g5.dtsi | 19 +++++++++++++++++++
+ arch/arm/boot/dts/aspeed/aspeed-g6.dtsi | 18 ++++++++++++++++++
+ 2 files changed, 37 insertions(+)
+
+diff --git a/arch/arm/boot/dts/aspeed/aspeed-g5.dtsi b/arch/arm/boot/dts/aspeed/aspeed-g5.dtsi
+index 00950fc372ea..5b01bf9eaf87 100644
+--- a/arch/arm/boot/dts/aspeed/aspeed-g5.dtsi
++++ b/arch/arm/boot/dts/aspeed/aspeed-g5.dtsi
+@@ -309,6 +309,25 @@ video: video@1e700000 {
+ 				interrupts = <7>;
+ 				status = "disabled";
+ 			};
++			espi: espi@1e6ee000 {
++				compatible = "aspeed,ast2500-espi", "simple-mfd", "syscon";
++				reg = <0x1e6ee000 0x1000>;
++
++				#address-cells = <1>;
++				#size-cells = <1>;
++				ranges = <0x0 0x1e6ee000 0x1000>;
++
++				espi_ctrl: espi-ctrl@0 {
++					compatible = "aspeed,ast2500-espi-ctrl";
++					reg = <0x0 0x800>,<0x0 0x4000000>;
++					reg-names = "espi_ctrl","espi_flash";
++					interrupts = <23>;
++					clocks = <&syscon ASPEED_CLK_GATE_ESPICLK>;
++					status = "disabled";
++					pinctrl-names = "default";
++					pinctrl-0 = <&pinctrl_espi_default>;
++				};
++			};
+ 
+ 			sram: sram@1e720000 {
+ 				compatible = "mmio-sram";
+diff --git a/arch/arm/boot/dts/aspeed/aspeed-g6.dtsi b/arch/arm/boot/dts/aspeed/aspeed-g6.dtsi
+index ecf6ff54fda3..42b4961d1a9a 100644
+--- a/arch/arm/boot/dts/aspeed/aspeed-g6.dtsi
++++ b/arch/arm/boot/dts/aspeed/aspeed-g6.dtsi
+@@ -421,6 +421,24 @@ adc1: adc@1e6e9100 {
+ 				status = "disabled";
+ 			};
+ 
++			espi: espi@1e6ee000 {
++				compatible = "aspeed,ast2600-espi", "simple-mfd", "syscon";
++				reg = <0x1e6ee000 0x1000>;
++
++				#address-cells = <1>;
++				#size-cells = <1>;
++				ranges = <0x0 0x1e6ee000 0x1000>;
++
++				espi_ctrl: espi-ctrl@0 {
++					compatible = "aspeed,ast2600-espi-ctrl";
++					reg = <0x0 0x800>,<0x0 0x4000000>;
++					reg-names = "espi_ctrl","espi_flash";
++					interrupts = <GIC_SPI 42 IRQ_TYPE_LEVEL_HIGH>;
++					clocks = <&syscon ASPEED_CLK_GATE_ESPICLK>;
++					status = "disabled";
++				};
++			};
++
+ 			sbc: secure-boot-controller@1e6f2000 {
+ 				compatible = "aspeed,ast2600-sbc";
+ 				reg = <0x1e6f2000 0x1000>;
+-- 
+2.43.0
+

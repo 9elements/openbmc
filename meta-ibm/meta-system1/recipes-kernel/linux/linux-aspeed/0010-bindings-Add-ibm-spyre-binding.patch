@@ -1,7 +1,7 @@
-From fbd9b44357b590dbc22af845cefe3ad4606ca62a Mon Sep 17 00:00:00 2001
+From f3b927017ecced24a04871c148cd5b3194d3ca65 Mon Sep 17 00:00:00 2001
 From: Patrick Rudolph <patrick.rudolph@9elements.com>
 Date: Tue, 10 Mar 2026 11:19:03 +0100
-Subject: [PATCH 4/5] bindings: Add ibm,spyre binding
+Subject: [PATCH 10/12] bindings: Add ibm,spyre binding
 
 Add binding for IBM's AI accelerator "Spyre" that has an I2C interface
 to gather temperature readings from a managment controller.
@@ -60,5 +60,5 @@ index 000000000000..a117d610a305
 +        };
 +    };
 -- 
-2.47.1
+2.43.0
 

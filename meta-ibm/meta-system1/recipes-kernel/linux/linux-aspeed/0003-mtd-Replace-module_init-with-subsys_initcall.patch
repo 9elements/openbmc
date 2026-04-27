@@ -1,0 +1,47 @@
+From fdccb4337317959d8de4f1d4284d9274199eba8d Mon Sep 17 00:00:00 2001
+From: Manojkiran Eda <manojkiran.eda@gmail.com>
+Date: Tue, 19 Mar 2024 15:04:03 +0530
+Subject: [PATCH 03/12] mtd: Replace module_init with subsys_initcall
+
+While engaged in development on the espi kernel device driver[1],
+I noticed that the espi flash driver, utilizing the mtd subsystem,
+appears to initialize before the mtdcore subsystem registers the
+mtd_class. As a result, although the mtd device for espi is created,
+it does not populate within the /sys/class/mtd hierarchy.
+
+Given that mtd serves as a subsystem upon which numerous other drivers
+rely for infrastructure, it appears logical to adjust the module_init()
+call to an alternative priority initcall, subsys_initcall(), thereby
+ensuring that the mtd core subsystem is probed prior to the drivers
+utilizing its infrastructure.
+
+Although this adjustment alters the initialization ordering, there
+exists a slight risk of uncovering implicit initialization ordering
+issues. However, I believe it is preferable to prioritize it reasonably
+rather than having module_init() in order to maintain the exact old
+ordering.
+
+Link : [1] https://lore.kernel.org/openbmc/20240213-espi_driver-v1-1-92741c812843@gmail.com
+
+Signed-off-by: Manojkiran Eda <manojkiran.eda@gmail.com>
+Upstream-Status: Pending
+---
+ drivers/mtd/mtdcore.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+diff --git a/drivers/mtd/mtdcore.c b/drivers/mtd/mtdcore.c
+index 64808493b4f5..d53dae225a5e 100644
+--- a/drivers/mtd/mtdcore.c
++++ b/drivers/mtd/mtdcore.c
+@@ -2631,7 +2631,7 @@ static void __exit cleanup_mtd(void)
+ 	idr_destroy(&mtd_idr);
+ }
+ 
+-module_init(init_mtd);
++subsys_initcall(init_mtd);
+ module_exit(cleanup_mtd);
+ 
+ MODULE_LICENSE("GPL");
+-- 
+2.43.0
+

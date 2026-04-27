@@ -1,0 +1,32 @@
+From 50a99911e5cb8cc5ab81d04df8b9a70be6d48e41 Mon Sep 17 00:00:00 2001
+From: Manojkiran Eda <manojeda@in.ibm.com>
+Date: Sat, 26 Oct 2024 00:15:17 +0530
+Subject: [PATCH 06/12] Fix (NULL device*) in traces
+
+espi_ctrl structure which was passed from the ctrl node to the
+mtd device node does not have the `dev` member variable set. So all the
+tracing in the flash driver code that uses `espi_flash->ctrl->dev`
+is coming as null. This PR would fix the above mentioned issue.
+
+Signed-off-by: Manojkiran Eda <manojkiran.eda@gmail.com>
+Co-authored-by: Manojkiran Eda <manojkiran.eda@gmail.com>
+Upstream-Status: Pending
+---
+ drivers/soc/aspeed/aspeed-espi-ctrl.c | 1 +
+ 1 file changed, 1 insertion(+)
+
+diff --git a/drivers/soc/aspeed/aspeed-espi-ctrl.c b/drivers/soc/aspeed/aspeed-espi-ctrl.c
+index 4aa568991274..a32daf28644c 100644
+--- a/drivers/soc/aspeed/aspeed-espi-ctrl.c
++++ b/drivers/soc/aspeed/aspeed-espi-ctrl.c
+@@ -104,6 +104,7 @@ static int aspeed_espi_ctrl_probe(struct platform_device *pdev)
+ 		dev_err(dev, "cannot enable clock\n");
+ 		return rc;
+ 	}
++	espi_ctrl->dev = dev;
+ 
+ 	/*
+ 	 * This takes care of deferred probe , incase the mtd core
+-- 
+2.43.0
+

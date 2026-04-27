@@ -1,0 +1,54 @@
+From bc420c6bdae3284d91a244f58caef23e7d70436d Mon Sep 17 00:00:00 2001
+From: Manojkiran Eda <manojeda@in.ibm.com>
+Date: Fri, 8 Nov 2024 20:08:01 +0530
+Subject: [PATCH 08/12] Fix CPU stalling due to early exit of espi driver
+
+espi driver spawns multiple devices one for each channel,
+In simulation, since we dont have the espi registers modelled
+the flash driver fails to probe, but prior to that all the other
+devices for rest of the channels are created.
+
+So when we bail out of the probe due to failure in creating the flash
+device, we should ensure that rest of the resorces created for other
+channels should be freed up. Without that the other channel devices
+seem to stall CPU causing a kernel panic.
+
+Signed-off-by: Manojkiran Eda <manojkiran.eda@gmail.com>
+Co-authored-by: Manojkiran Eda <manojkiran.eda@gmail.com>
+Upstream-Status: Pending
+---
+ drivers/soc/aspeed/aspeed-espi-ctrl.c | 11 ++++++++++-
+ 1 file changed, 10 insertions(+), 1 deletion(-)
+
+diff --git a/drivers/soc/aspeed/aspeed-espi-ctrl.c b/drivers/soc/aspeed/aspeed-espi-ctrl.c
+index 6f89b7aeef17..e28d454e7e3f 100644
+--- a/drivers/soc/aspeed/aspeed-espi-ctrl.c
++++ b/drivers/soc/aspeed/aspeed-espi-ctrl.c
+@@ -159,7 +159,8 @@ static int aspeed_espi_ctrl_probe(struct platform_device *pdev)
+ 		dev_err(dev, "failed to allocate flash channel\n");
+ 		pr_info("flash alloc failed with return code %ld\n",
+ 			PTR_ERR(espi_ctrl->flash));
+-		return PTR_ERR(espi_ctrl->flash);
++		rc = PTR_ERR(espi_ctrl->flash);
++                goto err_free_resources;
+ 	}
+ 
+ 	regmap_write(espi_ctrl->map, ESPI_SYSEVT_INT_T0, 0x0);
+@@ -186,6 +187,14 @@ static int aspeed_espi_ctrl_probe(struct platform_device *pdev)
+ 	dev_info(dev, "module loaded\n");
+ 
+ 	return 0;
++
++err_free_resources:
++       aspeed_espi_oob_free(dev, espi_ctrl->oob);
++       aspeed_espi_vw_free(dev, espi_ctrl->vw);
++       aspeed_espi_perif_free(dev, espi_ctrl->perif);
++       return rc;
++
++
+ }
+ 
+ /**
+-- 
+2.43.0
+
